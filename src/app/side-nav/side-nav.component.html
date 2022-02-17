@@ -1,0 +1,35 @@
+<div class="navbar">
+  <div class="user">
+      <img src="assets/login/logo.png" alt="">
+      <h4 class="name">admin</h4>
+      <p class="mail">admin@gmail.com</p>
+  </div>
+  <div class="menu">
+      <div class="menu-head">
+          <span>dashboard</span>
+      </div>
+      <div class="menu-item">
+          <button mat-button class="menu-button" [routerLink]="['/add-shipment']">
+              <mat-icon>local_shipping</mat-icon>
+              <span>New Shipment</span>
+          </button>
+          <button mat-button class="menu-button" [routerLink]="['/posts']">
+              <mat-icon>search</mat-icon>
+              <span>Find Shipment</span>
+          </button>
+          <button mat-button class="menu-button">
+              <mat-icon>list</mat-icon>
+              <span>All Shipments</span>
+          </button>
+          <button mat-button class="menu-button">
+              <mat-icon>bar_chart</mat-icon>
+              <span>Report</span>
+          </button>
+          <button mat-button class="menu-button" [routerLink]="['/home']">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+          </button>
+      </div>
+  </div>
+</div>
+
