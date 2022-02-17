@@ -1,26 +1,29 @@
-<div class="container">
-  <section>
-    <div class="imgBx">
-      <img src="assets/login/door2door.jpeg">
-    </div>
-    <div class="contentBx">
-      <div class="formBx">
-          <img src="assets/login/logo.png">
-        <!-- <h2>admin</h2> -->
-        <div>
-          <div class="inputBx">
-            <span>Username</span>
-            <input type="text" name="">
-          </div>
-          <div class="inputBx">
-            <span>Password</span>
-            <input type="password" name="">
-          </div>
-          <div class="inputBx">
-            <input type="submit" value="Login" name="" [routerLink]="['/home']">
-          </div>
+<section>
+  <div class="imgBx">
+    <img src="assets/login/door2door.jpeg">
+  </div>
+  <div class="contentBx">
+    <div class="formBx">
+      <!-- <img src="assets/login/logo.png"> -->
+      <h2>Welcome</h2>
+      <form action="">
+        <div class="inputBx">
+          <span>Username</span>
+          <input type="text" name="" />
         </div>
-      </div>
+         <div class="inputBx">
+          <span>Password</span>
+          <input type="password" name="" />
+        </div>
+        <div class="remember">
+          <label for="">
+            <input type="checkbox"> Remember me
+          </label>
+        </div>
+        <div class="inputBx">
+          <input type="submit" value="Sign in" name="" [routerLink]="['/home']" />
+        </div>
+      </form>
     </div>
-  </section>
-</div>
+  </div>
+</section>
