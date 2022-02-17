@@ -4,6 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -11,6 +14,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   imports: [
     CommonModule
   ],
-  exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule],
+  exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatFormFieldModule, MatInputModule],
 })
 export class MaterialDesignModule { }

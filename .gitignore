@@ -149,3 +149,4 @@ temp/
 node_modules
 .firebase
 .firebaserc
+.angular
