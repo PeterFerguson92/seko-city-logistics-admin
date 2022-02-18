@@ -263,3 +263,9 @@ h2.sub-heading-agileits,h3.sub-heading-agileits{font-size:18px;letter-spacing:1.
   transition: 0.6s;
 
 }
+
+.divider{
+  width:20px;
+  height:auto;
+  display:inline-block;
+}

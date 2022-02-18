@@ -1,6 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
-import { EventEmitterService } from './shared/service/event/event-emitter.service';
+import { Component } from '@angular/core';
+import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 
 @Component({
   selector: 'app-root',

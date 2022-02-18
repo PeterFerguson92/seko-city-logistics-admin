@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EventEmitterService } from '../shared/service/event/event-emitter.service';
 
 
 @Component({
@@ -10,7 +9,13 @@ import { EventEmitterService } from '../shared/service/event/event-emitter.servi
 
 export class AddShipmentComponent implements OnInit {
 
-  constructor(private eventEmitterService: EventEmitterService) {}
+  options = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+
+  constructor() {}
 
   ngOnInit() {
   }

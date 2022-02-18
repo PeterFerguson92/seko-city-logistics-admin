@@ -10,7 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { AddShipmentComponent } from './add-shipment/add-shipment.component';
-import { EventEmitterService } from './shared/service/event/event-emitter.service';
+import { MaterialInputComponent } from './shared/inputs/material-input/material-input.component';
+import { MaterialSelectInputComponent } from './shared/inputs/material-select-input/material-select-input.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,8 @@ import { EventEmitterService } from './shared/service/event/event-emitter.servic
     HomeComponent,
     SideNavComponent,
     AddShipmentComponent,
+    MaterialInputComponent,
+    MaterialSelectInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,7 @@ import { EventEmitterService } from './shared/service/event/event-emitter.servic
     MaterialDesignModule,
     FlexLayoutModule
   ],
-  providers: [EventEmitterService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

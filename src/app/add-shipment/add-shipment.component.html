@@ -6,18 +6,20 @@
     <h2 class="sub-heading-agileits">Shipment Details</h2>
     <div class="main-flex-w3ls-sectns">
       <div class="field-agileinfo-spc form-w3-agile-text1">
-        <select class="newEdition">
-                  <option>From</option>
-                  <option value="Lorem Ipsum">Lorem Ipsum</option>
-                  <option value="Adipiscing">Adipiscing</option>
-                  <option value="Lorem Ipsum">Lorem Ipsum</option>
-                  <option value="Adipiscing">Adipiscing</option>
-                  <option value="Lorem Ipsum">Lorem Ipsum</option>
-                  <option value="Adipiscing">Adipiscing</option>
-                </select>
+        <app-material-select-input [label]="'Departure'" [options]="options"></app-material-select-input>
+        <div class="divider"></div>
+        <app-material-select-input [label]="'Destination'" [options]="options"></app-material-select-input>
       </div>
+      <div class="main-flex-w3ls-sectns">
+        <div class="field-agileinfo-spc form-w3-agile-text1">
+          <app-material-select-input [label]="'Departure'" [options]="options"></app-material-select-input>
+          <div class="divider"></div>
+          <app-material-select-input [label]="'Destination'" [options]="options"></app-material-select-input>
+        </div>
+      </div>
+
       <div class="field-agileinfo-spc form-w3-agile-text2">
-        <select class="newEdition">
+        <!-- <select class="newEdition">
                   <option>To</option>
                   <option value="Lorem Ipsum">Lorem Ipsum</option>
                   <option value="Adipiscing">Adipiscing</option>
@@ -25,7 +27,7 @@
                   <option value="Adipiscing">Adipiscing</option>
                   <option value="Lorem Ipsum">Lorem Ipsum</option>
                   <option value="Adipiscing">Adipiscing</option>
-                </select>
+                </select> -->
       </div>
     </div>
     <div class="clear"></div>
@@ -61,22 +63,20 @@
     <h3 class="sub-heading-agileits">Customer Details</h3>
     <div class="main-flex-w3ls-sectns">
       <div class="field-agileinfo-spc form-w3-agile-text1">
-        <input type="text" name="Name" placeholder="Full Name" required="">
+        <app-material-input [label]="'First Name'" [icon]="'person_pin'"></app-material-input>
       </div>
-      <div class="field-agileinfo-spc form-w3-agile-text2">
-        <input type="text" name="Phone no" placeholder="Phone Number" required="">
+      <div class="field-agileinfo-spc form-w3-agile-text1">
+        <app-material-input [label]="'Surname'" [icon]="'person_pin'"></app-material-input>
       </div>
     </div>
-    <div class="field-agileinfo-spc form-w3-agile-text">
-      <!-- <input type="email" name="Email" placeholder="Email" required=""> -->
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput >
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint>Hint</mat-hint>
-      </mat-form-field>
+    <div class="main-flex-w3ls-sectns">
+      <div class="field-agileinfo-spc form-w3-agile-text1">
+        <app-material-input [label]="'Email'" [icon]="'email'"></app-material-input>
+      </div>
+      <div class="field-agileinfo-spc form-w3-agile-text1">
+        <app-material-input [label]="'Phone Number'" [icon]="'phone'"></app-material-input>
+      </div>
     </div>
-
 
     <h3 class="sub-heading-agileits">Customer Details</h3>
     <div class="main-flex-w3ls-sectns">
