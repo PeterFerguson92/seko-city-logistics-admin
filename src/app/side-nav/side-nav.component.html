@@ -9,11 +9,11 @@
           <span>dashboard</span>
       </div>
       <div class="menu-item">
-          <button mat-button class="menu-button"  [routerLink]="['/add-shipment']" >
+          <button mat-button class="menu-button"  (click)="navigate('/add-shipment')" >
               <mat-icon>local_shipping</mat-icon>
               <span>New Shipment</span>
           </button>
-          <button mat-button class="menu-button">
+          <button mat-button class="menu-button" (click)="navigate('/find-shipment')">
               <mat-icon>search</mat-icon>
               <span>Find Shipment</span>
           </button>
