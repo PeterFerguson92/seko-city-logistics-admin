@@ -27,20 +27,25 @@
 }
  .user .name {
 	 color: white;
+   font-family:'Raleway', sans-serif;
 }
  .user .mail {
 	 margin-top: -10px;
 	 color: #697d95;
+   font-family:'Raleway', sans-serif;
+
 }
  .menu-head {
-	 color: #466be0;
+	 color: gold;
 	 text-transform: uppercase;
 	 font-weight: 900;
 	 margin-left: 40px;
 	 margin-bottom: 20px;
+   text-align: center;
 }
  .menu-item {
 	 margin: 0 10px 0 10px;
+
 }
  .menu-item .menu-button {
 	 display: block;
@@ -55,6 +60,8 @@
  .menu-item .menu-button span {
 	 margin-left: 15px;
 	 color: white;
+   font-family:'Raleway', sans-serif;
+
 }
  .menu-item .menu-button:hover {
 	 background: #2c3344;

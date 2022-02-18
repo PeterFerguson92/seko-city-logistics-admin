@@ -9,7 +9,7 @@
           <span>dashboard</span>
       </div>
       <div class="menu-item">
-          <button mat-button class="menu-button" >
+          <button mat-button class="menu-button"  [routerLink]="['/add-shipment']" >
               <mat-icon>local_shipping</mat-icon>
               <span>New Shipment</span>
           </button>
@@ -25,7 +25,7 @@
               <mat-icon>bar_chart</mat-icon>
               <span>Report</span>
           </button>
-          <button mat-button class="menu-button" [routerLink]="['/home']">
+          <button mat-button class="menu-button" (click)="navigate('/login')">
               <mat-icon>exit_to_app</mat-icon>
               <span>Logout</span>
           </button>

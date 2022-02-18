@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { AddShipmentComponent } from './add-shipment/add-shipment.component';
+import { EventEmitterService } from './shared/service/event/event-emitter.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { AddShipmentComponent } from './add-shipment/add-shipment.component';
     LoginComponent,
     HomeComponent,
     SideNavComponent,
-    AddShipmentComponent
+    AddShipmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +28,7 @@ import { AddShipmentComponent } from './add-shipment/add-shipment.component';
     MaterialDesignModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [EventEmitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

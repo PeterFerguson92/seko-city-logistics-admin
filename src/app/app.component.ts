@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { EventEmitterService } from './shared/service/event/event-emitter.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'admin';
+  isVisible = true;
+  LOGIN_URL = '/login'
+
+  constructor(route: Router) {
+    route.events.subscribe(event => {
+      if (event instanceof RoutesRecognized) {
+        this.isVisible = event.url !== this.LOGIN_URL;
+      }
+      else if (event instanceof NavigationEnd)
+      {
+        this.isVisible = event.url !== this.LOGIN_URL;
+      }
+    });
+  }
+
 }

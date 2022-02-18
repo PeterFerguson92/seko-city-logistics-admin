@@ -1,7 +1,6 @@
-import { Component, OnInit, AfterContentInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { MatGridList } from '@angular/material/grid-list';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { EventEmitterService } from '../shared/service/event/event-emitter.service';
+
 
 @Component({
   selector: 'app-add-shipment',
@@ -9,31 +8,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./add-shipment.component.css']
 })
 
-export class AddShipmentComponent implements OnInit, AfterContentInit, OnDestroy {
-  @ViewChild('grid') grid: MatGridList;
+export class AddShipmentComponent implements OnInit {
 
-  gridByBreakpoint = { xl: 8, lg: 6, md: 4, sm: 2, xs: 1 };
-
-  private mediaSub: Subscription;
-  constructor(private cdRef: ChangeDetectorRef,  private mediaObservable: MediaObserver) {}
-
-
+  constructor(private eventEmitterService: EventEmitterService) {}
 
   ngOnInit() {
-  }
-
-  ngAfterContentInit() {
-    this.mediaObservable.asObservable().subscribe((changes: MediaChange[]) => {
-      const currentMediaChange = changes[0];
-      this.grid.cols = this.gridByBreakpoint[currentMediaChange.mqAlias];
-    });
-  }
-
-
-  ngOnDestroy(): void {
-    if (this.mediaObservable)
-    {
-      this.mediaSub.unsubscribe();
-    }
   }
 }

@@ -1,7 +1,8 @@
 .bodys {
-  font-family: 'Roboto', sans-serif;
+  font-family:'Raleway', sans-serif;
   font-size: 100%;
   height: 100%;
+  margin-left: -15%;
   /* background: url(https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736881_960_720.jpg)no-repeat center top; */
   background-size: cover;
   -webkit-background-size: cover;
@@ -9,28 +10,103 @@
   -o-background-size: cover;
   /* background-color: #000; */
   /* background-attachment: fixed; */
+  /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+
 }
 
 
 /*! CSS Used from: https://p.w3layouts.com/demos_new/template_demo/20-12-2017/airline_booking_form-demo_Free/828699705/web/css/style.css */
 div,h2,h3,h6,form,label{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;  color: black;}
 ul{list-style:none;margin:0px;padding:0px;}
-.clear{clear:both;}
+.clear{clear:both; margin: 20px;}
 .booking-form-w3layouts{box-sizing:border-box;padding:3em 3em ;width:65%;margin:0 auto; }
-h2.sub-heading-agileits,h3.sub-heading-agileits{display:inline-block;text-align:left;font-size:24px;color:rgb(10, 4, 4);text-transform:capitalize;margin-bottom:.4em;padding:0px 25px 10px 0px;font-weight:400;letter-spacing:2px;border-bottom:2px solid #0091cd;font-family:'Raleway', sans-serif;}
+h2.sub-heading-agileits,h3.sub-heading-agileits{
+  display:inline-block;
+  text-align:left;
+  font-size:24px;
+  color:rgb(10, 4, 4);
+  text-transform:capitalize;
+  margin-bottom:.4em;
+  padding:0px 25px 10px 0px;
+  font-weight:400;
+  letter-spacing:2px;
+  border-bottom:2px solid #0091cd;
+  font-family:'Raleway', sans-serif;
+}
 .radio-section{text-align:left;margin:0.7em 0;}
-.radio-section h6{display:inline;margin-top:10px;color:#0091cd;font-size:19px;text-transform:capitalize;margin-bottom:.7em;font-weight:400;letter-spacing:2px;font-family:'Raleway', sans-serif;}
+.radio-section h6{
+  display:inline;
+  margin-top:10px;
+  color:#0091cd;
+  font-size:19px;
+  text-transform:capitalize;
+  margin-bottom:.7em;
+  font-weight:400;
+  letter-spacing:2px;
+  /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+}
 .radio-section ul{display:inline;}
 .radio-buttons-w3-agileits li input[type="radio"]{cursor:pointer;}
 .radio-buttons-w3-agileits li label{color:rgb(5, 5, 5);font-size:13.5px;font-weight:400;letter-spacing:1px;font-family:'Raleway', sans-serif;}
-.booking-form-w3layouts input[type="text"],.booking-form-w3layouts input[type="email"],.booking-form-w3layouts textarea,select.form-control,input#datepicker{width:100%;font-weight:300;color:rgb(3, 0, 0);font-size:14px;letter-spacing:1.2px;padding:10px 10px;outline:none;background:rgba(255, 255, 255, 0);border:none;border-bottom:1px solid rgba(255, 255, 255, 0.27);box-sizing:border-box;font-family:'Roboto', sans-serif;}
+.booking-form-w3layouts input[type="text"],.booking-form-w3layouts input[type="email"],.booking-form-w3layouts textarea,select.form-control {
+  width:100%;
+  font-weight:300;
+  color:rgb(3, 0, 0);
+  font-size:14px;
+  letter-spacing:1.2px;
+  padding:10px 10px;
+  outline:none;
+  background:rgba(255, 255, 255, 0);
+  border:none;
+  border-bottom:1px solid rgba(255, 255, 255, 0.27);
+  box-sizing:border-box;
+  font-family:'Roboto', sans-serif;
+}
+
+.booking-form-w3layouts input#datepicker{
+  width:40%;
+  font-weight:300;
+  color:rgb(3, 0, 0);
+  font-size:14px;
+  letter-spacing:1.2px;
+  padding:10px 10px;
+  outline:none;
+  background:rgba(255, 255, 255, 0);
+  border:none;
+  border-bottom:1px solid rgba(255, 255, 255, 0.27);
+  box-sizing:border-box;
+  font-family:'Roboto', sans-serif;
+}
 .booking-form-w3layouts textarea{resize:none;height:80px;}
 .field-agileinfo-spc{margin-bottom:1em;}
-.form-w3-agile-text{width:100%;}
+.form-w3-agile-text{width:100%; margin-bottom: 20px;}
 select.form-control option{background:#000;}
-.booking-form-w3layouts input[type="submit"],.booking-form-w3layouts input[type="reset"]{text-transform:capitalize;background:#0091cd;color:rgb(10, 8, 8);padding:0.5em 4em;border:none;font-weight:500;font-size:1.2em;margin-top:1em;float:left;outline:none;letter-spacing:1px;-webkit-transition:.5s all;-moz-transition:.5s all;transition:.5s all;cursor:pointer;font-family:'Raleway', sans-serif;}
-.booking-form-w3layouts input[type="submit"]{margin-right:1.5em;background:#d2741c;}
-.booking-form-w3layouts input[type="submit"]:hover{background:#0091cd;color:rgb(14, 12, 12);}
+.booking-form-w3layouts input[type="submit"],.booking-form-w3layouts input[type="reset"]
+
+
+.booking-form-w3layouts input[type="submit"] {
+  margin-right:1.5em;
+  width: 20%;
+  padding: 10px 20px;
+  outline: none;
+  font-weight: 400;
+  border: 1px solid #607d8b;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-radius: 30px;
+}
+
+.booking-form-w3layouts .clearBtn {
+  background-color:#d2741c;
+  color: white;
+}
+
+.booking-form-w3layouts .submitBtn {
+  background:linear-gradient(#000428, #004e92);
+  color: white;
+}
+
+/* .booking-form-w3layouts input[type="submit"]:hover{background:red;color:rgb(14, 12, 12);} */
 .booking-form-w3layouts input[type="reset"]:hover{background:#d2741c;color:rgb(3, 3, 3);}
 .booking-form-w3layouts ::-webkit-input-placeholder{color:rgb(10, 10, 10);}
 .booking-form-w3layouts :-moz-placeholder{color:rgb(7, 6, 6);}
@@ -51,7 +127,7 @@ ul.radio-buttons-w3-agileits li{display:inline-block;margin:0em 2em;}
 .booking-form-w3layouts{width:83%;padding:2em 2.2em;}
 }
 @media (max-width:1024px){
-h2.sub-heading-agileits,h3.sub-heading-agileits{font-size:22px;padding:0px 20px 7px 0px;}
+h2.sub-heading-agileits,h3.sub-heading-agileits{font-size:22px;padding:0px 20px 7px 0px; }
 .field-agileinfo-spc{margin-bottom:0.8em;}
 .booking-form-w3layouts input[type="submit"],.booking-form-w3layouts input[type="reset"]{padding:0.5em 3em;font-size:1.1em;}
 }
@@ -148,10 +224,42 @@ h2.sub-heading-agileits,h3.sub-heading-agileits{font-size:18px;letter-spacing:1.
   width: 100%;
   padding: 10px 20px;
   outline: none;
+  font-weight: 200;
+  border: 1px solid #607d8b;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background: transparent;
+  border-radius: 30px;
+    text-align: center;
+
+}
+
+.newEdition2 {
+  width: 50%;
+  padding: 10px 20px;
+  outline: none;
   font-weight: 400;
   border: 1px solid #607d8b;
   font-size: 16px;
   letter-spacing: 1px;
   background: transparent;
   border-radius: 30px;
+  text-align: center;
+}
+
+.inputNewEdition {
+  background: #0091cd;
+  color: #fff;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+.inputNewEdition {
+  background:linear-gradient(#000428, #004e92);;;
+  transition: 0.6s;
+
 }

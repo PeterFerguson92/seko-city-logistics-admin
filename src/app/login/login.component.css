@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family:'Raleway', sans-serif;
 }
 
 section{
@@ -56,10 +57,12 @@ section .contentBx .formBx h2{
   font-size: 1.5em;
   text-transform: uppercase;
   margin-bottom: 20px;
-  border-bottom: 4px solid #07ab82;
+  border-bottom: 4px solid #0091cd;
   display: inline-block;
   letter-spacing: 1px;
+  font-family:'Raleway', sans-serif;
 }
+
 
 section .contentBx .formBx .inputBx{
   margin-bottom: 20px;
@@ -72,6 +75,7 @@ section .contentBx .formBx .inputBx span{
   color: #607d8b;
   font-weight: 300;
   letter-spacing: 1px;
+
 }
 
 section .contentBx .formBx .inputBx input{
@@ -87,17 +91,20 @@ section .contentBx .formBx .inputBx input{
 }
 
 section .contentBx .formBx .inputBx input[type="submit"]{
-  background: #07ab82;
+  background: #0091cd;
   color: #fff;
   outline: none;
   border: none;
   font-weight: 500;
   cursor: pointer;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
 }
 
 section .contentBx .formBx .inputBx input[type="submit"]:hover{
-  background: #069370;
+  background:linear-gradient(#000428, #004e92);
   transition: 0.6s;
+
 }
 
 section .contentBx .formBx .remember{
