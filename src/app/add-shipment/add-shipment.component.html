@@ -2,102 +2,98 @@
 <!-- https://w3layouts.com/airline-booking-form-responsive-widget-template/ -->
 <div class="booking-form-w3layouts">
   <!-- Form starts here -->
-  <form action="" method="post">
+  <section >
     <h2 class="sub-heading-agileits">Shipment Details</h2>
     <div class="main-flex-w3ls-sectns">
-      <div class="field-agileinfo-spc form-w3-agile-text1">
+      <div>
         <app-material-select-input [label]="'Departure'" [options]="options"></app-material-select-input>
         <div class="divider"></div>
         <app-material-select-input [label]="'Destination'" [options]="options"></app-material-select-input>
-      </div>
-      <div class="main-flex-w3ls-sectns">
-        <div class="field-agileinfo-spc form-w3-agile-text1">
-          <app-material-select-input [label]="'Departure'" [options]="options"></app-material-select-input>
-          <div class="divider"></div>
-          <app-material-select-input [label]="'Destination'" [options]="options"></app-material-select-input>
-        </div>
-      </div>
+        <div class="divider"></div>
+        <app-material-date-picker-input [label]="'Departure date'"></app-material-date-picker-input>
+        <div class="divider"></div>
+        <app-material-text-area-input [placeholder]="'Any comment'"></app-material-text-area-input>
+        <div class="divider"></div>
 
-      <div class="field-agileinfo-spc form-w3-agile-text2">
-        <!-- <select class="newEdition">
-                  <option>To</option>
-                  <option value="Lorem Ipsum">Lorem Ipsum</option>
-                  <option value="Adipiscing">Adipiscing</option>
-                  <option value="Lorem Ipsum">Lorem Ipsum</option>
-                  <option value="Adipiscing">Adipiscing</option>
-                  <option value="Lorem Ipsum">Lorem Ipsum</option>
-                  <option value="Adipiscing">Adipiscing</option>
-                </select> -->
       </div>
     </div>
-    <div class="clear"></div>
-    <div class="newEdition2">
-      <!-- <input id="datepicker" type="date" placeholder="Departure Date"> -->
-      <input placeholder="Departure Date" class="textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="datepicker" />
-    </div>
-
-
-    <!-- <div class="triple-wthree">
-      <div class="field-agileinfo-spc form-w3-agile-text11">
-        <select class="form-control">
-                      <option value="">Adult(12+ Yrs)</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5+</option>
-                    </select>
-      </div>
-    </div> -->
-
-    <div class="clear"></div>
-    <div class="newEdition">
-      <div class="field-agileinfo-spc form-w3-agile-text">
-        <textarea name="Message" placeholder="Any Message..."></textarea>
-      </div>
-    </div>
-    <div class="clear"></div>
 
     <!-- <div class="clear"></div>
     <div class="clear"></div> -->
-    <h3 class="sub-heading-agileits">Customer Details</h3>
+    <h4 class="sub-heading-agileits">Customer Details</h4>
     <div class="main-flex-w3ls-sectns">
-      <div class="field-agileinfo-spc form-w3-agile-text1">
-        <app-material-input [label]="'First Name'" [icon]="'person_pin'"></app-material-input>
-      </div>
-      <div class="field-agileinfo-spc form-w3-agile-text1">
-        <app-material-input [label]="'Surname'" [icon]="'person_pin'"></app-material-input>
-      </div>
-    </div>
-    <div class="main-flex-w3ls-sectns">
-      <div class="field-agileinfo-spc form-w3-agile-text1">
-        <app-material-input [label]="'Email'" [icon]="'email'"></app-material-input>
-      </div>
-      <div class="field-agileinfo-spc form-w3-agile-text1">
+      <div>
+        <app-material-input [label]="'Sender full name'" [icon]="'person_pin'"></app-material-input>
+        <div class="divider"></div>
+        <app-material-input [label]="'Receiver full name'" [icon]="'person_pin'"></app-material-input>
+        <div class="divider"></div>
         <app-material-input [label]="'Phone Number'" [icon]="'phone'"></app-material-input>
+        <div class="divider"></div><br>
+        <mat-divider></mat-divider>
+        <div class="divider"></div><br>
+        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+        <div class="divider"></div>
+        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+        <div class="divider"></div>
+        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+        <div class="divider"></div>
+        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+        <mat-divider></mat-divider>
+        <div class="divider"></div><br>
+        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+        <div class="divider"></div>
+        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+        <div class="divider"></div>
+        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+        <div class="divider"></div>
+        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+        <app-material-button [label]="'Remove Customer'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+        <div class="divider"></div>
+        <app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" ></app-material-button>
+        <br>
       </div>
     </div>
-
-    <h3 class="sub-heading-agileits">Customer Details</h3>
+    <div class="divider"></div>
     <div class="main-flex-w3ls-sectns">
-      <div class="field-agileinfo-spc form-w3-agile-text1">
-        <input type="text" name="Name" placeholder="Full Name" required="">
-      </div>
-      <div class="field-agileinfo-spc form-w3-agile-text2">
-        <input type="text" name="Phone no" placeholder="Phone Number" required="">
+      <div>
+        <app-material-input [label]="'Sender full name'" [icon]="'person_pin'"></app-material-input>
+        <div class="divider"></div>
+        <app-material-input [label]="'Receiver full name'" [icon]="'person_pin'"></app-material-input>
+        <div class="divider"></div>
+        <app-material-input [label]="'Phone Number'" [icon]="'phone'"></app-material-input>
+        <div class="divider"></div><br>
+        <mat-divider></mat-divider>
+        <div class="divider"></div><br>
+        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+        <div class="divider"></div>
+        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+        <div class="divider"></div>
+        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+        <div class="divider"></div>
+        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+        <mat-divider></mat-divider>
+        <div class="divider"></div><br>
+        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+        <div class="divider"></div>
+        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+        <div class="divider"></div>
+        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+        <div class="divider"></div>
+        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+
+        <app-material-button [label]="'Remove Customer'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+        <div class="divider"></div>
+        <app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" ></app-material-button>
+        <br>
       </div>
     </div>
-    <div class="field-agileinfo-spc form-w3-agile-text">
-      <input type="email" name="Email" placeholder="Email" required="">
-    </div>
+    <!-- #069370 -->
 
     <div class="clear"></div>
-    <input type="submit" value="Clear" class="clearBtn">
-    <input type="submit" value="Submit" class="submitBtn">
-    <!-- <input type="reset" value="Clear Form"> -->
-    <div class="clear"></div>
-  </form>
-  <!--// Form starts here -->
+    <app-material-button [label]="'Clear'" [color]="''" [backgroundColor]="" ></app-material-button>
+    <div class="divider"></div>
+    <app-material-button [label]="'Create Shipment'" [color]="'primary'" [backgroundColor]="'#069370'" style="float: right;" ></app-material-button> <br>
+  </section>
 </div>
 </div>
 

@@ -12,6 +12,11 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { AddShipmentComponent } from './add-shipment/add-shipment.component';
 import { MaterialInputComponent } from './shared/inputs/material-input/material-input.component';
 import { MaterialSelectInputComponent } from './shared/inputs/material-select-input/material-select-input.component';
+import { MaterialDatePickerInputComponent } from './shared/inputs/material-date-picker-input/material-date-picker-input.component';
+import { MaterialTextAreaInputComponent } from './shared/inputs/material-text-area-input/material-text-area-input.component';
+import { MaterialNumericInputComponent } from './shared/inputs/material-numeric-input/material-numeric-input.component';
+import { MaterialPlusButtonComponent } from './shared/buttons/material-plus-button/material-plus-button.component';
+import { MaterialButtonComponent } from './shared/inputs/material-button/material-button.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +27,11 @@ import { MaterialSelectInputComponent } from './shared/inputs/material-select-in
     AddShipmentComponent,
     MaterialInputComponent,
     MaterialSelectInputComponent,
+    MaterialDatePickerInputComponent,
+    MaterialTextAreaInputComponent,
+    MaterialNumericInputComponent,
+    MaterialPlusButtonComponent,
+    MaterialButtonComponent,
   ],
   imports: [
     BrowserModule,

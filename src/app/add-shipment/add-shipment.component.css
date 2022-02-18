@@ -20,10 +20,9 @@ div,h2,h3,h6,form,label{margin:0;padding:0;border:0;font-size:100%;font:inherit;
 ul{list-style:none;margin:0px;padding:0px;}
 .clear{clear:both; margin: 20px;}
 .booking-form-w3layouts{box-sizing:border-box;padding:3em 3em ;width:65%;margin:0 auto; }
-h2.sub-heading-agileits,h3.sub-heading-agileits{
+h2.sub-heading-agileits,h4.sub-heading-agileits{
   display:inline-block;
   text-align:left;
-  font-size:24px;
   color:rgb(10, 4, 4);
   text-transform:capitalize;
   margin-bottom:.4em;
@@ -32,6 +31,14 @@ h2.sub-heading-agileits,h3.sub-heading-agileits{
   letter-spacing:2px;
   border-bottom:2px solid #0091cd;
   font-family:'Raleway', sans-serif;
+}
+
+h2.sub-heading-agileits{
+  font-size:24px;
+}
+
+h4.sub-heading-agileits{
+  font-size:15px;
 }
 .radio-section{text-align:left;margin:0.7em 0;}
 .radio-section h6{
@@ -122,6 +129,8 @@ ul.radio-buttons-w3-agileits li{display:inline-block;margin:0em 2em;}
 }
 @media (max-width:1280px){
 .booking-form-w3layouts{width:80%;}
+/* .field-agileinfo-spc{margin-bottom:1em;}
+.form-w3-agile-text{width:150%; margin-bottom: 20px;} */
 }
 @media (max-width:1080px){
 .booking-form-w3layouts{width:83%;padding:2em 2.2em;}
