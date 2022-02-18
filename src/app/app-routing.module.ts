@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddShipmentComponent } from './add-shipment/add-shipment.component';
+import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'add-shipment', component: AddShipmentComponent },
   { path: 'find-shipment', component: FindShipmentComponent },
+  { path: 'all-shipments', component: AllShipmentsComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

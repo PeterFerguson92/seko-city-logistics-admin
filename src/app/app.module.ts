@@ -18,6 +18,7 @@ import { MaterialNumericInputComponent } from './shared/inputs/material-numeric-
 import { MaterialPlusButtonComponent } from './shared/buttons/material-plus-button/material-plus-button.component';
 import { MaterialButtonComponent } from './shared/inputs/material-button/material-button.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
+import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FindShipmentComponent } from './find-shipment/find-shipment.component';
     MaterialPlusButtonComponent,
     MaterialButtonComponent,
     FindShipmentComponent,
+    AllShipmentsComponent,
   ],
   imports: [
     BrowserModule,
