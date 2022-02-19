@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +8,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
   ngOnInit(): void {
+  }
+
+  navigate(url) {
+    this.router.navigate([`/${url}`])
+      // .then(() => {
+      //   window.location.reload();
+      // });
   }
 }

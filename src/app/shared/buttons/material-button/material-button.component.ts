@@ -13,7 +13,6 @@ export class MaterialButtonComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.color)
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit, AfterContentInit, AfterContentChecked } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -8,7 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './all-shipments.component.html',
   styleUrls: ['./all-shipments.component.css']
 })
-export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked {
 
 
    ELEMENT_DATA = [
@@ -40,11 +40,26 @@ export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor() {}
+  constructor() {
+    if (!localStorage.getItem('foo'))
+    {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+    } else
+    {
+      localStorage.removeItem('foo')
+    }
+  }
+  ngAfterContentChecked(): void {
+
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+
+
   }
 
 
