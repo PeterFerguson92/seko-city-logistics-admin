@@ -25,7 +25,7 @@ export class AppComponent implements AfterViewInit {
         this.isVisible = event.url !== this.LOGIN_URL;
         if (this.isVisible)
         {
-          // this.sidenav.toggle();
+          this.sidenav.toggle();
         }
       }
     });
