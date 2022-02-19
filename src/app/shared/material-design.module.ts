@@ -12,6 +12,9 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -21,6 +24,7 @@ import {MatButtonModule} from '@angular/material/button';
     CommonModule
   ],
   exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatFormFieldModule,
-    MatInputModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatDividerModule, MatButtonModule],
+    MatInputModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatDividerModule, MatButtonModule,
+    MatTableModule, MatPaginatorModule,MatSortModule ],
 })
 export class MaterialDesignModule { }
