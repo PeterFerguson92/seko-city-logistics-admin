@@ -14,7 +14,8 @@ export class AppComponent implements AfterViewInit {
   isVisible = true;
   LOGIN_URL = '/login'
 
-  constructor(route: Router, private observer : BreakpointObserver) {
+  constructor(route: Router, private observer: BreakpointObserver) {
+
     route.events.subscribe(event => {
       if (event instanceof RoutesRecognized) {
         this.isVisible = event.url !== this.LOGIN_URL;
@@ -22,9 +23,19 @@ export class AppComponent implements AfterViewInit {
       else if (event instanceof NavigationEnd)
       {
         this.isVisible = event.url !== this.LOGIN_URL;
+        if (this.isVisible)
+        {
+          // this.sidenav.toggle();
+        }
       }
     });
+
   }
+
+  closeDropdown() {
+    this.sidenav.close();
+  }
+
 
   ngAfterViewInit(): void {
     // this.observer.observe(['(max-width: 800px)']).subscribe((res)=>{

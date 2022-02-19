@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-nav.component.css']
 })
 export class SideNavComponent implements OnInit {
+  LOGIN_URL = '/login'
 
   constructor(private router: Router) { }
 
@@ -14,6 +15,10 @@ export class SideNavComponent implements OnInit {
   }
 
   navigate(url) {
+    if (this.LOGIN_URL === url)
+    {
+      localStorage.removeItem('foo')
+    }
     this.router.navigateByUrl(url)
   }
 

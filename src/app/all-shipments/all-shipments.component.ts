@@ -45,9 +45,6 @@ export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit, 
     {
       localStorage.setItem('foo', 'no reload')
       location.reload()
-    } else
-    {
-      localStorage.removeItem('foo')
     }
   }
   ngAfterContentChecked(): void {
@@ -57,9 +54,6 @@ export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit, 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
-
-
   }
 
 
