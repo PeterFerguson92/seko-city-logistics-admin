@@ -16,7 +16,7 @@ import { MaterialDatePickerInputComponent } from './shared/inputs/material-date-
 import { MaterialTextAreaInputComponent } from './shared/inputs/material-text-area-input/material-text-area-input.component';
 import { MaterialNumericInputComponent } from './shared/inputs/material-numeric-input/material-numeric-input.component';
 import { MaterialPlusButtonComponent } from './shared/buttons/material-plus-button/material-plus-button.component';
-import { MaterialButtonComponent } from './shared/inputs/material-button/material-button.component';
+import { MaterialButtonComponent } from './shared/buttons/material-button/material-button.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 

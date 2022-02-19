@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -10,6 +9,8 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./all-shipments.component.css']
 })
 export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
+
+
    ELEMENT_DATA = [
     {id: 1, origin: 'Hydrogen', destination: 1.0079, date: 'H'},
     {id: 2, origin: 'Helium', destination: 4.0026, date: 'He'},
@@ -33,13 +34,13 @@ export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
      {id: 10, origin: 'Neon', destination: 20.1797, date: 'Ne'}
    ];
 
-  displayedColumns: string[] = ['id', 'origin', 'destination', 'date'];
+  displayedColumns: string[] = ['ID', 'ORIGIN', 'DESTINATION', 'DATE', 'ACTION'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor() {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -54,5 +55,6 @@ export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
 
   }
-
 }
+
+
