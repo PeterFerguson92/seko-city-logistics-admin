@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
-import { BreakpointObserver} from '@angular/cdk/layout'
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
@@ -14,7 +13,7 @@ export class AppComponent implements AfterViewInit {
   isVisible = true;
   LOGIN_URL = '/login'
 
-  constructor(route: Router, private observer: BreakpointObserver) {
+  constructor(route: Router) {
 
     route.events.subscribe(event => {
       if (event instanceof RoutesRecognized) {
