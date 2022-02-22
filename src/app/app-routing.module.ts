@@ -6,6 +6,7 @@ import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'add-customer', component: AddCustomerComponent },
   { path: 'find-shipment', component: FindShipmentComponent },
   { path: 'all-shipments', component: AllShipmentsComponent },
+  { path: 'reports', component: ReportsComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

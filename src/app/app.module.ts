@@ -22,6 +22,7 @@ import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { AddShippmentConfirmationComponent } from './add-shippment-confirmation/add-shippment-confirmation.component';
 import { MaterialRadioButtonComponent } from './shared/inputs/material-radio-button/material-radio-button.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MaterialRadioButtonComponent } from './shared/inputs/material-radio-but
     AddCustomerComponent,
     AddShippmentConfirmationComponent,
     MaterialRadioButtonComponent,
+    ReportsComponent,
   ],
   imports: [
     BrowserModule,

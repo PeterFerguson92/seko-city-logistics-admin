@@ -15,7 +15,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 
 
@@ -26,6 +28,6 @@ import {MatRadioModule} from '@angular/material/radio';
   ],
   exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatFormFieldModule,
     MatInputModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatDividerModule, MatButtonModule,
-    MatTableModule, MatPaginatorModule,MatSortModule, MatRadioModule],
+    MatTableModule, MatPaginatorModule,MatSortModule, MatRadioModule, MatExpansionModule],
 })
 export class MaterialDesignModule { }
