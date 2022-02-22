@@ -8,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MaterialInputComponent implements OnInit {
   @Input() label;
   @Input() icon;
+  @Input() width;
+
 
   constructor() { }
 

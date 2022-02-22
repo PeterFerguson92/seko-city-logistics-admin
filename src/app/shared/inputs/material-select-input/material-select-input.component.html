@@ -1,8 +1,8 @@
 <mat-form-field appearance="outline">
   <mat-label>{{label}}</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let option of options" [value]="options.value">
-      {{option.viewValue}}
+  <mat-select [(ngModel)]="injectedNgModel">
+    <mat-option *ngFor="let option of options" [value]="option">
+      {{option}}
     </mat-option>
   </mat-select>
 </mat-form-field>

@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -9,14 +10,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 export class AddShipmentComponent implements OnInit {
 
-  options = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
+  newShipmentForm: FormGroup;
+  departures = ['London Gateway'];
 
-  constructor() {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
+    this.newShipmentForm = this.formBuilder.group({
+      departure: ['', [Validators.required]]
+    })
   }
 }

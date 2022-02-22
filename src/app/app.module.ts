@@ -20,6 +20,8 @@ import { MaterialButtonComponent } from './shared/buttons/material-button/materi
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { AddShippmentConfirmationComponent } from './add-shippment-confirmation/add-shippment-confirmation.component';
+import { MaterialRadioButtonComponent } from './shared/inputs/material-radio-button/material-radio-button.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { AddCustomerComponent } from './add-customer/add-customer.component';
     FindShipmentComponent,
     AllShipmentsComponent,
     AddCustomerComponent,
+    AddShippmentConfirmationComponent,
+    MaterialRadioButtonComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,99 +1,106 @@
 <div class="bodys">
-<!-- https://w3layouts.com/airline-booking-form-responsive-widget-template/ -->
-<div class="booking-form-w3layouts">
-  <!-- Form starts here -->
-  <section >
-    <h2 class="sub-heading-agileits">Shipment Details</h2>
-    <div class="main-flex-w3ls-sectns">
-      <div>
-        <app-material-select-input [label]="'Departure'" [options]="options"></app-material-select-input>
-        <div class="divider"></div>
-        <app-material-select-input [label]="'Destination'" [options]="options"></app-material-select-input>
-        <div class="divider"></div>
-        <app-material-date-picker-input [label]="'Departure date'"></app-material-date-picker-input>
-        <div class="divider"></div>
-        <app-material-text-area-input [placeholder]="'Any comment'"></app-material-text-area-input>
-        <div class="divider"></div>
+  <!-- https://w3layouts.com/airline-booking-form-responsive-widget-template/ -->
+  <div class="booking-form-w3layouts">
+    <!-- Form starts here -->
+    <section >
+      <h2 class="sub-heading-agileits">New Shipment</h2>
+      <div class="main-flex-w3ls-sectns">
+        <form id="form" >
+          <app-material-select-input
+            [label]="'Departure'"
+            [options]="departures">
+          </app-material-select-input>
+          <div class="divider"></div>
+          <app-material-select-input [label]="'Destination'"></app-material-select-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Please specify location'" [icon]="'person_pin'"></app-material-input>
+          <div class="divider"></div>
+          <app-material-date-picker-input [label]="'Departure date'"></app-material-date-picker-input><br>
 
+          <app-material-text-area-input [placeholder]="'Any comment'"></app-material-text-area-input>
+          <div class="divider"></div>
+        </form>
       </div>
-    </div>
-
-    <!-- <div class="clear"></div>
-    <div class="clear"></div> -->
-    <h4 class="sub-heading-agileits">Customer Details</h4>
-    <div class="main-flex-w3ls-sectns">
-      <div>
-        <app-material-input [label]="'Sender full name'" [icon]="'person_pin'"></app-material-input>
-        <div class="divider"></div>
-        <app-material-input [label]="'Receiver full name'" [icon]="'person_pin'"></app-material-input>
-        <div class="divider"></div>
-        <app-material-input [label]="'Phone Number'" [icon]="'phone'"></app-material-input>
-        <div class="divider"></div><br>
-        <mat-divider></mat-divider>
-        <div class="divider"></div><br>
-        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
-        <div class="divider"></div>
-        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
-        <div class="divider"></div>
-        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
-        <div class="divider"></div>
-        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
-        <mat-divider></mat-divider>
-        <div class="divider"></div><br>
-        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
-        <div class="divider"></div>
-        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
-        <div class="divider"></div>
-        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
-        <div class="divider"></div>
-        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
-        <app-material-button [label]="'Remove Customer'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
-        <div class="divider"></div>
-        <app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" ></app-material-button>
-        <br>
+      <!-- <div class="clear"></div>
+      <div class="clear"></div> -->
+      <!-- <h4 class="sub-heading-agileits">Customer Details</h4>
+      <div class="main-flex-w3ls-sectns">
+        <div>
+          <app-material-input [label]="'Sender full name'" [icon]="'person_pin'"></app-material-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Receiver full name'" [icon]="'person_pin'"></app-material-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Phone Number'" [icon]="'phone'"></app-material-input>
+          <div class="divider"></div><br>
+          <mat-divider></mat-divider>
+          <div class="divider"></div><br>
+          <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+          <div class="divider"></div>
+          <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+          <div class="divider"></div>
+          <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+          <div class="divider"></div>
+          <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+          <mat-divider></mat-divider>
+          <div class="divider"></div><br>
+          <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+          <div class="divider"></div>
+          <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+          <div class="divider"></div>
+          <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+          <div class="divider"></div>
+          <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+          <app-material-button [label]="'Remove Customer'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+          <div class="divider"></div>
+          <app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" ></app-material-button>
+          <br>
+        </div>
       </div>
-    </div>
-    <div class="divider"></div>
-    <div class="main-flex-w3ls-sectns">
-      <div>
-        <app-material-input [label]="'Sender full name'" [icon]="'person_pin'"></app-material-input>
-        <div class="divider"></div>
-        <app-material-input [label]="'Receiver full name'" [icon]="'person_pin'"></app-material-input>
-        <div class="divider"></div>
-        <app-material-input [label]="'Phone Number'" [icon]="'phone'"></app-material-input>
-        <div class="divider"></div><br>
-        <mat-divider></mat-divider>
-        <div class="divider"></div><br>
-        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
-        <div class="divider"></div>
-        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
-        <div class="divider"></div>
-        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
-        <div class="divider"></div>
-        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
-        <mat-divider></mat-divider>
-        <div class="divider"></div><br>
-        <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
-        <div class="divider"></div>
-        <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
-        <div class="divider"></div>
-        <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
-        <div class="divider"></div>
-        <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+      <div class="divider"></div>
+      <div class="main-flex-w3ls-sectns">
+        <div>
+          <app-material-input [label]="'Sender full name'" [icon]="'person_pin'"></app-material-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Receiver full name'" [icon]="'person_pin'"></app-material-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Phone Number'" [icon]="'phone'"></app-material-input>
+          <div class="divider"></div><br>
+          <mat-divider></mat-divider>
+          <div class="divider"></div><br>
+          <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+          <div class="divider"></div>
+          <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+          <div class="divider"></div>
+          <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+          <div class="divider"></div>
+          <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
+          <mat-divider></mat-divider>
+          <div class="divider"></div><br>
+          <app-material-numeric-input [label]="'Number of Items'" ></app-material-numeric-input>
+          <div class="divider"></div>
+          <app-material-text-area-input [placeholder]="'Item description'"></app-material-text-area-input>
+          <div class="divider"></div>
+          <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+          <div class="divider"></div>
+          <app-material-button [label]="'+'"[color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button><br>
 
-        <app-material-button [label]="'Remove Customer'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
-        <div class="divider"></div>
-        <app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" ></app-material-button>
-        <br>
-      </div>
-    </div>
-    <!-- #069370 -->
+          <app-material-button [label]="'Remove Customer'" [color]="'primary'" [backgroundColor]="'#c43b00'" ></app-material-button>
+          <div class="divider"></div>
+          <app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" ></app-material-button>
+          <br>
+        </div>
+      </div> -->
+      <!-- #069370 -->
 
-    <div class="clear"></div>
-    <app-material-button [label]="'Clear'" [color]="''" [backgroundColor]="" ></app-material-button>
-    <div class="divider"></div>
-    <app-material-button [label]="'Create Shipment'" [color]="'primary'" [backgroundColor]="'#069370'" style="float: right;" ></app-material-button> <br>
-  </section>
+      <div class="clear"></div>
+      <app-material-button [label]="'Clear'" [color]="''" [backgroundColor]="" ></app-material-button>
+      <div class="divider"></div>
+      <app-material-button [label]="'Create Shipment'" [color]="'primary'" [backgroundColor]="'#069370'" ></app-material-button> <br>
+    </section>
+    <app-add-shippment-confirmation></app-add-shippment-confirmation>
+
+  </div>
+
 </div>
-</div>
+
 

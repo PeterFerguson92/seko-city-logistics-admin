@@ -6,16 +6,19 @@
   </div>
   <div class="menu">
       <div class="menu-head">
-          <span>dashboard</span>
       </div>
       <div class="menu-item">
           <button mat-button class="menu-button"  (click)="navigate('/add-shipment')" >
               <mat-icon>local_shipping</mat-icon>
               <span>New Shipment</span>
           </button>
+          <button mat-button class="menu-button"  (click)="navigate('/add-customer')" >
+            <mat-icon>note_add</mat-icon>
+            <span>Add Customer</span>
+        </button>
           <button mat-button class="menu-button" (click)="navigate('/find-shipment')">
               <mat-icon>search</mat-icon>
-              <span>Find Shipment</span>
+              <span>Search</span>
           </button>
           <button mat-button class="menu-button" (click)="navigate('/all-shipments')">
               <mat-icon>list</mat-icon>
