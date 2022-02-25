@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialDesignModule } from './shared/material-design.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { InMemoryCache } from '@apollo/client/core';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -23,6 +27,8 @@ import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { AddShippmentConfirmationComponent } from './add-shippment-confirmation/add-shippment-confirmation.component';
 import { MaterialRadioButtonComponent } from './shared/inputs/material-radio-button/material-radio-button.component';
 import { ReportsComponent } from './reports/reports.component';
+import { ErrorMessageComponent } from './shared/error-message/error-message.component';
+import { MaterialSpinnerComponent } from './shared/buttons/material-spinner/material-spinner.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,8 @@ import { ReportsComponent } from './reports/reports.component';
     AddShippmentConfirmationComponent,
     MaterialRadioButtonComponent,
     ReportsComponent,
+    ErrorMessageComponent,
+    MaterialSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,9 +59,22 @@ import { ReportsComponent } from './reports/reports.component';
     BrowserAnimationsModule,
     SharedModule,
     MaterialDesignModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule,
+    ApolloModule
   ],
-  providers: [],
+  providers: [{
+    provide: APOLLO_OPTIONS,
+    useFactory: (httpLink: HttpLink) => {
+      return {
+        cache: new InMemoryCache(),
+        link: httpLink.create({
+          uri: 'http://localhost:4000/graphql'
+        })
+      }
+    },
+    deps: [HttpLink]
+  }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

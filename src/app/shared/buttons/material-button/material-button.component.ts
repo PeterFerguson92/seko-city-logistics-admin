@@ -6,9 +6,12 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./material-button.component.css']
 })
 export class MaterialButtonComponent implements OnInit {
+
   @Input() label;
   @Input() color;
   @Input() backgroundColor;
+  @Input() width;
+  @Input() disabled;
 
   constructor() { }
 

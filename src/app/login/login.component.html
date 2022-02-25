@@ -6,17 +6,21 @@
     <div class="formBx">
       <!-- <img src="assets/login/logo.png"> -->
       <h2>Welcome</h2>
-      <form action="">
+      <form (ngSubmit)="onAuthenticate()" [formGroup]="authForm">
         <div class="inputBx">
           <span>Username</span>
-          <input type="text" name="" />
+          <input type="text" name="" formControlName="usernameInput"/>
+          <app-error-message [showErrorText]=true [errorText]=formValidationMap.usernameInput></app-error-message>
         </div>
          <div class="inputBx">
           <span>Password</span>
-          <input type="password" name="" />
+          <input type="password" name="" formControlName="passwordInput"/>
+          <app-error-message [showErrorText]=true [errorText]=formValidationMap.passwordInput></app-error-message>
          </div>
+         <app-material-spinner [diameter]="30" [showLoader]=showLoader></app-material-spinner>
+         <app-error-message [showErrorText]=showErrorText [errorText]="errorText"></app-error-message>
         <div class="inputBx">
-          <input type="submit" value="Sign in" name="" [routerLink]="['/all-shipments']" />
+          <app-material-button [label]="'LOGIN'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="100" [disabled]="!authForm.valid"></app-material-button>
         </div>
       </form>
     </div>

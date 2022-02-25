@@ -17,9 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
-
-
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -28,6 +26,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
   ],
   exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatFormFieldModule,
     MatInputModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatDividerModule, MatButtonModule,
-    MatTableModule, MatPaginatorModule,MatSortModule, MatRadioModule, MatExpansionModule],
+    MatTableModule, MatPaginatorModule,MatSortModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule],
 })
 export class MaterialDesignModule { }
