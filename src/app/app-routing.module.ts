@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { AddShipmentComponent } from './add-shipment/add-shipment.component';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
+import { CustomersComponent } from './customers/customers.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -10,6 +11,7 @@ import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'customers', component: CustomersComponent },
   { path: 'home', component: HomeComponent },
   { path: 'add-shipment', component: AddShipmentComponent },
   { path: 'add-customer', component: AddCustomerComponent },

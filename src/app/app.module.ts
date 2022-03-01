@@ -29,6 +29,9 @@ import { MaterialRadioButtonComponent } from './shared/inputs/material-radio-but
 import { ReportsComponent } from './reports/reports.component';
 import { ErrorMessageComponent } from './shared/error-message/error-message.component';
 import { MaterialSpinnerComponent } from './shared/buttons/material-spinner/material-spinner.component';
+import { CustomersComponent } from './customers/customers.component';
+import { MaterialTableComponent } from './shared/elements/material-table/material-table.component';
+import { SectionTitleComponent } from './shared/elements/section-title/section-title.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,9 @@ import { MaterialSpinnerComponent } from './shared/buttons/material-spinner/mate
     ReportsComponent,
     ErrorMessageComponent,
     MaterialSpinnerComponent,
+    CustomersComponent,
+    MaterialTableComponent,
+    SectionTitleComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +75,9 @@ import { MaterialSpinnerComponent } from './shared/buttons/material-spinner/mate
       return {
         cache: new InMemoryCache(),
         link: httpLink.create({
-          uri: 'http://localhost:4000/graphql'
+          uri: 'http://localhost:4000/api'
+          // uri: 'https://seko-server.herokuapp.com/api'
+
         })
       }
     },

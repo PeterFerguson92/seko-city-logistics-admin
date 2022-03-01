@@ -1,0 +1,9 @@
+.test {
+  display: flex;
+  justify-content: center;
+}
+
+app-material-button {
+  display: flex;
+  justify-content: center;
+}
