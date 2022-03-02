@@ -19,6 +19,7 @@ export class MaterialTableComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
+    console.log(this.data)
     this.dataSource.paginator = this.paginator;
   }
 

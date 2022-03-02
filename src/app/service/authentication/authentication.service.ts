@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import {IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UserResponse
-} from '../../../graphql-schemas/mutations';
+} from './mutations';
 
 @Injectable({
   providedIn: 'root',

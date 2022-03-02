@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../shared/service/authentication/authentication.service';
+import { AuthenticationService } from '../service/authentication/authentication.service';
 import { REDIRECT_SECTION_AFTER_LOGIN } from '../constants';
-import { ValidationService } from '../shared/service/validation/validation.service';
+import { ValidationService } from '../service/validation/validation.service';
 
 @Component({
   selector: 'app-login',
