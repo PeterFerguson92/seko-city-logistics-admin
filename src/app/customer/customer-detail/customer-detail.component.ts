@@ -15,18 +15,19 @@ export class CustomerDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.addEditCustomerForm = this.formBuilder.group({
-      type: ['', [Validators.required]],
-      fullName: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
-      email:['', [Validators.required, Validators.email]] ,
-      address: ['', [Validators.required]],
-      postcode: ['', [Validators.required]],
-      country: ['', [Validators.required]]
+      // type: ['', [Validators.required]],
+      fullName: [],
+      // phone: ['', [Validators.required]],
+      // email:['', [Validators.required, Validators.email]] ,
+      // address: ['', [Validators.required]],
+      // postcode: ['', [Validators.required]],
+      // country: ['', [Validators.required]]
     })
   }
 
   onAddEdit() {
-      console.log(this.addEditCustomerForm.get('fullName').value)
+    console.log(9303)
+    console.log(this.addEditCustomerForm.get('fullName'));
   }
 
 }

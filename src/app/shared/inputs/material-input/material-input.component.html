@@ -1,6 +1,8 @@
 <mat-form-field appearance="outline" [style.width.%]="width">
   <mat-label>{{label}}</mat-label>
-  <input matInput >
+  <input matInput #input  [disabled]="disabled"
+  (input)="onChange($event.target.value)"
+  (blur)="onTouched()">
   <!-- <mat-icon matPrefix>{{icon}}</mat-icon> -->
   <!-- <mat-hint>Hint</mat-hint> -->
 </mat-form-field>
