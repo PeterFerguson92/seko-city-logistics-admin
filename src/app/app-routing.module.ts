@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { AddShipmentComponent } from './add-shipment/add-shipment.component';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
-import { CustomersComponent } from './customers/customers.component';
+import { AddCustomerComponent } from './customer/add-customer/add-customer.component';
+import { CustomersComponent } from './customer/customers/customers.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';

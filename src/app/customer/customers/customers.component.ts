@@ -2,29 +2,31 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CustomersService } from '../service/customers/customers.service';
-import { Customer } from '../service/customers/requests';
+import { Router } from '@angular/router';
+import { CustomersService } from '../service/customers.service';
+import { Customer } from '../service/requests';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css', '../shared/shared.css']
+  styleUrls: ['./customers.component.css', '../../shared/shared.css']
 })
 export class CustomersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['ID', 'NAME', 'ADDRESS', 'POSTCODE','TYPE', 'ACTION'];
+  displayedColumns: string[] = ['ID', 'NAME', 'ADDRESS', 'POSTCODE', 'TYPE', 'ACTION'];
   customers: [Customer] = null;
   dataSource = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private customersService: CustomersService) { }
+
+  ADD_CUSTOMER_URL = '/add-customer';
+
+  constructor(private customersService: CustomersService, private router: Router) { }
 
   ngAfterViewInit(): void {
     this.customersService.getCustomers().subscribe(
       ({ data }) => {
         this.customers = data.customers;
-        console.log(this.customers);
         this.dataSource = new MatTableDataSource(data.customers);
-
       },
       error => {
         console.log(error);
@@ -35,6 +37,11 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
   }
+
+  addCustomer() {
+    this.router.navigateByUrl(this.ADD_CUSTOMER_URL)
+  }
+
   viewCustomer(reference) {
     console.log('view');
     console.log(reference)

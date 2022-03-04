@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-nav.component.css']
 })
 export class SideNavComponent implements OnInit {
-  LOGIN_URL = '/login'
+  LOGIN_URL = '/login';
 
   constructor(private router: Router) { }
 

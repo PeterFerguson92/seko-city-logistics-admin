@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-all-shipments',
   templateUrl: './all-shipments.component.html',
-  styleUrls: ['./all-shipments.component.css']
+  styleUrls: ['./all-shipments.component.css', '../shared/shared.css']
 })
 export class AllShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 

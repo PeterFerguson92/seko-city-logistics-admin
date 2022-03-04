@@ -1,0 +1,22 @@
+<div class="bodys">
+    <div class="booking-form-w3layouts">
+        <h4 class="sub-heading-agileits">Add Customer</h4>
+        <div class="main-flex-w3ls-sectns">
+          <form (ngSubmit)="onAddEdit()" [formGroup]="addEditCustomerForm" >
+            <app-material-select-input [label]="'Personal'"></app-material-select-input><br>
+            <app-material-input [label]="'Full name'" [icon]="'person_pin'" formControlName="fullName"></app-material-input>
+            <div class="divider"></div>
+            <app-material-input [label]="'Phone'" [icon]="'person_pin'"></app-material-input>
+            <div class="divider"></div>
+            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="39"></app-material-input><br>
+            <app-material-input [label]="'Address'" [icon]="'person_pin'" [width]="60"></app-material-input>
+            <div class="divider"></div>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="30"></app-material-input><br>
+            <app-material-input [label]="'Country'" [icon]="'person_pin'" [width]="39"></app-material-input>
+            <div class="divider"></div>
+          </form>
+        </div>
+        <div class="clear"></div>
+        <app-material-button [label]="'Create Customer'" [color]="'primary'" [backgroundColor]="'#069370'" ></app-material-button> <br>
+    </div>
+  </div>

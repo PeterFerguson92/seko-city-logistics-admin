@@ -23,15 +23,16 @@ import { MaterialPlusButtonComponent } from './shared/buttons/material-plus-butt
 import { MaterialButtonComponent } from './shared/buttons/material-button/material-button.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
-import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { AddCustomerComponent } from './customer/add-customer/add-customer.component';
 import { AddShippmentConfirmationComponent } from './add-shippment-confirmation/add-shippment-confirmation.component';
 import { MaterialRadioButtonComponent } from './shared/inputs/material-radio-button/material-radio-button.component';
 import { ReportsComponent } from './reports/reports.component';
 import { ErrorMessageComponent } from './shared/error-message/error-message.component';
 import { MaterialSpinnerComponent } from './shared/buttons/material-spinner/material-spinner.component';
-import { CustomersComponent } from './customers/customers.component';
+import { CustomersComponent } from './customer/customers/customers.component';
 import { MaterialTableComponent } from './shared/elements/material-table/material-table.component';
 import { SectionTitleComponent } from './shared/elements/section-title/section-title.component';
+import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { SectionTitleComponent } from './shared/elements/section-title/section-t
     CustomersComponent,
     MaterialTableComponent,
     SectionTitleComponent,
+    CustomerDetailComponent,
   ],
   imports: [
     BrowserModule,
