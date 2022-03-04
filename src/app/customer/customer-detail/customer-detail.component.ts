@@ -16,7 +16,7 @@ export class CustomerDetailComponent implements OnInit {
   ngOnInit(): void {
     this.addEditCustomerForm = this.formBuilder.group({
       // type: ['', [Validators.required]],
-      fullName: [],
+      fullName: ['', Validators.required],
       // phone: ['', [Validators.required]],
       // email:['', [Validators.required, Validators.email]] ,
       // address: ['', [Validators.required]],
