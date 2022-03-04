@@ -1,8 +1,5 @@
-import { Component, ElementRef, forwardRef, Input, OnInit, Optional, Self, ViewChild } from '@angular/core';
-import {
-  AbstractControl, ControlValueAccessor, NgControl,
-  NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, ValidatorFn, Validators
-} from '@angular/forms';
+import { Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NgControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 
 export interface Validator {
@@ -14,18 +11,6 @@ export interface Validator {
   selector: 'app-material-input',
   templateUrl: './material-input.component.html',
   styleUrls: ['./material-input.component.css'],
-  // providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MaterialInputComponent), multi: true } ]
-
-
-  // providers: [{
-  //   provide: NG_VALUE_ACCESSOR,
-  //   multi: true,
-  //   useExisting: MaterialInputComponent
-  // },{
-  //   provide: NG_VALIDATORS,
-  //   useExisting: MaterialInputComponent,
-  //   multi: true
-  // }]
 })
 export class MaterialInputComponent implements OnInit, ControlValueAccessor, Validator {
   @ViewChild('input', { static: true }) public input: MatInput;
@@ -42,7 +27,7 @@ export class MaterialInputComponent implements OnInit, ControlValueAccessor, Val
   @Input() errorMsg: string;
 
 
-  constructor(@Optional() @Optional() public controlDir: NgControl) {
+  constructor(@Optional() public controlDir: NgControl) {
     if (controlDir) {
       controlDir.valueAccessor = this;
     }

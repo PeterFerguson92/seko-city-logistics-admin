@@ -9,25 +9,29 @@ import { CustomersService } from '../service/customers.service';
 })
 export class CustomerDetailComponent implements OnInit {
 
+  types = ['PERSONAL', 'BUSINESS', 'CHARITY'];
+  countries = ['UNITED KINGDOM', 'GHANA'];
   addEditCustomerForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private customersService: CustomersService,) { }
 
   ngOnInit(): void {
     this.addEditCustomerForm = this.formBuilder.group({
-      // type: ['', [Validators.required]],
+      type: [this.types[0], [Validators.required]],
       fullName: ['', Validators.required],
       // phone: ['', [Validators.required]],
       // email:['', [Validators.required, Validators.email]] ,
       // address: ['', [Validators.required]],
       // postcode: ['', [Validators.required]],
-      // country: ['', [Validators.required]]
+      country: [this.countries[0], [Validators.required]]
     })
   }
 
   onAddEdit() {
-    console.log(9303)
-    console.log(this.addEditCustomerForm.get('fullName'));
+    console.log(this.addEditCustomerForm);
   }
 
+  onSelectionChange(event, controlName) {
+    this.addEditCustomerForm.get(controlName).setValue(event.value);
+  }
 }

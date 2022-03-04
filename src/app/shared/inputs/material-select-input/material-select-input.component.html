@@ -1,6 +1,8 @@
 <mat-form-field appearance="outline">
   <mat-label>{{label}}</mat-label>
-  <mat-select [(ngModel)]="injectedNgModel">
+  <mat-select #select [(ngModel)]="value"  [disabled]="disabled"
+  (selectionChange)="onSelectionChange($event)"
+  (blur)="onTouched()">
     <mat-option *ngFor="let option of options" [value]="option">
       {{option}}
     </mat-option>
