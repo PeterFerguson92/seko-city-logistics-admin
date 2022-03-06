@@ -1,6 +1,8 @@
-import { Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NgControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Component, HostBinding, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import {AbstractControl, ControlValueAccessor,NgControl, ValidationErrors, } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ALERT_INPUT_COLOR, DEFAULT_INPUT_COLOR } from 'src/app/constants';
 
 export interface Validator {
   validate(c: AbstractControl): ValidationErrors | null;
@@ -12,22 +14,24 @@ export interface Validator {
   templateUrl: './material-input.component.html',
   styleUrls: ['./material-input.component.css'],
 })
-export class MaterialInputComponent implements OnInit, ControlValueAccessor, Validator {
+export class MaterialInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild('input', { static: true }) public input: MatInput;
-  disabled;
 
   @Input() label;
   @Input() icon;
   @Input() width;
-
-  @Input() type = 'text';
-  @Input() isRequired = false;
-  @Input() pattern: string = null;
-  @Input() placeholder: string;
   @Input() errorMsg: string;
+  @Input() type;
 
+  inputColor;
+  disabled;
 
-  constructor(@Optional() public controlDir: NgControl) {
+  @HostBinding('attr.style')
+  public get valueAsStyle(): any {
+    return this.sanitizer.bypassSecurityTrustStyle(`--input-color: ${this.inputColor}`);
+  }
+  constructor(@Optional() public controlDir: NgControl, private sanitizer: DomSanitizer) {
+    this.inputColor = DEFAULT_INPUT_COLOR
     if (controlDir) {
       controlDir.valueAccessor = this;
     }
@@ -37,24 +41,14 @@ export class MaterialInputComponent implements OnInit, ControlValueAccessor, Val
     if (this.controlDir)
     {
       const control = this.controlDir.control;
-      const validators: ValidatorFn[] = control.validator ? [control.validator] : [];
-      if (this.isRequired)
-      {
-        validators.push(Validators.required);
-      }
-      if (this.pattern)
-      {
-        validators.push(Validators.pattern(this.pattern));
-      }
-
-      control.setValidators(validators);
       control.updateValueAndValidity();
     }
   }
 
   writeValue(obj: any): void {
-   this.input.value = obj;
+    this.input.value = obj;
   }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -66,19 +60,12 @@ export class MaterialInputComponent implements OnInit, ControlValueAccessor, Val
   }
   onChange(event) { }
 
-  onTouched() { }
+  onTouched() {}
 
-  validate(c: AbstractControl): ValidationErrors {
-    const validators: ValidatorFn[] = [];
-    if (this.isRequired) {
-      validators.push(Validators.required);
-    }
-    if (this.pattern) {
-      validators.push(Validators.pattern(this.pattern));
-    }
 
-    return validators;
+  getDisplayLabel() {
+   this.inputColor = this.controlDir.control.dirty && this.controlDir.invalid ? ALERT_INPUT_COLOR : DEFAULT_INPUT_COLOR
+  return  this.label;
   }
-
 
 }

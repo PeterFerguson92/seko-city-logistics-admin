@@ -1,0 +1,28 @@
+
+mat-form-field {
+  margin-bottom: 2%;
+}
+
+mat-hint {
+  color: red;
+}
+
+/* default and hover color */
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--input-color);
+}
+
+/* focused color */
+:host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: var(--input-color);
+}
+
+/* floating label color */
+:host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+  color:var(--input-color);
+}
+
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  color:var(--input-color);
+ }

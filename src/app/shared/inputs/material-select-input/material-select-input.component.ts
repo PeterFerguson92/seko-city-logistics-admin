@@ -96,4 +96,12 @@ export class MaterialSelectInputComponent implements OnInit, ControlValueAccesso
     return validators;
   }
 
+  getErrorMessage() {
+    if (this.controlDir.control.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    return this.controlDir.hasError('email') ? 'Not a valid email' : '';
+  }
+
 }

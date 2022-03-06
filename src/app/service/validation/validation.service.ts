@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { POSTCODE_REGEX } from 'src/app/constants';
 
 export const specialCharactersValidator = (control: FormControl): { [key: string]: boolean } | null => {
   const nameRegexp = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
   if (control.value && !nameRegexp.test(control.value))
   {
     return { specialCharacters: true };
+  }
+  return null;
+};
+
+export const postCodeValidator = (control: FormControl): { [key: string]: boolean } | null => {
+  const nameRegexp = POSTCODE_REGEX
+  if (control.value && !nameRegexp.test(control.value))
+  {
+    return { postcode: true };
   }
   return null;
 };
@@ -48,9 +58,18 @@ export class ValidationService {
     required: 'Please enter your username.',
   };
 
+  private requiredValidationMessages = {
+    required: 'Please enter a value.',
+  };
+
   private emailValidationMessages = {
-    required: 'Please enter your email address.',
+    required: 'Please enter email address.',
     email: 'Please enter a valid email address.'
+  };
+
+  private postcodeValidationMessages = {
+    required: 'Please enter postcode.',
+    postcode: 'Please enter a valid postcode.'
   };
 
   private passwordValidationMessages = {
@@ -65,7 +84,12 @@ export class ValidationService {
   private formMap = {
     usernameInput: this.usernameValidationMessages,
     emailInput: this.emailValidationMessages,
-    passwordInput: this.passwordValidationMessages
+    passwordInput: this.passwordValidationMessages,
+    fullName: this.requiredValidationMessages,
+    phone: this.requiredValidationMessages,
+    email: this.emailValidationMessages,
+    address: this.requiredValidationMessages,
+    postcode: this.postcodeValidationMessages
   };
 
   constructor() { }
