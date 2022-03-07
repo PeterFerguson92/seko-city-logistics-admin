@@ -102,8 +102,6 @@ export class ValidationService {
     const validationMessages = this.formMap[fControlName];
     if ((fControl.touched || fControl.dirty) && fControl.errors)
     {
-      console.log(Object.keys(fControl.errors).map(
-        key => validationMessages[key]));
       return Object.keys(fControl.errors).map(
         key => validationMessages[key])[0];
     }

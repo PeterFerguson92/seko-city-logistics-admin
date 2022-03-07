@@ -8,17 +8,17 @@
               <div class="divider"></div>
             <app-material-input [label]="'Full name'" [icon]="'person_pin'" formControlName="fullName" [errorMsg]="formValidationMap.fullName"></app-material-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Phone'" [type]="'number'" [icon]="'person_pin'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
+            <app-material-input [label]="'Phone'" [type]="'phone'" [icon]="'person_pin'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="39" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
-            <app-material-input [label]="'Address'" [icon]="'person_pin'" [width]="60" formControlName="address" [errorMsg]="formValidationMap.address" ></app-material-input>
+            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="30" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="15" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="15" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input><br>
+            <app-material-select-input [label]="'address'" [width]="70" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
+            <div class="divider"></div>
             <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input><br>
             <div class="divider"></div>
             <div class="clear"></div>
-            <app-material-button [label]="'Create Customer'" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="!addEditCustomerForm.valid"></app-material-button> <br>
+            <app-material-button [label]="'Create Customer'" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="!addEditCustomerForm.valid" ></app-material-button> <br>
           </form>
         </div>
-    </div>
-  </div>
+      </div>

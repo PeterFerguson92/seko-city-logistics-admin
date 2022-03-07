@@ -38,26 +38,4 @@ export const DELETE_CUSTOMER = gql`
   }
 `;
 
-export interface CustomersResponse {
-  customers: [Customer];
-}
 
-export interface Customer {
-  id: number;
-  uuid: string;
-  fullName: string;
-  address: string;
-  postcode: string;
-  phone: string;
-  email: string;
-  country: string;
-  type: string;
-  destination: string;
-  // createdAt: Date;
-  // updateAt: Date;
-}
-
-export interface UpdateFieldInput {
-  name: string;
-  value: string;
-}

@@ -3,8 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
-import { Customer } from '../service/requests';
 
 @Component({
   selector: 'app-customers',
@@ -13,7 +13,7 @@ import { Customer } from '../service/requests';
 })
 export class CustomersComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['ID', 'NAME', 'ADDRESS', 'POSTCODE', 'TYPE', 'ACTION'];
-  customers: [Customer] = null;
+  customers: [ICustomer] = null;
   dataSource = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

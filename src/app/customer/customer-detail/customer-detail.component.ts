@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from 'src/app/service/common.service';
 import { ValidationService, postCodeValidator } from 'src/app/service/validation/validation.service';
+import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
 
 @Component({
@@ -21,11 +23,13 @@ export class CustomerDetailComponent implements OnInit {
 
   types = ['PERSONAL', 'BUSINESS', 'CHARITY'];
   countries = ['UNITED KINGDOM', 'GHANA'];
+  addresses = [];
   addEditCustomerForm: FormGroup;
 
 
   constructor(private formBuilder: FormBuilder,
     private customersService: CustomersService,
+    private commonService: CommonService,
     private validationService: ValidationService) { }
 
   ngOnInit(): void {
@@ -33,7 +37,7 @@ export class CustomerDetailComponent implements OnInit {
       type: [this.types[0], [Validators.required]],
       fullName: ['', Validators.required],
       phone: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.email]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, postCodeValidator]],
       country: [this.countries[0], [Validators.required]]
@@ -47,7 +51,14 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   onAddEdit() {
-    console.log(this.addEditCustomerForm.get('email'));
+    this.customersService.createCustomer(this.getCustomerAttributes()).subscribe(
+      ({ data }) => {
+        console.log(data)
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   onSelectionChange(event, controlName) {
@@ -58,5 +69,32 @@ export class CustomerDetailComponent implements OnInit {
     const fControl = this.addEditCustomerForm.get(fControlName);
     this.validationService.watchAndValidateFormControl(fControl)
       .subscribe(value => this.formValidationMap[fControlName] = this.validationService.setMessage(fControl, fControlName));
+  }
+
+  getAddressByPostcode() {
+    const postcodeFormControl = this.getFormAttribute('postcode');
+    if (!postcodeFormControl.invalid)
+    {
+      this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
+      return this.addresses;
+    }
+  }
+
+  getCustomerAttributes(): ICustomer {
+   return  {
+      uuid: '',
+      fullName: this.getFormAttribute('fullName').value,
+      address: this.getFormAttribute('address').value,
+      postcode: this.getFormAttribute('postcode').value,
+      phone: this.getFormAttribute('phone').value,
+      email: this.getFormAttribute('email').value,
+      country: this.getFormAttribute('country').value,
+      type: this.getFormAttribute('type').value,
+      destination: ''
+    };
+  }
+
+  getFormAttribute(fControlName: string) {
+    return this.addEditCustomerForm.get(fControlName);
   }
 }

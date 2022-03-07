@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { CREATE_CUSTOMER, Customer, CustomersResponse, DELETE_CUSTOMER, GET_ALL_CUSTOMERS, GET_CUSTOMER_BY_REFERENCE } from './requests';
+import { ICustomersResponse, ICustomer } from '../domain';
+import { CREATE_CUSTOMER, DELETE_CUSTOMER, GET_ALL_CUSTOMERS, GET_CUSTOMER_BY_REFERENCE } from './requests';
 
 const LIMIT = 100
 const CURSOR = null;
@@ -13,7 +14,7 @@ export class CustomersService {
   constructor(private apollo: Apollo) { }
 
   getCustomers() {
-    return this.apollo.query<CustomersResponse>({
+    return this.apollo.query<ICustomersResponse>({
       query: GET_ALL_CUSTOMERS,
       variables: {
         limit: LIMIT, cursor: CURSOR,
@@ -21,16 +22,15 @@ export class CustomersService {
     });
   }
 
-  createCustomer(fullName: string, address: string, postcode: string, phone: string, email: string, country: string,
-                 type: string, destination: string, uuid: string) {
-    return this.apollo.mutate<Customer>({
+  createCustomer(customer: ICustomer) {
+    return this.apollo.mutate<ICustomer>({
       mutation: CREATE_CUSTOMER,
-      variables: { input: {fullName, address, postcode, phone, email, country, type, destination, uuid}}
+      variables: { input: customer }
     });
   }
 
   getCustomerByReference(reference: string) {
-    return this.apollo.query<Customer>({
+    return this.apollo.query<ICustomer>({
       query: GET_CUSTOMER_BY_REFERENCE,
       variables: {reference}
     });
