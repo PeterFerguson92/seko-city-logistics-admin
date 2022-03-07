@@ -1,8 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
 
@@ -21,10 +23,10 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   ADD_CUSTOMER_URL = '/add-customer';
 
   constructor(private customersService: CustomersService,
-    private router: Router) { }
+    private router: Router,
+  private dialog: MatDialog) { }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
   }
 
   ngOnInit(): void {
@@ -49,6 +51,23 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   deleteCustomer(reference) {
     console.log('delete');
     console.log(reference)
+
+    const dialogRef = this.dialog.open(DialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'true')
+      {
+        this.customersService.deleteCustomer(reference).subscribe(
+          ({ data }) => {
+            console.log(data)
+            location.reload()
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    })
   }
 
   updateCustomer(customer) {
@@ -62,7 +81,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
         this.customers = data.customers;
         this.dataSource = new MatTableDataSource(data.customers);
         this.dataSource.paginator = this.paginator;
-
+        this.dataSource.sort = this.sort;
       },
       error => {
         console.log(error);

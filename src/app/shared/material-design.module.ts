@@ -18,17 +18,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    MatSortModule
-  ],
+  imports: [CommonModule,],
   exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatFormFieldModule,
     MatInputModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatDividerModule, MatButtonModule,
-    MatTableModule, MatPaginatorModule,MatSortModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule, MatTooltipModule],
+    MatTableModule, MatPaginatorModule, MatSortModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule,
+    MatTooltipModule, MatDialogModule],
 })
 export class MaterialDesignModule { }

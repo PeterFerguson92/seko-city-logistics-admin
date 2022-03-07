@@ -33,7 +33,7 @@ export const UPDATE_CUSTOMER = gql`
 `;
 
 export const DELETE_CUSTOMER = gql`
-  mutation deleteCustomer($reference: String) {
+  mutation deleteCustomer($reference: String!) {
     deleteCustomer(reference: $reference)
   }
 `;

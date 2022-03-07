@@ -33,6 +33,7 @@ import { CustomersComponent } from './customer/customers/customers.component';
 import { MaterialTableComponent } from './shared/elements/material-table/material-table.component';
 import { SectionTitleComponent } from './shared/elements/section-title/section-title.component';
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
+import { DialogComponent } from './shared/elements/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,9 @@ import { CustomerDetailComponent } from './customer/customer-detail/customer-det
     MaterialTableComponent,
     SectionTitleComponent,
     CustomerDetailComponent,
+    DialogComponent,
   ],
+  entryComponents: [DialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
