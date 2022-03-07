@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService, postCodeValidator } from 'src/app/service/validation/validation.service';
@@ -51,9 +51,10 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   onAddEdit() {
+    const createCustomerData = 'createCustomer'
     this.customersService.createCustomer(this.getCustomerAttributes()).subscribe(
       ({ data }) => {
-        console.log(data)
+        location.reload();  // To handle properly
       },
       error => {
         console.log(error);

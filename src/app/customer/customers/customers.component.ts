@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,21 +20,15 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 
   ADD_CUSTOMER_URL = '/add-customer';
 
-  constructor(private customersService: CustomersService, private router: Router) { }
+  constructor(private customersService: CustomersService,
+    private router: Router) { }
 
   ngAfterViewInit(): void {
-    this.customersService.getCustomers().subscribe(
-      ({ data }) => {
-        this.customers = data.customers;
-        this.dataSource = new MatTableDataSource(data.customers);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit(): void {
+    this.getCustomers();
 
   }
 
@@ -54,8 +48,30 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 
   deleteCustomer(reference) {
     console.log('delete');
-
     console.log(reference)
+  }
+
+  updateCustomer(customer) {
+    this.dataSource.data = this.dataSource.data.unshift(customer);
+    this.dataSource = new MatTableDataSource(this.dataSource.data);
+
+  }
+  getCustomers() {
+    this.customersService.getCustomers().subscribe(
+      ({ data }) => {
+        this.customers = data.customers;
+        this.dataSource = new MatTableDataSource(data.customers);
+        this.dataSource.paginator = this.paginator;
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
 }

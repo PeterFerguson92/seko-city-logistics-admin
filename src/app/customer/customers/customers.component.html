@@ -1,11 +1,11 @@
 <div class="test">
   <app-section-title [title]="'Customers'"></app-section-title>
 </div>
-<!-- <app-material-button [label]="'ADD CUSTOMER'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="20" (click)="addCustomer()"></app-material-button><br> -->
-<!-- <mat-form-field appearance="standard">
-  <mat-label>Filter</mat-label>
-  <input matInput placeholder="Search columns" #input>
-</mat-form-field> -->
+<div fxLayout fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <!-- Position Column -->
   <ng-container matColumnDef={{displayedColumns[0]}}>
