@@ -1,9 +1,8 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
@@ -14,17 +13,16 @@ import { CustomersService } from '../service/customers.service';
   styleUrls: ['./customers.component.css', '../../shared/shared.css']
 })
 export class CustomersComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['ID', 'NAME', 'ADDRESS', 'POSTCODE', 'TYPE', 'ACTION'];
   customers: [ICustomer] = null;
   dataSource = null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  selectedCustomer = null;
 
-  ADD_CUSTOMER_URL = '/add-customer';
-
-  constructor(private customersService: CustomersService,
-    private router: Router,
-  private dialog: MatDialog) { }
+  constructor(
+    private customersService: CustomersService,
+    private dialog: MatDialog) { }
 
   ngAfterViewInit(): void {
   }
@@ -34,26 +32,18 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 
   }
 
-  addCustomer() {
-    this.router.navigateByUrl(this.ADD_CUSTOMER_URL)
-  }
-
   viewCustomer(reference) {
     console.log('view');
     console.log(reference)
   }
 
-  editCustomer(reference) {
+  editCustomer(customer) {
     console.log('edit');
-    console.log(reference);
+    this.selectedCustomer = customer;
   }
 
   deleteCustomer(reference) {
-    console.log('delete');
-    console.log(reference)
-
     const dialogRef = this.dialog.open(DialogComponent);
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'true')
       {

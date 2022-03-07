@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService, postCodeValidator } from 'src/app/service/validation/validation.service';
@@ -10,8 +10,9 @@ import { CustomersService } from '../service/customers.service';
   templateUrl: './customer-detail.component.html',
   styleUrls: ['./customer-detail.component.css', '../../shared/shared.css']
 })
-export class CustomerDetailComponent implements OnInit {
-
+export class CustomerDetailComponent implements OnInit, OnChanges {
+  @Input() customer;
+  testv = 'Add Customer';
   formValidationMap = {
     fullName: '',
     phone: '',
@@ -31,6 +32,18 @@ export class CustomerDetailComponent implements OnInit {
     private customersService: CustomersService,
     private commonService: CommonService,
     private validationService: ValidationService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes.customer.currentValue); // here you will get the data from parent once the input param is change
+    if (changes.customer.currentValue && this.addEditCustomerForm)
+    this.testv = 'edit Cus'
+    {
+      // console.log(this.addEditCustomerForm)
+      // this.addEditCustomerForm.patchValue({
+      //   fullName: 'ccjsss'
+      // });
+    }
+  }
 
   ngOnInit(): void {
     this.addEditCustomerForm = this.formBuilder.group({

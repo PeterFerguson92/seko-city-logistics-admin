@@ -43,7 +43,7 @@
         <mat-icon (click)="viewCustomer(element.uuid)">book</mat-icon>
       </button>
       <button mat-icon-button color="primary" matTooltip="Edit customer" matTooltipPosition="above">
-        <mat-icon (click)="editCustomer(element.uuid)">edit</mat-icon>
+        <mat-icon (click)="editCustomer(element)">edit</mat-icon>
       </button>
       <button mat-icon-button color="warn" matTooltip="Delete customer" matTooltipPosition="right">
         <mat-icon (click)="deleteCustomer(element.uuid)">delete</mat-icon>
@@ -55,7 +55,7 @@
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
 
-<app-customer-detail></app-customer-detail>
+<app-customer-detail [customer]="selectedCustomer"></app-customer-detail>
 
 
 <!-- https://www.angularjswiki.com/material/mat-table-filter/ -->
