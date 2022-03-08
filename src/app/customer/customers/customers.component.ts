@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ADD_CUSTOMER_MODE, EDIT_CUSTOMER_MODE } from 'src/app/constants';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { AddEditCustomerDialogComponent } from '../add-edit-customer-dialog/add-edit-customer-dialog.component';
 import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
 
@@ -38,8 +40,28 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   }
 
   editCustomer(customer) {
-    console.log('edit');
     this.selectedCustomer = customer;
+    const dialogRef = this.dialog.open(AddEditCustomerDialogComponent, {
+      data: { customer, mode: EDIT_CUSTOMER_MODE }
+    });
+  }
+
+  addCustomer() {
+    const emptyCustomer: ICustomer = {
+      uuid: '',
+      fullName: '',
+      address: '',
+      postcode: '',
+      phone: '',
+      email: '',
+      country: '',
+      type: '',
+      destination: ''
+    };
+
+    const dialogRef = this.dialog.open(AddEditCustomerDialogComponent, {
+      data: { customer: emptyCustomer, mode: ADD_CUSTOMER_MODE }
+    });
   }
 
   deleteCustomer(reference) {

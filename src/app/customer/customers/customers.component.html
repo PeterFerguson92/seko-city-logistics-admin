@@ -6,6 +6,7 @@
     <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
+<app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#069370'" (click)="addCustomer()"></app-material-button> <br>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <!-- Position Column -->
   <ng-container matColumnDef={{displayedColumns[0]}}>
@@ -55,7 +56,7 @@
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
 
-<app-customer-detail [customer]="selectedCustomer"></app-customer-detail>
+<!-- <app-customer-detail [customer]="selectedCustomer"></app-customer-detail> -->
 
 
 <!-- https://www.angularjswiki.com/material/mat-table-filter/ -->

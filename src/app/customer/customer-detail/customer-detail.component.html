@@ -1,6 +1,6 @@
 <div class="bodys">
     <div class="booking-form-w3layouts">
-        <h4 class="sub-heading-agileits">{{testv}}</h4>
+        <h4 class="sub-heading-agileits">{{titlePrefix}} Customer</h4>
         <div class="main-flex-w3ls-sectns">
           <form (ngSubmit)="onAddEdit()" [formGroup]="addEditCustomerForm" >
             <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
@@ -10,7 +10,7 @@
             <div class="divider"></div>
             <app-material-input [label]="'Phone'" [type]="'phone'" [icon]="'person_pin'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="30" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
+            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="30" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input><br>
             <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="15" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
             <div class="divider"></div>
             <app-material-select-input [label]="'address'" [width]="70" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
@@ -18,7 +18,11 @@
             <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input><br>
             <div class="divider"></div>
             <div class="clear"></div>
-            <app-material-button [label]="'Create Customer'" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="!addEditCustomerForm.valid" ></app-material-button> <br>
+            <div align="end">
+              <app-material-button [label]="'Cancel'" [color]=""  ></app-material-button>
+              <div class="divider"></div>
+              <app-material-button [label]="buttonLabel" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isDisabled()" ></app-material-button> <br>
+            </div>
           </form>
         </div>
       </div>

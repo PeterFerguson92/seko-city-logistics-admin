@@ -22,6 +22,7 @@ export class MaterialInputComponent implements OnInit, ControlValueAccessor {
   @Input() width;
   @Input() errorMsg: string;
   @Input() type;
+  value;
 
   inputColor;
   disabled;
@@ -46,6 +47,7 @@ export class MaterialInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
+    this.value = obj
     this.input.value = obj;
   }
 

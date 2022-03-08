@@ -34,6 +34,7 @@ import { MaterialTableComponent } from './shared/elements/material-table/materia
 import { SectionTitleComponent } from './shared/elements/section-title/section-title.component';
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { DialogComponent } from './shared/elements/dialog/dialog.component';
+import { AddEditCustomerDialogComponent } from './customer/add-edit-customer-dialog/add-edit-customer-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,8 +63,9 @@ import { DialogComponent } from './shared/elements/dialog/dialog.component';
     SectionTitleComponent,
     CustomerDetailComponent,
     DialogComponent,
+    AddEditCustomerDialogComponent,
   ],
-  entryComponents: [DialogComponent],
+  entryComponents: [],
   imports: [
     BrowserModule,
     AppRoutingModule,

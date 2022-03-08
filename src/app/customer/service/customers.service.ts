@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ICustomersResponse, ICustomer } from '../domain';
-import { CREATE_CUSTOMER, DELETE_CUSTOMER, GET_ALL_CUSTOMERS, GET_CUSTOMER_BY_REFERENCE } from './requests';
+import { CREATE_CUSTOMER, DELETE_CUSTOMER, GET_ALL_CUSTOMERS, GET_CUSTOMER_BY_REFERENCE, UPDATE_CUSTOMER } from './requests';
 
 const LIMIT = 100
 const CURSOR = null;
@@ -26,6 +26,13 @@ export class CustomersService {
     return this.apollo.mutate<ICustomer>({
       mutation: CREATE_CUSTOMER,
       variables: { input: customer }
+    });
+  }
+
+  updateCustomer(reference: string, fields: any) {
+    return this.apollo.mutate<ICustomer>({
+      mutation: UPDATE_CUSTOMER,
+      variables: { reference, fields }
     });
   }
 
