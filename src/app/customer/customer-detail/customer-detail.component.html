@@ -2,7 +2,7 @@
     <div class="booking-form-w3layouts">
         <h4 class="sub-heading-agileits">{{titlePrefix}} Customer</h4>
         <div class="main-flex-w3ls-sectns">
-          <form (ngSubmit)="onAddEdit()" [formGroup]="addEditCustomerForm" >
+          <form [formGroup]="addEditCustomerForm" >
             <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
               (selectionChange)="onSelectionChange($event, 'type')" [value]="'PERSONAL'"></app-material-select-input>
               <div class="divider"></div>
@@ -10,18 +10,16 @@
             <div class="divider"></div>
             <app-material-input [label]="'Phone'" [type]="'phone'" [icon]="'person_pin'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="30" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input><br>
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="15" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="60" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input><br>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
             <div class="divider"></div>
-            <app-material-select-input [label]="'address'" [width]="70" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
-            <div class="divider"></div>
+            <app-material-select-input [label]="'address'" [width]="80" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
             <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input><br>
             <div class="divider"></div>
-            <div class="clear"></div>
             <div align="end">
-              <app-material-button [label]="'Cancel'" [color]=""  ></app-material-button>
+              <app-material-button [label]="'Cancel'" [color]="" (click)="onCancel()"></app-material-button>
               <div class="divider"></div>
-              <app-material-button [label]="buttonLabel" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isDisabled()" ></app-material-button> <br>
+              <app-material-button [label]="buttonLabel" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button> <br>
             </div>
           </form>
         </div>

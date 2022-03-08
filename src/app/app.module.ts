@@ -82,8 +82,8 @@ import { AddEditCustomerDialogComponent } from './customer/add-edit-customer-dia
       return {
         cache: new InMemoryCache(),
         link: httpLink.create({
-          uri: 'http://localhost:4000/api'
-          // uri: 'https://seko-server.herokuapp.com/api'
+          // uri: 'http://localhost:4000/api'
+          uri: 'https://seko-server.herokuapp.com/api'
 
         })
       }

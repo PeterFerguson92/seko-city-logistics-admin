@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ADD_CUSTOMER_MODE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
@@ -14,6 +14,7 @@ import { CustomersService } from '../service/customers.service';
 export class CustomerDetailComponent implements OnInit, AfterViewInit {
   @Input() customer: ICustomer;
   @Input() mode;
+  @Output() someEvent = new EventEmitter<string>();
 
   titlePrefix = 'Add';
   buttonLabel;
@@ -118,7 +119,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-
+  onCancel() {
+    this.someEvent.next('somePhone');
+  }
   onSelectionChange(event, controlName) {
     this.addEditCustomerForm.get(controlName).setValue(event.value);
     this.addEditCustomerForm.get(controlName).markAsDirty();

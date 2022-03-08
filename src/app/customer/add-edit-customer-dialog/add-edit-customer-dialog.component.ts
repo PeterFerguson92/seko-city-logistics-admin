@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { ICustomer } from '../domain';
 
 @Component({
@@ -11,10 +12,18 @@ export class AddEditCustomerDialogComponent implements OnInit {
 
   customer: ICustomer = null;
   mode = null;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialogRef: MatDialogRef<DialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.customer = this.data.customer;
     this.mode = this.data.mode;
+  }
+
+  deletePhone(event) {
+    this.onNoClick()
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
