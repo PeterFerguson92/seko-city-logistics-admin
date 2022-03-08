@@ -61,13 +61,13 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
     if (this.customer)
     {
       this.addEditCustomerForm.patchValue({
-        type: this.customer.type,
+        type: this.customer.type === '' ? this.types[0] : this.customer.type,
         fullName: this.customer.fullName,
         phone: this.customer.phone,
         email: this.customer.email,
         address: this.customer.address,
         postcode: this.customer.postcode,
-        country: this.customer.country
+        country: this.customer.type === '' ? this.countries[0] : this.customer.type
       });
     }
 
