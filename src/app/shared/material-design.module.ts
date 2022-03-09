@@ -24,7 +24,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule,],
+  imports: [CommonModule],
   exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatFormFieldModule,
     MatInputModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatDividerModule, MatButtonModule,
     MatTableModule, MatPaginatorModule, MatSortModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule,

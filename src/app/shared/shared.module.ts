@@ -2,11 +2,55 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MaterialDesignModule } from './material-design.module';
+import { MaterialButtonComponent } from './buttons/material-button/material-button.component';
+import { MaterialPlusButtonComponent } from './buttons/material-plus-button/material-plus-button.component';
+import { MaterialDatePickerInputComponent } from './inputs/material-date-picker-input/material-date-picker-input.component';
+import { MaterialInputComponent } from './inputs/material-input/material-input.component';
+import { MaterialNumericInputComponent } from './inputs/material-numeric-input/material-numeric-input.component';
+import { MaterialSelectInputComponent } from './inputs/material-select-input/material-select-input.component';
+import { MaterialTextAreaInputComponent } from './inputs/material-text-area-input/material-text-area-input.component';
+import { ReportsComponent } from '../reports/reports.component';
+import { MaterialSpinnerComponent } from './buttons/material-spinner/material-spinner.component';
+import { MaterialTableComponent } from './elements/material-table/material-table.component';
+import { SectionTitleComponent } from './elements/section-title/section-title.component';
+import { ErrorMessageComponent } from './error-message/error-message.component';
+import { MaterialRadioButtonComponent } from './inputs/material-radio-button/material-radio-button.component';
+import { DialogComponent } from './elements/dialog/dialog.component';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
-  exports: [ReactiveFormsModule, FormsModule],
+  declarations: [MaterialButtonComponent,
+    MaterialPlusButtonComponent,
+    MaterialDatePickerInputComponent,
+    MaterialInputComponent,
+    MaterialNumericInputComponent,
+    MaterialSelectInputComponent,
+    MaterialRadioButtonComponent,
+    MaterialTextAreaInputComponent,
+    ReportsComponent,
+    ErrorMessageComponent,
+    MaterialSpinnerComponent,
+    MaterialTableComponent,
+    SectionTitleComponent,
+    DialogComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule ],
+  exports: [
+    ReactiveFormsModule,
+    FormsModule,
+    MaterialDesignModule,
+    MaterialButtonComponent,
+    MaterialPlusButtonComponent,
+    MaterialDatePickerInputComponent,
+    MaterialInputComponent,
+    MaterialNumericInputComponent,
+    MaterialSelectInputComponent,
+    MaterialRadioButtonComponent,
+    MaterialTextAreaInputComponent,
+    ReportsComponent,
+    ErrorMessageComponent,
+    MaterialSpinnerComponent,
+    MaterialTableComponent,
+    SectionTitleComponent],
   providers: [],
 })
 export class SharedModule {}
