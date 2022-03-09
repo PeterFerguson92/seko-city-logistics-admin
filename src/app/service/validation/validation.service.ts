@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { POSTCODE_REGEX } from 'src/app/constants';
+import { isValidNumber, isValidPhoneNumber } from 'libphonenumber-js'
 
 export const specialCharactersValidator = (control: FormControl): { [key: string]: boolean } | null => {
   const nameRegexp = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
@@ -48,6 +49,13 @@ export const digitsCharactersValidator = (control: FormControl): { [key: string]
   return null;
 };
 
+export const phoneValidator = (control: FormControl): { [key: string]: boolean } | null => {
+  if (!isValidPhoneNumber(control.value))
+  {
+    return { telephone: true };
+  }
+  return null;
+};
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +80,11 @@ export class ValidationService {
     postcode: 'Please enter a valid postcode.'
   };
 
+  private phoneValidationMessages = {
+    required: 'Please enter phone number.',
+    telephone: 'Please enter a valid phone number.'
+  };
+
   private passwordValidationMessages = {
     required: 'Please enter your password.',
     minlength: 'The password must be of minimum length 8 characters.',
@@ -86,7 +99,7 @@ export class ValidationService {
     emailInput: this.emailValidationMessages,
     passwordInput: this.passwordValidationMessages,
     fullName: this.requiredValidationMessages,
-    phone: this.requiredValidationMessages,
+    phone: this.phoneValidationMessages,
     email: this.emailValidationMessages,
     address: this.requiredValidationMessages,
     postcode: this.postcodeValidationMessages

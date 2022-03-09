@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../service/authentication/authentication.service';
@@ -10,7 +10,7 @@ import { ValidationService } from '../service/validation/validation.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   authForm: FormGroup;
   showErrorText: boolean;
@@ -25,7 +25,11 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private validationService: ValidationService) {}
+    private validationService: ValidationService) { }
+
+  ngAfterViewInit(): void {
+    // window.location.reload();
+  }
 
   ngOnInit(): void {
     this.showLoader = false;

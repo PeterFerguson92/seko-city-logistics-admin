@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 
@@ -16,20 +16,18 @@ export class AppComponent implements AfterViewInit {
   constructor(route: Router) {
 
     route.events.subscribe(event => {
-      this.sidenav.close();
       if (event instanceof RoutesRecognized) {
-        this.isVisible = event.url !== this.LOGIN_URL;
+        this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
       }
       else if (event instanceof NavigationEnd)
       {
-        this.isVisible = event.url !== this.LOGIN_URL;
+        this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
         if (this.isVisible)
         {
           this.sidenav.toggle();
         }
       }
     });
-
   }
 
   closeDropdown() {

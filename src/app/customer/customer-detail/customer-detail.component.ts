@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ADD_CUSTOMER_MODE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
-import { ValidationService, postCodeValidator } from 'src/app/service/validation/validation.service';
+import { ValidationService, postCodeValidator, phoneValidator } from 'src/app/service/validation/validation.service';
 import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
 
@@ -52,7 +52,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
     this.addEditCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
       fullName: ['', Validators.required],
-      phone: ['', [Validators.required]],
+      phone: ['', [Validators.required, phoneValidator]],
       email: ['', [Validators.email]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, postCodeValidator]],
