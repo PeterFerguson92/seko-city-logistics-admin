@@ -6,7 +6,9 @@
     <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
-<app-material-button [label]="'Add Customer'" [color]="'primary'" [backgroundColor]="'#069370'" (click)="addCustomer()"></app-material-button> <br>
+<a mat-fab (click)="addCustomer()" class="fab-main">
+  <mat-icon class="mat-18">add</mat-icon>
+</a>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <!-- Position Column -->
   <ng-container matColumnDef={{displayedColumns[0]}}>
