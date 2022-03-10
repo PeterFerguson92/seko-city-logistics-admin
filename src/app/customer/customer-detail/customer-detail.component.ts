@@ -67,7 +67,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
         email: this.customer.email,
         address: this.customer.address,
         postcode: this.customer.postcode,
-        country: this.customer.type === '' ? this.countries[0] : this.customer.type
+        country: this.customer.country === '' ? this.countries[0] : this.customer.country
       });
     }
 
