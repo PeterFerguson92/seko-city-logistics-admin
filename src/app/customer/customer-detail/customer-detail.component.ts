@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ADD_CUSTOMER_MODE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService, postCodeValidator, phoneValidator } from 'src/app/service/validation/validation.service';
@@ -11,7 +12,7 @@ import { CustomersService } from '../service/customers.service';
   templateUrl: './customer-detail.component.html',
   styleUrls: ['./customer-detail.component.css', '../../shared/shared.css']
 })
-export class CustomerDetailComponent implements OnInit, AfterViewInit {
+export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() customer: ICustomer;
   @Input() mode;
   @Output() someEvent = new EventEmitter<string>();
@@ -32,7 +33,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
   addresses = [];
   addEditCustomerForm: FormGroup;
   buttonDisabled;
-
+  createCustomer;
 
   constructor(private formBuilder: FormBuilder,
     private customersService: CustomersService,
@@ -86,7 +87,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
 
   addCustomer() {
     const createCustomerData = 'createCustomer'
-    this.customersService.createCustomer(this.getCustomerAttributes()).subscribe(
+    this.createCustomer = this.customersService.createCustomer(this.getCustomerAttributes()).subscribe(
       ({ data }) => {
         location.reload();  // To handle properly
       },
@@ -122,6 +123,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
   onCancel() {
     this.someEvent.next('somePhone');
   }
+
   onSelectionChange(event, controlName) {
     this.addEditCustomerForm.get(controlName).setValue(event.value);
     this.addEditCustomerForm.get(controlName).markAsDirty();
@@ -184,5 +186,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit {
     {
       return this.addEditCustomerForm.pristine || !this.addEditCustomerForm.valid;
     }
+   }
+
+   ngOnDestroy() {
+    this.createCustomer.unsubscribe();
   }
+
 }

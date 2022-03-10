@@ -17,6 +17,7 @@ import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 import { AddShippmentConfirmationComponent } from './add-shippment-confirmation/add-shippment-confirmation.component';
 import { CustomerModule } from './customer/customer.module';
+import { BookingModule } from './booking/booking/booking.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { CustomerModule } from './customer/customer.module';
     HttpClientModule,
     ApolloModule,
     CustomerModule,
+    BookingModule
   ],
   providers: [{
     provide: APOLLO_OPTIONS,

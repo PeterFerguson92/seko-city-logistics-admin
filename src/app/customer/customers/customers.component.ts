@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ADD_CUSTOMER_MODE, EDIT_CUSTOMER_MODE } from 'src/app/constants';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { AddEditCustomerDialogComponent } from '../add-edit-customer-dialog/add-edit-customer-dialog.component';
@@ -14,7 +15,7 @@ import { CustomersService } from '../service/customers.service';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css', '../../shared/shared.css']
 })
-export class CustomersComponent implements OnInit, AfterViewInit {
+export class CustomersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['ID', 'NAME', 'ADDRESS', 'POSTCODE', 'TYPE', 'ACTION'];
@@ -23,11 +24,9 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   selectedCustomer = null;
 
   constructor(
+    private router: Router,
     private customersService: CustomersService,
     private dialog: MatDialog) { }
-
-  ngAfterViewInit(): void {
-  }
 
   ngOnInit(): void {
     this.getCustomers();
@@ -37,6 +36,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   viewCustomer(reference) {
     console.log('view');
     console.log(reference)
+    this.router.navigateByUrl('reports')
   }
 
   editCustomer(customer) {
