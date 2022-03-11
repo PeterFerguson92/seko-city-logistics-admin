@@ -9,7 +9,7 @@ export const GET_ALL_CUSTOMERS = gql`
 `;
 
 export const GET_CUSTOMER_BY_REFERENCE = gql`
-  query customers($reference: String) {
+  query customers($reference: String!) {
     customerByReference(reference: $reference) {
       id fullName address postcode phone email country type uuid
     }

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ADD_CUSTOMER_MODE } from 'src/app/constants';
+import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService, postCodeValidator, phoneValidator } from 'src/app/service/validation/validation.service';
 import { ICustomer } from '../domain';
@@ -15,7 +15,7 @@ import { CustomersService } from '../service/customers.service';
 export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() customer: ICustomer;
   @Input() mode;
-  @Output() someEvent = new EventEmitter<string>();
+  @Output() closeDialog = new EventEmitter<string>();
 
   titlePrefix = 'Add';
   buttonLabel;
@@ -32,7 +32,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   countries = ['UNITED KINGDOM', 'GHANA'];
   addresses = [];
   addEditCustomerForm: FormGroup;
-  buttonDisabled;
+  hideCancelButton;
   createCustomer;
 
   constructor(private formBuilder: FormBuilder,
@@ -49,7 +49,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit(): void {
-    this.setLabels();
+
+    this.setAttributes();
     this.addEditCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
       fullName: ['', Validators.required],
@@ -121,7 +122,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onCancel() {
-    this.someEvent.next('somePhone');
+    this.closeDialog.next('closeDialog');
   }
 
   onSelectionChange(event, controlName) {
@@ -164,15 +165,24 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     return this.addEditCustomerForm.get(fControlName);
   }
 
-  setLabels() {
-    if (this.mode === ADD_CUSTOMER_MODE)
+  setAttributes() {
+    this.hideCancelButton = this.mode !== BOOK_CUSTOMER_MODE;
+
+    if (this.mode !== BOOK_CUSTOMER_MODE)
     {
-      this.titlePrefix = 'Add';
-      this.buttonLabel = 'ADD'
+      if (this.mode === ADD_CUSTOMER_MODE)
+      {
+        this.titlePrefix = 'Add';
+        this.buttonLabel = 'ADD'
+      } else
+      {
+        this.titlePrefix = 'Edit';
+        this.buttonLabel = 'UPDATE'
+      }
     } else
     {
-      this.titlePrefix = 'Edit';
-      this.buttonLabel = 'UPDATE'
+      this.titlePrefix = 'Book';
+      this.buttonLabel = 'Update'
     }
   }
 
@@ -181,7 +191,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
    isDisabled() {
     if (this.mode === ADD_CUSTOMER_MODE)
     {
-      this.buttonDisabled = !this.addEditCustomerForm.valid;
+      return !this.addEditCustomerForm.valid;
     } else
     {
       return this.addEditCustomerForm.pristine || !this.addEditCustomerForm.valid;
@@ -189,7 +199,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
    }
 
    ngOnDestroy() {
-    this.createCustomer.unsubscribe();
+  //  this.createCustomer.unsubscribe();
   }
 
 }

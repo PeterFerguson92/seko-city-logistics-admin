@@ -36,12 +36,12 @@ export class CustomersComponent implements OnInit {
   viewCustomer(reference) {
     console.log('view');
     console.log(reference)
-    this.router.navigateByUrl('reports')
+    this.router.navigate(['/add-booking', reference]);
   }
 
   editCustomer(customer) {
     this.selectedCustomer = customer;
-    const dialogRef = this.dialog.open(AddEditCustomerDialogComponent, {
+    this.dialog.open(AddEditCustomerDialogComponent, {
       data: { customer, mode: EDIT_CUSTOMER_MODE }
     });
   }
@@ -59,7 +59,7 @@ export class CustomersComponent implements OnInit {
       destination: ''
     };
 
-    const dialogRef = this.dialog.open(AddEditCustomerDialogComponent, {
+    this.dialog.open(AddEditCustomerDialogComponent, {
       data: { customer: emptyCustomer, mode: ADD_CUSTOMER_MODE }
     });
   }

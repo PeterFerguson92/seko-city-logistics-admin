@@ -19,7 +19,7 @@ export class AddEditCustomerDialogComponent implements OnInit {
     this.mode = this.data.mode;
   }
 
-  deletePhone(event) {
+  closeDialog(event) {
     this.onNoClick()
   }
 

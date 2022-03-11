@@ -19,7 +19,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 @NgModule({
@@ -28,6 +29,6 @@ import {MatDialogModule} from '@angular/material/dialog';
   exports: [MatIconModule, MatGridListModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatFormFieldModule,
     MatInputModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatDividerModule, MatButtonModule,
     MatTableModule, MatPaginatorModule, MatSortModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule,
-    MatTooltipModule, MatDialogModule],
+    MatTooltipModule, MatDialogModule, MatStepperModule],
 })
 export class MaterialDesignModule { }

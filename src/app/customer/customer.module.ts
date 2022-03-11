@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [CustomersComponent, CustomerDetailComponent, AddEditCustomerDialogComponent],
-  imports: [CommonModule, SharedModule, FlexLayoutModule]
+  imports: [CommonModule, SharedModule, FlexLayoutModule],
+  exports: [CustomerDetailComponent]
 })
 export class CustomerModule { }

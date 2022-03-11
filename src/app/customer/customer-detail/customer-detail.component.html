@@ -16,8 +16,8 @@
             <app-material-select-input [label]="'address'" [width]="80" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
             <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input><br>
             <div class="divider"></div>
-            <div align="end">
-              <app-material-button [label]="'Cancel'" [color]="" (click)="onCancel()"></app-material-button>
+            <div align="end" >
+              <app-material-button  *ngIf = "hideCancelButton" [label]="'Cancel'" [color]="" (click)="onCancel()"></app-material-button>
               <div class="divider"></div>
               <app-material-button [label]="buttonLabel" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button> <br>
             </div>

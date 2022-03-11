@@ -10,7 +10,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class AppComponent implements AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav! : MatSidenav;
-  isVisible = false;
+  isVisible = true;
   LOGIN_URL = '/login'
 
   constructor(route: Router) {
@@ -24,7 +24,7 @@ export class AppComponent implements AfterViewInit {
         this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
         if (this.isVisible)
         {
-          this.sidenav.toggle();
+          if (this.sidenav) { this.sidenav.toggle() };
         }
       }
     });

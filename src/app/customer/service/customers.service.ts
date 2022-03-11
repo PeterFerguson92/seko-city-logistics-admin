@@ -37,7 +37,7 @@ export class CustomersService {
   }
 
   getCustomerByReference(reference: string) {
-    return this.apollo.query<ICustomer>({
+    return this.apollo.query<any>({
       query: GET_CUSTOMER_BY_REFERENCE,
       variables: {reference}
     });
