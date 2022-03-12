@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService, postCodeValidator, phoneValidator } from 'src/app/service/validation/validation.service';
+import { AlertService } from 'src/app/shared/elements/alert/alert.service';
 import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
 
@@ -17,28 +18,22 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() mode;
   @Output() closeDialog = new EventEmitter<string>();
 
-  titlePrefix = 'Add';
   buttonLabel;
-  formValidationMap = {
-    fullName: '',
-    phone: '',
-    email: '',
-    address: '',
-    postcode: '',
-    country: ''
-  };
-
-  types = ['PERSONAL', 'BUSINESS', 'CHARITY'];
-  countries = ['UNITED KINGDOM', 'GHANA'];
-  addresses = [];
-  addEditCustomerForm: FormGroup;
   hideCancelButton;
   createCustomer;
+  addresses = [];
+  addEditCustomerForm: FormGroup;
+  formValidationMap = {fullName: '',phone: '',email: '',address: '',postcode: '',country: ''};
+  titlePrefix = 'Add';
+  types = ['PERSONAL', 'BUSINESS', 'CHARITY'];
+  countries = ['UNITED KINGDOM', 'GHANA'];
+  alertOptions = {autoClose: true, keepAfterRouteChange: false};
 
   constructor(private formBuilder: FormBuilder,
     private customersService: CustomersService,
     private commonService: CommonService,
-    private validationService: ValidationService) { }
+    private validationService: ValidationService,
+    public alertService: AlertService) { }
 
   ngAfterViewInit(): void {
     this.validateFormControl('fullName');
@@ -90,7 +85,13 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const createCustomerData = 'createCustomer'
     this.createCustomer = this.customersService.createCustomer(this.getCustomerAttributes()).subscribe(
       ({ data }) => {
-        location.reload();  // To handle properly
+        if (this.mode === BOOK_CUSTOMER_MODE)
+        {
+          this.alertService.success('Customer added correctly', this.alertOptions);
+        } else
+        {
+          location.reload();  // To handle properly
+        }
       },
       error => {
         console.log(error);
@@ -112,7 +113,14 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       this.customersService.updateCustomer(this.customer.uuid, updateCustomerFields).subscribe(
         ({ data }) => {
-          location.reload();  // To handle properly
+          if (this.mode === BOOK_CUSTOMER_MODE)
+          {
+            this.alertService.success('Customer updated correctly', this.alertOptions);
+          } else
+          {
+            location.reload();  // To handle properly
+          }
+          this.addEditCustomerForm.markAsPristine();
         },
         error => {
           console.log(error);

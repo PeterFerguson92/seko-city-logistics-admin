@@ -17,6 +17,7 @@ import { SectionTitleComponent } from './elements/section-title/section-title.co
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { MaterialRadioButtonComponent } from './inputs/material-radio-button/material-radio-button.component';
 import { DialogComponent } from './elements/dialog/dialog.component';
+import { AlertComponent } from './elements/alert/alert.component';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -32,7 +33,8 @@ import { DialogComponent } from './elements/dialog/dialog.component';
     MaterialSpinnerComponent,
     MaterialTableComponent,
     SectionTitleComponent,
-    DialogComponent],
+    DialogComponent,
+    AlertComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule ],
   exports: [
     ReactiveFormsModule,
@@ -50,7 +52,7 @@ import { DialogComponent } from './elements/dialog/dialog.component';
     ErrorMessageComponent,
     MaterialSpinnerComponent,
     MaterialTableComponent,
-    SectionTitleComponent],
+    SectionTitleComponent,AlertComponent],
   providers: [],
 })
 export class SharedModule {}
