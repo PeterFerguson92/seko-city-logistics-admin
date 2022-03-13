@@ -8,15 +8,15 @@
               <div class="divider"></div>
             <app-material-input [label]="'Full name'" [icon]="'person_pin'" formControlName="fullName" [errorMsg]="formValidationMap.fullName"></app-material-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="60" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input><br>
-            
+            <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="40" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input><br>
+
             <div formGroupName="phoneGroup">
               <app-material-select-input [label]="'Code'"  [width]="20" [options]="countryCodes" formControlName="phoneCountryCode"
               (selectionChange)="onSelectionChange($event, 'phoneCountryCode')" [value]="countryCodes[0]"></app-material-select-input>
               <div class="divider"></div>
               <app-material-input [label]="'Phone'" [type]="'phone'" [icon]="'person_pin'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input><br>
             </div>
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="15" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="20" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
             <div class="divider"></div>
             <app-material-select-input [label]="'address'" [width]="80" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
             <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input><br>

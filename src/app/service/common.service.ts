@@ -53,4 +53,8 @@ export class CommonService {
         'Flat 8, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire',
         'Flat 9, Watkin Court, Watkin Terrace, , , Northampton, Northamptonshire']
   }
+
+  getFormattedPhoneNumber(countryCode: string, phoneNumber: string) {
+    return phoneNumber.startsWith('0') ? phoneNumber.replace(phoneNumber.substring(0, 1), countryCode) : countryCode + phoneNumber;
+  }
 }

@@ -2,67 +2,8 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { POSTCODE_REGEX } from 'src/app/constants';
-import { isValidNumber, isValidPhoneNumber } from 'libphonenumber-js'
-
-export const specialCharactersValidator = (control: FormControl): { [key: string]: boolean } | null => {
-  const nameRegexp = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-  if (control.value && !nameRegexp.test(control.value))
-  {
-    return { specialCharacters: true };
-  }
-  return null;
-};
-
-export const postCodeValidator = (control: FormControl): { [key: string]: boolean } | null => {
-  const nameRegexp = POSTCODE_REGEX
-  if (control.value && !nameRegexp.test(control.value))
-  {
-    return { postcode: true };
-  }
-  return null;
-};
-
-export const upperCaseCharactersValidator = (control: FormControl): { [key: string]: boolean } | null => {
-  const noUpperCase = control.value === control.value.toLowerCase() && control.value !== control.value.toUpperCase();
-  if(control.value && noUpperCase)
-  {
-    return { upperCase: true };
-  }
-  return null;
-};
-
-export const lowerCaseCharactersValidator = (control: FormControl): { [key: string]: boolean } | null => {
-  const noLowerCase = control.value === control.value.toUpperCase() && control.value !== control.value.toLowerCase();
-  if(control.value && noLowerCase)
-  {
-    return { lowerCase: true };
-  }
-  return null;
-};
-
-export const digitsCharactersValidator = (control: FormControl): { [key: string]: boolean } | null => {
-  const nameRegexp =  /\d/;
-  if (control.value && !nameRegexp.test(control.value))
-  {
-    return { digits: true };
-  }
-  return null;
-};
-
-export const phoneValidator = (formGroup: FormGroup): { [key: string]: boolean } | null => {
-  console.log(formGroup)
-  const countryCode = formGroup.get('phoneCountryCode').value;
-  const phoneNumber = formGroup.get('phone').value;
-
-  const formattedPhoneNumber = phoneNumber.startsWith('0') ? phoneNumber.replace(phoneNumber.substring(0, 1), countryCode) :
-    countryCode + phoneNumber;
-
-  if (!isValidPhoneNumber(formattedPhoneNumber))
-  {
-    return { telephone: true };
-  }
-  return null;
-};
+import { isValidPhoneNumber } from 'libphonenumber-js'
+import { CommonService } from '../common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -79,17 +20,17 @@ export class ValidationService {
 
   private emailValidationMessages = {
     required: 'Please enter email address.',
-    email: 'Please enter a valid email address.'
+    email: 'Email address not valid.'
   };
 
   private postcodeValidationMessages = {
     required: 'Please enter postcode.',
-    postcode: 'Please enter a valid postcode.'
+    postcode: 'Postcode not valid.'
   };
 
   private phoneValidationMessages = {
     required: 'Please enter phone number.',
-    telephone: 'Please enter a valid phone number.'
+    telephone: 'Phone number not valid.'
   };
 
   private passwordValidationMessages = {
@@ -112,7 +53,63 @@ export class ValidationService {
     postcode: this.postcodeValidationMessages
   };
 
-  constructor() { }
+  constructor(private commonService: CommonService) { }
+
+  specialCharactersValidator (control: FormControl): { [key: string]: boolean } | null {
+    const nameRegexp = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    if (control.value && !nameRegexp.test(control.value))
+    {
+      return { specialCharacters: true };
+    }
+    return null;
+  };
+
+  postCodeValidator (control: FormControl): { [key: string]: boolean } | null {
+    const nameRegexp = POSTCODE_REGEX
+    if (control.value && !nameRegexp.test(control.value))
+    {
+      return { postcode: true };
+    }
+    return null;
+  };
+
+  upperCaseCharactersValidator (control: FormControl): { [key: string]: boolean } | null {
+    const noUpperCase = control.value === control.value.toLowerCase() && control.value !== control.value.toUpperCase();
+    if(control.value && noUpperCase)
+    {
+      return { upperCase: true };
+    }
+    return null;
+  };
+
+ lowerCaseCharactersValidator(control: FormControl): { [key: string]: boolean } | null {
+    const noLowerCase = control.value === control.value.toUpperCase() && control.value !== control.value.toLowerCase();
+    if(control.value && noLowerCase)
+    {
+      return { lowerCase: true };
+    }
+    return null;
+  };
+
+  digitsCharactersValidator = (control: FormControl): { [key: string]: boolean } | null => {
+    const nameRegexp =  /\d/;
+    if (control.value && !nameRegexp.test(control.value))
+    {
+      return { digits: true };
+    }
+    return null;
+  };
+
+  phoneValidator = (formGroup: FormGroup): { [key: string]: boolean } | null => {
+    const countryCode = formGroup.get('phoneCountryCode').value;
+    const phoneNumber = formGroup.get('phone').value;
+
+    if (!isValidPhoneNumber(this.commonService.getFormattedPhoneNumber(countryCode, phoneNumber)))
+    {
+      return { telephone: true };
+    }
+    return null;
+  };
 
   watchAndValidateFormControl(fControl: AbstractControl) {
     return fControl.valueChanges.pipe(debounceTime(1000));
@@ -126,10 +123,5 @@ export class ValidationService {
         key => validationMessages[key])[0];
     }
     return null;
-  }
-
-
-  watchAndValidateFormControl2(formGroup: AbstractControl) {
-    return formGroup.valueChanges.pipe(debounceTime(1000));
   }
 }

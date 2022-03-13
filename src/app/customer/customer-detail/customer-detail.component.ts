@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Outpu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
-import { phoneValidator, postCodeValidator, ValidationService} from 'src/app/service/validation/validation.service';
+import { ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
 import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
@@ -52,10 +52,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       phoneGroup: this.formBuilder.group({
         phoneCountryCode: [this.countryCodes[0], [Validators.required]],
         phone: ['', [Validators.required]],
-      }, { validators: phoneValidator}),
+      }, { validators: this.validationService.phoneValidator}),
       email: ['', [Validators.email]],
       address: ['', [Validators.required]],
-      postcode: ['', [Validators.required, postCodeValidator]],
+      postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
       country: [this.countries[0], [Validators.required]]
     });
     if (this.customer)
@@ -142,7 +142,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         if (fGroup.dirty && !fGroup.valid)
         {
           fMainControl.markAsDirty();
-          fMainControl.setErrors({});
+          fMainControl.markAsTouched()
+          fMainControl.setErrors({telephone: 'Phone number not valid'});
         }
       });
   }
