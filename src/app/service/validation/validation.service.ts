@@ -103,12 +103,19 @@ export class ValidationService {
   phoneValidator = (formGroup: FormGroup): { [key: string]: boolean } | null => {
     const countryCode = formGroup.get('phoneCountryCode').value;
     const phoneNumber = formGroup.get('phone').value;
-
-    if (!isValidPhoneNumber(this.commonService.getFormattedPhoneNumber(countryCode, phoneNumber)))
+    console.log(phoneNumber)
+    if (phoneNumber.length !== 0)
     {
-      return { telephone: true };
+      console.log(3939393939339)
+      if (!isValidPhoneNumber(this.commonService.getFormattedPhoneNumber(countryCode, phoneNumber)))
+      {
+        return { telephone: true };
+      }
+      return null;
+    } else
+    {
+      return null;
     }
-    return null;
   };
 
   watchAndValidateFormControl(fControl: AbstractControl) {

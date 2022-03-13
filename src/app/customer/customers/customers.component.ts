@@ -56,7 +56,7 @@ export class CustomersComponent implements OnInit {
       email: '',
       country: '',
       type: '',
-      destination: ''
+      destination: '',
     };
 
     this.dialog.open(AddEditCustomerDialogComponent, {

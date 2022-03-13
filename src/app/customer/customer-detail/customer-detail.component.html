@@ -9,7 +9,6 @@
             <app-material-input [label]="'Full name'" [icon]="'person_pin'" formControlName="fullName" [errorMsg]="formValidationMap.fullName"></app-material-input>
             <div class="divider"></div>
             <app-material-input [label]="'Email'" [icon]="'person_pin'" [width]="40" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input><br>
-
             <div formGroupName="phoneGroup">
               <app-material-select-input [label]="'Code'"  [width]="20" [options]="countryCodes" formControlName="phoneCountryCode"
               (selectionChange)="onSelectionChange($event, 'phoneCountryCode')" [value]="countryCodes[0]"></app-material-select-input>

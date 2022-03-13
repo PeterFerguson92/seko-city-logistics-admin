@@ -52,23 +52,15 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       phoneGroup: this.formBuilder.group({
         phoneCountryCode: [this.countryCodes[0], [Validators.required]],
         phone: ['', [Validators.required]],
-      }, { validators: this.validationService.phoneValidator}),
+      }, { validators: [Validators.required, this.validationService.phoneValidator]}),
       email: ['', [Validators.email]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
       country: [this.countries[0], [Validators.required]]
     });
-    if (this.customer)
+    if (this.customer && this.mode !== ADD_CUSTOMER_MODE)
     {
-      this.addEditCustomerForm.patchValue({
-        type: this.customer.type === '' ? this.types[0] : this.customer.type,
-        fullName: this.customer.fullName,
-        phone: this.customer.phone,
-        email: this.customer.email,
-        address: this.customer.address,
-        postcode: this.customer.postcode,
-        country: this.customer.country === '' ? this.countries[0] : this.customer.country
-      });
+      this.populateFields()
     }
   }
 
@@ -125,8 +117,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   validateFormControl(fControlName: string) {
-    const fControl = this.isPhoneGroupControl(fControlName) ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
-      this.addEditCustomerForm.get(fControlName);
+    const fControl = this.getFormControl(fControlName);
     this.validationService.watchAndValidateFormControl(fControl)
       .subscribe(() => {
         this.formValidationMap[fControlName] = this.validationService.setMessage(fControl, fControlName);
@@ -139,31 +130,27 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     this.validationService.watchAndValidateFormControl(fGroup)
       .subscribe(() => {
         this.formValidationMap.phone = this.validationService.setMessage(fGroup, fControlName);
+        console.log(fGroup)
         if (fGroup.dirty && !fGroup.valid)
         {
           fMainControl.markAsDirty();
-          fMainControl.markAsTouched()
-          fMainControl.setErrors({telephone: 'Phone number not valid'});
+          // fMainControl.setErrors({ telephone: 'Phone number' });
+
+        } else
+        {
+          fGroup.setErrors(null);
         }
       });
   }
 
-  isPhoneGroupControl(fControlName: string) {
-    return fControlName === 'phone' || fControlName === 'phoneCountryCode';
-  }
-
   onSelectionChange(event: any, fControlName: string) {
-    console.log(fControlName)
-    const fControl = this.isPhoneGroupControl(fControlName) ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
-      this.addEditCustomerForm.get(fControlName);
-    console.log(fControl)
-    console.log(event)
+    const fControl = this.getFormControl(fControlName);
     fControl.setValue(event.value);
     fControl.markAsDirty();
   }
 
   getAddressByPostcode() {
-    const postcodeFormControl = this.getFormAttribute('postcode');
+    const postcodeFormControl = this.getFormControl('postcode');
     if (!postcodeFormControl.invalid)
     {
       this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
@@ -174,13 +161,13 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   getCustomerAttributes(): ICustomer {
    return  {
       uuid: '',
-      fullName: this.getFormAttribute('fullName').value,
-      address: this.getFormAttribute('address').value,
-      postcode: this.getFormAttribute('postcode').value,
-      phone: this.getFormAttribute('phone').value,
-      email: this.getFormAttribute('email').value,
-      country: this.getFormAttribute('country').value,
-      type: this.getFormAttribute('type').value,
+      fullName: this.getFormControl('fullName').value,
+      address: this.getFormControl('address').value,
+      postcode: this.getFormControl('postcode').value,
+      phone: this.commonService.getFormattedPhoneNumber(this.getFormControl('phoneCountryCode').value , this.getFormControl('phone').value),
+      email: this.getFormControl('email').value,
+      country: this.getFormControl('country').value,
+      type: this.getFormControl('type').value,
       destination: ''
     };
   }
@@ -189,8 +176,25 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     this.closeDialog.next('closeDialog');
   }
 
-  getFormAttribute(fControlName: string) {
-    return this.addEditCustomerForm.get(fControlName);
+  populateFields() {
+    const mainFormControl = this.addEditCustomerForm;
+    const phoneGroupFormControl = this.addEditCustomerForm.get('phoneGroup');
+
+    mainFormControl.patchValue({
+      type: this.customer.type === '' ? this.types[0] : this.customer.type,
+      fullName: this.customer.fullName,
+      email: this.customer.email,
+      address: this.customer.address,
+      postcode: this.customer.postcode,
+      country: this.customer.country === '' ? this.countries[0] : this.customer.country
+    });
+
+    const fullPhone = this.customer.phone;
+    const spaceIndex = fullPhone.indexOf(' ');  // Gets the first index where a space occours
+    const phoneCountryCode = fullPhone.substr(0, spaceIndex); // Gets the first part
+    const phone = fullPhone.substr(spaceIndex + 1);
+
+    phoneGroupFormControl.patchValue({phone, phoneCountryCode});
   }
 
   setAttributes() {
@@ -225,6 +229,11 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       return this.addEditCustomerForm.pristine || !this.addEditCustomerForm.valid;
     }
    }
+
+   getFormControl(fControlName: string) {
+    return fControlName === 'phone' || fControlName === 'phoneCountryCode' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
+      this.addEditCustomerForm.get(fControlName)
+  }
 
    ngOnDestroy() {
   //  this.createCustomer.unsubscribe();

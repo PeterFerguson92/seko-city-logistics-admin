@@ -55,6 +55,7 @@ export class CommonService {
   }
 
   getFormattedPhoneNumber(countryCode: string, phoneNumber: string) {
-    return phoneNumber.startsWith('0') ? phoneNumber.replace(phoneNumber.substring(0, 1), countryCode) : countryCode + phoneNumber;
+    const prefix = countryCode + ' ';
+    return phoneNumber.startsWith('0') ? phoneNumber.replace(phoneNumber.substring(0, 1), prefix) : prefix + phoneNumber;
   }
 }
