@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
-import { ValidationService, postCodeValidator, phoneValidator } from 'src/app/service/validation/validation.service';
+import { phoneValidator, postCodeValidator, ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
 import { ICustomer } from '../domain';
 import { CustomersService } from '../service/customers.service';
@@ -27,6 +26,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   titlePrefix = 'Add';
   types = ['PERSONAL', 'BUSINESS', 'CHARITY'];
   countries = ['UNITED KINGDOM', 'GHANA'];
+  countryCodes = ['+44', '+233']
   alertOptions = {autoClose: true, keepAfterRouteChange: false};
 
   constructor(private formBuilder: FormBuilder,
@@ -41,15 +41,18 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     this.validateFormControl('email');
     this.validateFormControl('address');
     this.validateFormControl('postcode');
+    this.validateGroupFormControl('phoneGroup', 'phone')
   }
 
   ngOnInit(): void {
-
     this.setAttributes();
     this.addEditCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
       fullName: ['', Validators.required],
-      phone: ['', [Validators.required, phoneValidator]],
+      phoneGroup: this.formBuilder.group({
+        phoneCountryCode: [this.countryCodes[0], [Validators.required]],
+        phone: ['', [Validators.required]],
+      }, { validators: phoneValidator}),
       email: ['', [Validators.email]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, postCodeValidator]],
@@ -67,18 +70,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         country: this.customer.country === '' ? this.countries[0] : this.customer.country
       });
     }
-
-
   }
 
   onAddEdit() {
-    if (this.mode === ADD_CUSTOMER_MODE)
-    {
-      this.addCustomer();
-    } else
-    {
-      this.editCustomer();
-    }
+    this.mode === ADD_CUSTOMER_MODE ? this.addCustomer() : this.editCustomer();
   }
 
   addCustomer() {
@@ -129,21 +124,41 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-  onCancel() {
-    this.closeDialog.next('closeDialog');
-  }
-
-  onSelectionChange(event, controlName) {
-    this.addEditCustomerForm.get(controlName).setValue(event.value);
-    this.addEditCustomerForm.get(controlName).markAsDirty();
-  }
-
   validateFormControl(fControlName: string) {
-    const fControl = this.addEditCustomerForm.get(fControlName);
+    const fControl = this.isPhoneGroupControl(fControlName) ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
+      this.addEditCustomerForm.get(fControlName);
     this.validationService.watchAndValidateFormControl(fControl)
-      .subscribe(value => {
+      .subscribe(() => {
         this.formValidationMap[fControlName] = this.validationService.setMessage(fControl, fControlName);
       });
+  }
+
+  validateGroupFormControl(formGroupName: string, fControlName: string) {
+    const fGroup = this.addEditCustomerForm.get(formGroupName);
+    const fMainControl = fGroup.get(fControlName);
+    this.validationService.watchAndValidateFormControl(fGroup)
+      .subscribe(() => {
+        this.formValidationMap.phone = this.validationService.setMessage(fGroup, fControlName);
+        if (fGroup.dirty && !fGroup.valid)
+        {
+          fMainControl.markAsDirty();
+          fMainControl.setErrors({});
+        }
+      });
+  }
+
+  isPhoneGroupControl(fControlName: string) {
+    return fControlName === 'phone' || fControlName === 'phoneCountryCode';
+  }
+
+  onSelectionChange(event: any, fControlName: string) {
+    console.log(fControlName)
+    const fControl = this.isPhoneGroupControl(fControlName) ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
+      this.addEditCustomerForm.get(fControlName);
+    console.log(fControl)
+    console.log(event)
+    fControl.setValue(event.value);
+    fControl.markAsDirty();
   }
 
   getAddressByPostcode() {
@@ -167,6 +182,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       type: this.getFormAttribute('type').value,
       destination: ''
     };
+  }
+
+  onCancel() {
+    this.closeDialog.next('closeDialog');
   }
 
   getFormAttribute(fControlName: string) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { POSTCODE_REGEX } from 'src/app/constants';
 import { isValidNumber, isValidPhoneNumber } from 'libphonenumber-js'
@@ -49,8 +49,15 @@ export const digitsCharactersValidator = (control: FormControl): { [key: string]
   return null;
 };
 
-export const phoneValidator = (control: FormControl): { [key: string]: boolean } | null => {
-  if (!isValidPhoneNumber(control.value))
+export const phoneValidator = (formGroup: FormGroup): { [key: string]: boolean } | null => {
+  console.log(formGroup)
+  const countryCode = formGroup.get('phoneCountryCode').value;
+  const phoneNumber = formGroup.get('phone').value;
+
+  const formattedPhoneNumber = phoneNumber.startsWith('0') ? phoneNumber.replace(phoneNumber.substring(0, 1), countryCode) :
+    countryCode + phoneNumber;
+
+  if (!isValidPhoneNumber(formattedPhoneNumber))
   {
     return { telephone: true };
   }
@@ -119,5 +126,10 @@ export class ValidationService {
         key => validationMessages[key])[0];
     }
     return null;
+  }
+
+
+  watchAndValidateFormControl2(formGroup: AbstractControl) {
+    return formGroup.valueChanges.pipe(debounceTime(1000));
   }
 }
