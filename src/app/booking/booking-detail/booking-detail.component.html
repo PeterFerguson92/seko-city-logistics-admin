@@ -12,12 +12,8 @@
   </mat-step>
   <mat-step>
     <form >
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input matInput placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
+      <ng-template matStepLabel>Fill out receiver details</ng-template>
+      <app-receiver></app-receiver>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>

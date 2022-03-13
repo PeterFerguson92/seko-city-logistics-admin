@@ -1,0 +1,24 @@
+<div class="bodys">
+  <div class="booking-form-w3layouts">
+      <!-- <h4 class="sub-heading-agileits"> Customer</h4> -->
+      <div class="main-flex-w3ls-sectns">
+        <form [formGroup]="receiverCustomerForm">
+          <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
+            (selectionChange)="onSelectionChange($event, 'type')"  [width]="40" [value]="'PERSONAL'"></app-material-select-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Full name'" [icon]="'person_pin'" formControlName="fullName" [errorMsg]="formValidationMap.fullName"></app-material-input>
+          <div formGroupName="phoneGroup">
+            <app-material-select-input [label]="'Code'"  [width]="20" [options]="codes" formControlName="code"
+            (selectionChange)="onSelectionChange($event, 'phoneCountryCode')" [value]="codes[0]"></app-material-select-input>
+            <div class="divider"></div>
+            <app-material-input [label]="'Phone'" [type]="'phone'" [icon]="'person_pin'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input><br>
+          </div>
+          <app-material-select-input [label]="'Destination'" (selectionChange)="onSelectionChange($event, 'destination')" [options]="destinations" formControlName="destination"></app-material-select-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Other destination'" [icon]="'person_pin'" [width]="40" *ngIf = "showOtherDestinations" [errorMsg]="formValidationMap.otherDestination" formControlName="otherDestination"></app-material-input><br>
+          <div class="alert-section">
+          <app-alert></app-alert>
+          </div>
+          </form>
+      </div>
+    </div>

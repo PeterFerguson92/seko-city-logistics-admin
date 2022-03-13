@@ -22,7 +22,8 @@ export class CustomersComponent implements OnInit {
   customers: [ICustomer] = null;
   dataSource = null;
   selectedCustomer = null;
-
+  height =  '80%'
+  width = '65%'
   constructor(
     private router: Router,
     private customersService: CustomersService,
@@ -30,18 +31,17 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCustomers();
-
   }
 
   viewCustomer(reference) {
-    console.log('view');
-    console.log(reference)
     this.router.navigate(['/add-booking', reference]);
   }
 
   editCustomer(customer) {
     this.selectedCustomer = customer;
     this.dialog.open(AddEditCustomerDialogComponent, {
+      height: '80%',
+      width: '65%',
       data: { customer, mode: EDIT_CUSTOMER_MODE }
     });
   }
@@ -60,6 +60,8 @@ export class CustomersComponent implements OnInit {
     };
 
     this.dialog.open(AddEditCustomerDialogComponent, {
+      height: '80%',
+      width: '65%',
       data: { customer: emptyCustomer, mode: ADD_CUSTOMER_MODE }
     });
   }

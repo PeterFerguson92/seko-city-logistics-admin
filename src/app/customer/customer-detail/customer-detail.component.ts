@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE } from 'src/app/constants';
+import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CUSTOMER_TYPES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
@@ -24,9 +24,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   addEditCustomerForm: FormGroup;
   formValidationMap = {fullName: '',phone: '',email: '',address: '',postcode: '',country: ''};
   titlePrefix = 'Add';
-  types = ['PERSONAL', 'BUSINESS', 'CHARITY'];
-  countries = ['UNITED KINGDOM', 'GHANA'];
-  countryCodes = ['+44', '+233']
+  types = CUSTOMER_TYPES;
+  countries = COUNTRIES;
+  countryCodes = COUNTRY_CODES
   alertOptions = {autoClose: true, keepAfterRouteChange: false};
 
   constructor(private formBuilder: FormBuilder,
@@ -34,15 +34,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     private commonService: CommonService,
     private validationService: ValidationService,
     public alertService: AlertService) { }
-
-  ngAfterViewInit(): void {
-    this.validateFormControl('fullName');
-    this.validateFormControl('phone');
-    this.validateFormControl('email');
-    this.validateFormControl('address');
-    this.validateFormControl('postcode');
-    this.validateGroupFormControl('phoneGroup', 'phone')
-  }
 
   ngOnInit(): void {
     this.setAttributes();
@@ -62,6 +53,15 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       this.populateFields()
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.validateFormControl('fullName');
+    this.validateFormControl('phone');
+    this.validateFormControl('email');
+    this.validateFormControl('address');
+    this.validateFormControl('postcode');
+    this.validateGroupFormControl('phoneGroup', 'phone')
   }
 
   onAddEdit() {
@@ -130,7 +130,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     this.validationService.watchAndValidateFormControl(fGroup)
       .subscribe(() => {
         this.formValidationMap.phone = this.validationService.setMessage(fGroup, fControlName);
-        console.log(fGroup)
         if (fGroup.dirty && !fGroup.valid)
         {
           fMainControl.markAsDirty();
@@ -230,7 +229,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
    }
 
-   getFormControl(fControlName: string) {
+  getFormControl(fControlName: string) {
     return fControlName === 'phone' || fControlName === 'phoneCountryCode' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
       this.addEditCustomerForm.get(fControlName)
   }

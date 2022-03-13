@@ -50,7 +50,8 @@ export class ValidationService {
     phone: this.phoneValidationMessages,
     email: this.emailValidationMessages,
     address: this.requiredValidationMessages,
-    postcode: this.postcodeValidationMessages
+    postcode: this.postcodeValidationMessages,
+    otherDestination: this.requiredValidationMessages
   };
 
   constructor(private commonService: CommonService) { }
@@ -103,10 +104,8 @@ export class ValidationService {
   phoneValidator = (formGroup: FormGroup): { [key: string]: boolean } | null => {
     const countryCode = formGroup.get('phoneCountryCode').value;
     const phoneNumber = formGroup.get('phone').value;
-    console.log(phoneNumber)
     if (phoneNumber.length !== 0)
     {
-      console.log(3939393939339)
       if (!isValidPhoneNumber(this.commonService.getFormattedPhoneNumber(countryCode, phoneNumber)))
       {
         return { telephone: true };

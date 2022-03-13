@@ -12,7 +12,6 @@ export class BookingDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.booking)
     this.mode = BOOK_CUSTOMER_MODE
   }
 
