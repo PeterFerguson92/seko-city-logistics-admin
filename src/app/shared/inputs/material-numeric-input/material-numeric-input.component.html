@@ -1,8 +1,11 @@
 <mat-form-field appearance="outline" style="width: 10%;">
-  <!-- <mat-label>{{label}}</mat-label> -->
-  <input
+  <mat-label>{{label}}</mat-label>
+  <input matInput #input
     type="number"
     matInput
     value="1"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+    [(ngModel)]="value"
   >
 </mat-form-field>
