@@ -17,7 +17,7 @@
             </div>
             <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="20" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
             <div class="divider"></div>
-            <app-material-select-input [label]="'address'" [width]="80" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
+            <app-material-select-input [label]="'Address'" [width]="80" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
             <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input><br>
             <div align="end" >
               <app-material-button  *ngIf = "hideCancelButton" [label]="'Cancel'" [color]="" (click)="onCancel()"></app-material-button>

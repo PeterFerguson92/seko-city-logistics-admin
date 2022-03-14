@@ -43,7 +43,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       phoneGroup: this.formBuilder.group({
         phoneCountryCode: [this.countryCodes[0], [Validators.required]],
         phone: ['', [Validators.required]],
-      }, { validators: [Validators.required, this.validationService.phoneValidator]}),
+      }, { validators: [Validators.required, this.validationService.phoneValidator] }),
       email: ['', [Validators.email]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, this.validationService.postCodeValidator]],

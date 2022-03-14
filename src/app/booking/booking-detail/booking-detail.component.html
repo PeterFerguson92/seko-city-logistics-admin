@@ -12,6 +12,16 @@
   </mat-step>
   <mat-step>
     <form >
+      <ng-template matStepLabel>Fill out item details</ng-template>
+      <app-booking-items></app-booking-items>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <form >
       <ng-template matStepLabel>Fill out receiver details</ng-template>
       <app-receiver></app-receiver>
       <div>

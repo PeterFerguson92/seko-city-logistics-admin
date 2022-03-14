@@ -4,7 +4,7 @@ import { BOOK_CUSTOMER_MODE } from 'src/app/constants';
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
-  styleUrls: ['./booking-detail.component.css']
+  styleUrls: ['./booking-detail.component.css', '../../shared/shared.css']
 })
 export class BookingDetailComponent implements OnInit {
   @Input() booking;
