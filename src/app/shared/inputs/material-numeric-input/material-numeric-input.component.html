@@ -4,6 +4,7 @@
     type="number"
     matInput
     value="1"
+    (ngModelChange)="onInputChange($event)"
     (input)="onChange($event.target.value)"
     (blur)="onTouched()"
     [(ngModel)]="value"

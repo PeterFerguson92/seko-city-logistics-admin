@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit, Optional, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnInit, Optional, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -17,6 +17,7 @@ export class MaterialNumericInputComponent implements OnInit, ControlValueAccess
   @Input() width;
   @Input() errorMsg: string;
   @Input() type;
+  @Output() inputChange = new EventEmitter<MatInput>();
   value;
 
   inputColor;
@@ -44,6 +45,10 @@ export class MaterialNumericInputComponent implements OnInit, ControlValueAccess
   writeValue(obj: any): void {
     this.value = obj
     this.input.value = obj;
+  }
+
+  onInputChange(event) {
+    this.inputChange.next(event);
   }
 
   registerOnChange(fn: any): void {

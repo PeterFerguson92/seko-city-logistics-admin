@@ -5,13 +5,13 @@
         <form [formGroup]="bookingItemForm" >
           <div formArrayName="items" *ngFor="let item of items.controls; let i = index">
             <div [formGroupName] = 'i' >
-              <app-material-numeric-input [label]="'Number of Items'" formControlName="quantity"></app-material-numeric-input>
+              <app-material-numeric-input [label]="'Number of Items'" (inputChange)='onInputChange($event, i)' formControlName="quantity"></app-material-numeric-input>
               <div class="divider"></div>
               <app-material-select-input [label]="'Type'"  [width]="15" [options]="types" formControlName="types"
-                  (selectionChange)="onSelectionChange($event, 'type', i)" [value]="types[0]"></app-material-select-input>
+                  (selectionChange)="onSelectionChange($event, 'types', i)" [value]="types[0]"></app-material-select-input>
               <div class="divider"></div>
-              <div *ngIf = "showDescription">
-                <app-material-input [label]="'Description'" [icon]="'person_pin'" [width]="25" *ngIf = "showDescription"  formControlName="description"></app-material-input>
+              <div *ngIf = "showDesc(i)">
+                <app-material-input [label]="'Description'" [icon]="'person_pin'" [width]="25" formControlName="description"></app-material-input>
                 <div class="divider"></div>
               </div>
               <app-material-input [label]="'Price per unit(£)'" [icon]="'person_pin'" [width]="10"  formControlName="pricePerUnit"></app-material-input>
