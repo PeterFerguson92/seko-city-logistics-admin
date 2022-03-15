@@ -2,37 +2,42 @@
   <div class="booking-form-w3layouts">
       <h4 class="sub-heading-agileits">Items</h4>
       <div class="main-flex-w3ls-sectns">
-        <form [formGroup]="bookingItemForm" >
-          <div formArrayName="items" *ngFor="let item of items.controls; let i = index">
-            <div [formGroupName] = 'i' >
-              <app-material-numeric-input [label]="'Number of Items'" (inputChange)='onInputChange($event, i)' formControlName="quantity"></app-material-numeric-input>
-              <div class="divider"></div>
-              <app-material-select-input [label]="'Type'"  [width]="15" [options]="types" formControlName="types"
-                  (selectionChange)="onSelectionChange($event, 'types', i)" [value]="types[0]"></app-material-select-input>
-              <div class="divider"></div>
-              <div *ngIf = "showDesc(i)">
-                <app-material-input [label]="'Description'" [icon]="'person_pin'" [width]="25" formControlName="description"></app-material-input>
+        <button mat-raised-button color="primary" style="margin-right:5px; width: 20%; background-color: #004e92;" *ngIf="!showItems"
+        (click)="onShowItems()">Add Items</button>
+        <div *ngIf="showItems">
+          <form [formGroup]="bookingItemForm" >
+            <div formArrayName="items" *ngFor="let item of items.controls; let i = index">
+              <div [formGroupName] = 'i' >
+                <app-material-numeric-input [label]="'Number of Items'" (inputChange)='onInputChange($event, i)' formControlName="quantity"></app-material-numeric-input>
                 <div class="divider"></div>
-              </div>
-              <app-material-input [label]="'Value (£)'" [icon]="'person_pin'" [width]="10" formControlName="value"></app-material-input>
-              <div class="divider"></div>
-              <app-material-input [label]="'Price per unit(£)'" [icon]="'person_pin'" [width]="10"  formControlName="pricePerUnit"></app-material-input>
-              <div class="divider"></div>
-              <app-material-input [label]="'Total(£)'" [icon]="'person_pin'" [width]="10"  formControlName="amount"></app-material-input>
-              <div class="divider"></div>
-              <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" (click)="onDeleteItem(i)"></app-material-button>
-              <div class="divider"></div>
-              <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onAddItem()"></app-material-button>
-              <mat-divider></mat-divider>
-              <div class="divider"></div>
-              <div class="divider"></div>
-              <div class="alert-section">
-              <app-alert></app-alert>
+                <app-material-select-input [label]="'Type'"  [width]="15" [options]="types" formControlName="types"
+                    (selectionChange)="onSelectionChange($event, 'types', i)" [value]="types[0]"></app-material-select-input>
+                <div class="divider"></div>
+                <div *ngIf = "showDesc(i)">
+                  <app-material-input [label]="'Description'" [icon]="'person_pin'" [width]="25" formControlName="description"></app-material-input>
+                  <div class="divider"></div>
+                </div>
+                <app-material-input [label]="'Value (£)'" [icon]="'person_pin'" [width]="10" formControlName="value"></app-material-input>
+                <div class="divider"></div>
+                <app-material-input [label]="'Price per unit(£)'" [icon]="'person_pin'" [width]="10"  formControlName="pricePerUnit"></app-material-input>
+                <div class="divider"></div>
+                <app-material-input [label]="'Total(£)'" [icon]="'person_pin'" [width]="10"  formControlName="amount"></app-material-input>
+                <div class="divider"></div>
+                <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" (click)="onDeleteItem(i)"></app-material-button>
+                <div class="divider"></div>
+                <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onAddItem()"></app-material-button>
+                <mat-divider></mat-divider>
+                <div class="divider"></div>
+                <div class="divider"></div>
+                <div class="alert-section">
+                <app-alert></app-alert>
+                </div>
               </div>
             </div>
-          </div>
           </form>
+          <p>Total number of items: {{getTotalNumberOfItems()}} </p>
+          <p>Total amount: £{{getTotalAmount()}} </p>
       </div>
-      <p>Total number of items: {{getTotalNumberOfItems()}} </p>
-      <p>Total amount: £{{getTotalAmount()}} </p>
+
     </div>
+</div>

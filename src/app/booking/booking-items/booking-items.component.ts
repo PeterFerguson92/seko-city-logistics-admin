@@ -8,6 +8,7 @@ import { BOOKING_ITEMS, BOOKING_ITEMS_DISPLAY_NAMES } from 'src/app/constants';
   styleUrls: ['./booking-items.component.css', '../../shared/shared.css']
 })
 export class BookingItemsComponent implements OnInit {
+  showItems = false;
   bookingItemForm: FormGroup;
   showDescription = false;
   types = BOOKING_ITEMS_DISPLAY_NAMES;
@@ -46,6 +47,11 @@ export class BookingItemsComponent implements OnInit {
     if (this.items.length > 1)
     {
       this.items.removeAt(index)
+    }
+
+    if (this.items.length === 1)
+    {
+      this.showItems = false;
     }
   }
 
@@ -101,6 +107,10 @@ export class BookingItemsComponent implements OnInit {
 
   showDesc(index) {
     return this.getFormControl('types', index).value === 'OTHER';
+  }
+
+  onShowItems() {
+    this.showItems = true
   }
 
   getTotalNumberOfItems() {
