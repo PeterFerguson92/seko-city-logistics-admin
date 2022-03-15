@@ -4,9 +4,7 @@
   <mat-step >
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
-      <!-- <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail> -->
-      <app-booking-items></app-booking-items>
-
+      <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail>
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>
@@ -34,8 +32,8 @@
   </mat-step>
   <mat-step>
     <form >
-      <ng-template matStepLabel>Fill out receiver details</ng-template>
-      <app-receiver></app-receiver>
+      <ng-template matStepLabel>Fill out pick up details</ng-template>
+      <app-booking-info></app-booking-info>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>

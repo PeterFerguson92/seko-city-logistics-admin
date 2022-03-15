@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AddressResponse } from './address';
+
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +57,9 @@ export class CommonService {
   getFormattedPhoneNumber(countryCode: string, phoneNumber: string) {
     const prefix = countryCode + ' ';
     return phoneNumber.startsWith('0') ? phoneNumber.replace(phoneNumber.substring(0, 1), prefix) : prefix + phoneNumber;
+  }
+
+  getFormattedDate(date: string) {
+    return new Date(date).toLocaleDateString('en-GB', {year: 'numeric', month: '2-digit', day: '2-digit'})
   }
 }

@@ -18,6 +18,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
 import { MaterialRadioButtonComponent } from './inputs/material-radio-button/material-radio-button.component';
 import { DialogComponent } from './elements/dialog/dialog.component';
 import { AlertComponent } from './elements/alert/alert.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -53,6 +54,8 @@ import { AlertComponent } from './elements/alert/alert.component';
     MaterialSpinnerComponent,
     MaterialTableComponent,
     SectionTitleComponent,AlertComponent],
-  providers: [],
+    providers: [
+      { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+    ]
 })
 export class SharedModule {}

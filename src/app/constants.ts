@@ -15,3 +15,4 @@ export const BOOKING_ITEMS = [
   { DISPLAY_NAME: 'MEDIUM BOX', PRICE: '20'  },
   { DISPLAY_NAME: 'BIG BOX', PRICE: '30'  }
 ]
+export const BOOKING_PICKUP_TIMES = ['MORNING', 'AFTERNOON', 'EVENING'];
