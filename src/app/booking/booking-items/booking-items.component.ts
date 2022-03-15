@@ -32,11 +32,13 @@ export class BookingItemsComponent implements OnInit {
       description: ['', Validators.required],
       value: ['', Validators.required],
       pricePerUnit: [this.typesObject[0].PRICE, Validators.required],
-      totalPrice: [parseInt(this.typesObject[0].PRICE, 10) * 1, Validators.required]
+      amount: [parseInt(this.typesObject[0].PRICE, 10) * 1, Validators.required]
     })
   }
 
   onAddItem() {
+    console.log(this.getTotalAmount())
+
     this.items.push(this.buildItem());
   }
 
@@ -55,13 +57,13 @@ export class BookingItemsComponent implements OnInit {
     const quantity = this.getFormControl('quantity', index).value;
     const pricePerUnit = this.getPricePerUnit(event.value);
     this.getFormControl('pricePerUnit', index).setValue(pricePerUnit);
-    this.getFormControl('totalPrice', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
+    this.getFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
 
     const descriptionFormControl = this.getFormControl('description', index);
     if (fControlName === 'types' && event.value === 'OTHER')
     {
       descriptionFormControl.setValidators([Validators.required]);
-      this.getFormControl('totalPrice', index).setValue(0);
+      this.getFormControl('amount', index).setValue(0);
       this.getFormControl('pricePerUnit', index).setValue(0);
     } else
     {
@@ -72,8 +74,9 @@ export class BookingItemsComponent implements OnInit {
   }
 
   onInputChange(quantity, index) {
+    console.log(index)
     const pricePerUnit = this.getPricePerUnit(this.getFormControl('types', index).value);
-    this.getFormControl('totalPrice', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
+    this.getFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
   }
 
   calculateTotalPrice(quantity, pricePerUnit) {
@@ -98,5 +101,17 @@ export class BookingItemsComponent implements OnInit {
 
   showDesc(index) {
     return this.getFormControl('types', index).value === 'OTHER';
+  }
+
+  getTotalNumberOfItems() {
+    return this.items.controls.length;
+  }
+
+  getTotalAmount() {
+    let totalAmount = 0;
+    this.items.controls.forEach((control) => {
+      totalAmount = totalAmount + parseInt(control.get('amount').value, 10);
+    });
+    return totalAmount;
   }
 }
