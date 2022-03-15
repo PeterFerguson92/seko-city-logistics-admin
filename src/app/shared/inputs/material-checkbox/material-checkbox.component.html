@@ -1,0 +1,7 @@
+<mat-checkbox #checkbox
+[(ngModel)]="value"
+[disabled]="disabled"
+(change)="onSelectionChange($event)"
+(blur)="onTouched()">
+{{label}}</mat-checkbox>
+

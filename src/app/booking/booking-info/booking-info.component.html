@@ -11,7 +11,8 @@
             <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="20" formControlName="postcode"></app-material-input>
             <div class="divider"></div>
             <app-material-select-input [label]="'Address'" [width]="100" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
-        </form>
+            <app-material-checkbox [label]="'Updates via whatsapp'"  (checkBoxChange)="onSelectionChange($event, 'updates')" formControlName="updates"></app-material-checkbox>
+          </form>
     </div>
   </div>
 </div>

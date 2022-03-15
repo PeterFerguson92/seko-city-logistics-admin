@@ -19,6 +19,7 @@ import { MaterialRadioButtonComponent } from './inputs/material-radio-button/mat
 import { DialogComponent } from './elements/dialog/dialog.component';
 import { AlertComponent } from './elements/alert/alert.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MaterialCheckboxComponent } from './inputs/material-checkbox/material-checkbox.component';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -29,6 +30,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MaterialSelectInputComponent,
     MaterialRadioButtonComponent,
     MaterialTextAreaInputComponent,
+    MaterialCheckboxComponent,
     ReportsComponent,
     ErrorMessageComponent,
     MaterialSpinnerComponent,
@@ -49,6 +51,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MaterialSelectInputComponent,
     MaterialRadioButtonComponent,
     MaterialTextAreaInputComponent,
+    MaterialCheckboxComponent,
     ReportsComponent,
     ErrorMessageComponent,
     MaterialSpinnerComponent,

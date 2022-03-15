@@ -25,22 +25,21 @@ export class BookingInfoComponent implements OnInit {
       time: [this.times[0], [Validators.required]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
-      agreedWhatsapp: [true, [Validators.required]]
+      updates: [true, [Validators.required]]
     })
   }
 
-  onInputChange(data, fControlName) {
+  onInputChange(event, fControlName) {
     const fControl = this.getFormControl(fControlName);
-    if (fControlName === 'date')
-    {
-      fControl.setValue(this.commonService.getFormattedDate(data))
-    }
+    fControl.setValue(this.commonService.getFormattedDate(event))
     fControl.markAsDirty();
   }
 
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
-    fControl.setValue(event.value);
+    const data = fControlName === 'updates' ? event.checked : event.value;
+    console.log(data)
+    fControl.setValue(data);
     fControl.markAsDirty();
   }
 
