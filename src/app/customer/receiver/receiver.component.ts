@@ -63,6 +63,10 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     fControl.markAsDirty();
   }
 
+  onLoadPreviousReceivers() {
+    console.log('something')
+  }
+
   isOtherLocationDisabled() {
     return false;
   }

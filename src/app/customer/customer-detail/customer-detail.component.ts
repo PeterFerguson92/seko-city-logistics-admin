@@ -234,6 +234,11 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       this.addEditCustomerForm.get(fControlName)
   }
 
+  getSenderDetails() {
+    return this.customer;
+  }
+
+
    ngOnDestroy() {
   //  this.createCustomer.unsubscribe();
   }

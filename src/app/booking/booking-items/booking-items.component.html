@@ -10,8 +10,8 @@
               <div [formGroupName] = 'i' >
                 <app-material-numeric-input [label]="'Number of Items'" (inputChange)='onInputChange($event, i)' formControlName="quantity"></app-material-numeric-input>
                 <div class="divider"></div>
-                <app-material-select-input [label]="'Type'"  [width]="15" [options]="types" formControlName="types"
-                    (selectionChange)="onSelectionChange($event, 'types', i)" [value]="types[0]"></app-material-select-input>
+                <app-material-select-input [label]="'Type'"  [width]="15" [options]="types" formControlName="type"
+                    (selectionChange)="onSelectionChange($event, 'type', i)" [value]="types[0]"></app-material-select-input>
                 <div class="divider"></div>
                 <div *ngIf = "showDesc(i)">
                   <app-material-input [label]="'Description'" [icon]="'person_pin'" [width]="25" formControlName="description"></app-material-input>

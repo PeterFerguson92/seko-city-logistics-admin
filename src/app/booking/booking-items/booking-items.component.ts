@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { BOOKING_ITEMS, BOOKING_ITEMS_DISPLAY_NAMES } from 'src/app/constants';
+
+export interface IItem {
+  quantity: number;
+  type: string;
+  description: string;
+  value: string;
+  pricePerUnit: string;
+  amount: number;
+}
 
 @Component({
   selector: 'app-booking-items',
@@ -29,7 +38,7 @@ export class BookingItemsComponent implements OnInit {
   buildItem(): FormGroup {
     return this.formBuilder.group({
       quantity: [ 1 , [Validators.required]],
-      types: [this.types[0], Validators.required],
+      type: [this.types[0], Validators.required],
       description: ['', Validators.required],
       value: ['', Validators.required],
       pricePerUnit: [this.typesObject[0].PRICE, Validators.required],
@@ -38,8 +47,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   onAddItem() {
-    console.log(this.getTotalAmount())
-
+    this.getItemsData()
     this.items.push(this.buildItem());
   }
 
@@ -66,7 +74,7 @@ export class BookingItemsComponent implements OnInit {
     this.getFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
 
     const descriptionFormControl = this.getFormControl('description', index);
-    if (fControlName === 'types' && event.value === 'OTHER')
+    if (fControlName === 'type' && event.value === 'OTHER')
     {
       descriptionFormControl.setValidators([Validators.required]);
       this.getFormControl('amount', index).setValue(0);
@@ -80,8 +88,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   onInputChange(quantity, index) {
-    console.log(index)
-    const pricePerUnit = this.getPricePerUnit(this.getFormControl('types', index).value);
+    const pricePerUnit = this.getPricePerUnit(this.getFormControl('type', index).value);
     this.getFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
   }
 
@@ -106,7 +113,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   showDesc(index) {
-    return this.getFormControl('types', index).value === 'OTHER';
+    return this.getFormControl('type', index).value === 'OTHER';
   }
 
   onShowItems() {
@@ -114,7 +121,11 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getTotalNumberOfItems() {
-    return this.items.controls.length;
+    let totalAmount = 0;
+    this.items.controls.forEach((control) => {
+      totalAmount = totalAmount + parseInt(control.get('quantity').value, 10);
+    });
+    return totalAmount;
   }
 
   getTotalAmount() {
@@ -123,5 +134,25 @@ export class BookingItemsComponent implements OnInit {
       totalAmount = totalAmount + parseInt(control.get('amount').value, 10);
     });
     return totalAmount;
+  }
+
+  getItemsData() {
+    const itemsData = [];
+    if (this.showItems)
+    {
+      this.items.controls.forEach((control) => {
+        itemsData.push(this.buildItemObject(control))
+      });
+    }
+    return itemsData;
+  }
+
+  buildItemObject(control: AbstractControl) {
+    const item: any = { quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }
+    Object.entries(item).forEach((key) => {
+      const attributeName = key[0];
+      item[attributeName] = control.get(attributeName).value;
+    })
+    return item;
   }
 }

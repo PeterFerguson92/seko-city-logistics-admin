@@ -1,10 +1,13 @@
 <button mat-raised-button  id="toggle-linear">
 </button>
-<mat-stepper linear #stepper>
+<mat-stepper linear (animationDone)="selectionChange(stepper)" #stepper>
   <mat-step >
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
       <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail>
+      <mat-divider></mat-divider>
+      <app-receiver></app-receiver>
+
       <!-- <app-booking-info></app-booking-info> -->
       <div>
         <button mat-button matStepperNext>Next</button>
@@ -21,7 +24,7 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
+  <!-- <mat-step>
     <form >
       <ng-template matStepLabel>Fill out receiver details</ng-template>
       <app-receiver></app-receiver>
@@ -30,7 +33,7 @@
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
-  </mat-step>
+  </mat-step> -->
   <mat-step>
     <form >
       <ng-template matStepLabel>Fill out pick up details</ng-template>
