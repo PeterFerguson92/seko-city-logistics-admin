@@ -7,7 +7,7 @@
           <div class="divider"></div>
           <app-material-button [label]="'Check availability'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onCheckAvailabilty()"></app-material-button><br>
           <app-material-select-input [label]="'Time'" [options]="times" formControlName="time"
-            (selectionChange)="onSelectionChange($event, 'time')"  [width]="40" [value]="times[0]"></app-material-select-input><br>
+            (selectionChange)="onSelectionChange($event, 'time')"  [width]="40" [value]="times[0]"></app-material-select-input>
             <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="20" formControlName="postcode"></app-material-input>
             <div class="divider"></div>
             <app-material-select-input [label]="'Address'" [width]="100" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>

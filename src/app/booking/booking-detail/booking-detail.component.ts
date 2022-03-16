@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
 import { BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
@@ -21,9 +22,17 @@ export class BookingDetailComponent implements OnInit {
   }
 
   selectionChange(stepper) {
-    console.log(stepper)
-    console.log(this.customerDetailComponent.getSenderDetails())
-    console.log(this.bookingItemsComponent.getItemsData())
+    // console.log(stepper)
+    // console.log(this.customerDetailComponent.getSenderDetails())
+    // console.log(this.bookingItemsComponent.getItemsData())
   }
+
+  goBack(stepper: MatStepper){
+    stepper.previous();
+  }
+
+  goForward(stepper: MatStepper){
+    stepper.next();
+  };
 
 }

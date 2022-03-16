@@ -22,7 +22,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   createCustomer;
   addresses = [];
   addEditCustomerForm: FormGroup;
-  formValidationMap = {fullName: '',phone: '',email: '',address: '',postcode: '',country: ''};
+  loadCustomerForm: FormGroup;
+  formValidationMap = {ref: '',fullName: '',phone: '',email: '',address: '',postcode: '',country: ''};
   titlePrefix = 'Add';
   types = CUSTOMER_TYPES;
   countries = COUNTRIES;
@@ -37,6 +38,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.setAttributes();
+    this.loadCustomerForm = this.formBuilder.group({
+      ref: ['', []]
+    });
+
     this.addEditCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
       fullName: ['', Validators.required],
@@ -66,6 +71,19 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   onAddEdit() {
     this.mode === ADD_CUSTOMER_MODE ? this.addCustomer() : this.editCustomer();
+  }
+
+  onLoadCustomer() {
+    this.customersService.getCustomerByReference(this.loadCustomerForm.get('ref').value).subscribe(
+      ({ data }) => {
+        console.log(data.customerByReference)
+        this.customer = data.customerByReference;
+        this.populateFields()
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   addCustomer() {
@@ -227,6 +245,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       return this.addEditCustomerForm.pristine || !this.addEditCustomerForm.valid;
     }
+   }
+
+   isLoadDisabled() {
+     return this.loadCustomerForm.get('ref').value === '';
    }
 
   getFormControl(fControlName: string) {
