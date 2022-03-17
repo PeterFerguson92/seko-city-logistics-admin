@@ -6,21 +6,19 @@
           <app-material-button [label]="'Load Previous'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()"></app-material-button><br>
           <br>
           <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
-            (selectionChange)="onSelectionChange($event, 'type')"  [width]="20" [value]="'PERSONAL'"></app-material-select-input>
+            (selectionChange)="onSelectionChange($event, 'type')"  [width]="10" [value]="types[0]"></app-material-select-input>
           <div class="divider"></div>
           <app-material-input [label]="'Full name'" [icon]="'person_pin'" [width]="40" formControlName="fullName" [errorMsg]="formValidationMap.fullName"></app-material-input>
           <div formGroupName="phoneGroup">
-            <app-material-select-input [label]="'Code'"  [width]="20" [options]="codes" formControlName="code"
-            (selectionChange)="onSelectionChange($event, 'phoneCountryCode')" [value]="codes[0]"></app-material-select-input>
+            <app-material-select-input [label]="'Code'"  [width]="10" [options]="codes" formControlName="code"
+            (selectionChange)="onSelectionChange($event, 'code')" [value]="codes[0]"></app-material-select-input>
             <div class="divider"></div>
             <app-material-input [label]="'Phone'" [type]="'phone'" [icon]="'person_pin'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input><br>
           </div>
           <app-material-select-input [label]="'Destination'" (selectionChange)="onSelectionChange($event, 'destination')" [options]="destinations" formControlName="destination"></app-material-select-input>
           <div class="divider"></div>
-          <app-material-input [label]="'Other destination'" [icon]="'person_pin'" [width]="40" *ngIf = "showOtherDestinations" [errorMsg]="formValidationMap.otherDestination" formControlName="otherDestination"></app-material-input><br>
-          <div class="alert-section">
-          <app-alert></app-alert>
-          </div>
+          <app-material-input [label]="'Location'" [icon]="'person_pin'" [width]="40" formControlName="otherDestination"></app-material-input><br>
+
           </form>
       </div>
     </div>

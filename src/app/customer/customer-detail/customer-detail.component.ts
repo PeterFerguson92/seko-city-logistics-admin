@@ -46,7 +46,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       type: [this.types[0], [Validators.required]],
       fullName: ['', Validators.required],
       phoneGroup: this.formBuilder.group({
-        phoneCountryCode: [this.countryCodes[0], [Validators.required]],
+        code: [this.countryCodes[0], [Validators.required]],
         phone: ['', [Validators.required]],
       }, { validators: [Validators.required, this.validationService.phoneValidator] }),
       email: ['', [Validators.email]],
@@ -62,7 +62,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit(): void {
     this.validateFormControl('fullName');
-    this.validateFormControl('phone');
     this.validateFormControl('email');
     this.validateFormControl('address');
     this.validateFormControl('postcode');
@@ -138,7 +137,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const fControl = this.getFormControl(fControlName);
     this.validationService.watchAndValidateFormControl(fControl)
       .subscribe(() => {
-        this.formValidationMap[fControlName] = this.validationService.setMessage(fControl, fControlName);
+        this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName);
       });
   }
 
@@ -147,11 +146,12 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const fMainControl = fGroup.get(fControlName);
     this.validationService.watchAndValidateFormControl(fGroup)
       .subscribe(() => {
-        this.formValidationMap.phone = this.validationService.setMessage(fGroup, fControlName);
+        this.formValidationMap.phone = this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName);
+        console.log( this.formValidationMap)
         if (fGroup.dirty && !fGroup.valid)
         {
           fMainControl.markAsDirty();
-          // fMainControl.setErrors({ telephone: 'Phone number' });
+          fMainControl.setErrors({ phone: 'Phone number' });
 
         } else
         {
@@ -181,7 +181,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       fullName: this.getFormControl('fullName').value,
       address: this.getFormControl('address').value,
       postcode: this.getFormControl('postcode').value,
-      phone: this.commonService.getFormattedPhoneNumber(this.getFormControl('phoneCountryCode').value , this.getFormControl('phone').value),
+      phone: this.commonService.getFormattedPhoneNumber(this.getFormControl('code').value , this.getFormControl('phone').value),
       email: this.getFormControl('email').value,
       country: this.getFormControl('country').value,
       type: this.getFormControl('type').value,
@@ -252,7 +252,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
    }
 
   getFormControl(fControlName: string) {
-    return fControlName === 'phone' || fControlName === 'phoneCountryCode' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
+    return fControlName === 'phone' || fControlName === 'code' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
       this.addEditCustomerForm.get(fControlName)
   }
 

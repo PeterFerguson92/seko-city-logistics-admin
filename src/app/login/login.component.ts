@@ -67,6 +67,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   validateFormControl(fControlName: string) {
     const fControl = this.authForm.get(fControlName);
     this.validationService.watchAndValidateFormControl(fControl)
-      .subscribe(value => this.formValidationMap[fControlName] = this.validationService.setMessage(fControl, fControlName));
+      .subscribe(value => this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName));
   }
 }

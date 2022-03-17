@@ -30,7 +30,7 @@ export class ValidationService {
 
   private phoneValidationMessages = {
     required: 'Please enter phone number.',
-    telephone: 'Phone number not valid.'
+    phone: 'Phone number not valid.'
   };
 
   private passwordValidationMessages = {
@@ -102,32 +102,42 @@ export class ValidationService {
   };
 
   phoneValidator = (formGroup: FormGroup): { [key: string]: boolean } | null => {
-    const countryCode = formGroup.get('phoneCountryCode').value;
+    const countryCode = formGroup.get('code').value;
     const phoneNumber = formGroup.get('phone').value;
     if (phoneNumber.length !== 0)
     {
       if (!isValidPhoneNumber(this.commonService.getFormattedPhoneNumber(countryCode, phoneNumber)))
       {
-        return { telephone: true };
+        return { phone: true };
       }
       return null;
-    } else
-    {
-      return null;
     }
+    return null;
   };
 
   watchAndValidateFormControl(fControl: AbstractControl) {
     return fControl.valueChanges.pipe(debounceTime(1000));
   }
 
-  setMessage(fControl: AbstractControl, fControlName: string): string | null {
+  getValidationMessage(fControl: AbstractControl, fControlName: string): string | null {
     const validationMessages = this.formMap[fControlName];
-    if ((fControl.touched || fControl.dirty) && fControl.errors)
+    if ((fControl.touched || fControl.dirty ) && fControl.errors)
     {
       return Object.keys(fControl.errors).map(
         key => validationMessages[key])[0];
     }
     return null;
+  }
+
+  getGroupValidationMessage(fGroup: AbstractControl, fMainControl: AbstractControl, fControlName: string): string | null {
+    const validationMessages = this.formMap[fControlName];
+    if ((fMainControl.touched || fMainControl.dirty ) && fMainControl.errors)
+    {
+      return Object.keys(fMainControl.errors).map(
+        key => validationMessages[key])[0];
+    } else
+    {
+      return this.getValidationMessage(fGroup, fControlName)
+    }
   }
 }
