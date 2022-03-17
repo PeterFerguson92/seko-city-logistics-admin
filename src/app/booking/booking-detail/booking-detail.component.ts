@@ -22,17 +22,33 @@ export class BookingDetailComponent implements OnInit {
   }
 
   selectionChange(stepper) {
-    // console.log(stepper)
-    // console.log(this.customerDetailComponent.getSenderDetails())
-    // console.log(this.bookingItemsComponent.getItemsData())
+    console.log(stepper)
+    console.log(this.customerDetailComponent.getSenderDetails())
+    console.log(this.customerDetailComponent.isDisabled())
+    console.log(this.bookingItemsComponent.getItemsData())
   }
 
-  goBack(stepper: MatStepper){
+  isDisabled(componentName: string) {
+    if (componentName === 'customerDetailComponent')
+    {
+      console.log(this.customerDetailComponent.getSenderDetails())
+      return true
+      // return this.customerDetailComponent.isDisabled();
+    } else
+    {
+      return true
+    }
+  }
+
+  goBack(stepper: MatStepper, componentName: string){
     stepper.previous();
   }
 
-  goForward(stepper: MatStepper){
-    stepper.next();
+  goForward(stepper: MatStepper, componentName: string) {
+    if (!this[componentName].isDisabled())
+    {
+      stepper.next();
+    }
   };
 
 }

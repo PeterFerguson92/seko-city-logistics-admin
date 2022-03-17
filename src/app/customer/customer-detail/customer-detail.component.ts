@@ -18,7 +18,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   @Output() closeDialog = new EventEmitter<string>();
 
   buttonLabel;
-  hideCancelButton;
+  showLoading = false;
   createCustomer;
   addresses = [];
   addEditCustomerForm: FormGroup;
@@ -76,8 +76,14 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     this.customersService.getCustomerByReference(this.loadCustomerForm.get('ref').value).subscribe(
       ({ data }) => {
         console.log(data.customerByReference)
-        this.customer = data.customerByReference;
-        this.populateFields()
+        if (data.customerByReference)
+        {
+          this.customer = data.customerByReference;
+          this.populateFields()
+        } else
+        {
+          this.alertService.success('Customer not found', this.alertOptions);
+        }
       },
       error => {
         console.log(error);
@@ -133,6 +139,62 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
+
+
+  onSelectionChange(event: any, fControlName: string) {
+    const fControl = this.getFormControl(fControlName);
+    fControl.setValue(event.value);
+    fControl.markAsDirty();
+  }
+
+  onCancel() {
+    this.closeDialog.next('closeDialog');
+  }
+
+  getAddressByPostcode() {
+    const postcodeFormControl = this.getFormControl('postcode');
+    if (!postcodeFormControl.invalid)
+    {
+      this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
+      return this.addresses;
+    }
+  }
+
+  getCustomerAttributes(): ICustomer {
+   return  {
+      uuid: '',
+      fullName: this.getFormControl('fullName').value,
+      address: this.getFormControl('address').value,
+      postcode: this.getFormControl('postcode').value,
+      phone: this.commonService.getFormattedPhoneNumber(this.getFormControl('code').value , this.getFormControl('phone').value),
+      email: this.getFormControl('email').value,
+      country: this.getFormControl('country').value,
+      type: this.getFormControl('type').value,
+      destination: ''
+    };
+  }
+
+  populateFields() {
+    const mainFormControl = this.addEditCustomerForm;
+    const phoneGroupFormControl = this.addEditCustomerForm.get('phoneGroup');
+
+    mainFormControl.patchValue({
+      type: this.customer.type === '' ? this.types[0] : this.customer.type,
+      fullName: this.customer.fullName,
+      email: this.customer.email,
+      address: this.customer.address,
+      postcode: this.customer.postcode,
+      country: this.customer.country === '' ? this.countries[0] : this.customer.country
+    });
+
+    const fullPhone = this.customer.phone;
+    const spaceIndex = fullPhone.indexOf(' ');  // Gets the first index where a space occours
+    const phoneCountryCode = fullPhone.substr(0, spaceIndex); // Gets the first part
+    const phone = fullPhone.substr(spaceIndex + 1);
+
+    phoneGroupFormControl.patchValue({phone, phoneCountryCode});
+  }
+
   validateFormControl(fControlName: string) {
     const fControl = this.getFormControl(fControlName);
     this.validationService.watchAndValidateFormControl(fControl)
@@ -160,65 +222,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       });
   }
 
-  onSelectionChange(event: any, fControlName: string) {
-    const fControl = this.getFormControl(fControlName);
-    fControl.setValue(event.value);
-    fControl.markAsDirty();
-  }
-
-  getAddressByPostcode() {
-    const postcodeFormControl = this.getFormControl('postcode');
-    if (!postcodeFormControl.invalid)
-    {
-      this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
-      return this.addresses;
-    }
-  }
-
-  getCustomerAttributes(): ICustomer {
-   return  {
-      uuid: '',
-      fullName: this.getFormControl('fullName').value,
-      address: this.getFormControl('address').value,
-      postcode: this.getFormControl('postcode').value,
-      phone: this.commonService.getFormattedPhoneNumber(this.getFormControl('code').value , this.getFormControl('phone').value),
-      email: this.getFormControl('email').value,
-      country: this.getFormControl('country').value,
-      type: this.getFormControl('type').value,
-      destination: ''
-    };
-  }
-
-  onCancel() {
-    this.closeDialog.next('closeDialog');
-  }
-
-  populateFields() {
-    const mainFormControl = this.addEditCustomerForm;
-    const phoneGroupFormControl = this.addEditCustomerForm.get('phoneGroup');
-
-    mainFormControl.patchValue({
-      type: this.customer.type === '' ? this.types[0] : this.customer.type,
-      fullName: this.customer.fullName,
-      email: this.customer.email,
-      address: this.customer.address,
-      postcode: this.customer.postcode,
-      country: this.customer.country === '' ? this.countries[0] : this.customer.country
-    });
-
-    const fullPhone = this.customer.phone;
-    const spaceIndex = fullPhone.indexOf(' ');  // Gets the first index where a space occours
-    const phoneCountryCode = fullPhone.substr(0, spaceIndex); // Gets the first part
-    const phone = fullPhone.substr(spaceIndex + 1);
-
-    phoneGroupFormControl.patchValue({phone, phoneCountryCode});
-  }
-
   setAttributes() {
-    this.hideCancelButton = this.mode !== BOOK_CUSTOMER_MODE;
-
     if (this.mode !== BOOK_CUSTOMER_MODE)
     {
+      this.showLoading = false;
       if (this.mode === ADD_CUSTOMER_MODE)
       {
         this.titlePrefix = 'Add';
@@ -232,24 +239,23 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       this.titlePrefix = 'Book';
       this.buttonLabel = 'Update'
+      this.showLoading = true;
     }
   }
 
     // TODO find a way to proper handle enable/disable of button, at the moment it's enabled when a value is changed,
     // to find a way to enable when the value have actually changed
-   isDisabled() {
-    if (this.mode === ADD_CUSTOMER_MODE)
-    {
-      return !this.addEditCustomerForm.valid;
-    } else
-    {
-      return this.addEditCustomerForm.pristine || !this.addEditCustomerForm.valid;
-    }
-   }
+  isDisabled() {
+    return !this.addEditCustomerForm.valid;
+  }
 
-   isLoadDisabled() {
+  isLoadDisabled() {
      return this.loadCustomerForm.get('ref').value === '';
-   }
+  }
+
+  isBookingMode() {
+    return this.mode === BOOK_CUSTOMER_MODE;
+  }
 
   getFormControl(fControlName: string) {
     return fControlName === 'phone' || fControlName === 'code' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :

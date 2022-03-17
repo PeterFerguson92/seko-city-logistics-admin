@@ -3,10 +3,15 @@
       <h4 class="sub-heading-agileits">{{titlePrefix}} Customer</h4>
       <div class="main-flex-w3ls-sectns">
           <form [formGroup]="addEditCustomerForm" >
-            <form [formGroup]="loadCustomerForm" >
+            <form *ngIf="isBookingMode()" [formGroup]="loadCustomerForm" >
               <app-material-input [label]="'Reference'" [icon]="'person_pin'" formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>
               <div class="divider"></div>
-              <app-material-button [label]="'Load Customer'" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button><br>
+              <app-material-button [label]="'Load Customer'" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
+              <app-alert></app-alert>
+
+                <!-- <div *ngIf="isBookingMode()" class="alert-section">
+                <app-alert></app-alert>
+              </div> -->
             </form>
             <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
               (selectionChange)="onSelectionChange($event, 'type')"  [width]="20" [value]="'PERSONAL'"></app-material-select-input>
@@ -24,16 +29,15 @@
             <div class="divider"></div>
             <app-material-select-input [label]="'Address'" [width]="40" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
             <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input><br>
-            <div align="end"  *ngIf = "hideCancelButton">
+            <div align="end" *ngIf="!isBookingMode()">
               <app-material-button  [label]="'Cancel'" [color]="" (click)="onCancel()"></app-material-button>
               <div class="divider"></div>
               <app-material-button [label]="buttonLabel" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
               <div class="divider"></div>
-              <app-material-button [label]="'Next'" [color]="'primary'" [backgroundColor]="'#004e92'"></app-material-button>
             </div>
-            <div class="alert-section">
+            <!-- <div *ngIf="isBookingMode()" class="alert-section">
               <app-alert></app-alert>
-            </div>
+            </div> -->
             </form>
         </div>
       </div>

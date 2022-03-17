@@ -8,7 +8,7 @@
       <!-- <app-receiver></app-receiver> -->
       <!-- <app-booking-info></app-booking-info> -->
       <div align="center" >
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="goForward(stepper, 'customerDetailComponent')" >Next</button>
       </div>
     </form>
   </mat-step>
