@@ -25,7 +25,7 @@
                 <div class="divider"></div>
                 <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" (click)="onDeleteItem(i)"></app-material-button>
                 <div class="divider"></div>
-                <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onAddItem()"></app-material-button>
+                <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'" [disabled]="isItemValuePopulated(i)" (click)="onAddItem(i)"></app-material-button>
                 <mat-divider></mat-divider>
                 <div class="divider"></div>
                 <div class="divider"></div>

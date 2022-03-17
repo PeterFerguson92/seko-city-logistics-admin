@@ -108,4 +108,8 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
         }
       });
   }
+
+  isDisabled() {
+    return !this.receiverCustomerForm.valid;
+  }
 }

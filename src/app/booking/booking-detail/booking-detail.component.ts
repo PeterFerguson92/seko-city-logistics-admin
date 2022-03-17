@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
+import { ReceiverComponent } from 'src/app/customer/receiver/receiver.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
 
 @Component({
@@ -10,11 +11,12 @@ import { BookingItemsComponent } from '../booking-items/booking-items.component'
   styleUrls: ['./booking-detail.component.css', '../../shared/shared.css']
 })
 export class BookingDetailComponent implements OnInit {
-  @ViewChild(CustomerDetailComponent) customerDetailComponent:CustomerDetailComponent;
-  @ViewChild(BookingItemsComponent) bookingItemsComponent:BookingItemsComponent;
-
+  @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;
+  @ViewChild(ReceiverComponent) receiverComponent:ReceiverComponent;
+  @ViewChild(BookingItemsComponent) bookingItemsComponent: BookingItemsComponent;
   @Input() booking;
   mode
+
   constructor() { }
 
   ngOnInit(): void {
@@ -22,10 +24,10 @@ export class BookingDetailComponent implements OnInit {
   }
 
   selectionChange(stepper) {
-    console.log(stepper)
-    console.log(this.customerDetailComponent.getSenderDetails())
-    console.log(this.customerDetailComponent.isDisabled())
-    console.log(this.bookingItemsComponent.getItemsData())
+    // console.log(stepper)
+    // console.log(this.customerDetailComponent.getSenderDetails())
+    // console.log(this.customerDetailComponent.isDisabled())
+    // console.log(this.bookingItemsComponent.getItemsData())
   }
 
   isDisabled(componentName: string) {
@@ -45,10 +47,12 @@ export class BookingDetailComponent implements OnInit {
   }
 
   goForward(stepper: MatStepper, componentName: string) {
-    if (!this[componentName].isDisabled())
-    {
-      stepper.next();
-    }
+          stepper.next();
+
+    // if (!this[componentName].isDisabled())
+    // {
+    //   stepper.next();
+    // }
   };
 
 }

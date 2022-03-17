@@ -10,3 +10,8 @@ button{
   margin-left:25%;
   margin-right:25%;
 }
+
+
+.mat-expansion-panel-header-title {
+  font-weight: bold;
+}

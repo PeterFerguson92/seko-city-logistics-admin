@@ -4,9 +4,9 @@
   <mat-step >
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
-      <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail>
-      <!-- <app-receiver></app-receiver> -->
-      <!-- <app-booking-info></app-booking-info> -->
+      <!-- <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail> -->
+      <app-booking-items></app-booking-items>
+
       <div align="center" >
         <button mat-button (click)="goForward(stepper, 'customerDetailComponent')" >Next</button>
       </div>
@@ -14,19 +14,19 @@
   </mat-step>
   <mat-step>
     <form >
-      <ng-template matStepLabel>Fill out item details</ng-template>
+      <ng-template matStepLabel>Fill out receiver details</ng-template>
       <app-receiver></app-receiver>
       <!-- <app-material-button [label]="'Back'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="goBack(stepper)"></app-material-button>
       <app-material-button [label]="'Next'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="goForward(stepper)"></app-material-button> -->
-      <div align="center" >
+      <div align="center">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="goForward(stepper, 'receiverComponent')">Next</button>
       </div>
     </form>
   </mat-step>
   <mat-step>
     <form >
-      <ng-template matStepLabel>Fill out receiver details</ng-template>
+      <ng-template matStepLabel>Fill out items details</ng-template>
       <app-booking-items></app-booking-items>
       <div align="center" >
         <button mat-button matStepperPrevious>Back</button>
