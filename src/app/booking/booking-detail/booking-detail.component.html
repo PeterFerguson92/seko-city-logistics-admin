@@ -4,7 +4,8 @@
   <mat-step >
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
-      <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail>
+      <app-booking-review></app-booking-review>
+      <!-- <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail> -->
       <div align="end" >
         <button mat-button (click)="onForward(stepper, 'customerDetailComponent')"> Next</button>
       </div>

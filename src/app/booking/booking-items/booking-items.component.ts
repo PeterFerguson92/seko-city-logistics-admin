@@ -161,7 +161,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getItemsDetails() {
-    return {items: this.getItemsDataDetails(), paymentInfo: this.getPaymentInfoDetails()}
+    return {items: this.getItemsDataDetails(), paymentInfo: this.getPaymentInfoDetails(), totalNumberOfItems: this.getTotalNumberOfItems()}
   }
 
   getItemsDataDetails() {
@@ -185,6 +185,7 @@ export class BookingItemsComponent implements OnInit {
       const attributeName = key[0];
       payment[attributeName] = this.getPaymentFormControl(attributeName).value;
     })
+    payment.totalAmount = this.getTotalAmount();
     return payment;
   }
 

@@ -1,25 +1,152 @@
-<mat-accordion>
-  <mat-expansion-panel hideToggle>
+<mat-accordion [multi]="true">
+  <mat-expansion-panel hideToggle [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        This is the expansion title
+        Sender Details
       </mat-panel-title>
-      <mat-panel-description>
+      <!-- <mat-panel-description>
         This is a summary of the content
-      </mat-panel-description>
+      </mat-panel-description> -->
     </mat-expansion-panel-header>
-    <p>This is the primary content of the panel.</p>
+    <!-- <p>Type: {{booking.sender2.type}} -  <b>Full Name: </b>{{booking.sender2.fullName}}</p> -->
+    <table>
+      <tr>
+        <th class="details">Details</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Type</td>
+        <td>{{booking.sender2.type}}</td>
+      </tr>
+      <tr>
+        <td>Full name</td>
+        <td>{{booking.sender2.fullName}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{booking.sender2.email}}</td>
+      </tr>
+      <tr>
+        <td>Code</td>
+        <td>{{booking.sender2.code}}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>{{booking.sender2.phone}}</td>
+      </tr>
+      <tr>
+        <td>Postcode</td>
+        <td>{{booking.sender2.postcode}}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>{{booking.sender2.address}}</td>
+      </tr>
+    </table>
   </mat-expansion-panel>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
+  <mat-expansion-panel  [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Self aware panel
+        Receiver Details
       </mat-panel-title>
-      <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
-      </mat-panel-description>
+      <!-- <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description> -->
     </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
+    <!-- <p>Type: {{booking.sender2.type}} -  <b>Full Name: </b>{{booking.sender2.fullName}}</p> -->
+    <table>
+      <tr>
+        <th class="details">Details</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Type</td>
+        <td>{{booking.receiver.type}}</td>
+      </tr>
+      <tr>
+        <td>Full name</td>
+        <td>{{booking.receiver.fullName}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{booking.sender2.email}}</td>
+      </tr>
+      <tr>
+        <td>Code</td>
+        <td>{{booking.receiver.code}}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>{{booking.receiver.phone}}</td>
+      </tr>
+      <tr>
+        <td>Destination</td>
+        <td>{{booking.receiver.destination}}</td>
+      </tr>
+      <tr>
+        <td>Location</td>
+        <td>{{booking.receiver.otherDestination}}</td>
+      </tr>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Items Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table>
+      <tr>
+        <th class="details">Quantity</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Value</th>
+        <th>Price per unit</th>
+        <th>Amount</th>
+      </tr>
+      <tr *ngFor="let item of booking.items.items">
+        <td>{{item.quantity}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.description}}</td>
+        <td>£{{item.value}}</td>
+        <td>£{{item.pricePerUnit}}</td>
+        <td>£{{item.amount}}</td>
+      </tr>
+      <br>
+      <p><b>Number of items:</b> <br>{{booking.items.totalNumberOfItems}}</p>
+      <p><b>Total amount:</b> <br>£{{booking.items.paymentInfo.totalAmount}}</p>
+      <p><b>Selected payment type:</b> <br>{{booking.items.paymentInfo.paymentType}}</p>
+      <p><b>Selected payment status:</b> <br>{{booking.items.paymentInfo.paymentStatus}}</p>
+      <p><b>Notes:</b> <br>{{booking.items.paymentInfo.notes}}</p>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Pick Up Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table>
+      <tr>
+        <th class="details">Details</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Date</td>
+        <td>{{booking.info.date}}</td>
+      </tr>
+      <tr>
+        <td>Time</td>
+        <td>{{booking.info.time}}</td>
+      </tr>
+      <tr>
+        <td>Postcode</td>
+        <td>{{booking.info.postcode}}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>{{booking.info.address}}</td>
+      </tr>
+    </table>
   </mat-expansion-panel>
 </mat-accordion>
