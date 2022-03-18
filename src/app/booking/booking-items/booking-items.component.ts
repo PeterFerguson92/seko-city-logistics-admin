@@ -184,9 +184,10 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getPaymentInfoDetails() {
-    const payment: any = { paymentType: '', paymentStatus: '', notes: '', totalAmount: 0}
+    const payment: any = { paymentType: '', paymentStatus: '', notes: ''}
     if (!this.showItems)
     {
+      payment.totalAmount = 0;
       return payment
     }
     Object.entries(payment).forEach((key) => {
