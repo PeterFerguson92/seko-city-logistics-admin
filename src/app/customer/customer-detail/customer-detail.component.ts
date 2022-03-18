@@ -34,7 +34,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     private customersService: CustomersService,
     private commonService: CommonService,
     private validationService: ValidationService,
-    public alertService: AlertService) { }
+    private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.setAttributes();

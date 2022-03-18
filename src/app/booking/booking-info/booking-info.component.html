@@ -1,17 +1,18 @@
 <div class="bodys">
   <div class="booking-form-w3layouts">
-      <h4 class="sub-heading-agileits">PickUp Details</h4>
       <div class="main-flex-w3ls-sectns">
         <form [formGroup]="bookingInfoForm" >
+          <h4 class="sub-heading-agileits">PickUp Details</h4><br><br>
           <app-material-date-picker-input [label]="'Pick-Up Date'" (inputChange)="onInputChange($event, 'date')" formControlName="date"></app-material-date-picker-input>
           <div class="divider"></div>
           <app-material-button [label]="'Check availability'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onCheckAvailabilty()"></app-material-button><br>
           <app-material-select-input [label]="'Time'" [options]="times" formControlName="time"
-            (selectionChange)="onSelectionChange($event, 'time')"  [width]="40" [value]="times[0]"></app-material-select-input>
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="20" formControlName="postcode"></app-material-input>
+            (selectionChange)="onSelectionChange($event, 'time')"  [width]="20" [value]="times[0]"></app-material-select-input><br>
             <div class="divider"></div>
-            <app-material-select-input [label]="'Address'" [width]="100" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
-            <app-material-checkbox [label]="'Updates via whatsapp'"  (checkBoxChange)="onSelectionChange($event, 'updates')" formControlName="updates"></app-material-checkbox>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="15" formControlName="postcode"></app-material-input>
+            <div class="divider"></div>
+            <app-material-select-input [label]="'Address'" [width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
+            <app-material-checkbox [label]="'Updates via whatsapp'"  (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
           </form>
     </div>
   </div>

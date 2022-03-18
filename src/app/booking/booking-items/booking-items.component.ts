@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { BOOKING_ITEMS, BOOKING_ITEMS_DISPLAY_NAMES } from 'src/app/constants';
+import { BOOKING_ITEMS, BOOKING_ITEMS_DISPLAY_NAMES, PAYMENT_STATUSES, PAYMENT_TYPES } from 'src/app/constants';
+import { AlertService } from 'src/app/shared/elements/alert/alert.service';
 
 export interface IItem {
   quantity: number;
@@ -19,9 +20,12 @@ export interface IItem {
 export class BookingItemsComponent implements OnInit {
   showItems = false;
   bookingItemForm: FormGroup;
+  paymentForm: FormGroup;
   showDescription = false;
   types = BOOKING_ITEMS_DISPLAY_NAMES;
   typesObject = BOOKING_ITEMS
+  paymentTypes = PAYMENT_TYPES
+  paymentStatuses = PAYMENT_STATUSES
 
   get items(): FormArray {
     return this.bookingItemForm.get('items') as FormArray;
@@ -33,13 +37,19 @@ export class BookingItemsComponent implements OnInit {
     this.bookingItemForm = this.formBuilder.group({
       items: this.formBuilder.array([this.buildItem()])
     });
+
+    this.paymentForm = this.formBuilder.group({
+      paymentType: [this.paymentTypes[0] , [Validators.required]],
+      paymentStatus: [this.paymentStatuses[0], Validators.required],
+      notes: ['', []]
+    })
   }
 
   buildItem(): FormGroup {
     return this.formBuilder.group({
       quantity: [ 1 , [Validators.required]],
       type: [this.types[0], Validators.required],
-      description: ['', Validators.required],
+      description: [''],
       value: ['', Validators.required],
       pricePerUnit: [this.typesObject[0].PRICE, Validators.required],
       amount: [parseInt(this.typesObject[0].PRICE, 10) * 1, Validators.required]
@@ -65,26 +75,33 @@ export class BookingItemsComponent implements OnInit {
   }
 
   onSelectionChange(event: any, fControlName: string, index) {
-    const fControl = this.getItemFormControl(fControlName, index);
-    fControl.setValue(event.value);
-    fControl.markAsDirty();
-
-    const quantity = this.getItemFormControl('quantity', index).value;
-    const pricePerUnit = this.getPricePerUnit(event.value);
-    this.getItemFormControl('pricePerUnit', index).setValue(pricePerUnit);
-    this.getItemFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
-
-    const descriptionFormControl = this.getItemFormControl('description', index);
-    if (fControlName === 'type' && event.value === 'OTHER')
+    if (fControlName === 'paymentType' || fControlName === 'paymentStatus')
     {
-      descriptionFormControl.setValidators([Validators.required]);
-      this.getItemFormControl('amount', index).setValue(0);
-      this.getItemFormControl('pricePerUnit', index).setValue(0);
+      this.paymentForm.get(fControlName).setValue(event.value);
     } else
     {
-      descriptionFormControl.setValidators([]);
-      descriptionFormControl.markAsPristine();
-      descriptionFormControl.setValue('');
+      const fControl = this.getItemFormControl(fControlName, index);
+      fControl.setValue(event.value);
+      fControl.markAsDirty();
+
+      const quantity = this.getItemFormControl('quantity', index).value;
+      const pricePerUnit = this.getPricePerUnit(event.value);
+      this.getItemFormControl('pricePerUnit', index).setValue(pricePerUnit);
+      this.getItemFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
+
+      const descriptionFormControl = this.getItemFormControl('description', index);
+      if (fControlName === 'type' && event.value === 'OTHER')
+      {
+        console.log(939393)
+        descriptionFormControl.setValidators([Validators.required]);
+        this.getItemFormControl('amount', index).setValue(0);
+        this.getItemFormControl('pricePerUnit', index).setValue(0);
+      } else
+      {
+        descriptionFormControl.setValidators([]);
+        descriptionFormControl.markAsPristine();
+        descriptionFormControl.setValue('');
+      }
     }
   }
 
@@ -141,7 +158,7 @@ export class BookingItemsComponent implements OnInit {
     return totalAmount;
   }
 
-  getItemsData() {
+  getItemsDetails() {
     const itemsData = [];
     if (this.showItems)
     {
@@ -159,5 +176,9 @@ export class BookingItemsComponent implements OnInit {
       item[attributeName] = control.get(attributeName).value;
     })
     return item;
+  }
+
+  isDisabled() {
+    return !this.showItems ? false : !this.bookingItemForm.valid;
   }
 }

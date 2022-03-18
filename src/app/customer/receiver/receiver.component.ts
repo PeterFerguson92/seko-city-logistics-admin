@@ -40,8 +40,6 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
   ngAfterViewInit(): void {
     this.validateFormControl('type');
     this.validateFormControl('fullName');
@@ -107,6 +105,15 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
           fGroup.setErrors(null);
         }
       });
+  }
+
+  getReceiverDetails() {
+    const receiver: any = { type: '', code: '', phone: '', destination: '', otherDestination: '' }
+    Object.entries(receiver).forEach((key) => {
+      const attributeName = key[0];
+      receiver[attributeName] = this.getFormControl(attributeName).value;
+    })
+    return receiver;
   }
 
   isDisabled() {

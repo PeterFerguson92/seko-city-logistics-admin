@@ -3,6 +3,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
 import { ReceiverComponent } from 'src/app/customer/receiver/receiver.component';
+import { BookingInfoComponent } from '../booking-info/booking-info.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
 
 @Component({
@@ -14,6 +15,8 @@ export class BookingDetailComponent implements OnInit {
   @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;
   @ViewChild(ReceiverComponent) receiverComponent:ReceiverComponent;
   @ViewChild(BookingItemsComponent) bookingItemsComponent: BookingItemsComponent;
+  @ViewChild(BookingInfoComponent) bookingInfoComponent: BookingInfoComponent;
+
   @Input() booking;
   mode
 
@@ -42,17 +45,20 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
-  goBack(stepper: MatStepper, componentName: string){
-    stepper.previous();
-  }
-
-  goForward(stepper: MatStepper, componentName: string) {
-          stepper.next();
-
+  onForward(stepper: MatStepper, componentName: string) {
+    stepper.next()
     // if (!this[componentName].isDisabled())
     // {
     //   stepper.next();
     // }
   };
+
+  onCreateBooking() {
+    console.log(this.customerDetailComponent.getSenderDetails())
+    console.log(this.receiverComponent.getReceiverDetails())
+    console.log(this.bookingItemsComponent.getItemsDetails())
+    console.log(this.bookingInfoComponent.getInfoDetails())
+
+  }
 
 }

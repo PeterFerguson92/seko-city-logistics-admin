@@ -28,15 +28,21 @@
                 <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'" [disabled]="isItemValuePopulated(i)" (click)="onAddItem(i)"></app-material-button>
                 <mat-divider></mat-divider>
                 <div class="divider"></div>
-                <div class="divider"></div>
-                <div class="alert-section">
-                <app-alert></app-alert>
-                </div>
               </div>
             </div>
           </form>
           <p>Total number of items: {{getTotalNumberOfItems()}} </p>
           <p>Total amount: £{{getTotalAmount()}} </p>
+          <form [formGroup]="paymentForm" >
+            <app-material-select-input [label]="'Payment type'"  [width]="10" [options]="paymentTypes" formControlName="paymentType"
+            (selectionChange)="onSelectionChange($event, 'paymentType', 0)" [value]="paymentTypes[0]"></app-material-select-input>
+            <div class="divider"></div>
+            <app-material-select-input [label]="'Payment status'"  [width]="10" [options]="paymentStatuses" formControlName="paymentStatus"
+            (selectionChange)="onSelectionChange($event, 'paymentStatus', 0)" [value]="paymentStatuses[0]"></app-material-select-input>
+            <div class="divider"></div>
+            <app-material-input [label]="'Notes'" [icon]="'person_pin'" [width]="40"  formControlName="notes"></app-material-input>
+          </form>
+
       </div>
     </div>
 </div>

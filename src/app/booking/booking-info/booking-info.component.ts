@@ -25,7 +25,7 @@ export class BookingInfoComponent implements OnInit {
       time: [this.times[0], [Validators.required]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
-      updates: [true, [Validators.required]]
+      updatesViaWhatsapp: [true, [Validators.required]]
     })
   }
 
@@ -38,7 +38,6 @@ export class BookingInfoComponent implements OnInit {
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
     const data = fControlName === 'updates' ? event.checked : event.value;
-    console.log(data)
     fControl.setValue(data);
     fControl.markAsDirty();
   }
@@ -58,6 +57,19 @@ export class BookingInfoComponent implements OnInit {
       this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
       return this.addresses;
     }
+  }
+
+  isDisabled() {
+    return !this.bookingInfoForm.valid;
+  }
+
+  getInfoDetails() {
+    const info: any = { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '' }
+    Object.entries(info).forEach((key) => {
+      const attributeName = key[0];
+      info[attributeName] = this.getFormControl(attributeName).value;
+    })
+    return info;
   }
 
 
