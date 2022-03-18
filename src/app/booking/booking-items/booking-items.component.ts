@@ -146,6 +146,10 @@ export class BookingItemsComponent implements OnInit {
 
   getTotalNumberOfItems() {
     let total = 0;
+    if (!this.showItems)
+    {
+      return total;
+    }
     this.items.controls.forEach((control) => {
       total = total + parseInt(control.get('quantity').value, 10);
     });
@@ -154,6 +158,10 @@ export class BookingItemsComponent implements OnInit {
 
   getTotalAmount() {
     let totalAmount = 0;
+    if (!this.showItems)
+    {
+      return totalAmount;
+    }
     this.items.controls.forEach((control) => {
       totalAmount = totalAmount + parseInt(control.get('amount').value, 10);
     });
@@ -176,7 +184,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getPaymentInfoDetails() {
-    const payment: any = { paymentType: '', paymentStatus: '', notes: ''}
+    const payment: any = { paymentType: '', paymentStatus: '', notes: '', totalAmount: 0}
     if (!this.showItems)
     {
       return payment

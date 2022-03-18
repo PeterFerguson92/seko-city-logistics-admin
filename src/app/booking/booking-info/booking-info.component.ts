@@ -31,13 +31,13 @@ export class BookingInfoComponent implements OnInit {
 
   onInputChange(event, fControlName) {
     const fControl = this.getFormControl(fControlName);
-    fControl.setValue(this.commonService.getFormattedDate(event))
+    fControl.setValue(event)
     fControl.markAsDirty();
   }
 
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
-    const data = fControlName === 'updates' ? event.checked : event.value;
+    const data = fControlName === 'updatesViaWhatsapp' ? event.checked : event.value;
     fControl.setValue(data);
     fControl.markAsDirty();
   }
