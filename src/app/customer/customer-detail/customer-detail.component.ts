@@ -50,8 +50,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         phone: ['', [Validators.required]],
       }, { validators: [Validators.required, this.validationService.phoneValidator] }),
       email: ['', [Validators.email]],
-      address: ['', [Validators.required]],
       postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
+      address: ['', [Validators.required]],
       country: [this.countries[0], [Validators.required]]
     });
     if (this.customer && this.mode !== ADD_CUSTOMER_MODE)
@@ -263,7 +263,12 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getSenderDetails() {
-    return this.customer;
+    const sender: any = { type: '', fullName: '', code: '', phone: '', email: '', postcode: '' , address:'', country: ''}
+    Object.entries(sender).forEach((key) => {
+      const attributeName = key[0];
+      sender[attributeName] = this.getFormControl(attributeName).value;
+    })
+    return sender;
   }
 
 

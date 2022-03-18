@@ -46,18 +46,19 @@ export class BookingDetailComponent implements OnInit {
   }
 
   onForward(stepper: MatStepper, componentName: string) {
-    stepper.next()
-    // if (!this[componentName].isDisabled())
-    // {
-    //   stepper.next();
-    // }
+    if (!this[componentName].isDisabled())
+    {
+      stepper.next();
+    }
   };
 
   onCreateBooking() {
-    console.log(this.customerDetailComponent.getSenderDetails())
-    console.log(this.receiverComponent.getReceiverDetails())
-    console.log(this.bookingItemsComponent.getItemsDetails())
-    console.log(this.bookingInfoComponent.getInfoDetails())
+    this.booking.sender2 = this.customerDetailComponent.getSenderDetails();
+    this.booking.receiver = this.receiverComponent.getReceiverDetails();
+    this.booking.items = this.bookingItemsComponent.getItemsDetails();
+    this.booking.info = this.bookingInfoComponent.getInfoDetails();
+
+    console.log(JSON.stringify(this.booking));
 
   }
 

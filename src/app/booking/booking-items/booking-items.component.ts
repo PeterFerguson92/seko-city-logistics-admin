@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { BOOKING_ITEMS, BOOKING_ITEMS_DISPLAY_NAMES, PAYMENT_STATUSES, PAYMENT_TYPES } from 'src/app/constants';
-import { AlertService } from 'src/app/shared/elements/alert/alert.service';
 
 export interface IItem {
   quantity: number;
@@ -92,7 +91,6 @@ export class BookingItemsComponent implements OnInit {
       const descriptionFormControl = this.getItemFormControl('description', index);
       if (fControlName === 'type' && event.value === 'OTHER')
       {
-        console.log(939393)
         descriptionFormControl.setValidators([Validators.required]);
         this.getItemFormControl('amount', index).setValue(0);
         this.getItemFormControl('pricePerUnit', index).setValue(0);
@@ -127,7 +125,11 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getItemFormControl(fControlName: string, index) {
-    return this.items.controls[index].get(fControlName)
+    return this.items.controls[index].get(fControlName);
+  }
+
+  getPaymentFormControl(fControlName: string) {
+    return this.paymentForm.get(fControlName);
   }
 
   showDesc(index) {
@@ -159,6 +161,10 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getItemsDetails() {
+    return {items: this.getItemsDataDetails(), paymentInfo: this.getPaymentInfoDetails()}
+  }
+
+  getItemsDataDetails() {
     const itemsData = [];
     if (this.showItems)
     {
@@ -167,6 +173,19 @@ export class BookingItemsComponent implements OnInit {
       });
     }
     return itemsData;
+  }
+
+  getPaymentInfoDetails() {
+    const payment: any = { paymentType: '', paymentStatus: '', notes: ''}
+    if (!this.showItems)
+    {
+      return payment
+    }
+    Object.entries(payment).forEach((key) => {
+      const attributeName = key[0];
+      payment[attributeName] = this.getPaymentFormControl(attributeName).value;
+    })
+    return payment;
   }
 
   buildItemObject(control: AbstractControl) {

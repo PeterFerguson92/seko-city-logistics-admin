@@ -108,7 +108,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   getReceiverDetails() {
-    const receiver: any = { type: '', code: '', phone: '', destination: '', otherDestination: '' }
+    const receiver: any = { type: '', fullName: '', code: '', phone: '', destination: '', otherDestination: '' }
     Object.entries(receiver).forEach((key) => {
       const attributeName = key[0];
       receiver[attributeName] = this.getFormControl(attributeName).value;

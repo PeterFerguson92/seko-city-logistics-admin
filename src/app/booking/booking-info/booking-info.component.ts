@@ -67,7 +67,13 @@ export class BookingInfoComponent implements OnInit {
     const info: any = { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '' }
     Object.entries(info).forEach((key) => {
       const attributeName = key[0];
-      info[attributeName] = this.getFormControl(attributeName).value;
+      if (attributeName === 'date')
+      {
+        info[attributeName] = this.commonService.getFormattedDate(this.getFormControl(attributeName).value);
+      } else
+      {
+        info[attributeName] = this.getFormControl(attributeName).value;
+      }
     })
     return info;
   }
