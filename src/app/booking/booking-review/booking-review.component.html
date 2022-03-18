@@ -4,11 +4,7 @@
       <mat-panel-title>
         Sender Details
       </mat-panel-title>
-      <!-- <mat-panel-description>
-        This is a summary of the content
-      </mat-panel-description> -->
     </mat-expansion-panel-header>
-    <!-- <p>Type: {{booking.sender2.type}} -  <b>Full Name: </b>{{booking.sender2.fullName}}</p> -->
     <table>
       <tr>
         <th class="details">Details</th>
@@ -104,7 +100,7 @@
         <th>Price per unit</th>
         <th>Amount</th>
       </tr>
-      <tr *ngFor="let item of booking.items.items">
+      <tr *ngFor="let item of booking.itemsDetails.items">
         <td>{{item.quantity}}</td>
         <td>{{item.type}}</td>
         <td>{{item.description}}</td>
@@ -113,11 +109,11 @@
         <td>£{{item.amount}}</td>
       </tr>
       <br>
-      <p><b>Number of items:</b> <br>{{booking.items.totalNumberOfItems}}</p>
-      <p><b>Total amount:</b> <br>£{{booking.items.paymentInfo.totalAmount}}</p>
-      <p><b>Selected payment type:</b> <br>{{booking.items.paymentInfo.paymentType}}</p>
-      <p><b>Selected payment status:</b> <br>{{booking.items.paymentInfo.paymentStatus}}</p>
-      <p><b>Notes:</b> <br>{{booking.items.paymentInfo.notes}}</p>
+      <p><b>Number of items:</b> <br>{{booking.itemsDetails.totalNumberOfItems}}</p>
+      <p><b>Total amount:</b> <br>£{{booking.itemsDetails.paymentInfo.totalAmount}}</p>
+      <p><b>Selected payment type:</b> <br>{{booking.itemsDetails.paymentInfo.paymentType}}</p>
+      <p><b>Selected payment status:</b> <br>{{booking.itemsDetails.paymentInfo.paymentStatus}}</p>
+      <p><b>Notes:</b> <br>{{booking.itemsDetails.paymentInfo.notes}}</p>
     </table>
   </mat-expansion-panel>
   <mat-expansion-panel  [expanded]="false">

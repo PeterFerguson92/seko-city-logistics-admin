@@ -4,8 +4,7 @@
   <mat-step >
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
-      <app-booking-review></app-booking-review>
-      <!-- <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail> -->
+      <app-customer-detail [customer]="booking.sender" [mode]="mode"></app-customer-detail>
       <div align="end" >
         <button mat-button (click)="onForward(stepper, 'customerDetailComponent')"> Next</button>
       </div>
@@ -46,6 +45,7 @@
     <p>Amazing we are now ready to create a booking, make sure all information submitted are correct, once you are happy with it
       just click on the create button and I'll take care of the rest.
     </p>
+    <app-booking-review ></app-booking-review>
     <div align="center">
       <br>
       <app-material-button [label]="'CREATE BOOKING'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="30" (click)="onCreateBooking()"></app-material-button>
