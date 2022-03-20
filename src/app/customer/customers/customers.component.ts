@@ -5,7 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ADD_CUSTOMER_MODE, EDIT_CUSTOMER_MODE } from 'src/app/constants';
-import { CommonService } from 'src/app/service/common.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { AddEditCustomerDialogComponent } from '../add-edit-customer-dialog/add-edit-customer-dialog.component';
 import { ICustomer } from '../model';
@@ -31,7 +30,7 @@ export class CustomersComponent implements OnInit {
     this.getCustomers();
   }
 
-  viewCustomer(reference) {
+  bookCustomer(reference) {
     this.router.navigate(['/add-booking', reference]);
   }
 
@@ -91,8 +90,8 @@ export class CustomersComponent implements OnInit {
     );
   }
 
-  getName(element: ICustomer) {
-    return element.name
+  getName(customer: ICustomer) {
+    return customer.type === 'PERSONAL' ? customer.fullName : customer.registeredName;
   }
 
 

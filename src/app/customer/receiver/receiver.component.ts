@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CUSTOMER_TYPES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS } from 'src/app/constants';
+import { CUSTOMER_TYPES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_TITLES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
@@ -15,24 +15,25 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
 
   receiverCustomerForm: FormGroup;
   types = CUSTOMER_TYPES;
+  titles = CUSTOMER_TITLES;
   countries = COUNTRIES;
   codes = COUNTRY_CODES;
   destinations = GH_DESTINATIONS;
   showOtherDestinations = false;
   formValidationMap = {fullName: '', phone: '', address: '',postcode: '',country: ''};
 
-  constructor(private formBuilder: FormBuilder,
-    private customersService: CustomersService,
-    private commonService: CommonService,
-    private validationService: ValidationService,
-    public alertService: AlertService) { }
+  constructor(private formBuilder: FormBuilder,private validationService: ValidationService,public alertService: AlertService) { }
 
   ngOnInit(): void {
     this.receiverCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
-      fullName: ['', [Validators.required]],
+      title: [this.titles[0], [Validators.required]],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      registeredName: [''],
+      registeredNumber: [''],
       phoneGroup: this.formBuilder.group({
-        code: [this.codes[0], [Validators.required]],
+        countryCode: [this.codes[0], [Validators.required]],
         phone: ['', [Validators.required]],
       }, { validators: [Validators.required, this.validationService.phoneValidator] }),
       destination: [this.destinations[0], [Validators.required]],
@@ -108,7 +109,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   getReceiverDetails() {
-    const receiver: any = { type: '', fullName: '', code: '', phone: '', destination: '', otherDestination: '' }
+    const receiver: any = { type: '', name: '', surname: '', code: '', phone: '', destination: '', otherDestination: '' }
     Object.entries(receiver).forEach((key) => {
       const attributeName = key[0];
       receiver[attributeName] = this.getFormControl(attributeName).value;

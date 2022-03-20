@@ -122,9 +122,7 @@ export class ValidationService {
   }
 
   getValidationMessage(fControl: AbstractControl, fControlName: string): string | null {
-    console.log(fControl)
     const validationMessages = this.formMap[fControlName];
-    console.log(validationMessages)
     if ((fControl.touched || fControl.dirty ) && fControl.errors)
     {
       console.log(29929292)

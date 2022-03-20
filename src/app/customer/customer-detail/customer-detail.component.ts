@@ -207,19 +207,21 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
     mainFormControl.patchValue({
       type: this.customer.type === '' ? this.types[0] : this.customer.type,
-      fullName: this.customer.fullName,
+      title: this.customer.title,
+      name: this.customer.name,
+      surname: this.customer.surname,
+      registeredName: this.customer.registeredName,
+      registeredNumber: this.customer.registeredNumber,
       email: this.customer.email,
       address: this.customer.address,
       postcode: this.customer.postcode,
       country: this.customer.country === '' ? this.countries[0] : this.customer.country
     });
 
-    const fullPhone = this.customer.phone;
-    const spaceIndex = fullPhone.indexOf(' ');  // Gets the first index where a space occours
-    const phoneCountryCode = fullPhone.substr(0, spaceIndex); // Gets the first part
-    const phone = fullPhone.substr(spaceIndex + 1);
-
-    phoneGroupFormControl.patchValue({phone, phoneCountryCode});
+    phoneGroupFormControl.patchValue({
+      countryCode: this.customer.countryCode,
+      phone: this.customer.phone
+    });
   }
 
   validateFormControl(fControlName: string) {
@@ -289,7 +291,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getSenderDetails() {
-    const sender: any = { type: '', fullName: '', countryCode: '', phone: '', email: '', postcode: '' , address:'', country: ''}
+    const sender: any = {
+      type: '', title: '', name: '', surname: '', countryCode: '', phone: ''
+      , email: '', postcode: '', address: '', country: ''
+    }
     Object.entries(sender).forEach((key) => {
       const attributeName = key[0];
       sender[attributeName] = this.getFormControl(attributeName).value;
