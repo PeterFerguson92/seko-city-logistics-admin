@@ -4,17 +4,25 @@ export interface ICustomersResponse {
 
 export interface ICustomer {
   // id: number;
-  uuid: string;
+  reference: string;
+  title: string;
+  name: string;
+  surname: string;
   fullName: string;
-  address: string;
-  postcode: string;
-  phone: string;
   email: string;
+  postcode: string;
+  address: string;
+  displayAddress: string;
+  countryCode: string;
+  phone: string;
+  fullPhoneNumber: string;
   country: string;
   type: string;
   destination: string;
-  // createdAt: Date;
-  // updateAt: Date;
+  location: string;
+  registeredName: string;
+  registeredNumber: string;
+  role: string;
 }
 
 export interface IUpdateFieldInput {

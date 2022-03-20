@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CUSTOMER_TYPES } from 'src/app/constants';
+import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CUSTOMER_TITLES, CUSTOMER_TYPES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
-import { ICustomer } from '../domain';
+import { ICustomer } from '../model';
 import { CustomersService } from '../service/customers.service';
 
 @Component({
@@ -21,14 +21,17 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   showLoading = false;
   createCustomer;
   addresses = [];
+  exclusionList=['reference', 'fullName', 'displayAddress','fullPhoneNumber', 'destination','location','role']
   addEditCustomerForm: FormGroup;
   loadCustomerForm: FormGroup;
-  formValidationMap = {ref: '',fullName: '',phone: '',email: '',address: '',postcode: '',country: ''};
+  formValidationMap = { ref: '', name: '', surname: '', registeredName: '', phone: '', email: '', address: '', postcode: '', country: '' };
+
   titlePrefix = 'Add';
   types = CUSTOMER_TYPES;
+  titles = CUSTOMER_TITLES;
   countries = COUNTRIES;
   countryCodes = COUNTRY_CODES
-  alertOptions = {autoClose: true, keepAfterRouteChange: false};
+  alertOptions = { autoClose: true, keepAfterRouteChange: false };
 
   constructor(private formBuilder: FormBuilder,
     private customersService: CustomersService,
@@ -44,12 +47,16 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.addEditCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
-      fullName: ['', Validators.required],
+      title: [this.titles[0], [Validators.required]],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      registeredName: [''],
+      registeredNumber: [''],
+      email: ['', [Validators.email]],
       phoneGroup: this.formBuilder.group({
-        code: [this.countryCodes[0], [Validators.required]],
+        countryCode: [this.countryCodes[0], [Validators.required]],
         phone: ['', [Validators.required]],
       }, { validators: [Validators.required, this.validationService.phoneValidator] }),
-      email: ['', [Validators.email]],
       postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
       address: ['', [Validators.required]],
       country: [this.countries[0], [Validators.required]]
@@ -61,21 +68,18 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit(): void {
-    this.validateFormControl('fullName');
+    this.validateFormControl('registeredName');
+    this.validateFormControl('name');
+    this.validateFormControl('surname');
     this.validateFormControl('email');
     this.validateFormControl('address');
     this.validateFormControl('postcode');
     this.validateGroupFormControl('phoneGroup', 'phone')
   }
 
-  onAddEdit() {
-    this.mode === ADD_CUSTOMER_MODE ? this.addCustomer() : this.editCustomer();
-  }
-
   onLoadCustomer() {
     this.customersService.getCustomerByReference(this.loadCustomerForm.get('ref').value).subscribe(
       ({ data }) => {
-        console.log(data.customerByReference)
         if (data.customerByReference)
         {
           this.customer = data.customerByReference;
@@ -91,9 +95,33 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     )
   }
 
+  onSelectionChange(event: any, fControlName: string) {
+    const fControl = this.getFormControl(fControlName);
+    fControl.setValue(event.value);
+    fControl.markAsDirty();
+
+    const registeredNameFormControl = this.getFormControl('registeredName');
+    if (fControlName === 'type' && event.value !== 'PERSONAL')
+    {
+      registeredNameFormControl.setValidators([Validators.required]);
+    } else
+    {
+      registeredNameFormControl.setErrors(null);
+      registeredNameFormControl.markAsPristine();
+    }
+  }
+
+  onCancel() {
+    this.closeDialog.next('closeDialog');
+  }
+
+  onAddEdit() {
+    this.mode === ADD_CUSTOMER_MODE ? this.addCustomer() : this.editCustomer();
+  }
+
   addCustomer() {
     const createCustomerData = 'createCustomer'
-    this.createCustomer = this.customersService.createCustomer(this.getCustomerAttributes()).subscribe(
+    this.createCustomer = this.customersService.createCustomer(this.getCustomerDetails()).subscribe(
       ({ data }) => {
         if (this.mode === BOOK_CUSTOMER_MODE)
         {
@@ -121,7 +149,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
     if (updateCustomerFields.length > 0)
     {
-      this.customersService.updateCustomer(this.customer.uuid, updateCustomerFields).subscribe(
+      this.customersService.updateCustomer(this.customer.reference, updateCustomerFields).subscribe(
         ({ data }) => {
           if (this.mode === BOOK_CUSTOMER_MODE)
           {
@@ -139,16 +167,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-
-
-  onSelectionChange(event: any, fControlName: string) {
-    const fControl = this.getFormControl(fControlName);
-    fControl.setValue(event.value);
-    fControl.markAsDirty();
-  }
-
-  onCancel() {
-    this.closeDialog.next('closeDialog');
+  isCustomerPersonal() {
+    return this.getFormControl('type').value === 'PERSONAL';
   }
 
   getAddressByPostcode() {
@@ -160,18 +180,25 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-  getCustomerAttributes(): ICustomer {
-   return  {
-      uuid: '',
-      fullName: this.getFormControl('fullName').value,
-      address: this.getFormControl('address').value,
-      postcode: this.getFormControl('postcode').value,
-      phone: this.commonService.getFormattedPhoneNumber(this.getFormControl('code').value , this.getFormControl('phone').value),
-      email: this.getFormControl('email').value,
-      country: this.getFormControl('country').value,
-      type: this.getFormControl('type').value,
-      destination: ''
-    };
+  getCustomerDetails(): ICustomer {
+    const customerDetails = this.customersService.getEmptyCustomer();
+    Object.entries(customerDetails).forEach((key) => {
+      const attributeName = key[0];
+      console.log(attributeName)
+      if (this.exclusionList.indexOf(attributeName) > -1)
+      {
+        return
+      }
+      if (attributeName === 'registeredName' || attributeName === 'registeredNumber')
+      {
+        customerDetails[attributeName] = this.getFormControl('type').value === 'PERSONAL' ? ''
+          : this.getFormControl(attributeName).value;
+      } else
+      {
+        customerDetails[attributeName] =  this.getFormControl(attributeName).value;
+      }
+    })
+    return customerDetails;
   }
 
   populateFields() {
@@ -209,7 +236,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     this.validationService.watchAndValidateFormControl(fGroup)
       .subscribe(() => {
         this.formValidationMap.phone = this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName);
-        console.log( this.formValidationMap)
         if (fGroup.dirty && !fGroup.valid)
         {
           fMainControl.markAsDirty();
@@ -258,12 +284,12 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getFormControl(fControlName: string) {
-    return fControlName === 'phone' || fControlName === 'code' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
+    return fControlName === 'phone' || fControlName === 'countryCode' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
       this.addEditCustomerForm.get(fControlName)
   }
 
   getSenderDetails() {
-    const sender: any = { type: '', fullName: '', code: '', phone: '', email: '', postcode: '' , address:'', country: ''}
+    const sender: any = { type: '', fullName: '', countryCode: '', phone: '', email: '', postcode: '' , address:'', country: ''}
     Object.entries(sender).forEach((key) => {
       const attributeName = key[0];
       sender[attributeName] = this.getFormControl(attributeName).value;

@@ -46,7 +46,9 @@ export class ValidationService {
     usernameInput: this.usernameValidationMessages,
     emailInput: this.emailValidationMessages,
     passwordInput: this.passwordValidationMessages,
-    fullName: this.requiredValidationMessages,
+    name: this.requiredValidationMessages,
+    surname: this.requiredValidationMessages,
+    registeredName: this.requiredValidationMessages,
     phone: this.phoneValidationMessages,
     email: this.emailValidationMessages,
     address: this.requiredValidationMessages,
@@ -102,7 +104,7 @@ export class ValidationService {
   };
 
   phoneValidator = (formGroup: FormGroup): { [key: string]: boolean } | null => {
-    const countryCode = formGroup.get('code').value;
+    const countryCode = formGroup.get('countryCode').value;
     const phoneNumber = formGroup.get('phone').value;
     if (phoneNumber.length !== 0)
     {
@@ -120,9 +122,12 @@ export class ValidationService {
   }
 
   getValidationMessage(fControl: AbstractControl, fControlName: string): string | null {
+    console.log(fControl)
     const validationMessages = this.formMap[fControlName];
+    console.log(validationMessages)
     if ((fControl.touched || fControl.dirty ) && fControl.errors)
     {
+      console.log(29929292)
       return Object.keys(fControl.errors).map(
         key => validationMessages[key])[0];
     }

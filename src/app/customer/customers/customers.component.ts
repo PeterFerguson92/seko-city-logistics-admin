@@ -5,9 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ADD_CUSTOMER_MODE, EDIT_CUSTOMER_MODE } from 'src/app/constants';
+import { CommonService } from 'src/app/service/common.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { AddEditCustomerDialogComponent } from '../add-edit-customer-dialog/add-edit-customer-dialog.component';
-import { ICustomer } from '../domain';
+import { ICustomer } from '../model';
 import { CustomersService } from '../service/customers.service';
 
 @Component({
@@ -24,10 +25,7 @@ export class CustomersComponent implements OnInit {
   selectedCustomer = null;
   height =  '80%'
   width = '65%'
-  constructor(
-    private router: Router,
-    private customersService: CustomersService,
-    private dialog: MatDialog) { }
+  constructor(private router: Router, private customersService: CustomersService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getCustomers();
@@ -37,32 +35,21 @@ export class CustomersComponent implements OnInit {
     this.router.navigate(['/add-booking', reference]);
   }
 
+  addCustomer() {
+    const emptyCustomer: ICustomer = this.customersService.getEmptyCustomer();
+    this.dialog.open(AddEditCustomerDialogComponent, {
+      height: '80%',
+      width: '65%',
+      data: { customer: emptyCustomer, mode: ADD_CUSTOMER_MODE }
+    });
+  }
+
   editCustomer(customer) {
     this.selectedCustomer = customer;
     this.dialog.open(AddEditCustomerDialogComponent, {
       height: '80%',
       width: '65%',
       data: { customer, mode: EDIT_CUSTOMER_MODE }
-    });
-  }
-
-  addCustomer() {
-    const emptyCustomer: ICustomer = {
-      uuid: '',
-      fullName: '',
-      address: '',
-      postcode: '',
-      phone: '',
-      email: '',
-      country: '',
-      type: '',
-      destination: '',
-    };
-
-    this.dialog.open(AddEditCustomerDialogComponent, {
-      height: '80%',
-      width: '65%',
-      data: { customer: emptyCustomer, mode: ADD_CUSTOMER_MODE }
     });
   }
 
@@ -89,6 +76,7 @@ export class CustomersComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.dataSource.data);
 
   }
+
   getCustomers() {
     this.customersService.getCustomers().subscribe(
       ({ data }) => {
@@ -102,6 +90,11 @@ export class CustomersComponent implements OnInit {
       }
     );
   }
+
+  getName(element: ICustomer) {
+    return element.name
+  }
+
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();

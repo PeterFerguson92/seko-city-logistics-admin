@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { ICustomersResponse, ICustomer } from '../domain';
+import { ICustomersResponse, ICustomer } from '../model';
 import { CREATE_CUSTOMER, DELETE_CUSTOMER, GET_ALL_CUSTOMERS, GET_CUSTOMER_BY_REFERENCE, UPDATE_CUSTOMER } from './requests';
 
 const LIMIT = 100
@@ -48,6 +48,20 @@ export class CustomersService {
       mutation: DELETE_CUSTOMER,
       variables: {reference}
     });
+  }
+
+  getEmptyCustomer():ICustomer {
+    return {
+      reference: '', title: '', name: '', surname: '', fullName: '', email: '', postcode: '', address: '', displayAddress: '', countryCode: '',
+      phone: '',fullPhoneNumber: '',
+      country: '',
+      type: '',
+      destination: '',
+      location: '',
+      registeredName: '',
+      registeredNumber: '',
+      role: ''
+    };
   }
 
 }

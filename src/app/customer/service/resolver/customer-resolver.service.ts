@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { id } from '@swimlane/ngx-datatable';
 import { map, Observable, of } from 'rxjs';
-import { ICustomer } from '../../domain';
+import { ICustomer } from '../../model';
 import { CustomersService } from '../customers.service';
 
 @Injectable({

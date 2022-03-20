@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
-import { ICustomer } from '../domain';
+import { ICustomer } from '../model';
 
 @Component({
   selector: 'app-add-edit-customer-dialog',
