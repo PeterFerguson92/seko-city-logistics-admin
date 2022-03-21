@@ -65,52 +65,32 @@
         This is a summary of the content
       </mat-panel-description> -->
     </mat-expansion-panel-header>
-    <!-- <p>Type: {{booking.sender2.type}} -  <b>Full Name: </b>{{booking.sender2.fullName}}</p> -->
     <table>
       <tr>
-        <th class="details">Details</th>
-        <th>Value</th>
+        <th>Type</th>
+        <th>Registered Name</th>
+        <th>Registered Number</th>
+        <th>Title</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Country Code</th>
+        <th>Phone</th>
+
+
       </tr>
-      <tr>
-        <td>Type</td>
-        <td>{{booking.receiver.type}}</td>
+      <tr *ngFor="let receiver of booking.receiver.receivers">
+        <td>{{receiver.type}}</td>
+        <td>{{receiver.registeredName}}</td>
+        <td>{{receiver.registeredNumber}}</td>
+        <td>{{receiver.title}}</td>
+        <td>{{receiver.name}}</td>
+        <td>{{receiver.surname}}</td>
+        <td>{{receiver.countryCode}}</td>
+        <td>{{receiver.phone}}</td>
       </tr>
-      <tr *ngIf="!isCustomerPersonal(booking.receiver.type)">
-        <td>Registered Name</td>
-        <td>{{booking.receiver.registeredName}}</td>
-      </tr>
-      <tr *ngIf="!isCustomerPersonal(booking.receiver.type)">
-        <td>Registered Number</td>
-        <td>{{booking.receiver.registeredNumber}}</td>
-      </tr>
-      <tr>
-        <td>Title</td>
-        <td>{{booking.receiver.title}}</td>
-      </tr>
-      <tr>
-        <td>Name</td>
-        <td>{{booking.receiver.name}}</td>
-      </tr>
-      <tr>
-        <td>Surname</td>
-        <td>{{booking.receiver.surname}}</td>
-      </tr>
-      <tr>
-        <td>Code</td>
-        <td>{{booking.receiver.countryCode}}</td>
-      </tr>
-      <tr>
-        <td>Phone</td>
-        <td>{{booking.receiver.phone}}</td>
-      </tr>
-      <tr>
-        <td>Destination</td>
-        <td>{{booking.receiver.destination}}</td>
-      </tr>
-      <tr>
-        <td>Location</td>
-        <td>{{booking.receiver.otherDestination}}</td>
-      </tr>
+      <br>
+      <p><b>Destination:</b> <br>{{booking.receiver.destinationInfo.destination}}</p>
+      <p><b>Location:</b> <br>{{booking.receiver.destinationInfo.location}}</p>
     </table>
   </mat-expansion-panel>
   <mat-expansion-panel  [expanded]="false">

@@ -124,7 +124,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   onLoadPreviousReceivers() {
-    console.log('something')
+    this.getReceiverDetails()
   }
 
   isCustomerPersonal(index) {
@@ -180,15 +180,38 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   getReceiverDetails() {
-    // const receiver: any = {
-    //   type: '', registeredName: '', registeredNumber: '', title: '',
-    //   name: '', surname: '', countryCode: '', phone: '', destination: '', location: ''
-    // }
-    // Object.entries(receiver).forEach((key) => {
-    //   const attributeName = key[0];
-    //   receiver[attributeName] = this.getFormControl(attributeName).value;
-    // })
-    // receiver.role = CUSTOMER_RECEIVER_ROLE;
-    // return receiver;
+    return {receivers: this.getReceiversData(), destinationInfo: this.getDestinationInfo()}
+  }
+
+  getReceiversData() {
+    const receiverData = [];
+    this.receivers.controls.forEach((control) => {
+        receiverData.push(this.buildReceiverObject(control))
+      });
+
+    return receiverData;
+  }
+
+  buildReceiverObject(control: AbstractControl) {
+    const receiver: any = {
+      type: '', registeredName: '', registeredNumber: '',
+      title: '', name: '', surname: '', countryCode: '', phone: ''
+    }
+    Object.entries(receiver).forEach((key) => {
+      const attributeName = key[0];
+      if (attributeName === 'countryCode' || attributeName === 'phone')
+      {
+        receiver[attributeName] = control.get('phoneGroup').get(attributeName).value;
+
+      } else
+      {
+        receiver[attributeName] = control.get(attributeName).value;
+      }
+    })
+    return receiver;
+  }
+
+  getDestinationInfo() {
+    return {destination: this.getDestinationFormControl('destination').value, location: this.getDestinationFormControl('location').value}
   }
 }
