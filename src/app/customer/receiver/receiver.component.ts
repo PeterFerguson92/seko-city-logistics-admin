@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CUSTOMER_TYPES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_TITLES } from 'src/app/constants';
+import { CUSTOMER_TYPES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_TITLES, CUSTOMER_RECEIVER_ROLE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
 
@@ -118,6 +118,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
       const attributeName = key[0];
       receiver[attributeName] = this.getFormControl(attributeName).value;
     })
+    receiver.role = CUSTOMER_RECEIVER_ROLE;
     return receiver;
   }
 

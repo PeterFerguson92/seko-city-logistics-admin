@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CUSTOMER_TITLES, CUSTOMER_TYPES } from 'src/app/constants';
+import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
@@ -276,6 +276,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       const attributeName = key[0];
       sender[attributeName] = this.getFormControl(attributeName).value;
     })
+   sender.reference = this.customer.reference;
+   sender.role = CUSTOMER_SENDER_ROLE
     return sender;
  }
 
