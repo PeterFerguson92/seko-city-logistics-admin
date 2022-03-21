@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { PERSONAL_CUSTOMER_TYPE } from '../constants';
 
 
 @Injectable({
@@ -61,5 +62,9 @@ export class CommonService {
 
   getFormattedDate(date: string) {
     return new Date(date).toLocaleDateString('en-GB', {year: 'numeric', month: '2-digit', day: '2-digit'})
+  }
+
+  isCustomerPersonal(customerType:string) {
+    return PERSONAL_CUSTOMER_TYPE === customerType;
   }
 }

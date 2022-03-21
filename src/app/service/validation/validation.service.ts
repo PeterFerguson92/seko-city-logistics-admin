@@ -53,7 +53,7 @@ export class ValidationService {
     email: this.emailValidationMessages,
     address: this.requiredValidationMessages,
     postcode: this.postcodeValidationMessages,
-    otherDestination: this.requiredValidationMessages
+    location: this.requiredValidationMessages
   };
 
   constructor(private commonService: CommonService) { }

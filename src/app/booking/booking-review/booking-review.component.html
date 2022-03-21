@@ -12,31 +12,47 @@
       </tr>
       <tr>
         <td>Type</td>
-        <td>{{booking.sender2.type}}</td>
+        <td>{{booking.sender.type}}</td>
+      </tr>
+      <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
+        <td>Registered Name</td>
+        <td>{{booking.sender.registeredName}}</td>
+      </tr>
+      <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
+        <td>Registered Number</td>
+        <td>{{booking.sender.registeredNumber}}</td>
       </tr>
       <tr>
-        <td>Full name</td>
-        <td>{{booking.sender2.fullName}}</td>
+        <td>Title</td>
+        <td>{{booking.sender.title}}</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>{{booking.sender.name}}</td>
+      </tr>
+      <tr>
+        <td>Surname</td>
+        <td>{{booking.sender.surname}}</td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{booking.sender2.email}}</td>
+        <td>{{booking.sender.email}}</td>
       </tr>
       <tr>
         <td>Code</td>
-        <td>{{booking.sender2.code}}</td>
+        <td>{{booking.sender.countryCode}}</td>
       </tr>
       <tr>
         <td>Phone</td>
-        <td>{{booking.sender2.phone}}</td>
+        <td>{{booking.sender.phone}}</td>
       </tr>
       <tr>
         <td>Postcode</td>
-        <td>{{booking.sender2.postcode}}</td>
+        <td>{{booking.sender.postcode}}</td>
       </tr>
       <tr>
         <td>Address</td>
-        <td>{{booking.sender2.address}}</td>
+        <td>{{booking.sender.address}}</td>
       </tr>
     </table>
   </mat-expansion-panel>
@@ -59,17 +75,29 @@
         <td>Type</td>
         <td>{{booking.receiver.type}}</td>
       </tr>
-      <tr>
-        <td>Full name</td>
-        <td>{{booking.receiver.fullName}}</td>
+      <tr *ngIf="!isCustomerPersonal(booking.receiver.type)">
+        <td>Registered Name</td>
+        <td>{{booking.receiver.registeredName}}</td>
+      </tr>
+      <tr *ngIf="!isCustomerPersonal(booking.receiver.type)">
+        <td>Registered Number</td>
+        <td>{{booking.receiver.registeredNumber}}</td>
       </tr>
       <tr>
-        <td>Email</td>
-        <td>{{booking.sender2.email}}</td>
+        <td>Title</td>
+        <td>{{booking.receiver.title}}</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>{{booking.receiver.name}}</td>
+      </tr>
+      <tr>
+        <td>Surname</td>
+        <td>{{booking.receiver.surname}}</td>
       </tr>
       <tr>
         <td>Code</td>
-        <td>{{booking.receiver.code}}</td>
+        <td>{{booking.receiver.countryCode}}</td>
       </tr>
       <tr>
         <td>Phone</td>

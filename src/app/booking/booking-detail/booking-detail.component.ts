@@ -27,26 +27,11 @@ export class BookingDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.mode = BOOK_CUSTOMER_MODE
-    this.booking.sender2 = { type: '', fullName: '', code: '', phone: '', email: '', postcode: '', address: '', country: '' };
-    this.booking.receiver = { type: '', fullName: '', code: '', phone: '', destination: '', otherDestination: '' };
-    this.booking.itemsDetails = {
-      items: [{ quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }],
-      paymentInfo: { paymentType: '', paymentStatus: '', notes: '', totalAmount: '' }, totalNumberOfItems: 0
-    };
-    this.booking.info = { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '' };
-  }
-
-  selectionChange(stepper) {
-    // console.log(stepper)
-    // console.log(this.customerDetailComponent.getSenderDetails())
-    // console.log(this.customerDetailComponent.isDisabled())
-    // console.log(this.bookingItemsComponent.getItemsData())
   }
 
   isDisabled(componentName: string) {
     if (componentName === 'customerDetailComponent')
     {
-      console.log(this.customerDetailComponent.getSenderDetails())
       return true
       // return this.customerDetailComponent.isDisabled();
     } else
@@ -58,17 +43,18 @@ export class BookingDetailComponent implements OnInit {
   onForward(stepper: MatStepper, componentName: string) {
     if (!this[componentName].isDisabled())
     {
-      stepper.next();
-      if (stepper._getFocusIndex() === 4)
+      console.log(stepper._getFocusIndex())
+      if (stepper._getFocusIndex() === 3)
       {
         this.buildBook();
         this.bookingReviewComponent.updateBook(this.booking)
       }
+     stepper.next();
     }
   };
 
   buildBook() {
-    this.booking.sender2 = this.customerDetailComponent.getSenderDetails();
+    this.booking.sender = this.customerDetailComponent.getSenderDetails();
     this.booking.receiver = this.receiverComponent.getReceiverDetails();
     this.booking.itemsDetails = this.bookingItemsComponent.getItemsDetails();
     this.booking.info = this.bookingInfoComponent.getInfoDetails();

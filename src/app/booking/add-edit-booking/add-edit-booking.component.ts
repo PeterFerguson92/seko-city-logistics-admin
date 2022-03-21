@@ -16,24 +16,12 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
     private customersService: CustomersService,
     private router: Router) {
     this.activatedroute.data.subscribe(data => {
-      this.booking.sender = data.customer
+      this.booking.customer = data.customer
     })
     }
 
 
   ngOnInit(): void {
-
-  //   this.sub = this.activatedroute.paramMap.subscribe(params => {
-  //      const reference = params.get('reference');
-  //      this.sub = this.customersService.getCustomerByReference(reference).subscribe(
-  //       ({ data }) => {
-  //          this.booking.sender = data.customerByReference;
-  //       },
-  //       error => {
-  //         console.log(error);
-  //       }
-  //     );
-  //  });
   }
 
   ngOnDestroy(): void {

@@ -50,7 +50,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       title: [this.titles[0], [Validators.required]],
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      registeredName: [''],
+      registeredName: ['', Validators.required],
       registeredNumber: [''],
       email: ['', [Validators.email]],
       phoneGroup: this.formBuilder.group({
@@ -93,6 +93,55 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         console.log(error);
       }
     )
+  }
+
+  populateFields() {
+    const mainFormControl = this.addEditCustomerForm;
+    const phoneGroupFormControl = this.addEditCustomerForm.get('phoneGroup');
+
+    mainFormControl.patchValue({
+      type: this.customer.type === '' ? this.types[0] : this.customer.type,
+      title: this.customer.title,
+      name: this.customer.name,
+      surname: this.customer.surname,
+      registeredName: this.customer.registeredName,
+      registeredNumber: this.customer.registeredNumber,
+      email: this.customer.email,
+      address: this.customer.address,
+      postcode: this.customer.postcode,
+      country: this.customer.country === '' ? this.countries[0] : this.customer.country
+    });
+
+    phoneGroupFormControl.patchValue({
+      countryCode: this.customer.countryCode,
+      phone: this.customer.phone
+    });
+  }
+
+  validateFormControl(fControlName: string) {
+    const fControl = this.getFormControl(fControlName);
+    this.validationService.watchAndValidateFormControl(fControl)
+      .subscribe(() => {
+        this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName);
+      });
+  }
+
+  validateGroupFormControl(formGroupName: string, fControlName: string) {
+    const fGroup = this.addEditCustomerForm.get(formGroupName);
+    const fMainControl = fGroup.get(fControlName);
+    this.validationService.watchAndValidateFormControl(fGroup)
+      .subscribe(() => {
+        this.formValidationMap.phone = this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName);
+        if (fGroup.dirty && !fGroup.valid)
+        {
+          fMainControl.markAsDirty();
+          fMainControl.setErrors({ phone: 'Phone number' });
+
+        } else
+        {
+          fGroup.setErrors(null);
+        }
+      });
   }
 
   onSelectionChange(event: any, fControlName: string) {
@@ -168,7 +217,24 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   isCustomerPersonal() {
-    return this.getFormControl('type').value === 'PERSONAL';
+    return this.commonService.isCustomerPersonal(this.getFormControl('type').value);
+  }
+
+  isDisabled() {
+    return !this.addEditCustomerForm.valid;
+  }
+
+  isLoadDisabled() {
+     return this.loadCustomerForm.get('ref').value === '';
+  }
+
+  isBookingMode() {
+    return this.mode === BOOK_CUSTOMER_MODE;
+  }
+
+  getFormControl(fControlName: string) {
+    return fControlName === 'phone' || fControlName === 'countryCode' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
+      this.addEditCustomerForm.get(fControlName)
   }
 
   getAddressByPostcode() {
@@ -201,54 +267,17 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     return customerDetails;
   }
 
-  populateFields() {
-    const mainFormControl = this.addEditCustomerForm;
-    const phoneGroupFormControl = this.addEditCustomerForm.get('phoneGroup');
-
-    mainFormControl.patchValue({
-      type: this.customer.type === '' ? this.types[0] : this.customer.type,
-      title: this.customer.title,
-      name: this.customer.name,
-      surname: this.customer.surname,
-      registeredName: this.customer.registeredName,
-      registeredNumber: this.customer.registeredNumber,
-      email: this.customer.email,
-      address: this.customer.address,
-      postcode: this.customer.postcode,
-      country: this.customer.country === '' ? this.countries[0] : this.customer.country
-    });
-
-    phoneGroupFormControl.patchValue({
-      countryCode: this.customer.countryCode,
-      phone: this.customer.phone
-    });
-  }
-
-  validateFormControl(fControlName: string) {
-    const fControl = this.getFormControl(fControlName);
-    this.validationService.watchAndValidateFormControl(fControl)
-      .subscribe(() => {
-        this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName);
-      });
-  }
-
-  validateGroupFormControl(formGroupName: string, fControlName: string) {
-    const fGroup = this.addEditCustomerForm.get(formGroupName);
-    const fMainControl = fGroup.get(fControlName);
-    this.validationService.watchAndValidateFormControl(fGroup)
-      .subscribe(() => {
-        this.formValidationMap.phone = this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName);
-        if (fGroup.dirty && !fGroup.valid)
-        {
-          fMainControl.markAsDirty();
-          fMainControl.setErrors({ phone: 'Phone number' });
-
-        } else
-        {
-          fGroup.setErrors(null);
-        }
-      });
-  }
+ getSenderDetails() {
+    const sender: any = {
+      type: '', registeredName: '', registeredNumber: '', title: '', name: '', surname: '', countryCode: '', phone: ''
+      , email: '', postcode: '', address: '', country: ''
+    }
+    Object.entries(sender).forEach((key) => {
+      const attributeName = key[0];
+      sender[attributeName] = this.getFormControl(attributeName).value;
+    })
+    return sender;
+ }
 
   setAttributes() {
     if (this.mode !== BOOK_CUSTOMER_MODE)
@@ -270,38 +299,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       this.showLoading = true;
     }
   }
-
-    // TODO find a way to proper handle enable/disable of button, at the moment it's enabled when a value is changed,
-    // to find a way to enable when the value have actually changed
-  isDisabled() {
-    return !this.addEditCustomerForm.valid;
-  }
-
-  isLoadDisabled() {
-     return this.loadCustomerForm.get('ref').value === '';
-  }
-
-  isBookingMode() {
-    return this.mode === BOOK_CUSTOMER_MODE;
-  }
-
-  getFormControl(fControlName: string) {
-    return fControlName === 'phone' || fControlName === 'countryCode' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
-      this.addEditCustomerForm.get(fControlName)
-  }
-
-  getSenderDetails() {
-    const sender: any = {
-      type: '', title: '', name: '', surname: '', countryCode: '', phone: ''
-      , email: '', postcode: '', address: '', country: ''
-    }
-    Object.entries(sender).forEach((key) => {
-      const attributeName = key[0];
-      sender[attributeName] = this.getFormControl(attributeName).value;
-    })
-    return sender;
-  }
-
 
    ngOnDestroy() {
   //  this.createCustomer.unsubscribe();

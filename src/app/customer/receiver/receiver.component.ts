@@ -3,8 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CUSTOMER_TYPES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_TITLES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
-import { AlertService } from 'src/app/shared/elements/alert/alert.service';
-import { CustomersService } from '../service/customers.service';
 
 @Component({
   selector: 'app-receiver',
@@ -20,63 +18,67 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   codes = COUNTRY_CODES;
   destinations = GH_DESTINATIONS;
   showOtherDestinations = false;
-  formValidationMap = {fullName: '', phone: '', address: '',postcode: '',country: ''};
+  formValidationMap = { name: '', surname: '', registeredName: '', phone: '', location: '' };
 
-  constructor(private formBuilder: FormBuilder,private validationService: ValidationService,public alertService: AlertService) { }
+  constructor(private formBuilder: FormBuilder,
+    private validationService: ValidationService,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.receiverCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
+      registeredName: [''],
+      registeredNumber: [''],
       title: [this.titles[0], [Validators.required]],
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      registeredName: [''],
-      registeredNumber: [''],
+      email: ['', [Validators.email]],
       phoneGroup: this.formBuilder.group({
         countryCode: [this.codes[0], [Validators.required]],
         phone: ['', [Validators.required]],
       }, { validators: [Validators.required, this.validationService.phoneValidator] }),
       destination: [this.destinations[0], [Validators.required]],
-      otherDestination: ['',  []],
+      location: ['', []],
     });
   }
 
   ngAfterViewInit(): void {
-    this.validateFormControl('type');
-    this.validateFormControl('fullName');
+    this.validateFormControl('registeredName');
+    this.validateFormControl('name');
+    this.validateFormControl('surname');
     this.validateFormControl('destination');
-    this.validateFormControl('phone');
+    this.validateFormControl('location');
     this.validateGroupFormControl('phoneGroup', 'phone')
   }
 
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
-    if (fControlName === 'destination' && event.value === 'OTHER')
-    {
-      this.showOtherDestinations = true;
-      this.receiverCustomerForm.get('otherDestination').setValidators([Validators.required]);
-      this.validateFormControl('otherDestination');
-    } else
-    {
-      this.showOtherDestinations = false;
-      this.receiverCustomerForm.get('otherDestination').setValidators([]);
-      this.receiverCustomerForm.get('otherDestination').markAsPristine();
-      this.receiverCustomerForm.get('otherDestination').setValue('');
-    }
     fControl.setValue(event.value);
     fControl.markAsDirty();
+    const locationFormControl = this.receiverCustomerForm.get('location');
+    if (fControlName === 'destination' && event.value === 'OTHER')
+    {
+      locationFormControl.setValidators([Validators.required]);
+    } else
+    {
+      locationFormControl.setValidators([]);
+    }
   }
 
   onLoadPreviousReceivers() {
     console.log('something')
   }
 
-  isOtherLocationDisabled() {
-    return false;
+  isCustomerPersonal() {
+    return this.commonService.isCustomerPersonal(this.getFormControl('type').value);
+  }
+
+  isDisabled() {
+    return !this.receiverCustomerForm.valid;
   }
 
   getFormControl(fControlName: string) {
-    return fControlName === 'phone' || fControlName === 'code' ? this.receiverCustomerForm.get('phoneGroup').get(fControlName) :
+    return fControlName === 'phone' || fControlName === 'countryCode' ? this.receiverCustomerForm.get('phoneGroup').get(fControlName) :
       this.receiverCustomerForm.get(fControlName)
   }
 
@@ -85,7 +87,6 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     this.validationService.watchAndValidateFormControl(fControl)
       .subscribe(() => {
         this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName);
-        console.log(this.formValidationMap)
       });
   }
 
@@ -109,7 +110,10 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   getReceiverDetails() {
-    const receiver: any = { type: '', name: '', surname: '', code: '', phone: '', destination: '', otherDestination: '' }
+    const receiver: any = {
+      type: '', registeredName: '', registeredNumber: '', title: '',
+      name: '', surname: '', countryCode: '', phone: '', destination: '', location: ''
+    }
     Object.entries(receiver).forEach((key) => {
       const attributeName = key[0];
       receiver[attributeName] = this.getFormControl(attributeName).value;
@@ -117,7 +121,4 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     return receiver;
   }
 
-  isDisabled() {
-    return !this.receiverCustomerForm.valid;
-  }
 }
