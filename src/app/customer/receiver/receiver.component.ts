@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CUSTOMER_TYPES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_TITLES, CUSTOMER_RECEIVER_ROLE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
@@ -11,7 +11,8 @@ import { ValidationService } from 'src/app/service/validation/validation.service
 })
 export class ReceiverComponent implements OnInit, AfterViewInit {
 
-  receiverCustomerForm: FormGroup;
+  receiversCustomerForm: FormGroup;
+  receiverInfoCustomerForm: FormGroup;
   types = CUSTOMER_TYPES;
   titles = CUSTOMER_TITLES;
   countries = COUNTRIES;
@@ -20,12 +21,27 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   showOtherDestinations = false;
   formValidationMap = { name: '', surname: '', registeredName: '', phone: '', location: '' };
 
+  get receivers(): FormArray {
+    return this.receiversCustomerForm.get('receivers') as FormArray;
+  }
+
   constructor(private formBuilder: FormBuilder,
     private validationService: ValidationService,
     private commonService: CommonService) { }
 
   ngOnInit(): void {
-    this.receiverCustomerForm = this.formBuilder.group({
+    this.receiversCustomerForm = this.formBuilder.group({
+      receivers: this.formBuilder.array([this.buildReceiver()])
+    });
+
+    this.receiverInfoCustomerForm = this.formBuilder.group({
+      destination: [this.destinations[0], [Validators.required]],
+      location: ['', []],
+    });
+  }
+
+  buildReceiver(): FormGroup {
+    return this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
       registeredName: [''],
       registeredNumber: [''],
@@ -37,25 +53,48 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
         countryCode: [this.codes[0], [Validators.required]],
         phone: ['', [Validators.required]],
       }, { validators: [Validators.required, this.validationService.phoneValidator] }),
-      destination: [this.destinations[0], [Validators.required]],
-      location: ['', []],
-    });
+    })
   }
 
   ngAfterViewInit(): void {
-    this.validateFormControl('registeredName');
-    this.validateFormControl('name');
-    this.validateFormControl('surname');
-    this.validateFormControl('destination');
-    this.validateFormControl('location');
-    this.validateGroupFormControl('phoneGroup', 'phone')
+    // this.validateFormControl('registeredName');
+    // this.validateFormControl('name');
+    // this.validateFormControl('surname');
+    // this.validateFormControl('destination');
+    // this.validateFormControl('location');
+    // this.validateGroupFormControl('phoneGroup', 'phone')
   }
 
-  onSelectionChange(event: any, fControlName: string) {
-    const fControl = this.getFormControl(fControlName);
+  onAddReceveir(index) {
+    if (!this.isReceiverValuePopulated(index))
+    {
+      this.receivers.push(this.buildReceiver());
+    }
+  }
+
+  isReceiverValuePopulated(index) {
+    console.log(this.receivers.controls[index])
+    return !this.receivers.controls[index].valid;
+  }
+
+  onDeleteReceiver(index) {
+    if (this.receivers.length > 1)
+    {
+      this.receivers.removeAt(index)
+    };
+  }
+
+  onSelectionChange(event: any, fControlName: string, index) {
+    const fControl = this.getReceiversFormControl(fControlName, index);
     fControl.setValue(event.value);
     fControl.markAsDirty();
-    const locationFormControl = this.receiverCustomerForm.get('location');
+  }
+
+  onInfoSelectionChange(event: any, fControlName: string) {
+    const fControl = this.getReceiversInfoFormControl(fControlName);
+    fControl.setValue(event.value);
+    fControl.markAsDirty();
+    const locationFormControl = this.getReceiversInfoFormControl('location');
     if (fControlName === 'destination' && event.value === 'OTHER')
     {
       locationFormControl.setValidators([Validators.required]);
@@ -69,17 +108,26 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     console.log('something')
   }
 
-  isCustomerPersonal() {
-    return this.commonService.isCustomerPersonal(this.getFormControl('type').value);
+  isCustomerPersonal(index) {
+    return this.commonService.isCustomerPersonal(this.getReceiversFormControl('type', index).value);
   }
 
   isDisabled() {
-    return !this.receiverCustomerForm.valid;
+    return !this.receiverInfoCustomerForm.valid;
   }
 
   getFormControl(fControlName: string) {
-    return fControlName === 'phone' || fControlName === 'countryCode' ? this.receiverCustomerForm.get('phoneGroup').get(fControlName) :
-      this.receiverCustomerForm.get(fControlName)
+    return this.receiverInfoCustomerForm.get(fControlName);
+  }
+
+  getReceiversFormControl(fControlName: string, index) {
+    const fControl = this.receivers.controls[index];
+    return fControlName === 'phone' || fControlName === 'countryCode' ? fControl.get('phoneGroup').get(fControlName) :
+    fControl.get(fControlName)
+  }
+
+  getReceiversInfoFormControl(fControlName: string) {
+    return this.receivers.get(fControlName);
   }
 
   validateFormControl(fControlName: string) {
@@ -91,7 +139,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   validateGroupFormControl(formGroupName: string, fControlName: string) {
-    const fGroup = this.receiverCustomerForm.get(formGroupName);
+    const fGroup = this.receiverInfoCustomerForm.get(formGroupName);
     const fMainControl = fGroup.get(fControlName);
     this.validationService.watchAndValidateFormControl(fGroup)
       .subscribe(() => {
@@ -121,5 +169,6 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     receiver.role = CUSTOMER_RECEIVER_ROLE;
     return receiver;
   }
+
 
 }
