@@ -202,7 +202,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         ({ data }) => {
           if (this.mode === BOOK_CUSTOMER_MODE)
           {
-            this.alertService.success('Customer updated correctly', this.alertOptions);
+            this.alertService.warn('Customer updated correctly', this.alertOptions);
           } else
           {
             location.reload();  // To handle properly
@@ -250,7 +250,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const customerDetails = this.customersService.getEmptyCustomer();
     Object.entries(customerDetails).forEach((key) => {
       const attributeName = key[0];
-      console.log(attributeName)
       if (this.exclusionList.indexOf(attributeName) > -1)
       {
         return

@@ -43,7 +43,6 @@ export class BookingDetailComponent implements OnInit {
   onForward(stepper: MatStepper, componentName: string) {
     if (!this[componentName].isDisabled())
     {
-      console.log(stepper._getFocusIndex())
       if (stepper._getFocusIndex() === 3)
       {
         this.buildBook();

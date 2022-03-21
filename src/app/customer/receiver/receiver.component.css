@@ -3,3 +3,9 @@ form {
 /* background: gray; */
 margin: 0 auto;
 }
+
+.alert-section {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  height:70px;
+}
