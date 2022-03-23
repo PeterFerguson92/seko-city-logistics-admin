@@ -60,8 +60,14 @@ export class CommonService {
     return phoneNumber.startsWith('0') ? phoneNumber.replace(phoneNumber.substring(0, 1), prefix) : prefix + phoneNumber;
   }
 
-  getFormattedDate(date: string) {
-    return new Date(date).toLocaleDateString('en-GB', {year: 'numeric', month: '2-digit', day: '2-digit'})
+  getFormattedDate(dateTime: string) {
+    const date = new Date(dateTime) // formated_Date - SDK returned date
+
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  }
+
+  getFormattedIsoDate(date: string) {
+    return new Date(date + ' GMT').toISOString();
   }
 
   isCustomerPersonal(customerType:string) {

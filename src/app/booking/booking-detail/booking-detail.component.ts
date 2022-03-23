@@ -32,7 +32,7 @@ export class BookingDetailComponent implements OnInit {
   isDisabled(componentName: string) {
     if (componentName === 'customerDetailComponent')
     {
-      return true
+      // return true
       // return this.customerDetailComponent.isDisabled();
     } else
     {

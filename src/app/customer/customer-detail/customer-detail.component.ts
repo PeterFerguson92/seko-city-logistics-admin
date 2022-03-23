@@ -50,7 +50,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       title: [this.titles[0], [Validators.required]],
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      registeredName: ['', Validators.required],
+      registeredName: [''],
       registeredNumber: [''],
       email: ['', [Validators.email]],
       phoneGroup: this.formBuilder.group({
@@ -221,6 +221,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   isDisabled() {
+    console.log(this.addEditCustomerForm)
     return !this.addEditCustomerForm.valid;
   }
 

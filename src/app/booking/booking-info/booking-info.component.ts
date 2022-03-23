@@ -21,7 +21,7 @@ export class BookingInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookingInfoForm = this.formBuilder.group({
-      date: [new Date().toISOString(), [Validators.required]],
+      date: [new Date(), [Validators.required]],
       time: [this.times[0], [Validators.required]],
       address: ['', [Validators.required]],
       postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
@@ -69,7 +69,7 @@ export class BookingInfoComponent implements OnInit {
       const attributeName = key[0];
       if (attributeName === 'date')
       {
-        info[attributeName] = this.commonService.getFormattedDate(this.getFormControl(attributeName).value);
+        info[attributeName] = this.commonService.getFormattedIsoDate(this.getFormControl(attributeName).value);
       } else
       {
         info[attributeName] = this.getFormControl(attributeName).value;
