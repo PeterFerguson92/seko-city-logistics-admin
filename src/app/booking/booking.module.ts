@@ -7,9 +7,11 @@ import { AddEditBookingComponent } from './add-edit-booking/add-edit-booking.com
 import { BookingItemsComponent } from './booking-items/booking-items.component';
 import { BookingInfoComponent } from './booking-info/booking-info.component';
 import { BookingReviewComponent } from './booking-review/booking-review.component';
+import { BookingsComponent } from './bookings/bookings.component';
 
 @NgModule({
-  declarations: [BookingDetailComponent, AddEditBookingComponent, BookingItemsComponent, BookingInfoComponent, BookingReviewComponent],
+  declarations: [BookingDetailComponent, AddEditBookingComponent,
+    BookingItemsComponent, BookingInfoComponent, BookingReviewComponent, BookingsComponent],
   imports: [CommonModule, SharedModule, CustomerModule]
 })
 export class BookingModule { }

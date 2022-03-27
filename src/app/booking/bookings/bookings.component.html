@@ -1,0 +1,28 @@
+<div class="bodys">
+  <div class="booking-form-w3layouts">
+      <h4 class="sub-heading-agileits">Filter bookings by</h4>
+      <div class="main-flex-w3ls-sectns">
+          <form [formGroup]="bookingsFilterForm" >
+            <app-material-select-input [label]="'Status'"  [width]="15" [options]="bookingStatuses" formControlName="status"
+            (selectionChange)="onSelectionChange($event, 'status')" [value]="bookingStatuses[0]"></app-material-select-input>
+            <div class="divider"></div>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="10" formControlName="postcode"></app-material-input>
+            <div class="divider"></div>
+            <app-material-input [label]="'Booking Reference'" [icon]="'person_pin'"[width]="20" formControlName="bookingReference"></app-material-input>
+            <div class="divider"></div>
+            <app-material-select-input [label]="'Payment Status'"  [width]="20" [options]="paymentStatuses" formControlName="paymentStatus"
+            (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]"></app-material-select-input>
+            <div class="divider"></div>
+            <span *ngIf="isRangeEnabled()">
+              <app-material-date-picker-input [label]="'From Date'" (inputChange)="onInputChange($event, 'fromDate')" formControlName="fromDate"></app-material-date-picker-input>
+              <div class="divider"></div>
+              <app-material-date-picker-input [label]="'To Date'" (inputChange)="onInputChange($event, 'toDate')" formControlName="toDate"></app-material-date-picker-input>
+              <div class="divider"></div>
+            </span>
+            <app-material-checkbox [label]="'Enable interval Filter'"  (checkBoxChange)="onSelectionChange($event, 'useRange')" formControlName="useRange"></app-material-checkbox>
+            <div class="divider"></div>
+          </form>
+      </div>
+      <app-material-button [label]="'SEARCH'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="30" (click)="onSearch()"></app-material-button>
+    </div>
+</div>

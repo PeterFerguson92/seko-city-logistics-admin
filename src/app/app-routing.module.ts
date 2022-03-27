@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 import { AddEditBookingComponent } from './booking/add-edit-booking/add-edit-booking.component';
+import { BookingsComponent } from './booking/bookings/bookings.component';
 import { CustomersComponent } from './customer/customers/customers.component';
 import { CustomerResolverService } from './customer/service/resolver/customer-resolver.service';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
@@ -11,6 +12,7 @@ import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'home', component: HomeComponent },
   { path: 'add-booking/:reference', component: AddEditBookingComponent, resolve: {customer: CustomerResolverService} },
