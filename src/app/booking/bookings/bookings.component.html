@@ -11,8 +11,7 @@
             <app-material-input [label]="'Booking Reference'" [icon]="'person_pin'"[width]="20" formControlName="reference"></app-material-input>
             <div class="divider"></div>
             <app-material-select-input [label]="'Payment Status'"  [width]="20" [options]="paymentStatuses" formControlName="paymentStatus"
-            (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]"></app-material-select-input>
-            <div class="divider"></div>
+            (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]"></app-material-select-input><br>
             <span *ngIf="isRangeEnabled()">
               <app-material-date-picker-input [label]="'From Date'" (inputChange)="onInputChange($event, 'fromDate')" formControlName="fromDate"></app-material-date-picker-input>
               <div class="divider"></div>

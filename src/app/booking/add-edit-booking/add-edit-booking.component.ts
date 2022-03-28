@@ -15,10 +15,22 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
     private activatedroute: ActivatedRoute,
     private customersService: CustomersService,
     private router: Router) {
+    console.log(router.url) // edit-booking/B3637-43083-WIN5
+
     this.activatedroute.data.subscribe(data => {
-      this.booking.customer = data.customer
+      if (router.url.includes('edit-booking'))
+      {
+        this.booking = Object.assign({selected: false}, data.booking);
+
+
+        this.getCustomerByReference(data.booking.senderReference);
+
+      } else
+      {
+        this.booking.customer = data.customer
+      }
     })
-    }
+  }
 
 
   ngOnInit(): void {
@@ -26,5 +38,18 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   //  this.sub.unsubscribe();
+  }
+
+  getCustomerByReference(customerReference: string) {
+    this.customersService.getCustomerByReference(customerReference).subscribe(
+      ({ data }) => {
+        this.booking.customer = data.customerByReference
+        console.log(this.booking);
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

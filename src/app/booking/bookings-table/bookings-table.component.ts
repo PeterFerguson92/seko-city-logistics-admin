@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ICustomer } from 'src/app/customer/model';
 import { CommonService } from 'src/app/service/common.service';
 import { IBooking } from '../model';
@@ -20,7 +21,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   height =  '80%'
   width = '65%'
 
-  constructor(private commonService:CommonService) { }
+  constructor(private router: Router,
+    private commonService:CommonService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.buildData(changes.bookings.currentValue)
@@ -29,8 +31,14 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.buildData(this.bookings);
   }
+
   addBooking() {
 
+  }
+
+  editBooking(element) {
+    console.log(element)
+    this.router.navigate(['/edit-booking', element.reference]);
   }
 
   getFormattedDate(date) {
