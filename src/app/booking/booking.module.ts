@@ -8,10 +8,11 @@ import { BookingItemsComponent } from './booking-items/booking-items.component';
 import { BookingInfoComponent } from './booking-info/booking-info.component';
 import { BookingReviewComponent } from './booking-review/booking-review.component';
 import { BookingsComponent } from './bookings/bookings.component';
+import { BookingsTableComponent } from './bookings-table/bookings-table.component';
 
 @NgModule({
   declarations: [BookingDetailComponent, AddEditBookingComponent,
-    BookingItemsComponent, BookingInfoComponent, BookingReviewComponent, BookingsComponent],
+    BookingItemsComponent, BookingInfoComponent, BookingReviewComponent, BookingsComponent, BookingsTableComponent],
   imports: [CommonModule, SharedModule, CustomerModule]
 })
 export class BookingModule { }

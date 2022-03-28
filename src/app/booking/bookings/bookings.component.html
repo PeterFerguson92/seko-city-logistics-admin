@@ -8,7 +8,7 @@
             <div class="divider"></div>
             <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="10" formControlName="postcode"></app-material-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Booking Reference'" [icon]="'person_pin'"[width]="20" formControlName="bookingReference"></app-material-input>
+            <app-material-input [label]="'Booking Reference'" [icon]="'person_pin'"[width]="20" formControlName="reference"></app-material-input>
             <div class="divider"></div>
             <app-material-select-input [label]="'Payment Status'"  [width]="20" [options]="paymentStatuses" formControlName="paymentStatus"
             (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]"></app-material-select-input>
@@ -26,3 +26,4 @@
       <app-material-button [label]="'SEARCH'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="30" (click)="onSearch()"></app-material-button>
     </div>
 </div>
+<app-bookings-table [bookings]="bookings"></app-bookings-table>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BOOKING_STATUSES, PAYMENT_STATUSES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
+import { BookingsService } from '../service/bookings.service';
 
 @Component({
   selector: 'app-bookings',
@@ -13,9 +14,11 @@ export class BookingsComponent implements OnInit {
   bookingsFilterForm: FormGroup;
   bookingStatuses = BOOKING_STATUSES;
   paymentStatuses = PAYMENT_STATUSES
+  bookings = null;
 
   constructor(
     private formBuilder: FormBuilder,
+    private bookingsService: BookingsService,
     private validationService: ValidationService,
     private commonService: CommonService) { }
 
@@ -25,11 +28,12 @@ export class BookingsComponent implements OnInit {
     const fiveDaysAgo = new Date(today - (7 * days));
 
     this.bookingStatuses.unshift('ALL','OPEN')
+    this.paymentStatuses.unshift('ALL')
 
     this.bookingsFilterForm = this.formBuilder.group({
       status: [this.bookingStatuses[0]],
       postcode: ['', [this.validationService.postCodeValidator]],
-      bookingReference: ['', [this.validationService.postCodeValidator]],
+      reference: ['', [this.validationService.postCodeValidator]],
       paymentStatus: [this.paymentStatuses[0]],
       fromDate: [fiveDaysAgo],
       toDate: [today],
@@ -51,7 +55,18 @@ export class BookingsComponent implements OnInit {
   }
 
   onSearch() {
-    console.log(this.buildFilterFields());
+   // console.log(this.buildFilterFields());
+    this.bookingsService.filterBookings(this.buildFilterFields()).subscribe(
+      ({ data }) => {
+        // tslint:disable-next-line:no-string-literal
+        console.log(data['filterBookings']);
+                // tslint:disable-next-line:no-string-literal
+        this.bookings = data['filterBookings'];
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   isRangeEnabled() {
@@ -63,7 +78,7 @@ export class BookingsComponent implements OnInit {
   }
 
   buildFilterFields() {
-    const filters: any = {status: '', postcode: '', bookingReference: '', paymentStatus: '', fromDate: '', toDate: ''}
+    const filters: any = {status: '', postcode: '', reference: '', paymentStatus: '', fromDate: '', toDate: ''}
     const fields = []
 
     Object.entries(filters).forEach((key) => {
@@ -75,11 +90,10 @@ export class BookingsComponent implements OnInit {
       }
       else
       {
-        if (attributeName === 'fromDate' || attributeName === 'toDate')
-        {
-          filter.value = this.commonService.getFormattedIsoDate(this.getFormControl(attributeName).value);
 
-        }
+        filter.value = attributeName === 'fromDate' || attributeName === 'toDate' ?
+          this.commonService.getFormattedIsoDate(this.getFormControl(attributeName).value) :
+          this.getFormControl(attributeName).value;
       }
       filter.name = attributeName;
       fields.push(filter)

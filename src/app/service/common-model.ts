@@ -5,3 +5,8 @@ export interface AddressResponse {
   longitude: number,
   addresses: [string]
 }
+
+export interface IUpdateFieldInput {
+  name: string;
+  value: string;
+}

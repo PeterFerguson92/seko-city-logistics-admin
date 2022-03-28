@@ -22,6 +22,13 @@ export class CustomersService {
     });
   }
 
+  getCustomerByReference(reference: string) {
+    return this.apollo.query<any>({
+      query: GET_CUSTOMER_BY_REFERENCE,
+      variables: {reference}
+    });
+  }
+
   createCustomer(customer: ICustomer) {
     return this.apollo.mutate<ICustomer>({
       mutation: CREATE_CUSTOMER,
@@ -33,13 +40,6 @@ export class CustomersService {
     return this.apollo.mutate<ICustomer>({
       mutation: UPDATE_CUSTOMER,
       variables: { reference, fields }
-    });
-  }
-
-  getCustomerByReference(reference: string) {
-    return this.apollo.query<any>({
-      query: GET_CUSTOMER_BY_REFERENCE,
-      variables: {reference}
     });
   }
 
