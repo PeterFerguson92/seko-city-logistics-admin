@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
 import { ReceiverComponent } from 'src/app/customer/receiver/receiver.component';
 import { BookingInfoComponent } from '../booking-info/booking-info.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
 import { CustomersService } from 'src/app/customer/service/customers.service';
+import { VIEW_BOOKING_MODE } from 'src/app/constants';
 
 @Component({
   selector: 'app-booking-detail',
@@ -22,13 +22,11 @@ export class BookingDetailComponent implements OnInit {
 
 
   @Input() booking;
-  mode
+  @Input() mode
 
-  constructor(private customerService: CustomersService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.mode = BOOK_CUSTOMER_MODE
-  }
+  ngOnInit(): void {}
 
   isDisabled(componentName: string) {
     if (componentName === 'customerDetailComponent')
@@ -39,6 +37,10 @@ export class BookingDetailComponent implements OnInit {
     {
       return true
     }
+  }
+
+  isViewOnlyMode() {
+    return VIEW_BOOKING_MODE !== this.mode;
   }
 
   onForward(stepper: MatStepper, componentName: string) {

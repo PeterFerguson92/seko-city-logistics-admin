@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ADD_CUSTOMER_MODE, BOOK_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES } from 'src/app/constants';
+import {
+  ADD_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
+  CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, VIEW_BOOKING_MODE
+} from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
@@ -17,6 +20,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() mode;
   @Output() closeDialog = new EventEmitter<string>();
 
+  bookingModes = [CREATE_BOOKING_MODE, VIEW_BOOKING_MODE, EDIT_BOOKING_MODE]
   buttonLabel;
   showLoading = false;
   createCustomer;
@@ -172,7 +176,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const createCustomerData = 'createCustomer'
     this.createCustomer = this.customersService.createCustomer(this.getCustomerDetails()).subscribe(
       ({ data }) => {
-        if (this.mode === BOOK_CUSTOMER_MODE)
+        if (this.mode === CREATE_BOOKING_MODE || VIEW_BOOKING_MODE)
         {
           this.alertService.success('Customer added correctly', this.alertOptions);
         } else
@@ -200,7 +204,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       this.customersService.updateCustomer(this.customer.reference, updateCustomerFields).subscribe(
         ({ data }) => {
-          if (this.mode === BOOK_CUSTOMER_MODE)
+          if (this.mode === this.isBookingMode())
           {
             this.alertService.warn('Customer updated correctly', this.alertOptions);
           } else
@@ -229,7 +233,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   isBookingMode() {
-    return this.mode === BOOK_CUSTOMER_MODE;
+    return this.bookingModes.includes(this.mode);
   }
 
   getFormControl(fControlName: string) {
@@ -281,7 +285,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
  }
 
   setAttributes() {
-    if (this.mode !== BOOK_CUSTOMER_MODE)
+    if (this.mode !== this.isBookingMode())
     {
       this.showLoading = false;
       if (this.mode === ADD_CUSTOMER_MODE)

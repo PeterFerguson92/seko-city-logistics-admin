@@ -1,11 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { ICustomer } from 'src/app/customer/model';
 import { CommonService } from 'src/app/service/common.service';
+import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { IBooking } from '../model';
+import { BookingsService } from '../service/bookings.service';
 
 @Component({
   selector: 'app-bookings-table',
@@ -22,7 +24,9 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   width = '65%'
 
   constructor(private router: Router,
-    private commonService:CommonService) { }
+    private bookingsService: BookingsService,
+    private commonService:CommonService,
+    private dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.buildData(changes.bookings.currentValue)
@@ -36,9 +40,30 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   }
 
+  viewBooking(element) {
+    this.router.navigate(['/view-booking', element.reference, element.senderReference]);
+  }
+
   editBooking(element) {
-    console.log(element)
     this.router.navigate(['/edit-booking', element.reference, element.senderReference]);
+  }
+
+  deleteBooking(reference) {
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'true')
+      {
+        this.bookingsService.deleteBooking(reference).subscribe(
+          ({ data }) => {
+            console.log(data)
+            location.reload()
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    })
   }
 
   getFormattedDate(date) {

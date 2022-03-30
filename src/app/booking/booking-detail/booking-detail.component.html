@@ -1,7 +1,7 @@
 <button mat-raised-button  id="toggle-linear">
 </button>
 <mat-stepper linear #stepper>
-  <mat-step >
+  <mat-step *ngIf="isViewOnlyMode()">
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
       <app-customer-detail [customer]="booking.customer" [mode]="mode"></app-customer-detail>
@@ -10,7 +10,7 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
+  <mat-step *ngIf="isViewOnlyMode()">
     <form >
       <ng-template matStepLabel>Fill out receiver details</ng-template>
       <app-receiver [references]="booking.receiverReferences" [destination]="booking.destination" [location]="booking.location"></app-receiver>
@@ -20,7 +20,7 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
+  <mat-step *ngIf="isViewOnlyMode()">
     <form >
       <ng-template matStepLabel>Fill out items details</ng-template>
       <app-booking-items [reference]="booking.reference" [paymentType]="booking.paymentType" [paymentStatus]="booking.paymentStatus"
@@ -31,7 +31,7 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
+  <mat-step *ngIf="isViewOnlyMode()">
     <form >
       <ng-template matStepLabel>Fill out pick up details</ng-template>
       <app-booking-info [pickUpDate]="booking.pickUpDate" [pickUpTime]="booking.pickUpTime" [pickUpPostCode]="booking.pickUpPostCode"
