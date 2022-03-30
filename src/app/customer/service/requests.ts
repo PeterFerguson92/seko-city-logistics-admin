@@ -22,7 +22,7 @@ export const GET_CUSTOMER_BY_REFERENCE = gql`
 
 export const GET_CUSTOMERS_BY_REFERENCES = gql`
   query customersByReferences($references: [String!]!) {
-    customerByReference(reference: $reference) {
+    customersByReferences(references: $references) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress
       country type location destination role registeredName registeredNumber

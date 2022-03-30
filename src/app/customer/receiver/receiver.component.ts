@@ -1,9 +1,12 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { element } from 'protractor';
 import { CUSTOMER_TYPES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_TITLES, CUSTOMER_RECEIVER_ROLE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
+import { ICustomer } from '../model';
+import { CustomersService } from '../service/customers.service';
 
 @Component({
   selector: 'app-receiver',
@@ -11,7 +14,9 @@ import { AlertService } from 'src/app/shared/elements/alert/alert.service';
   styleUrls: ['./receiver.component.css', '../../shared/shared.css']
 })
 export class ReceiverComponent implements OnInit, AfterViewInit {
-
+  @Input() references;
+  @Input() destination;
+  @Input() location;
   receiversCustomerForm: FormGroup;
   destinationForm: FormGroup;
   types = CUSTOMER_TYPES;
@@ -29,34 +34,62 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
 
   constructor(private formBuilder: FormBuilder,
     private validationService: ValidationService,
+    private customersService: CustomersService,
     private commonService: CommonService,
     private alertService: AlertService) { }
 
   ngOnInit(): void {
+    console.log(this.references)
     this.receiversCustomerForm = this.formBuilder.group({
-      receivers: this.formBuilder.array([this.buildReceiver()])
+      receivers: this.formBuilder.array([])
     });
 
     this.destinationForm = this.formBuilder.group({
       destination: [this.destinations[0], [Validators.required]],
       location: [''],
     });
+
+    if (this.references && this.references.length > 0)
+    {
+      this.populateFields(this.references);
+    } else
+    {
+      this.receivers.push(this.buildReceiver(null));
+    }
+
   }
 
-  buildReceiver(): FormGroup {
+  buildReceiver(customer: ICustomer): FormGroup {
     return this.formBuilder.group({
-      type: [this.types[0], [Validators.required]],
-      registeredName: [''],
-      registeredNumber: [''],
-      title: [this.titles[0], [Validators.required]],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      email: ['', [Validators.email]],
+      type: [customer ? customer.type : this.types[0], [Validators.required]],
+      registeredName: [customer ? customer.registeredName : ''],
+      registeredNumber: [customer ? customer.registeredNumber : ''],
+      title: [customer ? customer.title : this.titles[0], [Validators.required]],
+      name: [customer ? customer.name : '', Validators.required],
+      surname: [customer ? customer.surname : '', Validators.required],
+      email: [customer ? customer.email : '', [Validators.email]],
       phoneGroup: this.formBuilder.group({
-        countryCode: [this.codes[0], [Validators.required]],
-        phone: ['', [Validators.required]],
+        countryCode: [customer ? customer.countryCode : this.codes[0], [Validators.required]],
+        phone: [customer ? customer.phone : '', [Validators.required]],
       }, { validators: [Validators.required, this.validationService.phoneValidator] }),
     })
+  }
+
+  populateFields(references: [string]) {
+
+    this.customersService.getCustomersByReferences(references).subscribe(
+      ({ data }) => {
+        const recvs = data.customersByReferences;
+        recvs.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    this.getDestinationFormControl('destination').setValue(this.destination);
+    this.getDestinationFormControl('location').setValue(this.location)
   }
 
   ngAfterViewInit(): void {
@@ -71,7 +104,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   onAddReceveir(index) {
     if (!this.isReceiverValuePopulated(index))
     {
-      this.receivers.push(this.buildReceiver());
+      this.receivers.push(this.buildReceiver(null));
     }
   }
 

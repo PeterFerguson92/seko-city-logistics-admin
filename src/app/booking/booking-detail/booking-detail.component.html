@@ -1,7 +1,7 @@
 <button mat-raised-button  id="toggle-linear">
 </button>
 <mat-stepper linear #stepper>
-  <mat-step >
+  <!-- <mat-step >
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
       <app-customer-detail [customer]="booking.customer" [mode]="mode"></app-customer-detail>
@@ -9,11 +9,11 @@
         <button mat-button (click)="onForward(stepper, 'customerDetailComponent')"> Next</button>
       </div>
     </form>
-  </mat-step>
+  </mat-step> -->
   <mat-step>
     <form >
       <ng-template matStepLabel>Fill out receiver details</ng-template>
-      <app-receiver></app-receiver>
+      <app-receiver [references]="booking.receiverReferences" [destination]="booking.destination" [location]="booking.location"></app-receiver>
       <div align="end">
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="onForward(stepper, 'receiverComponent')">Next</button>
