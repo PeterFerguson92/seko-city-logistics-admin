@@ -76,6 +76,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   isReceiverValuePopulated(index) {
+    console.log(this.receivers.controls[index]);
     return !this.receivers.controls[index].valid;
   }
 

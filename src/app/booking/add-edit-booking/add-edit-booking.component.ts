@@ -15,7 +15,6 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
     private activatedroute: ActivatedRoute,
     private customersService: CustomersService,
     private router: Router) {
-    console.log(router.url) // edit-booking/B3637-43083-WIN5
 
     this.activatedroute.data.subscribe(data => {
       if (router.url.includes('edit-booking'))
@@ -44,8 +43,6 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
     this.customersService.getCustomerByReference(customerReference).subscribe(
       ({ data }) => {
         this.booking.customer = data.customerByReference
-        console.log(this.booking);
-
       },
       error => {
         console.log(error);
