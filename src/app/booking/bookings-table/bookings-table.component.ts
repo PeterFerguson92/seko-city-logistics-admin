@@ -38,7 +38,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   editBooking(element) {
     console.log(element)
-    this.router.navigate(['/edit-booking', element.reference]);
+    this.router.navigate(['/edit-booking', element.reference, element.senderReference]);
   }
 
   getFormattedDate(date) {

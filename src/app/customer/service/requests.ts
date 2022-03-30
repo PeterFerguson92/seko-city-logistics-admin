@@ -11,7 +11,17 @@ export const GET_ALL_CUSTOMERS = gql`
 `;
 
 export const GET_CUSTOMER_BY_REFERENCE = gql`
-  query customers($reference: String!) {
+  query customerByReference($reference: String!) {
+    customerByReference(reference: $reference) {
+      id reference title name surname fullName email countryCode
+      phone fullPhoneNumber postcode address displayAddress
+      country type location destination role registeredName registeredNumber
+    }
+  }
+`;
+
+export const GET_CUSTOMERS_BY_REFERENCES = gql`
+  query customersByReferences($references: [String!]!) {
     customerByReference(reference: $reference) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress

@@ -19,11 +19,8 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
     this.activatedroute.data.subscribe(data => {
       if (router.url.includes('edit-booking'))
       {
-        this.booking = Object.assign({selected: false}, data.booking);
-
-
-        this.getCustomerByReference(data.booking.senderReference);
-
+        this.booking = Object.assign({selected: false}, data.booking[0].data.bookingByReference);
+        this.booking.customer = data.booking[1].data.customerByReference
       } else
       {
         this.booking.customer = data.customer
@@ -37,16 +34,5 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   //  this.sub.unsubscribe();
-  }
-
-  getCustomerByReference(customerReference: string) {
-    this.customersService.getCustomerByReference(customerReference).subscribe(
-      ({ data }) => {
-        this.booking.customer = data.customerByReference
-      },
-      error => {
-        console.log(error);
-      }
-    );
   }
 }
