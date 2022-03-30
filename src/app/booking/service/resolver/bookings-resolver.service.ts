@@ -16,7 +16,6 @@ export class BookingsResolverService implements Resolve<IBooking>  {
 
     const reference = route.paramMap.get('reference');
     const sreference = route.paramMap.get('senderReference');
-    console.log(sreference);
     if (!reference)
     {
       const message = `reference was not a found: ${id}`;

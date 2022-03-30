@@ -1,7 +1,7 @@
 <button mat-raised-button  id="toggle-linear">
 </button>
 <mat-stepper linear #stepper>
-  <!-- <mat-step >
+  <mat-step >
     <form >
       <ng-template matStepLabel>Fill out sender details</ng-template>
       <app-customer-detail [customer]="booking.customer" [mode]="mode"></app-customer-detail>
@@ -9,8 +9,8 @@
         <button mat-button (click)="onForward(stepper, 'customerDetailComponent')"> Next</button>
       </div>
     </form>
-  </mat-step> -->
-  <!-- <mat-step>
+  </mat-step>
+  <mat-step>
     <form >
       <ng-template matStepLabel>Fill out receiver details</ng-template>
       <app-receiver [references]="booking.receiverReferences" [destination]="booking.destination" [location]="booking.location"></app-receiver>
@@ -19,7 +19,7 @@
         <button mat-button (click)="onForward(stepper, 'receiverComponent')">Next</button>
       </div>
     </form>
-  </mat-step> -->
+  </mat-step>
   <mat-step>
     <form >
       <ng-template matStepLabel>Fill out items details</ng-template>
@@ -34,7 +34,8 @@
   <mat-step>
     <form >
       <ng-template matStepLabel>Fill out pick up details</ng-template>
-      <app-booking-info></app-booking-info>
+      <app-booking-info [pickUpDate]="booking.pickUpDate" [pickUpTime]="booking.pickUpTime" [pickUpPostCode]="booking.pickUpPostCode"
+      [pickUpAddress]="booking.pickUpAddress"  [updatesViaWhatsapp]="booking.updatesViaWhatsapp"></app-booking-info>
       <div align="end">
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="onForward(stepper, 'bookingInfoComponent')"> Next</button>

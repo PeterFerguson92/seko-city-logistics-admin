@@ -221,7 +221,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   isDisabled() {
-    console.log(this.addEditCustomerForm)
     return !this.addEditCustomerForm.valid;
   }
 

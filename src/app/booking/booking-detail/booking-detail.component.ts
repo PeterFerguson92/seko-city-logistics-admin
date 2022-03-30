@@ -3,11 +3,10 @@ import { MatStepper } from '@angular/material/stepper';
 import { BOOK_CUSTOMER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
 import { ReceiverComponent } from 'src/app/customer/receiver/receiver.component';
-import { CustomersService } from 'src/app/customer/service/customers.service';
-import { IUpdateFieldInput } from 'src/app/service/common-model';
 import { BookingInfoComponent } from '../booking-info/booking-info.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
+import { CustomersService } from 'src/app/customer/service/customers.service';
 
 @Component({
   selector: 'app-booking-detail',

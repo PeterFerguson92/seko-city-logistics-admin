@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BOOKING_PICKUP_TIMES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
@@ -10,6 +10,11 @@ import { ValidationService } from 'src/app/service/validation/validation.service
   styleUrls: ['./booking-info.component.css', '../../shared/shared.css']
 })
 export class BookingInfoComponent implements OnInit {
+  @Input() pickUpDate;
+  @Input() pickUpTime;
+  @Input() pickUpPostCode;
+  @Input() pickUpAddress;
+  @Input() updatesViaWhatsapp;
 
   bookingInfoForm: FormGroup;
   times = BOOKING_PICKUP_TIMES
@@ -21,11 +26,11 @@ export class BookingInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookingInfoForm = this.formBuilder.group({
-      date: [new Date(), [Validators.required]],
-      time: [this.times[0], [Validators.required]],
-      address: ['', [Validators.required]],
-      postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
-      updatesViaWhatsapp: [true, [Validators.required]]
+      date: [this.pickUpDate ? new Date(this.pickUpDate) : new Date(), [Validators.required]],
+      time: [this.pickUpTime ? this. pickUpTime :  this.times[0], [Validators.required]],
+      postcode: [this.pickUpPostCode ? this.pickUpPostCode : '', [Validators.required, this.validationService.postCodeValidator]],
+      address: [this.pickUpAddress ? this.pickUpAddress : '', [Validators.required]],
+      updatesViaWhatsapp: [this.updatesViaWhatsapp === null ? this.updatesViaWhatsapp : true, [Validators.required]]
     })
   }
 
