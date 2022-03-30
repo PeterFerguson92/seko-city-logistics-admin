@@ -39,7 +39,6 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     private alertService: AlertService) { }
 
   ngOnInit(): void {
-    console.log(this.references)
     this.receiversCustomerForm = this.formBuilder.group({
       receivers: this.formBuilder.array([])
     });
@@ -51,7 +50,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
 
     if (this.references && this.references.length > 0)
     {
-      this.populateFields(this.references);
+      this.populateFields();
     } else
     {
       this.receivers.push(this.buildReceiver(null));
@@ -75,9 +74,8 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     })
   }
 
-  populateFields(references: [string]) {
-
-    this.customersService.getCustomersByReferences(references).subscribe(
+  populateFields() {
+    this.customersService.getCustomersByReferences(this.references).subscribe(
       ({ data }) => {
         const recvs = data.customersByReferences;
         recvs.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
@@ -109,7 +107,6 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
   }
 
   isReceiverValuePopulated(index) {
-    // console.log(this.receivers.controls[index]);
     return !this.receivers.controls[index].valid;
   }
 

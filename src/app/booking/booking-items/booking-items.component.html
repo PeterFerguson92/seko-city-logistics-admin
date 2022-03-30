@@ -40,7 +40,7 @@
             <app-material-select-input [label]="'Payment status'"  [width]="10" [options]="paymentStatuses" formControlName="paymentStatus"
             (selectionChange)="onSelectionChange($event, 'paymentStatus', 0)" [value]="paymentStatuses[0]"></app-material-select-input>
             <div class="divider"></div>
-            <app-material-input [label]="'Notes'" [icon]="'person_pin'" [width]="40"  formControlName="notes"></app-material-input>
+            <app-material-input [label]="'Notes'" [icon]="'person_pin'" [width]="40"  formControlName="paymentNotes"></app-material-input>
           </form>
 
       </div>

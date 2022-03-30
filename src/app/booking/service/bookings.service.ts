@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { UPDATE_CUSTOMER } from 'src/app/customer/service/requests';
 import { IBooking, IBookingsResponse } from '../model';
-import { CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS, GET_BOOKING_BY_REFERENCE, UPDATE_BOOKING } from './request';
+import {
+  CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS,
+  GET_BOOKING_BY_REFERENCE, GET_ITEMS_BY_REFERENCE, UPDATE_BOOKING
+} from './request';
 
 const LIMIT = 100
 const CURSOR = null;
@@ -44,9 +46,9 @@ export class BookingsService {
     });
   }
 
-  updateCustomer(reference: string, fields: any) {
+  updateBooking(reference: string, fields: any) {
     return this.apollo.mutate<IBooking>({
-      mutation: UPDATE_CUSTOMER,
+      mutation: UPDATE_BOOKING,
       variables: { reference, fields }
     });
   }
@@ -54,6 +56,13 @@ export class BookingsService {
   deleteBooking(reference: string) {
     return this.apollo.mutate<boolean>({
       mutation: DELETE_BOOKING,
+      variables: {reference}
+    });
+  }
+
+  getItemsByReference(reference: string) {
+    return this.apollo.query<any>({
+      query: GET_ITEMS_BY_REFERENCE,
       variables: {reference}
     });
   }

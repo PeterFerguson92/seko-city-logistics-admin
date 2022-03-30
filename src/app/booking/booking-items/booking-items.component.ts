@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { BOOKING_ITEMS, BOOKING_ITEMS_DISPLAY_NAMES, PAYMENT_STATUSES, PAYMENT_TYPES } from 'src/app/constants';
+import { BookingsService } from '../service/bookings.service';
 
 export interface IItem {
   quantity: number;
@@ -17,6 +18,10 @@ export interface IItem {
   styleUrls: ['./booking-items.component.css', '../../shared/shared.css']
 })
 export class BookingItemsComponent implements OnInit {
+  @Input() reference;
+  @Input() paymentType;
+  @Input() paymentStatus;
+  @Input() paymentNotes
   showItems = false;
   bookingItemForm: FormGroup;
   paymentForm: FormGroup;
@@ -30,35 +35,63 @@ export class BookingItemsComponent implements OnInit {
     return this.bookingItemForm.get('items') as FormArray;
   }
 
-  constructor(private formBuilder: FormBuilder) {}
-
+  constructor(private formBuilder: FormBuilder, private bookingsService:BookingsService) {}
   ngOnInit(): void {
     this.bookingItemForm = this.formBuilder.group({
-      items: this.formBuilder.array([this.buildItem()])
+      items: this.formBuilder.array([])
     });
 
     this.paymentForm = this.formBuilder.group({
       paymentType: [this.paymentTypes[0] , [Validators.required]],
       paymentStatus: [this.paymentStatuses[0], Validators.required],
-      notes: ['', []]
+      paymentNotes: ['', []]
+    })
+
+    if (this.reference)
+    {
+      this.populateFields();
+    }
+    else
+    {
+      this.items.push(this.buildItem(null))
+    }
+  }
+
+  buildItem(item:IItem): FormGroup {
+    return this.formBuilder.group({
+      quantity: [ item ? item.quantity :  1 , [Validators.required]],
+      type: [item ? item.type : this.types[0], Validators.required],
+      description: [item ? item.description :  ''],
+      value: [item ? item.value : '', Validators.required],
+      pricePerUnit: [item ? item.pricePerUnit : this.typesObject[0].PRICE, Validators.required],
+      amount: [item ? item.amount : parseInt(this.typesObject[0].PRICE, 10) * 1, Validators.required]
     })
   }
 
-  buildItem(): FormGroup {
-    return this.formBuilder.group({
-      quantity: [ 1 , [Validators.required]],
-      type: [this.types[0], Validators.required],
-      description: [''],
-      value: ['', Validators.required],
-      pricePerUnit: [this.typesObject[0].PRICE, Validators.required],
-      amount: [parseInt(this.typesObject[0].PRICE, 10) * 1, Validators.required]
-    })
+  populateFields() {
+    this.bookingsService.getItemsByReference(this.reference).subscribe(
+      ({ data }) => {
+        const items = data.itemsByBookingReference;
+        if (items.length > 0)
+        {
+          items.forEach(item => this.items.push(this.buildItem(item)));
+          this.showItems = true;
+        }
+        this.getPaymentFormControl('paymentType').setValue(this.paymentType);
+        this.getPaymentFormControl('paymentStatus').setValue(this.paymentStatus);
+        this.getPaymentFormControl('paymentNotes').setValue(this.paymentNotes);
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   onAddItem(index) {
     if (!this.isItemValuePopulated(index))
     {
-      this.items.push(this.buildItem());
+      this.items.push(this.buildItem(null));
     }
   }
 
@@ -184,7 +217,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getPaymentInfoDetails() {
-    const payment: any = { paymentType: '', paymentStatus: '', notes: ''}
+    const payment: any = { paymentType: '', paymentStatus: '', paymentNotes: ''}
     if (!this.showItems)
     {
       payment.totalAmount = 0;

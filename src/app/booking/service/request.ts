@@ -55,3 +55,11 @@ export const DELETE_BOOKING = gql`
     deleteBooking(reference: $reference)
   }
 `;
+
+export const GET_ITEMS_BY_REFERENCE = gql`
+  query itemsByBookingReference($reference: String!) {
+    itemsByBookingReference(reference: $reference) {
+      id bookingReference quantity type description pricePerUnit value amount
+    }
+  }
+`;
