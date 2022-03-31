@@ -25,7 +25,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   constructor(private router: Router,
     private bookingsService: BookingsService,
-    private commonService:CommonService,
+    private commonService: CommonService,
     private dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -36,8 +36,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     this.buildData(this.bookings);
   }
 
-  addBooking() {
-
+  onAddBooking() {
+    this.router.navigate(['/add-booking']);
   }
 
   viewBooking(element) {

@@ -40,6 +40,16 @@ export const CREATE_CUSTOMER = gql`
   }
 `;
 
+export const CREATE_CUSTOMERS = gql`
+  mutation createCustomers($customersInputs: [CustomerInput!]!) {
+    createCustomers(customersInputs: $customersInputs) {
+      id reference title name surname fullName email countryCode
+      phone fullPhoneNumber postcode address displayAddress
+      country type location destination role registeredName registeredNumber
+    }
+  }
+`;
+
 export const UPDATE_CUSTOMER = gql`
   mutation createCustomer($reference: String!, $fields: [UpdateFieldInput!]) {
     updateCustomer(reference: $reference, fields: $fields) {

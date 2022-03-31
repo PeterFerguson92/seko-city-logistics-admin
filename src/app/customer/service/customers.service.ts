@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ICustomersResponse, ICustomer } from '../model';
 import {
-  CREATE_CUSTOMER, DELETE_CUSTOMER, GET_ALL_CUSTOMERS,
+  CREATE_CUSTOMER, CREATE_CUSTOMERS, DELETE_CUSTOMER, GET_ALL_CUSTOMERS,
  GET_CUSTOMERS_BY_REFERENCES, GET_CUSTOMER_BY_REFERENCE, UPDATE_CUSTOMER
 } from './requests';
 
@@ -43,6 +43,13 @@ export class CustomersService {
     return this.apollo.mutate<ICustomer>({
       mutation: CREATE_CUSTOMER,
       variables: { input: customer }
+    });
+  }
+
+  createCustomers(customersInputs: [ICustomer]) {
+    return this.apollo.mutate<any>({
+      mutation: CREATE_CUSTOMERS,
+      variables: { customersInputs }
     });
   }
 

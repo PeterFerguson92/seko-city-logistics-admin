@@ -279,7 +279,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       const attributeName = key[0];
       sender[attributeName] = this.getFormControl(attributeName).value;
     })
-   sender.reference = this.customer.reference;
+   sender.reference = this.customer ? this.customer.reference : null;
    sender.role = CUSTOMER_SENDER_ROLE
     return sender;
  }

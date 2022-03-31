@@ -7,6 +7,9 @@ import { BookingItemsComponent } from '../booking-items/booking-items.component'
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { VIEW_BOOKING_MODE } from 'src/app/constants';
+import { lastValueFrom } from 'rxjs';
+import { ICustomer } from 'src/app/customer/model';
+import { IBooking } from '../model';
 
 @Component({
   selector: 'app-booking-detail',
@@ -24,7 +27,7 @@ export class BookingDetailComponent implements OnInit {
   @Input() booking;
   @Input() mode
 
-  constructor() { }
+  constructor(private customersService: CustomersService) { }
 
   ngOnInit(): void {}
 
@@ -62,16 +65,19 @@ export class BookingDetailComponent implements OnInit {
     this.booking.info = this.bookingInfoComponent.getInfoDetails();
   }
 
-  onCreateBooking() {
-
-    const x = '{"customer":{"__typename":"Customer","id":2,"reference":"CUK-33735-PN2","title":"Mr","name":"Abigail","surname":"Amoah","fullName":"Mr Abigail Amoah","email":"test@gmail.com","countryCode":"+44","phone":"7948212772","fullPhoneNumber":"+447948212772","postcode":"MK17 8FG","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","displayAddress":"2 Watkin Terrace, , , , , Northampton, Northamptonshire MK17 8FG","country":"UNITED KINGDOM","type":"PERSONAL","location":"","destination":"","role":"","registeredName":"","registeredNumber":""},"sender":{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"Abigail","surname":"Amoah-Korsah","countryCode":"+44","phone":"7948212772","email":"test@gmail.com","postcode":"MK17 8FG","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","country":"UNITED KINGDOM","reference":"CUK-33735-PN2","role":"SENDER"},"receiver":{"receivers":[{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"John","surname":"Mensah","countryCode":"+44","phone":"07948212772"}],"destinationInfo":{"destination":"KOFORIDUA","location":"tesss"}},"itemsDetails":{"items":[{"quantity":1,"type":"SMALL BOX","description":"","value":"45","pricePerUnit":"30","amount":30},{"quantity":"3","type":"BIG BOX","description":"","value":"34","pricePerUnit":70,"amount":210},{"quantity":"11","type":"OTHER","description":"pampers","value":"1222","pricePerUnit":"10","amount":"11"}],"paymentInfo":{"paymentType":"DIRECT DEBIT","paymentStatus":"COMPLETED","notes":"some random notes","totalAmount":251},"totalNumberOfItems":15},"info":{"date":"2022-04-08T00:00:00.000Z","time":"MORNING","postcode":"se193ty","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","updatesViaWhatsapp":true}}'
+  async onCreateBooking() {
+    // console.log(this.booking)
+    // console.log(JSON.stringify(this.booking))
+    const x = '{"sender":{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"francis amadu","surname":"Osei","countryCode":"+44","phone":"7948212772","email":"test@gmail.com","postcode":"se193ty","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","country":"UNITED KINGDOM","reference":null,"role":"SENDER"},"receiver":{"receivers":[{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"test1","surname":"etee","countryCode":"+44","phone":"07948212772"},{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"etete","surname":"etetet","countryCode":"+44","phone":"7948321334"}],"destinationInfo":{"destination":"KUMASI","location":"wrwrwr"}},"itemsDetails":{"items":[{"quantity":1,"type":"SMALL BOX","description":"","value":"4535","pricePerUnit":"30","amount":30},{"quantity":"3","type":"SMALL BOX","description":"","value":"555","pricePerUnit":"30","amount":90}],"paymentInfo":{"paymentType":"DIRECT DEBIT","paymentStatus":"COMPLETED","paymentNotes":"sfsf","totalAmount":120},"totalNumberOfItems":4},"info":{"date":"2022-03-31T15:24:08.000Z","time":"MORNING","postcode":"se193ty","address":"14 Watkin Terrace, , , , , Northampton, Northamptonshire","updatesViaWhatsapp":true}}'
     const mock = JSON.parse(x);
+    console.log(mock)
     this.booking = mock;
-    console.log(mock);
-    if (mock.customer.reference)
+    if (mock.customer && mock.customer.reference)
     {
-      console.log(this.getDifference(this.booking.sender, this.booking.customer))
       const fields = this.getDifference(this.booking.sender, this.booking.customer)
+    } else {
+      console.log('jerhlejhrl')
+      // console.log(await this.saveReceivers(this.booking.receiver.receivers));
     }
 
   }
@@ -89,6 +95,77 @@ export class BookingDetailComponent implements OnInit {
     })
 
     return updateFields;
+  }
+
+  async saveSender(customerDetails) {
+    customerDetails.role = 'SENDER'
+    customerDetails.destination = 'null'
+    customerDetails.location = 'null'
+
+      const saved = await lastValueFrom(this.customersService.createCustomer(customerDetails))
+      console.log(saved);
+    // console.log(saved.data['createCustomer'].reference)
+          // tslint:disable-next-line:no-string-literal
+    return saved.data['createCustomer'].reference;
+  }
+
+  async saveReceivers(receiversDetails) {
+    const recvReferences = [];
+    receiversDetails.forEach(recv => {
+      recv.role = 'RECEIVER',
+      recv.reference =  null,
+      recv.fullName =  null,
+      recv.email =  null ,
+      recv.fullPhoneNumber =  null ,
+      recv.displayAddress = null ,
+      recv.destination =  null ,
+      recv.location =  null ,
+      recv.postcode = null ,
+      recv.address =  null ,
+        recv.country = null
+    })
+   const saved = await lastValueFrom(this.customersService.createCustomers(receiversDetails))
+    saved.data.createCustomers.forEach(recv => {
+      console.log(recv.reference)
+      recvReferences.push(recv.reference);
+    })
+    console.log(recvReferences)
+    return recvReferences;
+  }
+
+  buildCustomer(sender: any): ICustomer {
+    return {
+      reference: sender.reference,
+      title: '',
+      name: '',
+      surname: '',
+      fullName: '',
+      email: '',
+      postcode: '',
+      address: '',
+      displayAddress: '',
+      countryCode: '',
+      phone: '',
+      fullPhoneNumber: '',
+      country: '',
+      type: '',
+      destination: '',
+      location: '',
+      registeredName: '',
+      registeredNumber: '',
+      role: ''
+    }
+  }
+
+
+
+  saveBooking(senderReference, recvReferences, itemsDetails, info) {
+    const booking: IBooking = null;
+
+    booking.senderReference = senderReference;
+    booking.receiverReferences = recvReferences;
+  
+
   }
 
 }

@@ -3,6 +3,7 @@ export interface IBookingsResponse {
 }
 
 export interface IBooking {
+  items: any;
   id: number;
   reference: string;
   senderReference: string;
