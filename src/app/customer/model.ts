@@ -18,8 +18,6 @@ export interface ICustomer {
   fullPhoneNumber: string;
   country: string;
   type: string;
-  destination: string;
-  location: string;
   registeredName: string;
   registeredNumber: string;
   role: string;

@@ -5,7 +5,7 @@ export const GET_ALL_CUSTOMERS = gql`
     customers(limit:$limit, cursor: $cursor) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress
-      country type location destination role registeredName registeredNumber
+      country type role registeredName registeredNumber
     }
   }
 `;
@@ -15,7 +15,7 @@ export const GET_CUSTOMER_BY_REFERENCE = gql`
     customerByReference(reference: $reference) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress
-      country type location destination role registeredName registeredNumber
+      country type role registeredName registeredNumber
     }
   }
 `;
@@ -25,7 +25,7 @@ export const GET_CUSTOMERS_BY_REFERENCES = gql`
     customersByReferences(references: $references) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress
-      country type location destination role registeredName registeredNumber
+      country type role registeredName registeredNumber
     }
   }
 `;
@@ -35,7 +35,7 @@ export const CREATE_CUSTOMER = gql`
     createCustomer(input: $input) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress
-      country type location destination role registeredName registeredNumber
+      country type role registeredName registeredNumber
     }
   }
 `;
@@ -45,7 +45,7 @@ export const CREATE_CUSTOMERS = gql`
     createCustomers(customersInputs: $customersInputs) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress
-      country type location destination role registeredName registeredNumber
+      country type  role registeredName registeredNumber
     }
   }
 `;
@@ -55,7 +55,7 @@ export const UPDATE_CUSTOMER = gql`
     updateCustomer(reference: $reference, fields: $fields) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress
-      country type location destination role registeredName registeredNumber
+      country type role registeredName registeredNumber
     }
   }
 `;

@@ -67,18 +67,27 @@ export class CustomersService {
     });
   }
 
-  getEmptyCustomer():ICustomer {
+  getEmptyCustomer(): ICustomer {
     return {
-      reference: '', title: '', name: '', surname: '', fullName: '', email: '', postcode: '', address: '', displayAddress: '', countryCode: '',
-      phone: '',fullPhoneNumber: '',
+      reference: '',
+      title: '',
+      name: '',
+      surname: '',
+      fullName: '',
+      email: '',
+      postcode: '',
+      address: '',
+      displayAddress: '',
+      countryCode: '',
+      phone: '',
+      fullPhoneNumber: '',
       country: '',
       type: '',
-      destination: '',
-      location: '',
       registeredName: '',
       registeredNumber: '',
       role: ''
-    };
+    }
+
   }
 
 }

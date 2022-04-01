@@ -176,13 +176,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const createCustomerData = 'createCustomer'
     this.createCustomer = this.customersService.createCustomer(this.getCustomerDetails()).subscribe(
       ({ data }) => {
-        if (this.mode === CREATE_BOOKING_MODE || VIEW_BOOKING_MODE)
-        {
-          this.alertService.success('Customer added correctly', this.alertOptions);
-        } else
-        {
-          location.reload();  // To handle properly
-        }
+        location.reload();  // To handle properly
       },
       error => {
         console.log(error);
@@ -204,7 +198,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       this.customersService.updateCustomer(this.customer.reference, updateCustomerFields).subscribe(
         ({ data }) => {
-          if (this.mode === this.isBookingMode())
+          if (this.isBookingMode())
           {
             this.alertService.warn('Customer updated correctly', this.alertOptions);
           } else
@@ -267,6 +261,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         customerDetails[attributeName] =  this.getFormControl(attributeName).value;
       }
     })
+    console.log(customerDetails)
     return customerDetails;
   }
 

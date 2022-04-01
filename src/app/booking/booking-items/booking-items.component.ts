@@ -137,6 +137,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   onInputChange(quantity, index) {
+    console.log(quantity)
     const pricePerUnit = this.getPricePerUnit(this.getItemFormControl('type', index).value);
     this.getItemFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
   }
@@ -235,8 +236,15 @@ export class BookingItemsComponent implements OnInit {
     const item: any = { quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }
     Object.entries(item).forEach((key) => {
       const attributeName = key[0];
-      item[attributeName] = control.get(attributeName).value;
+      if (attributeName === 'type' || attributeName === 'description')
+      {
+        item[attributeName] = control.get(attributeName).value;
+      } else
+      {
+        item[attributeName] = parseInt(control.get(attributeName).value, 10);
+      }
     })
+    item.bookingReference = '';
     return item;
   }
 

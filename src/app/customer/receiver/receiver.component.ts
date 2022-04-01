@@ -239,6 +239,15 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
         receiver[attributeName] = control.get(attributeName).value;
       }
     })
+    receiver.role = CUSTOMER_RECEIVER_ROLE,
+    receiver.reference =  null,
+    receiver.fullName =  null,
+    receiver.email =  null ,
+    receiver.fullPhoneNumber =  null ,
+    receiver.displayAddress = null ,
+    receiver.postcode = null ,
+    receiver.address =  null ,
+    receiver.country = null
     return receiver;
   }
 
