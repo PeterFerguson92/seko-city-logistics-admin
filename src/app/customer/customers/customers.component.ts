@@ -77,10 +77,10 @@ export class CustomersComponent implements OnInit {
   }
 
   getCustomers() {
-    this.customersService.getCustomers().subscribe(
+    this.customersService.getSenderCustomers().subscribe(
       ({ data }) => {
-        this.customers = data.customers;
-        this.dataSource = new MatTableDataSource(data.customers);
+        this.customers = data.senderCustomers;
+        this.dataSource = new MatTableDataSource(data.senderCustomers);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },

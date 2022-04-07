@@ -6,6 +6,7 @@ export interface IBooking {
   items: any;
   id: number;
   reference: string;
+  senderId: number;
   senderReference: string;
   senderFullName: string;
   receiverReferences: string[];

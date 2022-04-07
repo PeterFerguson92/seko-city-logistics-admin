@@ -50,6 +50,12 @@ export const UPDATE_BOOKING = gql`
   }
 `;
 
+export const SYNC_BOOKING = gql`
+  mutation syncBooking($input: BookingInput!) {
+    syncBooking(input: $input)
+  }
+`;
+
 export const DELETE_BOOKING = gql`
   mutation deleteBooking($reference: String!) {
     deleteBooking(reference: $reference)

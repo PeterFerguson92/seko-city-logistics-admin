@@ -33,7 +33,6 @@ export class BookingReviewComponent implements OnInit {
   }
 
   updateBook(data) {
-    console.log(JSON.stringify(data))
     this.booking = data
   }
 

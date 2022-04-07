@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { IBooking, IBookingsResponse } from '../model';
 import {
   CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS,
-  GET_BOOKING_BY_REFERENCE, GET_ITEMS_BY_REFERENCE, UPDATE_BOOKING
+  GET_BOOKING_BY_REFERENCE, GET_ITEMS_BY_REFERENCE, SYNC_BOOKING, UPDATE_BOOKING
 } from './request';
 
 const LIMIT = 100
@@ -50,6 +50,13 @@ export class BookingsService {
     return this.apollo.mutate<IBooking>({
       mutation: UPDATE_BOOKING,
       variables: { reference, fields }
+    });
+  }
+
+  syncBooking(booking: IBooking) {
+    return this.apollo.mutate<IBooking>({
+      mutation: SYNC_BOOKING,
+      variables: { input: booking }
     });
   }
 

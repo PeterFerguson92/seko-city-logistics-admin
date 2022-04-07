@@ -10,6 +10,16 @@ export const GET_ALL_CUSTOMERS = gql`
   }
 `;
 
+export const GET_ALL_SENDER_CUSTOMERS = gql`
+  query senderCustomers($limit: Int!, $cursor: String) {
+    senderCustomers(limit:$limit, cursor: $cursor) {
+      id reference title name surname fullName email countryCode
+      phone fullPhoneNumber postcode address displayAddress
+      country type role registeredName registeredNumber
+    }
+  }
+`;
+
 export const GET_CUSTOMER_BY_REFERENCE = gql`
   query customerByReference($reference: String!) {
     customerByReference(reference: $reference) {

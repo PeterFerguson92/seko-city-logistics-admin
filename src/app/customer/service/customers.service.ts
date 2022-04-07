@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ICustomersResponse, ICustomer } from '../model';
-import {
-  CREATE_CUSTOMER, CREATE_CUSTOMERS, DELETE_CUSTOMER, GET_ALL_CUSTOMERS,
- GET_CUSTOMERS_BY_REFERENCES, GET_CUSTOMER_BY_REFERENCE, UPDATE_CUSTOMER
+import { CREATE_CUSTOMER, CREATE_CUSTOMERS, DELETE_CUSTOMER, GET_ALL_CUSTOMERS,
+ GET_ALL_SENDER_CUSTOMERS,GET_CUSTOMERS_BY_REFERENCES, GET_CUSTOMER_BY_REFERENCE, UPDATE_CUSTOMER
 } from './requests';
 
 const LIMIT = 100
@@ -19,6 +18,15 @@ export class CustomersService {
   getCustomers() {
     return this.apollo.query<ICustomersResponse>({
       query: GET_ALL_CUSTOMERS,
+      variables: {
+        limit: LIMIT, cursor: CURSOR,
+      }
+    });
+  }
+
+  getSenderCustomers() {
+    return this.apollo.query<any>({
+      query: GET_ALL_SENDER_CUSTOMERS,
       variables: {
         limit: LIMIT, cursor: CURSOR,
       }
