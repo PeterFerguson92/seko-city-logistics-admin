@@ -61,7 +61,7 @@ export const CREATE_CUSTOMERS = gql`
 `;
 
 export const UPDATE_CUSTOMER = gql`
-  mutation createCustomer($reference: String!, $fields: [UpdateFieldInput!]) {
+  mutation updateCustomer($reference: String!, $fields: [UpdateFieldInput!]) {
     updateCustomer(reference: $reference, fields: $fields) {
       id reference title name surname fullName email countryCode
       phone fullPhoneNumber postcode address displayAddress

@@ -9,10 +9,12 @@ import { BookingInfoComponent } from './booking-info/booking-info.component';
 import { BookingReviewComponent } from './booking-review/booking-review.component';
 import { BookingsComponent } from './bookings/bookings.component';
 import { BookingsTableComponent } from './bookings-table/bookings-table.component';
+import { AvailabilityDialogComponent } from './availability-dialog/availability-dialog.component';
 
 @NgModule({
   declarations: [BookingDetailComponent, AddEditBookingComponent,
-    BookingItemsComponent, BookingInfoComponent, BookingReviewComponent, BookingsComponent, BookingsTableComponent],
+    BookingItemsComponent, BookingInfoComponent, BookingReviewComponent, BookingsComponent, BookingsTableComponent,
+    AvailabilityDialogComponent],
   imports: [CommonModule, SharedModule, CustomerModule]
 })
 export class BookingModule { }

@@ -261,7 +261,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         customerDetails[attributeName] =  this.getFormControl(attributeName).value;
       }
     })
-    console.log(customerDetails)
+    // tslint:disable-next-line:no-string-literal
+    customerDetails['role'] = CUSTOMER_SENDER_ROLE
     return customerDetails;
   }
 

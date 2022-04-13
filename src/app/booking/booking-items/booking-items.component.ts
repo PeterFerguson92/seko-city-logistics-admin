@@ -69,13 +69,16 @@ export class BookingItemsComponent implements OnInit {
   }
 
   populateFields() {
-    this.bookingsService.getItemsByReference(this.reference).subscribe(
+    this.bookingsService.getItemsByBookingReference(this.reference).subscribe(
       ({ data }) => {
         const items = data.itemsByBookingReference;
         if (items.length > 0)
         {
           items.forEach(item => this.items.push(this.buildItem(item)));
           this.showItems = true;
+        } else
+        {
+          this.items.push(this.buildItem(null));
         }
         this.getPaymentFormControl('paymentType').setValue(this.paymentType);
         this.getPaymentFormControl('paymentStatus').setValue(this.paymentStatus);

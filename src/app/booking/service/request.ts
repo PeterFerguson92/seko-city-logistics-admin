@@ -56,15 +56,27 @@ export const SYNC_BOOKING = gql`
   }
 `;
 
+export const SYNC_RECEIVERS = gql`
+  mutation syncReceivers($reference: String!, $receivers: [CustomerInput!]) {
+    syncReceivers(reference: $reference, receivers: $receivers)
+  }
+`;
+
+export const SYNC_ITEMS = gql`
+  mutation syncItems($bookingReference: String!, $items: [ItemInput!]) {
+    syncItems(bookingReference: $bookingReference, items: $items)
+  }
+`;
+
 export const DELETE_BOOKING = gql`
   mutation deleteBooking($reference: String!) {
     deleteBooking(reference: $reference)
   }
 `;
 
-export const GET_ITEMS_BY_REFERENCE = gql`
-  query itemsByBookingReference($reference: String!) {
-    itemsByBookingReference(reference: $reference) {
+export const GET_ITEMS_BY_BOOKING_REFERENCE = gql`
+  query itemsByBookingReference($bookingReference: String!) {
+    itemsByBookingReference(bookingReference: $bookingReference) {
       id bookingReference quantity type description pricePerUnit value amount
     }
   }

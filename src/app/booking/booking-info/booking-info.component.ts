@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { BOOKING_PICKUP_TIMES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
+import { AvailabilityDialogComponent } from '../availability-dialog/availability-dialog.component';
 
 @Component({
   selector: 'app-booking-info',
@@ -21,6 +23,7 @@ export class BookingInfoComponent implements OnInit {
   addresses = [];
 
   constructor(private formBuilder: FormBuilder,
+    private dialog: MatDialog,
     private commonService: CommonService,
     private validationService: ValidationService) { }
 
@@ -48,7 +51,12 @@ export class BookingInfoComponent implements OnInit {
   }
 
   onCheckAvailabilty() {
-    console.log(this.getFormControl('date').value)
+    console.log(this.getFormControl('date').value);
+    this.dialog.open(AvailabilityDialogComponent, {
+      height: '50%',
+      width: '50%',
+      data: { date: this.commonService.getFormattedIsoDate(this.getFormControl('date').value) }
+    });
   }
 
   getFormControl(fControlName: string) {

@@ -11,6 +11,7 @@ import { lastValueFrom } from 'rxjs';
 import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings.service';
 import { Router } from '@angular/router';
+import { ICustomer } from 'src/app/customer/model';
 
 @Component({
   selector: 'app-booking-detail',
@@ -101,6 +102,10 @@ export class BookingDetailComponent implements OnInit {
     } else
     {
       console.log('EDIT')
+      const fields = this.getDifference(this.booking.sender, this.booking.customer);
+      await this.updateCustomer(this.booking.customer.reference, fields);
+      await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);
+      await this.syncItems(this.booking.reference, this.booking.itemsDetails.items)
       this.syncBooking(this.booking)
     }
 
@@ -185,8 +190,8 @@ export class BookingDetailComponent implements OnInit {
     return booking;
   }
 
-  syncBooking(bookingInfo) {
-    this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
+  syncItems(bookingReference, items) {
+    this.bookingsService.syncItems(bookingReference, items).subscribe(
       ({ data }) => {
         console.log(data)
       //  this.router.navigate(['/bookings']);
@@ -196,7 +201,35 @@ export class BookingDetailComponent implements OnInit {
         console.log(error);
       }
     )
- //   return booking;
+  }
+
+  syncBooking(bookingInfo) {
+    this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
+      ({ data }) => {
+        console.log(data)
+       this.router.navigate(['/bookings']);
+
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  syncReceivers(reference, receivers: [ICustomer]) {
+    if (receivers.length > 0)
+    {
+      this.bookingsService.syncReceivers(reference, receivers).subscribe(
+        ({ data }) => {
+          console.log(data)
+          // this.router.navigate(['/bookings']);
+
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
   }
 
   buildBookingInput(bookingInfo) {
@@ -224,7 +257,6 @@ export class BookingDetailComponent implements OnInit {
       shipmentReference: bookingInfo.shipmentReference,
       assignedDriverReference: bookingInfo.assignedDriverReference
     };
-
   }
 
 }

@@ -67,7 +67,9 @@ export class CommonService {
   }
 
   getFormattedIsoDate(date: string) {
-    return new Date(date + ' GMT').toISOString();
+    const newDate = new Date(date + ' GMT');
+    newDate.setUTCHours(0,0,0,0);
+    return newDate.toISOString();
   }
 
   isCustomerPersonal(customerType:string) {

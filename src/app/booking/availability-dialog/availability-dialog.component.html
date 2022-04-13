@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <th>Reference</th>
+    <th>Sender</th>
+    <th>Postcode</th>
+    <th>Address</th>
+    <th>Time</th>
+
+  </tr>
+  <tr *ngFor="let booking of bookings">
+    <td>{{booking.reference}}</td>
+    <td>{{booking.senderFullName}}</td>
+    <td>{{booking.pickUpPostCode}}</td>
+    <td>{{booking.pickUpAddress}}</td>
+    <td>{{booking.pickUpTime}}</td>
+  </tr>
+</table>

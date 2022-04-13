@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { IBooking, IBookingsResponse } from '../model';
 import {
   CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS,
-  GET_BOOKING_BY_REFERENCE, GET_ITEMS_BY_REFERENCE, SYNC_BOOKING, UPDATE_BOOKING
+  GET_BOOKING_BY_REFERENCE, GET_ITEMS_BY_BOOKING_REFERENCE, SYNC_BOOKING, SYNC_ITEMS, SYNC_RECEIVERS, UPDATE_BOOKING
 } from './request';
 
 const LIMIT = 100
@@ -60,6 +60,20 @@ export class BookingsService {
     });
   }
 
+  syncReceivers(reference: string, receivers: any) {
+    return this.apollo.mutate<any>({
+      mutation: SYNC_RECEIVERS,
+      variables: { reference, receivers }
+    });
+  }
+
+  syncItems(bookingReference: string, items: any) {
+    return this.apollo.mutate<any>({
+      mutation: SYNC_ITEMS,
+      variables: { bookingReference, items }
+    });
+  }
+
   deleteBooking(reference: string) {
     return this.apollo.mutate<boolean>({
       mutation: DELETE_BOOKING,
@@ -67,10 +81,10 @@ export class BookingsService {
     });
   }
 
-  getItemsByReference(reference: string) {
+  getItemsByBookingReference(bookingReference: string) {
     return this.apollo.query<any>({
-      query: GET_ITEMS_BY_REFERENCE,
-      variables: {reference}
+      query: GET_ITEMS_BY_BOOKING_REFERENCE,
+      variables: {bookingReference}
     });
   }
 }

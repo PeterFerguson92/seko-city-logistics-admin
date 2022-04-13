@@ -16,6 +16,9 @@
                 <app-material-input [label]="'Registered number'" [width]="20" formControlName="registeredNumber"></app-material-input>
                 </span>
                 <div class="divider"></div>
+                <app-material-select-input [label]="'Title'" [options]="titles" formControlName="title"
+              (selectionChange)="onSelectionChange($event, 'title',i)"  [width]="10" [value]="titles[0]"></app-material-select-input>
+              <div class="divider"></div>
                 <app-material-input [label]="'Name'" [width]="20" formControlName="name" [errorMsg]="formValidationMap.name"></app-material-input>
                 <div class="divider"></div>
                 <app-material-input [label]="'Surname'" [width]="20" formControlName="surname" [errorMsg]="formValidationMap.surname"></app-material-input>
