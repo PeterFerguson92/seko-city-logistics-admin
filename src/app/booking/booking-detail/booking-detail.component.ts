@@ -69,8 +69,6 @@ export class BookingDetailComponent implements OnInit {
   }
 
   async onCreateBooking() {
-    console.log(this.booking)
-    console.log(this.mode)
     // console.log(JSON.stringify(this.booking))
     // tslint:disable-next-line:max-line-length
     // const x = '{"sender":{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Miss","name":"Comfort","surname":"boateng","countryCode":"+44","phone":"7880256714","email":"test@gmail.com","postcode":"se193ty","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","country":"UNITED KINGDOM","reference":null,"role":"SENDER"},"receiver":{"receivers":[{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"test1","surname":"etee","countryCode":"+44","phone":"07948212772"},{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"etete","surname":"etetet","countryCode":"+44","phone":"7948321334"}],"destinationInfo":{"destination":"KUMASI","location":"wrwrwr"}},"itemsDetails":{"items":[{"quantity":1,"type":"SMALL BOX","description":"","value":4535,"pricePerUnit":30,"amount":30},{"quantity":3,"type":"SMALL BOX","description":"","value":555,"pricePerUnit":30,"amount":90}],"paymentInfo":{"paymentType":"DIRECT DEBIT","paymentStatus":"COMPLETED","paymentNotes":"sfsf","totalAmount":120},"totalNumberOfItems":4},"info":{"date":"2022-03-31T15:24:08.000Z","time":"MORNING","postcode":"se193ty","address":"14 Watkin Terrace, , , , , Northampton, Northamptonshire","updatesViaWhatsapp":true}}'
@@ -84,7 +82,6 @@ export class BookingDetailComponent implements OnInit {
     {
       if (this.booking.customer && this.booking.customer.reference)
       {
-        console.log('CREATE esiste')
         const fields = this.getDifference(this.booking.sender, this.booking.customer)
         await this.updateCustomer(this.booking.customer.reference, fields);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
@@ -93,7 +90,6 @@ export class BookingDetailComponent implements OnInit {
       }
       else
       {
-        console.log('CREATE non esiste')
         const senderDetails = await this.saveSender(this.booking.sender);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
         this.saveBooking(senderDetails, recvReference, this.booking)
@@ -101,7 +97,6 @@ export class BookingDetailComponent implements OnInit {
 
     } else
     {
-      console.log('EDIT')
       const fields = this.getDifference(this.booking.sender, this.booking.customer);
       await this.updateCustomer(this.booking.customer.reference, fields);
       await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);

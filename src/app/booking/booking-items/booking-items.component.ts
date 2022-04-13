@@ -36,15 +36,16 @@ export class BookingItemsComponent implements OnInit {
   }
 
   constructor(private formBuilder: FormBuilder, private bookingsService:BookingsService) {}
+
   ngOnInit(): void {
     this.bookingItemForm = this.formBuilder.group({
       items: this.formBuilder.array([])
     });
 
     this.paymentForm = this.formBuilder.group({
-      paymentType: [this.paymentTypes[0] , [Validators.required]],
-      paymentStatus: [this.paymentStatuses[0], Validators.required],
-      paymentNotes: ['', []]
+      paymentType: [this.paymentType ? this.paymentType : this.paymentTypes[0] , [Validators.required]],
+      paymentStatus: [this.paymentStatus ? this.paymentStatus : this.paymentStatuses[0], Validators.required],
+      paymentNotes: [this.paymentNotes ? this.paymentNotes : '', []]
     })
 
     if (this.reference)
@@ -80,10 +81,6 @@ export class BookingItemsComponent implements OnInit {
         {
           this.items.push(this.buildItem(null));
         }
-        this.getPaymentFormControl('paymentType').setValue(this.paymentType);
-        this.getPaymentFormControl('paymentStatus').setValue(this.paymentStatus);
-        this.getPaymentFormControl('paymentNotes').setValue(this.paymentNotes);
-
       },
       error => {
         console.log(error);
@@ -140,7 +137,6 @@ export class BookingItemsComponent implements OnInit {
   }
 
   onInputChange(quantity, index) {
-    console.log(quantity)
     const pricePerUnit = this.getPricePerUnit(this.getItemFormControl('type', index).value);
     this.getItemFormControl('amount', index).setValue(this.calculateTotalPrice(quantity, pricePerUnit));
   }

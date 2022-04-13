@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BOOKING_STATUSES, PAYMENT_STATUSES } from 'src/app/constants';
+import { ALL_BOOKING_STATUSES, ALL_PAYMENT_STATUSES,  } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
 import { BookingsService } from '../service/bookings.service';
@@ -13,13 +13,12 @@ import { BookingsService } from '../service/bookings.service';
 })
 export class BookingsComponent implements OnInit {
   bookingsFilterForm: FormGroup;
-  bookingStatuses = BOOKING_STATUSES;
-  paymentStatuses = PAYMENT_STATUSES
+  bookingStatuses = ALL_BOOKING_STATUSES;
+  paymentStatuses = ALL_PAYMENT_STATUSES
   bookings = null;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private bookingsService: BookingsService,
+
+  constructor(private formBuilder: FormBuilder, private bookingsService: BookingsService,
     private validationService: ValidationService,
     private commonService: CommonService) { }
 
@@ -28,8 +27,6 @@ export class BookingsComponent implements OnInit {
     const days = 86400000;
     const fiveDaysAgo = new Date(today - (7 * days));
 
-    this.bookingStatuses.unshift('ALL','OPEN')
-    this.paymentStatuses.unshift('ALL')
 
     this.bookingsFilterForm = this.formBuilder.group({
       status: [this.bookingStatuses[0]],
@@ -56,12 +53,9 @@ export class BookingsComponent implements OnInit {
   }
 
   onSearch() {
-   // console.log(this.buildFilterFields());
     this.bookingsService.filterBookings(this.buildFilterFields()).subscribe(
       ({ data }) => {
         // tslint:disable-next-line:no-string-literal
-        console.log(data['filterBookings']);
-                // tslint:disable-next-line:no-string-literal
         this.bookings = data['filterBookings'];
       },
       error => {

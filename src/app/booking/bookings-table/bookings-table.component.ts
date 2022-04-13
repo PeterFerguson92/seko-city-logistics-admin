@@ -55,7 +55,6 @@ export class BookingsTableComponent implements OnInit, OnChanges {
       {
         this.bookingsService.deleteBooking(reference).subscribe(
           ({ data }) => {
-            console.log(data)
             location.reload()
           },
           error => {

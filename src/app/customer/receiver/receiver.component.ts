@@ -79,7 +79,6 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
       ({ data }) => {
         const recvs = data.customersByReferences;
         recvs.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
-
       },
       error => {
         console.log(error);
@@ -90,14 +89,7 @@ export class ReceiverComponent implements OnInit, AfterViewInit {
     this.getDestinationFormControl('location').setValue(this.location)
   }
 
-  ngAfterViewInit(): void {
-    // this.validateFormControl('registeredName');
-    // this.validateFormControl('name');
-    // this.validateFormControl('surname');
-    // this.validateFormControl('destination');
-
-    // this.validateGroupFormControl('phoneGroup', 'phone')
-  }
+  ngAfterViewInit(): void {}
 
   onAddReceveir(index) {
     if (!this.isReceiverValuePopulated(index))
