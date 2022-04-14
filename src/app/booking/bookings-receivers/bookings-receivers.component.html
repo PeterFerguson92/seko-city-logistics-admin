@@ -1,0 +1,49 @@
+<div class="bodys">
+  <div class="booking-form-w3layouts">
+    <app-material-button [label]="'Load Previous'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()"></app-material-button><br><br>
+      <div class="main-flex-w3ls-sectns">
+      <div>
+      </div>
+          <form [formGroup]="receiversCustomerForm" >
+            <div formArrayName="receivers" *ngFor="let item of receivers.controls; let i = index">
+              <div [formGroupName] = 'i' >
+                <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
+                (selectionChange)="onSelectionChange($event, 'type', i)"  [width]="10" [value]="types[0]"></app-material-select-input>
+                <div class="divider"></div>
+                <span *ngIf="!isCustomerPersonal(i)">
+                  <app-material-input [label]="'Registered Name'" [width]="20" formControlName="registeredName" [errorMsg]="formValidationMap.registeredName"></app-material-input>
+                <div class="divider"></div>
+                <app-material-input [label]="'Registered number'" [width]="20" formControlName="registeredNumber"></app-material-input>
+                </span>
+                <div class="divider"></div>
+                <app-material-select-input [label]="'Title'" [options]="titles" formControlName="title"
+              (selectionChange)="onSelectionChange($event, 'title',i)"  [width]="10" [value]="titles[0]"></app-material-select-input>
+              <div class="divider"></div>
+                <app-material-input [label]="'Name'" [width]="20" formControlName="name" [errorMsg]="formValidationMap.name"></app-material-input>
+                <div class="divider"></div>
+                <app-material-input [label]="'Surname'" [width]="20" formControlName="surname" [errorMsg]="formValidationMap.surname"></app-material-input>
+                <div class="divider"></div>
+                <span formGroupName="phoneGroup">
+                  <app-material-select-input [label]="'Code'"  [width]="7" [options]="codes" formControlName="countryCode"
+                  (selectionChange)="onSelectionChange($event, 'countryCode', i)" [value]="codes[0]"></app-material-select-input>
+                  <div class="divider"></div>
+                   <app-material-input [label]="'Phone'" [type]="'phone'" [width]="15" [icon]="'person_pin'"  formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
+                </span>
+                <div class="divider"></div>
+                <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" [disabled]="isDeleteDisabled()"(click)="onDeleteReceiver(i)"></app-material-button>
+                   <div class="divider"></div>
+                <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button><br><br>
+              </div>
+            </div>
+          </form>
+        </div>
+        <form [formGroup]="destinationForm">
+          <app-material-select-input [label]="'Destination'" (selectionChange)="onDestinationSelectionChange($event, 'destination')" [options]="destinations" formControlName="destination"></app-material-select-input>
+          <div class="divider"></div>
+          <app-material-input [label]="'Location'" [icon]="'person_pin'" [width]="10" formControlName="location" [errorMsg]="formValidationMap.location"></app-material-input><br>
+        </form>
+         <div class="alert-section">
+              <app-alert></app-alert>
+            </div>
+      </div>
+  </div>

@@ -11,12 +11,14 @@ import { BookingsComponent } from './bookings/bookings.component';
 import { BookingsTableComponent } from './bookings-table/bookings-table.component';
 import { AvailabilityDialogComponent } from './availability-dialog/availability-dialog.component';
 import { PreviousRecvDialogComponent } from './previous-recv-dialog/previous-recv-dialog.component';
+import { BookingsReceiversComponent } from './bookings-receivers/bookings-receivers.component';
 
 @NgModule({
   declarations: [BookingDetailComponent, AddEditBookingComponent,
     BookingItemsComponent, BookingInfoComponent, BookingReviewComponent, BookingsComponent, BookingsTableComponent,
     AvailabilityDialogComponent,
-    PreviousRecvDialogComponent],
+    PreviousRecvDialogComponent,
+    BookingsReceiversComponent],
   imports: [CommonModule, SharedModule, CustomerModule]
 })
 export class BookingModule { }

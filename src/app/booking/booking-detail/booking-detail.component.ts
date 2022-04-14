@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
-import { ReceiverComponent } from 'src/app/customer/receiver/receiver.component';
 import { BookingInfoComponent } from '../booking-info/booking-info.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
@@ -12,6 +11,7 @@ import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings.service';
 import { Router } from '@angular/router';
 import { ICustomer } from 'src/app/customer/model';
+import { BookingsReceiversComponent } from '../bookings-receivers/bookings-receivers.component';
 
 @Component({
   selector: 'app-booking-detail',
@@ -20,7 +20,7 @@ import { ICustomer } from 'src/app/customer/model';
 })
 export class BookingDetailComponent implements OnInit {
   @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;
-  @ViewChild(ReceiverComponent) receiverComponent: ReceiverComponent;
+  @ViewChild(BookingsReceiversComponent) bookingReceiversComponent: BookingsReceiversComponent;
   @ViewChild(BookingItemsComponent) bookingItemsComponent: BookingItemsComponent;
   @ViewChild(BookingInfoComponent) bookingInfoComponent: BookingInfoComponent;
   @ViewChild(BookingReviewComponent) bookingReviewComponent: BookingReviewComponent;
@@ -33,7 +33,8 @@ export class BookingDetailComponent implements OnInit {
 
   constructor(private router: Router, private customersService: CustomersService, private bookingsService: BookingsService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
   isDisabled(componentName: string) {
     if (componentName === 'customerDetailComponent')
     {
@@ -63,7 +64,7 @@ export class BookingDetailComponent implements OnInit {
 
   buildBook() {
     this.booking.sender = this.customerDetailComponent.getSenderDetails();
-    this.booking.receiver = this.receiverComponent.getReceiverDetails();
+    this.booking.receiver = this.bookingReceiversComponent.getReceiverDetails();
     this.booking.itemsDetails = this.bookingItemsComponent.getItemsDetails();
     this.booking.info = this.bookingInfoComponent.getInfoDetails();
   }

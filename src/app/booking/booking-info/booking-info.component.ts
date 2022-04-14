@@ -51,7 +51,6 @@ export class BookingInfoComponent implements OnInit {
   }
 
   onCheckAvailabilty() {
-    console.log(this.getFormControl('date').value);
     this.dialog.open(AvailabilityDialogComponent, {
       height: '50%',
       width: '50%',
