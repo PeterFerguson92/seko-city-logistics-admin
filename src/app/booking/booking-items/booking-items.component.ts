@@ -62,7 +62,7 @@ export class BookingItemsComponent implements OnInit {
   buildItem(item:IItem): FormGroup {
     return this.formBuilder.group({
       id: [ item ? item.id :  null],
-      quantity: [ item ? item.quantity :  1 , [Validators.required]],
+      quantity: [ item ? item.quantity : 1, [Validators.required]],
       type: [item ? item.type : this.types[0], Validators.required],
       description: [item ? item.description :  ''],
       value: [item ? item.value : '', Validators.required],
@@ -72,10 +72,8 @@ export class BookingItemsComponent implements OnInit {
   }
 
   populateFields() {
-    console.log(this.reference);
     this.bookingsService.getItemsByBookingReference(this.reference).subscribe(
       ({ data }) => {
-        console.log(data)
         const items = data.itemsByBookingReference;
         if (items.length > 0)
         {

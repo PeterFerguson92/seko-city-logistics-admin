@@ -69,15 +69,6 @@ export class BookingDetailComponent implements OnInit {
   }
 
   async onCreateBooking() {
-    // console.log(JSON.stringify(this.booking))
-    // tslint:disable-next-line:max-line-length
-    // const x = '{"sender":{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Miss","name":"Comfort","surname":"boateng","countryCode":"+44","phone":"7880256714","email":"test@gmail.com","postcode":"se193ty","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","country":"UNITED KINGDOM","reference":null,"role":"SENDER"},"receiver":{"receivers":[{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"test1","surname":"etee","countryCode":"+44","phone":"07948212772"},{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"etete","surname":"etetet","countryCode":"+44","phone":"7948321334"}],"destinationInfo":{"destination":"KUMASI","location":"wrwrwr"}},"itemsDetails":{"items":[{"quantity":1,"type":"SMALL BOX","description":"","value":4535,"pricePerUnit":30,"amount":30},{"quantity":3,"type":"SMALL BOX","description":"","value":555,"pricePerUnit":30,"amount":90}],"paymentInfo":{"paymentType":"DIRECT DEBIT","paymentStatus":"COMPLETED","paymentNotes":"sfsf","totalAmount":120},"totalNumberOfItems":4},"info":{"date":"2022-03-31T15:24:08.000Z","time":"MORNING","postcode":"se193ty","address":"14 Watkin Terrace, , , , , Northampton, Northamptonshire","updatesViaWhatsapp":true}}'
-    // const mock = JSON.parse(x);
-    // console.log(mock)
-    // this.booking = mock;
-
-
-
     if (CREATE_BOOKING_MODE === this.mode)
     {
       if (this.booking.customer && this.booking.customer.reference)
@@ -174,9 +165,7 @@ export class BookingDetailComponent implements OnInit {
 
     this.bookingsService.createBooking(booking).subscribe(
       ({ data }) => {
-        console.log(data)
-      //  this.router.navigate(['/bookings']);
-
+        this.redirectToBookings()
       },
       error => {
         console.log(error);
@@ -188,10 +177,7 @@ export class BookingDetailComponent implements OnInit {
   syncItems(bookingReference, items) {
     this.bookingsService.syncItems(bookingReference, items).subscribe(
       ({ data }) => {
-        console.log(data)
-        this.ngOnInit();
-       this.router.navigate(['/bookings']);
-
+        this.redirectToBookings()
       },
       error => {
         console.log(error);
@@ -202,10 +188,7 @@ export class BookingDetailComponent implements OnInit {
   syncBooking(bookingInfo) {
     this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
       ({ data }) => {
-        console.log(data)
-        this.ngOnInit();
-       this.router.navigate(['/bookings']);
-
+        this.redirectToBookings()
       },
       error => {
         console.log(error);
@@ -218,11 +201,7 @@ export class BookingDetailComponent implements OnInit {
     {
       this.bookingsService.syncReceivers(reference, receivers).subscribe(
         ({ data }) => {
-          console.log(data)
-          this.ngOnInit();
-
-          this.router.navigate(['/bookings']);
-
+          this.redirectToBookings()
         },
         error => {
           console.log(error);
@@ -256,6 +235,12 @@ export class BookingDetailComponent implements OnInit {
       shipmentReference: bookingInfo.shipmentReference,
       assignedDriverReference: bookingInfo.assignedDriverReference
     };
+  }
+
+  redirectToBookings() {
+    this.router.navigate(['/bookings']).then(() => {
+      window.location.reload();
+    });
   }
 
 }
