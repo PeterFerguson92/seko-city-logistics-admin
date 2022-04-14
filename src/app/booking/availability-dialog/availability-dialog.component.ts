@@ -15,13 +15,10 @@ export class AvailabilityDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.bookingsService.filterBookings( [{ name: 'pickUpDate', value: this.data.date }]).subscribe(
       ({ data }) => {
         // tslint:disable-next-line:no-string-literal
         this.bookings = data['filterBookings'];
-        console.log(this.bookings)
-                // tslint:disable-next-line:no-string-literal
       },
       error => {
         console.log(error);

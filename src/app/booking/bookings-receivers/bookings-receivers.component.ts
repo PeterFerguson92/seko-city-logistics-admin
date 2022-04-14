@@ -19,6 +19,7 @@ export class BookingsReceiversComponent implements OnInit {
   @Input() references;
   @Input() destination;
   @Input() location;
+  @Input() senderReference;
   receiversCustomerForm: FormGroup;
   destinationForm: FormGroup;
   types = CUSTOMER_TYPES;
@@ -148,10 +149,19 @@ export class BookingsReceiversComponent implements OnInit {
   }
 
   onLoadPreviousReceivers() {
-    this.dialog.open(PreviousRecvDialogComponent, {
+    const dialogRef =  this.dialog.open(PreviousRecvDialogComponent, {
       height: '50%',
       width: '50%',
-      // data: { date: this.commonService.getFormattedIsoDate(this.getFormControl('date').value)}
+      data: { senderReference: this.senderReference}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result)
+      // this.receiversCustomerForm.patchValue({
+      //   receivers: new FormArray([])
+      // })
+      result.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
     });
   }
 
@@ -230,7 +240,6 @@ export class BookingsReceiversComponent implements OnInit {
       if (attributeName === 'countryCode' || attributeName === 'phone')
       {
         receiver[attributeName] = control.get('phoneGroup').get(attributeName).value;
-
       } else
       {
         receiver[attributeName] = control.get(attributeName).value;

@@ -69,11 +69,16 @@ export class BookingDetailComponent implements OnInit {
     this.booking.info = this.bookingInfoComponent.getInfoDetails();
   }
 
+  getSenderRef() {
+    return this.booking.customer && this.booking.customer.reference ? this.booking.customer.reference : this.booking.senderReference
+  }
+
   async onCreateBooking() {
     if (CREATE_BOOKING_MODE === this.mode)
     {
       if (this.booking.customer && this.booking.customer.reference)
       {
+        // updating booking for exist customer
         const fields = this.getDifference(this.booking.sender, this.booking.customer)
         await this.updateCustomer(this.booking.customer.reference, fields);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
@@ -82,6 +87,7 @@ export class BookingDetailComponent implements OnInit {
       }
       else
       {
+        // creating booking for exist customer
         const senderDetails = await this.saveSender(this.booking.sender);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
         this.saveBooking(senderDetails, recvReference, this.booking)
@@ -89,6 +95,7 @@ export class BookingDetailComponent implements OnInit {
 
     } else
     {
+      // create new booking
       const fields = this.getDifference(this.booking.sender, this.booking.customer);
       await this.updateCustomer(this.booking.customer.reference, fields);
       await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);

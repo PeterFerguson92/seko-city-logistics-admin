@@ -81,3 +81,12 @@ export const GET_ITEMS_BY_BOOKING_REFERENCE = gql`
     }
   }
 `;
+
+export const GET_PREVIOUS_RECEIVERS = gql`
+  query previousReceiversBySender($senderReference: String!) {
+    previousReceiversBySender(senderReference: $senderReference) {
+      id reference title name surname fullName email countryCode phone
+      fullPhoneNumber postcode address displayAddress country type role registeredName registeredNumber
+    }
+  }
+`;

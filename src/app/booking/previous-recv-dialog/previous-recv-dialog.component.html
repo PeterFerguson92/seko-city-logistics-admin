@@ -1,1 +1,12 @@
-<p>previous-recv-dialog works!</p>
+<span class="example-list-section">
+  <ul>
+    <li *ngFor="let recv of receivers">
+      <mat-checkbox [(ngModel)]="recv.selected"
+                    (ngModelChange)="updateAllComplete(recv.selected, recv)">
+        {{recv.info.fullName}}
+      </mat-checkbox>
+    </li>
+  </ul>
+</span>
+<button mat-button (click)="onNoClick()">Cancel</button>
+<button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
