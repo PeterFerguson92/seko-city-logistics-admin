@@ -4,6 +4,7 @@ import { BOOKING_ITEMS, BOOKING_ITEMS_DISPLAY_NAMES, PAYMENT_STATUSES, PAYMENT_T
 import { BookingsService } from '../service/bookings.service';
 
 export interface IItem {
+  id: number
   quantity: number;
   type: string;
   description: string;
@@ -60,6 +61,7 @@ export class BookingItemsComponent implements OnInit {
 
   buildItem(item:IItem): FormGroup {
     return this.formBuilder.group({
+      id: [ item ? item.id :  null],
       quantity: [ item ? item.quantity :  1 , [Validators.required]],
       type: [item ? item.type : this.types[0], Validators.required],
       description: [item ? item.description :  ''],
@@ -70,8 +72,10 @@ export class BookingItemsComponent implements OnInit {
   }
 
   populateFields() {
+    console.log(this.reference);
     this.bookingsService.getItemsByBookingReference(this.reference).subscribe(
       ({ data }) => {
+        console.log(data)
         const items = data.itemsByBookingReference;
         if (items.length > 0)
         {
@@ -232,7 +236,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   buildItemObject(control: AbstractControl) {
-    const item: any = { quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }
+    const item: any = {id: null,  quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }
     Object.entries(item).forEach((key) => {
       const attributeName = key[0];
       if (attributeName === 'type' || attributeName === 'description')

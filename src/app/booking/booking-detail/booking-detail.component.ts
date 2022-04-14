@@ -189,7 +189,8 @@ export class BookingDetailComponent implements OnInit {
     this.bookingsService.syncItems(bookingReference, items).subscribe(
       ({ data }) => {
         console.log(data)
-      //  this.router.navigate(['/bookings']);
+        this.ngOnInit();
+       this.router.navigate(['/bookings']);
 
       },
       error => {
@@ -202,6 +203,7 @@ export class BookingDetailComponent implements OnInit {
     this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
       ({ data }) => {
         console.log(data)
+        this.ngOnInit();
        this.router.navigate(['/bookings']);
 
       },
@@ -217,7 +219,9 @@ export class BookingDetailComponent implements OnInit {
       this.bookingsService.syncReceivers(reference, receivers).subscribe(
         ({ data }) => {
           console.log(data)
-          // this.router.navigate(['/bookings']);
+          this.ngOnInit();
+
+          this.router.navigate(['/bookings']);
 
         },
         error => {
