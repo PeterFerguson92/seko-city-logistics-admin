@@ -1,0 +1,47 @@
+<div class="container">
+  <h1 id="title">Create new shipment</h1>
+  <p id="description">Resize the browser window to see the effect.</p>
+  <div class="row">
+    <div class="col-75">
+      <div class="container">
+        <form id="survey-form" [formGroup]="newShipmentForm">
+
+          <div class="row">
+            <div class="col-50">
+              <app-material-select-input [label]="'Port Of Loading'" [width]="100" [options]="portsOfLoading"
+                [value]="portsOfLoading[0]" formControlName="portOfLoading">
+              </app-material-select-input>
+              <app-material-select-input [label]="'Port Of Discharge'" [width]="100" [options]="portsOfDischarge"
+              [value]="portsOfDischarge[0]" formControlName="portOfDischarge">
+            </app-material-select-input>
+              <app-material-select-input [label]="'Place Of Receipt'" [width]="100" [options]="placesOfReceipt"
+                [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
+              </app-material-select-input>
+            </div>
+            <div class="col-50">
+                <app-material-input [label]="'Consignee Exporter'" [width]="100" formControlName="consigneeExporter" ></app-material-input>
+                <app-material-input [label]="'Container Number'" [width]="100" formControlName="containerNumber" ></app-material-input>
+
+              <app-material-date-picker-input [label]="'Shipment Date'" formControlName="shipmentDate"></app-material-date-picker-input>
+              <app-material-select-input [label]="'Place Of Receipt'" [width]="100" [options]="placesOfReceipt"
+              [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
+            </app-material-select-input>
+              <app-material-select-input [label]="'Place Of Receipt'" [width]="100" [options]="placesOfReceipt"
+              [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
+            </app-material-select-input>
+
+              <app-material-date-picker-input [label]="'Shipment Date'" formControlName="shipmentDate"></app-material-date-picker-input>
+            </div>
+
+            <div class="col-50">
+
+            </div>
+          </div>
+
+          <input id="submit" type="submit" value="Submit request" class="btn">
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

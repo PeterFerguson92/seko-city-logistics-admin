@@ -23,3 +23,6 @@ export const PAYMENT_STATUSES = ['PENDING', 'COMPLETED', 'REFUNDED', 'CANCELLED'
 export const BOOKING_STATUSES = ['CREATED', 'IN PROCESS', 'SHIPPED', 'DELIVERED']
 export const ALL_PAYMENT_STATUSES = ['ALL'].concat(PAYMENT_STATUSES)
 export const ALL_BOOKING_STATUSES = ['ALL', 'OPEN'].concat(BOOKING_STATUSES)
+export const PORTS_OF_LOADING = ['London Gateway'];
+export const  PORTS_OF_DISCHARGE = ['Tema Port'];
+export const PLACES_OF_RECEIPT = ['Northampton'];

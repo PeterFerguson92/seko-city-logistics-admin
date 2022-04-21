@@ -10,22 +10,19 @@ import { HttpLink } from 'apollo-angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
-import { AddShipmentComponent } from './add-shipment/add-shipment.component';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
 import { AddShippmentConfirmationComponent } from './add-shippment-confirmation/add-shippment-confirmation.component';
 import { CustomerModule } from './customer/customer.module';
 import { BookingModule } from './booking/booking.module';
+import { ShipmentModule } from './shipment/shipment.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
     SideNavComponent,
-    AddShipmentComponent,
     FindShipmentComponent,
     AllShipmentsComponent,
     AddShippmentConfirmationComponent,
@@ -40,7 +37,8 @@ import { BookingModule } from './booking/booking.module';
     HttpClientModule,
     ApolloModule,
     CustomerModule,
-    BookingModule
+    BookingModule,
+    ShipmentModule
   ],
   providers: [{
     provide: APOLLO_OPTIONS,

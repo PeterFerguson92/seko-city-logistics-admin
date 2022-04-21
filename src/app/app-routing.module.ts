@@ -7,15 +7,15 @@ import { BookingsResolverService } from './booking/service/resolver/bookings-res
 import { CustomersComponent } from './customer/customers/customers.component';
 import { CustomerResolverService } from './customer/service/resolver/customer-resolver.service';
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
-import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ReportsComponent } from './reports/reports.component';
+import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'shipments', component: ShipmentsComponent },
   { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
-  { path: 'home', component: HomeComponent },
   { path: 'add-booking', component: AddEditBookingComponent },
   { path: 'add-booking/:reference', component: AddEditBookingComponent, resolve: { customer: CustomerResolverService } },
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },

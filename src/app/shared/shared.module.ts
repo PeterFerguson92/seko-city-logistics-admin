@@ -20,6 +20,7 @@ import { DialogComponent } from './elements/dialog/dialog.component';
 import { AlertComponent } from './elements/alert/alert.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MaterialCheckboxComponent } from './inputs/material-checkbox/material-checkbox.component';
+import { InputComponent } from './inputs/input/input.component';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -37,7 +38,8 @@ import { MaterialCheckboxComponent } from './inputs/material-checkbox/material-c
     MaterialTableComponent,
     SectionTitleComponent,
     DialogComponent,
-    AlertComponent],
+    AlertComponent,
+    InputComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule ],
   exports: [
     ReactiveFormsModule,
