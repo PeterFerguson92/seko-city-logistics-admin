@@ -1,2 +1,6 @@
 <label for={{name}} id="name-label"><i class="fa fa-user"></i>{{label}}</label>
-<input type="text" id={{name}} name={{name}} placeholder={{placeholder}} required>
+<input #input type="text" id={{name}} name={{name}} placeholder={{placeholder}}
+(input)="onChange($event.target.value)"
+  (blur)="onTouched()"
+  [(ngModel)]="value"
+required>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PLACES_OF_RECEIPT, PORTS_OF_DISCHARGE, PORTS_OF_LOADING } from 'src/app/constants';
+import { IShipment } from '../model';
 
 
 @Component({
@@ -23,10 +24,43 @@ export class AddShipmentComponent implements OnInit {
       portOfLoading: [this.portsOfLoading[0]],
       portOfDischarge: [this.portsOfDischarge[0]],
       placeOfReceipt: [this.placesOfReceipt[0]],
+      blVessel: [''],
+      consigneeExporter: [''],
+      containerNumber: [''],
       loadingDate: ['', Validators.required],
-      consigneeExporter: ['', Validators.required],
-      containerNumber: ['', Validators.required],
-      shipmentDate: ['', Validators.required],
+      shipmentDate: [''],
     })
+  }
+
+  onCreate() {
+    const shipment: IShipment = {
+      portOfLoading: this.getFormControl('portOfLoading').value,
+      portOfDischarge: this.getFormControl('portOfDischarge').value,
+      placeOfReceipt: this.getFormControl('placeOfReceipt').value,
+      consigneeExporter: this.getFormControl('consigneeExporter').value,
+      containerNumber: this.getFormControl('containerNumber').value,
+      blVessel: this.getFormControl('blVessel').value,
+      loadingDate: this.getFormControl('loadingDate').value,
+      shipmentDate: this.getFormControl('shipmentDate').value
+    }
+  }
+
+  onCancel() {
+    console.log(this.newShipmentForm)
+    // this.closeDialog.next('closeDialog');
+  }
+
+  isDisabled() {
+    return !this.newShipmentForm.valid;
+  }
+
+  getFormControl(fControlName: string) {
+    return this.newShipmentForm.get(fControlName)
+  }
+
+  onInputChange(event, fControlName) {
+    const fControl = this.getFormControl(fControlName);
+    fControl.setValue(event)
+    fControl.markAsDirty();
   }
 }

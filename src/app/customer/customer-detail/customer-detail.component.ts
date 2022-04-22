@@ -281,7 +281,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     })
    sender.reference = this.customer ? this.customer.reference : null;
    sender.role = CUSTOMER_SENDER_ROLE
-    return sender;
+   return sender;
  }
 
   setAttributes() {

@@ -1,13 +1,13 @@
 
-mat-form-field {
+/* mat-form-field {
   margin-bottom: 2%;
-}
+} */
 
 mat-hint {
   color: red;
 }
 
-/* default and hover color */
+/* default and hover color
 :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
   color: var(--input-color);
 }
@@ -17,12 +17,11 @@ mat-hint {
   color: var(--input-color);
 }
 
-/* floating label color */
-:host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+:host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {/* floating label color */
+
   color:var(--input-color);
 }
 
 ::ng-deep .mat-form-field-label {
-  /*change color of label*/
-  color:var(--input-color);
+  color:var(--input-color);  /*change color of label*/
  }

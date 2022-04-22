@@ -58,7 +58,9 @@ import { InputComponent } from './inputs/input/input.component';
     ErrorMessageComponent,
     MaterialSpinnerComponent,
     MaterialTableComponent,
-    SectionTitleComponent,AlertComponent],
+    SectionTitleComponent,
+    AlertComponent,
+    InputComponent],
     providers: [
       { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
     ]
