@@ -11,9 +11,11 @@
               <app-material-input [label]="'Container Number'" [width]="100" formControlName="containerNumber" ></app-material-input>
               <app-material-input [label]="'BL Vessel'" [width]="100" formControlName="blVessel" ></app-material-input>
               <app-material-date-picker-input [label]="'Shipment Date'" formControlName="shipmentDate"></app-material-date-picker-input>
+              <mat-divider inset vertical></mat-divider>
+
           </div>
           <div class="col-50">
-              <app-material-select-input [label]="'Port Of Loading'" [width]="100" [options]="portsOfLoading"
+              <!-- <app-material-select-input [label]="'Port Of Loading'" [width]="100" [options]="portsOfLoading"
                 [value]="portsOfLoading[0]" formControlName="portOfLoading">
               </app-material-select-input>
               <app-material-select-input [label]="'Port Of Discharge'" [width]="100" [options]="portsOfDischarge"
@@ -22,7 +24,7 @@
               <app-material-select-input [label]="'Place Of Receipt'" [width]="100" [options]="placesOfReceipt"
                 [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
               </app-material-select-input>
-              <app-material-date-picker-input [label]="'Loading Date'" (inputChange)="onInputChange($event, 'loadingDate')" formControlName="loadingDate"></app-material-date-picker-input>
+              <app-material-date-picker-input [label]="'Loading Date'" (inputChange)="onInputChange($event, 'loadingDate')" formControlName="loadingDate"></app-material-date-picker-input> -->
           </div>
           </div>
         </form>

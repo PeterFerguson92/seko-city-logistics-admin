@@ -33,16 +33,16 @@ export class AddShipmentComponent implements OnInit {
   }
 
   onCreate() {
-    const shipment: IShipment = {
-      portOfLoading: this.getFormControl('portOfLoading').value,
-      portOfDischarge: this.getFormControl('portOfDischarge').value,
-      placeOfReceipt: this.getFormControl('placeOfReceipt').value,
-      consigneeExporter: this.getFormControl('consigneeExporter').value,
-      containerNumber: this.getFormControl('containerNumber').value,
-      blVessel: this.getFormControl('blVessel').value,
-      loadingDate: this.getFormControl('loadingDate').value,
-      shipmentDate: this.getFormControl('shipmentDate').value
-    }
+    // const shipment: IShipment = {
+    //   portOfLoading: this.getFormControl('portOfLoading').value,
+    //   portOfDischarge: this.getFormControl('portOfDischarge').value,
+    //   placeOfReceipt: this.getFormControl('placeOfReceipt').value,
+    //   consigneeExporter: this.getFormControl('consigneeExporter').value,
+    //   containerNumber: this.getFormControl('containerNumber').value,
+    //   blVessel: this.getFormControl('blVessel').value,
+    //   loadingDate: this.getFormControl('loadingDate').value,
+    //   shipmentDate: this.getFormControl('shipmentDate').value
+    // }
   }
 
   onCancel() {
