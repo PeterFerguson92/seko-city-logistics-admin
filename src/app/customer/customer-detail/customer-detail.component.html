@@ -3,7 +3,7 @@
       <h4 class="sub-heading-agileits">{{titlePrefix}} Customer</h4>
       <div class="main-flex-w3ls-sectns">
           <form [formGroup]="addEditCustomerForm" >
-            <form *ngIf="isBookingMode()" [formGroup]="loadCustomerForm" >
+            <form *ngIf="isCreateBookingMode()" [formGroup]="loadCustomerForm" >
               <app-material-input [label]="'Reference'" [icon]="'person_pin'" formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>
               <div class="divider"></div>
               <app-material-button [label]="'Load Customer'" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>

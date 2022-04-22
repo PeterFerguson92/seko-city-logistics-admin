@@ -64,6 +64,7 @@ export class BookingsReceiversComponent implements OnInit {
 
   buildReceiver(customer: ICustomer): FormGroup {
     return this.formBuilder.group({
+      reference: [customer ? customer.reference : null, []],
       type: [customer ? customer.type : this.types[0], [Validators.required]],
       registeredName: [customer ? customer.registeredName : ''],
       registeredNumber: [customer ? customer.registeredNumber : ''],
@@ -152,15 +153,10 @@ export class BookingsReceiversComponent implements OnInit {
     const dialogRef =  this.dialog.open(PreviousRecvDialogComponent, {
       height: '50%',
       width: '50%',
-      data: { senderReference: this.senderReference}
+      data: { senderReference: this.senderReference, currentReferences: this.getReceiversReference()}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result)
-      // this.receiversCustomerForm.patchValue({
-      //   receivers: new FormArray([])
-      // })
       result.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
     });
   }
@@ -221,6 +217,14 @@ export class BookingsReceiversComponent implements OnInit {
     return {receivers: this.getReceiversData(), destinationInfo: this.getDestinationInfo()}
   }
 
+  getReceiversReference() {
+    const receiversReference = [];
+    this.receivers.controls.forEach((control) => {
+      receiversReference.push(control.get('reference').value)
+    });
+    return receiversReference;
+  }
+
   getReceiversData() {
     const receiverData = [];
     this.receivers.controls.forEach((control) => {
@@ -231,7 +235,7 @@ export class BookingsReceiversComponent implements OnInit {
   }
 
   buildReceiverObject(control: AbstractControl) {
-    const receiver: any = {
+    const receiver: any = { reference: '',
       type: '', registeredName: '', registeredNumber: '',
       title: '', name: '', surname: '', countryCode: '', phone: ''
     }
@@ -246,7 +250,7 @@ export class BookingsReceiversComponent implements OnInit {
       }
     })
     receiver.role = CUSTOMER_RECEIVER_ROLE,
-    receiver.reference =  null,
+    // receiver.reference =  null,
     receiver.fullName =  null,
     receiver.email =  null ,
     receiver.fullPhoneNumber =  null ,

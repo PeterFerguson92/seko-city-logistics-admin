@@ -2,6 +2,7 @@
   <ul>
     <li *ngFor="let recv of receivers">
       <mat-checkbox [(ngModel)]="recv.selected"
+                    [disabled]="recv.disabled"
                     (ngModelChange)="updateAllComplete(recv.selected, recv)">
         {{recv.info.fullName}}
       </mat-checkbox>

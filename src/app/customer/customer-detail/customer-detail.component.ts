@@ -230,6 +230,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     return this.bookingModes.includes(this.mode);
   }
 
+  isCreateBookingMode() {
+    return CREATE_BOOKING_MODE === this.mode;
+  }
+
   getFormControl(fControlName: string) {
     return fControlName === 'phone' || fControlName === 'countryCode' ? this.addEditCustomerForm.get('phoneGroup').get(fControlName) :
       this.addEditCustomerForm.get(fControlName)

@@ -31,9 +31,15 @@ export class PreviousRecvDialogComponent implements OnInit {
 
   buildRecvCheckBox(receiversData) {
     receiversData.forEach((recv) => {
-      this.receivers.push({info: recv, selected: false},)
+      const isPresent = this.checkIfPresent(recv.reference)
+      this.receivers.push({info: recv, selected: isPresent, disabled: isPresent},)
     });
 
+  }
+
+  checkIfPresent(reference) {
+    console.log(reference)
+    return this.data.currentReferences.includes(reference);
   }
 
   updateAllComplete(selected, recv) {
