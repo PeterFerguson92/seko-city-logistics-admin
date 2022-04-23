@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component';
 import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings.service';
 
@@ -18,7 +19,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() bookings: [IBooking] = null;
-  displayedColumns: string[] = ['ID', 'NAME', 'DESTINATION', 'POSTCODE', 'DATE', 'PAYMENT STATUS', 'ACTION'];
+  displayedColumns: string[] = ['ID', 'NAME', 'DESTINATION', 'POSTCODE', 'DATE', 'PAYMENT STATUS', 'BOOKING STATUS', 'ACTION'];
   dataSource = null;
   height =  '80%'
   width = '65%'
@@ -40,8 +41,13 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     this.router.navigate(['/add-booking']);
   }
 
-  viewBooking(element) {
-    this.router.navigate(['/view-booking', element.reference, element.senderReference]);
+  assignBooking(booking) {
+    const dialogRef = this.dialog.open(AssignDialogComponent, {
+      // height: '80%',
+      // width: '65%',
+      data: { booking }
+    });
+
   }
 
   editBooking(element) {
