@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PLACES_OF_RECEIPT, PORTS_OF_DISCHARGE, PORTS_OF_LOADING } from 'src/app/constants';
 import { IShipment } from '../model';
 import { ShipmentService } from '../service/shipment.service';
@@ -18,7 +19,7 @@ export class AddShipmentComponent implements OnInit {
   portsOfDischarge = PORTS_OF_DISCHARGE;
   placesOfReceipt = PLACES_OF_RECEIPT;
 
-  constructor(private formBuilder: FormBuilder, private shipmentService: ShipmentService) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private shipmentService: ShipmentService) {}
 
   ngOnInit() {
     this.newShipmentForm = this.formBuilder.group({
@@ -54,16 +55,16 @@ export class AddShipmentComponent implements OnInit {
       exporterAdress: this.getFormControl('reference').value,
       exporterArea: this.getFormControl('exporterArea').value,
       exporterCity: this.getFormControl('exporterCity').value,
-      containerNumber: parseInt(this.getFormControl('containerNumber').value, 10),
-      blVessel: this.getFormControl('reference').value,
-      shipmentDate: this.getFormControl('reference').value
+      containerNumber: this.getFormControl('containerNumber').value,
+      blVessel: this.getFormControl('blVessel').value,
+      shipmentDate: this.getFormControl('shipmentDate').value
     }
-
-    console.log(shipment)
 
     this.shipmentService.createShipment(shipment).subscribe(
       ({ data }) => {
-        location.reload();  // To handle properly
+        this.router.navigate(['/shipments']).then(() => {
+          window.location.reload();
+        });
       },
       error => {
         console.log(error);

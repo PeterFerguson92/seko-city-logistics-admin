@@ -1,5 +1,5 @@
 export interface IShipmentsResponse {
-  shipment: [IShipment];
+  shipments: [IShipment];
 }
 
 export interface IShipment{
@@ -16,7 +16,7 @@ export interface IShipment{
   exporterAdress: string;
   exporterArea: string;
   exporterCity: string;
-  containerNumber: number;
+  containerNumber: string;
   blVessel: string;
   shipmentDate: string;
 }

@@ -9,11 +9,14 @@ import { CustomerResolverService } from './customer/service/resolver/customer-re
 import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { LoginComponent } from './login/login.component';
 import { ReportsComponent } from './reports/reports.component';
+import { AddShipmentComponent } from './shipment/add-shipment/add-shipment.component';
+import { ShipmentsResolverService } from './shipment/service/resolver/shipment-resolver.service';
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'shipments', component: ShipmentsComponent },
+  { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
+  { path: 'add-shipments', component: AddShipmentComponent},
   { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'add-booking', component: AddEditBookingComponent },
