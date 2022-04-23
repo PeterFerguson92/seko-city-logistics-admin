@@ -5,32 +5,67 @@
     <div class="col-75">
       <div class="container">
         <form id="survey-form" [formGroup]="newShipmentForm">
-          <div class="row">
-            <div class="col-50">
-              <app-material-input [label]="'Consignee Exporter'" [width]="100" formControlName="consigneeExporter" ></app-material-input>
-              <app-material-input [label]="'Container Number'" [width]="100" formControlName="containerNumber" ></app-material-input>
-              <app-material-input [label]="'BL Vessel'" [width]="100" formControlName="blVessel" ></app-material-input>
-              <app-material-date-picker-input [label]="'Shipment Date'" formControlName="shipmentDate"></app-material-date-picker-input>
-              <mat-divider inset vertical></mat-divider>
-
-          </div>
-          <div class="col-50">
-              <!-- <app-material-select-input [label]="'Port Of Loading'" [width]="100" [options]="portsOfLoading"
-                [value]="portsOfLoading[0]" formControlName="portOfLoading">
-              </app-material-select-input>
-              <app-material-select-input [label]="'Port Of Discharge'" [width]="100" [options]="portsOfDischarge"
-                [value]="portsOfDischarge[0]" formControlName="portOfDischarge">
-              </app-material-select-input>
-              <app-material-select-input [label]="'Place Of Receipt'" [width]="100" [options]="placesOfReceipt"
-                [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
-              </app-material-select-input>
-              <app-material-date-picker-input [label]="'Loading Date'" (inputChange)="onInputChange($event, 'loadingDate')" formControlName="loadingDate"></app-material-date-picker-input> -->
-          </div>
-          </div>
+              <fieldset>
+                <legend>Ports information</legend>
+                <div>
+                  <label class="required">Port Of Loading</label>
+                  <app-material-select-input [width]="80" [options]="portsOfLoading"
+                    [value]="portsOfLoading[0]" formControlName="portOfLoading">
+                  </app-material-select-input>
+                  <label class="required">Port Of Discharge</label>
+                  <app-material-select-input [width]="80" [options]="portsOfDischarge"
+                    [value]="portsOfDischarge[0]" formControlName="portOfDischarge">
+                  </app-material-select-input>
+                  <label class="required">Place Of Receipt</label>
+                  <app-material-select-input [width]="80" [options]="placesOfReceipt"
+                    [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
+                  </app-material-select-input>
+                </div>
+            </fieldset>
+            <fieldset>
+              <legend>Exporter Information</legend>
+              <div>
+                  <label>Full Name:</label>
+                  <app-material-input  [width]="80" formControlName="exporterFullName"></app-material-input>
+                  <label>Postcode:</label>
+                  <app-material-input [width]="80" formControlName="exporterPostcode"></app-material-input>
+                  <label>Address:</label>
+                  <app-material-input  [width]="80" formControlName="exporterAddress"></app-material-input>
+                  <label>Area:</label>
+                  <app-material-input  [width]="80" formControlName="exporterArea"></app-material-input>
+                  <label>City:</label>
+                  <app-material-input  [width]="80" formControlName="exporterCity"></app-material-input>
+              </div>
+          </fieldset>
+          <fieldset>
+              <legend>Consignee Information</legend>
+              <div>
+                  <label>Full Name:</label>
+                  <app-material-input  [width]="80" formControlName="consigneeName" ></app-material-input>
+                  <label>Address:</label>
+                  <app-material-input [width]="80" formControlName="consigneeAddress" ></app-material-input>
+              </div>
+          </fieldset>
+          <fieldset>
+            <legend>Details</legend>
+            <div>
+                <label>BL Vessel:</label>
+                <app-material-input  [width]="80" formControlName="blVessel" ></app-material-input>
+                <label>Container Number:</label>
+                <app-material-input  [width]="80" formControlName="containerNumber" ></app-material-input>
+                <label>Loading Date:</label>
+                <app-material-date-picker-input (inputChange)="onInputChange($event, 'loadingDate')" formControlName="loadingDate"></app-material-date-picker-input>
+                <label>Shipment Date:</label>
+                <app-material-date-picker-input (inputChange)="onInputChange($event, 'shipmentDate')" formControlName="shipmentDate"></app-material-date-picker-input>
+              </div>
+          </fieldset>
         </form>
+      </div>
+      <br>
+      <div align="center">
+        <br>
         <app-material-button [label]="'Create'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onCreate()"></app-material-button>
       </div>
     </div>
-
   </div>
 </div>

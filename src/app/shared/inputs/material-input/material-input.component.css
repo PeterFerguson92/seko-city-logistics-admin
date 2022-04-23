@@ -7,21 +7,28 @@ mat-hint {
   color: red;
 }
 
-/* default and hover color
+/* default and hover color */
 :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
   color: var(--input-color);
+  background-color: white !important;
+
 }
 
 /* focused color */
 :host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
   color: var(--input-color);
+  background-color: white !important;
+
 }
 
 :host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {/* floating label color */
 
   color:var(--input-color);
+
 }
 
 ::ng-deep .mat-form-field-label {
   color:var(--input-color);  /*change color of label*/
  }
+
+

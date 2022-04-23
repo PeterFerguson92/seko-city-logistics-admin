@@ -1,3 +1,7 @@
+export interface IShipmentsResponse {
+  shipment: [IShipment];
+}
+
 export interface IShipment{
 
   reference: string;
@@ -7,7 +11,8 @@ export interface IShipment{
   loadingDate: string;
   consigneeName: string;
   consigneeAddress: string;
-  exporterName: string;
+  exporterFullName: string;
+  exporterPostcode: string;
   exporterAdress: string;
   exporterArea: string;
   exporterCity: string;

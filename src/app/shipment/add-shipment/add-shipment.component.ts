@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PLACES_OF_RECEIPT, PORTS_OF_DISCHARGE, PORTS_OF_LOADING } from 'src/app/constants';
 import { IShipment } from '../model';
+import { ShipmentService } from '../service/shipment.service';
 
 
 @Component({
@@ -17,34 +18,60 @@ export class AddShipmentComponent implements OnInit {
   portsOfDischarge = PORTS_OF_DISCHARGE;
   placesOfReceipt = PLACES_OF_RECEIPT;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private shipmentService: ShipmentService) {}
 
   ngOnInit() {
     this.newShipmentForm = this.formBuilder.group({
+      reference: [null],
       portOfLoading: [this.portsOfLoading[0]],
       portOfDischarge: [this.portsOfDischarge[0]],
       placeOfReceipt: [this.placesOfReceipt[0]],
-      blVessel: [''],
-      consigneeExporter: [''],
-      containerNumber: [''],
       loadingDate: ['', Validators.required],
-      shipmentDate: [''],
+      consigneeName: [''],
+      consigneeAddress: [''],
+      exporterFullName: [''],
+      exporterPostcode: [''],
+      exporterAddress: [''],
+      exporterArea: [''],
+      exporterCity: [''],
+      containerNumber:[''],
+      blVessel:[''],
+      shipmentDate: ['']
     })
   }
 
   onCreate() {
-    // const shipment: IShipment = {
-    //   portOfLoading: this.getFormControl('portOfLoading').value,
-    //   portOfDischarge: this.getFormControl('portOfDischarge').value,
-    //   placeOfReceipt: this.getFormControl('placeOfReceipt').value,
-    //   consigneeExporter: this.getFormControl('consigneeExporter').value,
-    //   containerNumber: this.getFormControl('containerNumber').value,
-    //   blVessel: this.getFormControl('blVessel').value,
-    //   loadingDate: this.getFormControl('loadingDate').value,
-    //   shipmentDate: this.getFormControl('shipmentDate').value
-    // }
-  }
+    const shipment: IShipment = {
+      reference: this.getFormControl('reference').value,
+      portOfLoading: this.getFormControl('portOfLoading').value,
+      portOfDischarge: this.getFormControl('portOfDischarge').value,
+      placeOfReceipt: this.getFormControl('placeOfReceipt').value,
+      loadingDate: this.getFormControl('loadingDate').value,
+      consigneeName: this.getFormControl('consigneeName').value,
+      consigneeAddress: this.getFormControl('consigneeAddress').value,
+      exporterFullName: this.getFormControl('exporterFullName').value,
+      exporterPostcode: this.getFormControl('exporterPostcode').value,
+      exporterAdress: this.getFormControl('reference').value,
+      exporterArea: this.getFormControl('exporterArea').value,
+      exporterCity: this.getFormControl('exporterCity').value,
+      containerNumber: parseInt(this.getFormControl('containerNumber').value, 10),
+      blVessel: this.getFormControl('reference').value,
+      shipmentDate: this.getFormControl('reference').value
+    }
 
+    console.log(shipment)
+
+    this.shipmentService.createShipment(shipment).subscribe(
+      ({ data }) => {
+        location.reload();  // To handle properly
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+
+  }
   onCancel() {
     console.log(this.newShipmentForm)
     // this.closeDialog.next('closeDialog');
