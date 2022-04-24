@@ -2,7 +2,7 @@
 <div class="test">
   <app-section-title [title]="'Shipments'"></app-section-title>
 </div>
-<a mat-fab (click)="addShipment()"  class="fab-main">
+<a mat-fab (click)="onAddShipment()"  class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
 </a>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -34,8 +34,11 @@
   <ng-container matColumnDef="ACTION">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
     <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="Accent" matTooltip="View/Assign Booking"  matTooltipPosition="left">
+        <mat-icon (click)="onAssignBooking(element.reference)">book</mat-icon>
+      </button>
       <button mat-icon-button color="warn" matTooltip="Delete customer" matTooltipPosition="right">
-        <mat-icon (click)="deleteShipment(element.reference)">delete</mat-icon>
+        <mat-icon (click)="onDeleteShipment(element.reference)">delete</mat-icon>
       </button>
     </td>
   </ng-container>

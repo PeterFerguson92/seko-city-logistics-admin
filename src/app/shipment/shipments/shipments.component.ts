@@ -30,11 +30,15 @@ export class ShipmentsComponent implements OnInit {
     })
   }
 
-  addShipment() {
+  onAddShipment() {
     this.router.navigate(['/add-shipments']);
   }
 
-  deleteShipment(reference) {
+  onAssignBooking(reference) {
+    this.router.navigate(['/assign-bookings', reference]);
+  }
+
+  onDeleteShipment(reference) {
     console.log(reference)
   }
 

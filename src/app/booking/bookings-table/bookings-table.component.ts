@@ -21,8 +21,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   @Input() bookings: [IBooking] = null;
   displayedColumns: string[] = ['ID', 'NAME', 'DESTINATION', 'POSTCODE', 'DATE', 'PAYMENT STATUS', 'BOOKING STATUS', 'ACTION'];
   dataSource = null;
-  height =  '80%'
-  width = '65%'
+  height = '80%';
+  width = '65%';
 
   constructor(private router: Router,
     private bookingsService: BookingsService,

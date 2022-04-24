@@ -90,3 +90,14 @@ export const GET_PREVIOUS_RECEIVERS = gql`
     }
   }
 `;
+
+
+export const GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE = gql`
+  query bookingsByStatusOrShipmentReference($status: String!, $shipmentReference: String!) {
+    bookingsByStatusOrShipmentReference(status: $status, shipmentReference:$shipmentReference) {
+      id reference senderReference senderFullName receiverReferences destination location numberOfItems
+      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
+      updatesViaWhatsapp status shipmentReference assignedDriverReference
+    }
+  }
+`;
