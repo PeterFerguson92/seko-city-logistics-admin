@@ -50,6 +50,12 @@ export const UPDATE_BOOKING = gql`
   }
 `;
 
+export const UPDATE_BOOKINGS_BY_REFERENCES = gql`
+  mutation updateBookingsByReference($references: [String!]!, $fields: [UpdateFieldInput!]) {
+    updateBookingsByReference(references: $references, fields: $fields)
+  }
+`;
+
 export const SYNC_BOOKING = gql`
   mutation syncBooking($input: BookingInput!) {
     syncBooking(input: $input)

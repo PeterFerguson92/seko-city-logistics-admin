@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { IBooking } from 'src/app/booking/model';
+import { BookingsService } from 'src/app/booking/service/bookings.service';
 import { CommonService } from 'src/app/service/common.service';
 
 @Component({
@@ -22,7 +23,9 @@ export class AssignBookingsComponent implements OnInit {
   height =  '80%';
   width = '65%';
 
-  constructor(private activatedroute: ActivatedRoute,private commonService: CommonService) { }
+  constructor(private activatedroute: ActivatedRoute,
+    private bookingsService: BookingsService,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -30,6 +33,10 @@ export class AssignBookingsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     })
+
+    this.dataSource.data.forEach(row => {
+      if (row.shipmentReference === this.activatedroute.snapshot.params.reference) this.selection.select(row);
+    });
   }
 
   getFormattedDate(date) {
@@ -62,5 +69,29 @@ export class AssignBookingsComponent implements OnInit {
 
   isSomeSelected() {
     return this.selection.selected.length > 0;
+  }
+
+  onAssign() {
+    const bookingsToAssignReferences = [];
+    this.dataSource.data.forEach(row => {
+      if (this.selection.isSelected(row) && row.shipmentReference !== this.activatedroute.snapshot.params.reference)
+      {
+        bookingsToAssignReferences.push(row.reference)
+      }
+    });
+    console.log(bookingsToAssignReferences)
+    this.assignBookingsToShipment(bookingsToAssignReferences)
+  }
+
+  assignBookingsToShipment(bookingsToAssignReferences) {
+    const fieldToUpdate = {name: 'shipmentReference', value: this.activatedroute.snapshot.params.reference}
+    this.bookingsService.updateBookingsByReferences(bookingsToAssignReferences, fieldToUpdate).subscribe(
+      ({ data }) => {
+        location.reload();  // TODO handle properly
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 }
