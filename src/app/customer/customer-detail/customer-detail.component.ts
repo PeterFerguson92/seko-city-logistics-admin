@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   ADD_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
   CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, VIEW_BOOKING_MODE
@@ -13,7 +14,7 @@ import { CustomersService } from '../service/customers.service';
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.css', '../../shared/shared.css']
+  styleUrls: ['./customer-detail.component.css', '../../shared/shared-form.css']
 })
 export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() customer: ICustomer;
@@ -37,13 +38,19 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   countryCodes = COUNTRY_CODES
   alertOptions = { autoClose: true, keepAfterRouteChange: false };
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private activatedroute: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private customersService: CustomersService,
     private commonService: CommonService,
     private validationService: ValidationService,
     private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.activatedroute.data.subscribe(data => {
+      console.log(data)
+      this.customer = data.customer
+
     this.setAttributes();
     this.loadCustomerForm = this.formBuilder.group({
       ref: ['', []]
@@ -69,6 +76,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       this.populateFields()
     }
+  })
   }
 
   ngAfterViewInit(): void {

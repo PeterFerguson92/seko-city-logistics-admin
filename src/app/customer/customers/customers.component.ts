@@ -35,21 +35,12 @@ export class CustomersComponent implements OnInit {
   }
 
   addCustomer() {
-    const emptyCustomer: ICustomer = this.customersService.getEmptyCustomer();
-    this.dialog.open(AddEditCustomerDialogComponent, {
-      height: '80%',
-      width: '65%',
-      data: { customer: emptyCustomer, mode: ADD_CUSTOMER_MODE }
-    });
+    this.router.navigate(['/add-customer'])
+
   }
 
-  editCustomer(customer) {
-    this.selectedCustomer = customer;
-    this.dialog.open(AddEditCustomerDialogComponent, {
-      height: '80%',
-      width: '65%',
-      data: { customer, mode: EDIT_CUSTOMER_MODE }
-    });
+  editCustomer(reference) {
+    this.router.navigate(['/edit-customer',reference])
   }
 
   deleteCustomer(reference) {

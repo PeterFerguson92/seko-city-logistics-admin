@@ -1,4 +1,4 @@
-form {
+/* form {
   display: grid;
   grid-gap: 20px;
   font-family: verdana, sans-serif;
@@ -82,4 +82,4 @@ label.required::after {
   fieldset > div {
       grid-template-columns: 1fr;
   }
-}
+} */
