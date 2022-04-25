@@ -5,6 +5,18 @@
     <div class="col-75">
       <div class="container">
         <form id="survey-form" [formGroup]="addEditCustomerForm">
+          <fieldset>
+            <legend>Load Customer</legend>
+            <div>
+              <form *ngIf="isCreateBookingMode()" [formGroup]="loadCustomerForm" >
+                <label >Reference</label>
+                <app-material-input formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>
+                <app-material-button [label]="'Load Customer'" [color]="'primary'" [backgroundColor]="'#069370'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
+                <app-alert></app-alert>
+              </form>
+            </div>
+          </fieldset>
+
               <fieldset>
                 <legend>Customer Details</legend>
                 <div>
@@ -57,7 +69,6 @@
       <br>
       <div class="submitBtn" align="center">
         <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
-        <br>
       </div>
     </div>
   </div>
