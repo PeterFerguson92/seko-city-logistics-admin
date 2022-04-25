@@ -18,9 +18,7 @@ export class ShipmentsComponent implements OnInit {
   shipments: [IShipment] = null;
   dataSource = null;
 
-  constructor(private router: Router,
-    private activatedroute: ActivatedRoute,
-    private commonService:CommonService) { }
+  constructor(private router: Router, private activatedroute: ActivatedRoute, private commonService:CommonService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -31,11 +29,15 @@ export class ShipmentsComponent implements OnInit {
   }
 
   onAddShipment() {
-    this.router.navigate(['/add-shipments']);
+    this.router.navigate(['/add-shipment']);
   }
 
   onAssignBooking(reference) {
     this.router.navigate(['/assign-bookings', reference]);
+  }
+
+  OnEditShipment(reference) {
+    this.router.navigate(['/edit-shipment', reference]);
   }
 
   onDeleteShipment(reference) {

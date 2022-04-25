@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { id } from '@swimlane/ngx-datatable';
+import {Resolve,ActivatedRouteSnapshot} from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { IShipment } from '../../model';
 import { ShipmentService } from '../shipment.service';
@@ -8,12 +7,17 @@ import { ShipmentService } from '../shipment.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ShipmentsResolverService implements Resolve<IShipment> {
-
+export class ShipmentResolverService implements Resolve<IShipment> {
   constructor(private shipmentService: ShipmentService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.shipmentService.getShipments()
-              .pipe(map(data => data.data.shipments));
+    const reference = route.paramMap.get('reference');
+    if (!reference)
+    {
+      const message = `shipment reference: ${reference} not found`;
+      return of({ shipment: null, error: message });
+    }
+    return this.shipmentService.getShipmentByReference(reference)
+      .pipe(map(data => data.data.shipmentByReference));
   }
 }

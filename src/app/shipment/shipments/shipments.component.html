@@ -37,6 +37,9 @@
       <button mat-icon-button color="Accent" matTooltip="View/Assign Booking"  matTooltipPosition="left">
         <mat-icon (click)="onAssignBooking(element.reference)">list_alt</mat-icon>
       </button>
+      <button mat-icon-button color="primary" matTooltip="Edit booking" matTooltipPosition="above">
+        <mat-icon (click)="OnEditShipment(element.reference)">edit</mat-icon>
+      </button>
       <button mat-icon-button color="warn" matTooltip="Delete customer" matTooltipPosition="right">
         <mat-icon (click)="onDeleteShipment(element.reference)">delete</mat-icon>
       </button>

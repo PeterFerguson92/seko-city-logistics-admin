@@ -25,7 +25,7 @@
                 </app-material-select-input>
                 <label *ngIf="!isCustomerPersonal()" class="required">Registered Name</label>
                 <app-material-input *ngIf="!isCustomerPersonal()"  [width]="80" formControlName="registeredName" [errorMsg]="formValidationMap.registeredName"></app-material-input>
-                <label class="required" *ngIf="!isCustomerPersonal()">Registered number</label>
+                <label class="required" *ngIf="!isCustomerPersonal()">Registered Number</label>
                 <app-material-input *ngIf="!isCustomerPersonal()" [width]="80" formControlName="registeredNumber"></app-material-input>
               </div>
               <label class="required">Country</label>
@@ -36,7 +36,7 @@
               <div>
                 <label class="required">Title</label>
                 <app-material-select-input [options]="titles" formControlName="title"
-                  (selectionChange)="onSelectionChange($event, 'title')"  [width]="60" [value]="titles[0]">
+                  (selectionChange)="onSelectionChange($event, 'title')"  [width]="30" [value]="titles[0]">
                 </app-material-select-input>
                 <label class="required">Name</label>
                 <app-material-input formControlName="name" [width]="80" [errorMsg]="formValidationMap.name"></app-material-input>
@@ -45,9 +45,9 @@
               </div>
           </fieldset>
           <fieldset>
-            <legend>Contact Information</legend>
+          <legend>Contact Information</legend>
             <div>
-              <label class="required">Email</label>
+              <label>Email</label>
               <app-material-input [width]="80" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
               <label class="required">Telephone</label>
               <div formGroupName="phoneGroup">
@@ -65,7 +65,7 @@
         </form>
       </div>
       <br>
-      <div *ngIf="isCreateBookingMode()" class="submitBtn" align="center">
+      <div *ngIf="!isBookingMode()" class="submitBtn" align="center">
         <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
       </div>
     </div>

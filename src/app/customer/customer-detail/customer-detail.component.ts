@@ -43,7 +43,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      this.customer = this.customer.reference ? this.customer : data.customer
+      this.customer = this.customer && this.customer.reference ? this.customer : data.customer
 
     this.setAttributes();
     this.loadCustomerForm = this.formBuilder.group({
