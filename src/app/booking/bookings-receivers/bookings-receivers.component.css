@@ -1,11 +1,8 @@
-form {
-  width: 255%;
-/* background: gray; */
-margin: 0 auto;
+button {
+  display: inline-block;
 }
-
-.alert-section {
-  margin-bottom: 15px;
-  margin-top: 15px;
-  height:70px;
+.divider{
+  width:20px;
+  height:auto;
+  display:inline-block;
 }

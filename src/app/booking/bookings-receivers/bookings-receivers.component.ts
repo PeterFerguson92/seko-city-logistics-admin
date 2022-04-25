@@ -12,7 +12,7 @@ import { PreviousRecvDialogComponent } from '../previous-recv-dialog/previous-re
 @Component({
   selector: 'app-bookings-receivers',
   templateUrl: './bookings-receivers.component.html',
-  styleUrls: ['./bookings-receivers.component.css', '../../shared/shared.css']
+  styleUrls: ['./bookings-receivers.component.css', '../../shared/shared-form.css']
 })
 export class BookingsReceiversComponent implements OnInit {
 
