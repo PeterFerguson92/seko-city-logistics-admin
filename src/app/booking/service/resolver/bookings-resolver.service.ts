@@ -13,7 +13,6 @@ export class BookingsResolverService implements Resolve<IBooking>  {
 
   constructor(private bookingsService: BookingsService, private customersService: CustomersService) { }
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-
     const reference = route.paramMap.get('reference');
     const sreference = route.paramMap.get('senderReference');
     if (!reference)

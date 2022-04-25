@@ -38,18 +38,12 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   countryCodes = COUNTRY_CODES
   alertOptions = { autoClose: true, keepAfterRouteChange: false };
 
-  constructor(
-    private activatedroute: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private customersService: CustomersService,
-    private commonService: CommonService,
-    private validationService: ValidationService,
-    private alertService: AlertService) { }
+  constructor(private activatedroute: ActivatedRoute, private formBuilder: FormBuilder, private customersService: CustomersService,
+    private commonService: CommonService, private validationService: ValidationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      console.log(data)
-      this.customer = data.customer
+      this.customer = this.customer.reference ? this.customer : data.customer
 
     this.setAttributes();
     this.loadCustomerForm = this.formBuilder.group({
@@ -280,8 +274,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
  getSenderDetails() {
     const sender: any = {
-      type: '', registeredName: '', registeredNumber: '', title: '', name: '', surname: '', countryCode: '', phone: ''
-      , email: '', postcode: '', address: '', country: ''
+      type: '', registeredName: '', registeredNumber: '', title: '', name: '', surname: '', countryCode: '', phone: '',
+      email: '', postcode: '', address: '', country: ''
     }
     Object.entries(sender).forEach((key) => {
       const attributeName = key[0];

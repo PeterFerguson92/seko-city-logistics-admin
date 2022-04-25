@@ -13,7 +13,6 @@ export class CustomerResolverService implements Resolve<ICustomer> {
   constructor(private customersService: CustomersService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-
     const reference = route.paramMap.get('reference');
     if (!reference) {
       const message = `reference was not a found: ${id}`;
