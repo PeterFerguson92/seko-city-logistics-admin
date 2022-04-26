@@ -16,7 +16,7 @@ export interface IItem {
 @Component({
   selector: 'app-booking-items',
   templateUrl: './booking-items.component.html',
-  styleUrls: ['./booking-items.component.css', '../../shared/shared.css']
+  styleUrls: ['./booking-items.component.css', '../../shared/shared-form.css']
 })
 export class BookingItemsComponent implements OnInit {
   @Input() reference;

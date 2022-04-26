@@ -1,20 +1,30 @@
-<div class="bodys">
-  <div class="booking-form-w3layouts">
-      <div class="main-flex-w3ls-sectns">
-        <form [formGroup]="bookingInfoForm" >
-          <h4 class="sub-heading-agileits">PickUp Details</h4><br><br>
-          <app-material-date-picker-input [label]="'Pick-Up Date'" (inputChange)="onInputChange($event, 'date')" formControlName="date"></app-material-date-picker-input>
-          <div class="divider"></div>
-          <app-material-button [label]="'Check availability'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onCheckAvailabilty()"></app-material-button><br>
-          <app-material-select-input [label]="'Time'" [options]="times" formControlName="time"
-            (selectionChange)="onSelectionChange($event, 'time')"  [width]="20" [value]="times[0]"></app-material-select-input><br>
-            <div class="divider"></div>
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="15" formControlName="postcode"></app-material-input>
-            <div class="divider"></div>
-            <app-material-select-input [label]="'Address'" [width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
-            <app-material-checkbox [label]="'Updates via whatsapp'"  (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
-          </form>
+<div class="container">
+  <h1 id="title">Pick Up Information Form</h1>
+  <!-- <p id="description">Please fill the customer details.</p> -->
+  <div class="row">
+    <div class="col-75">
+      <div class="container">
+        <form id="survey-form" [formGroup]="bookingInfoForm">
+          <fieldset>
+            <legend>Pick Up Details</legend>
+            <div>
+              <label class="required">Date</label>
+              <app-material-date-picker-input (inputChange)="onInputChange($event, 'date')" formControlName="date"></app-material-date-picker-input>
+              <app-material-button [label]="'Check availability'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onCheckAvailabilty()"></app-material-button><br>
+              <label class="required">Time</label>
+              <app-material-select-input [label]="'Time'" [options]="times" formControlName="time"
+                (selectionChange)="onSelectionChange($event, 'time')"  [width]="20" [value]="times[0]">
+              </app-material-select-input>
+              <label class="required">Postcode</label>
+              <app-material-input [icon]="'person_pin'"[width]="15" formControlName="postcode"></app-material-input>
+              <label class="required">Address</label>
+              <app-material-select-input [width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
+              <label class="required">Updates via whatsapp</label>
+              <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
+            </div>
+          </fieldset>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-

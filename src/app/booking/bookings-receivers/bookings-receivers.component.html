@@ -5,25 +5,25 @@
       <div class="col-75">
         <div class="container">
           <form id="survey-form" [formGroup]="receiversCustomerForm">
-            <fieldset>
-              <legend>Destination Details</legend>
-              <form [formGroup]="destinationForm">
-                <label class="required">Destination</label>
-                <app-material-select-input  (selectionChange)="onDestinationSelectionChange($event, 'destination')"
-                  [options]="destinations" formControlName="destination"></app-material-select-input>
-                <label class="required">Location</label>
-                <app-material-input
-                  [icon]="'person_pin'" [width]="10" formControlName="location" [errorMsg]="formValidationMap.location">
-                </app-material-input>
-              </form>
-            </fieldset>
+            <form [formGroup]="destinationForm">
+              <fieldset>
+                <legend>Destination Details</legend>
+                  <label class="required">Destination</label>
+                  <app-material-select-input  (selectionChange)="onDestinationSelectionChange($event, 'destination')"
+                    [options]="destinations" formControlName="destination"></app-material-select-input>
+                  <div class="divider"></div>
+                  <label class="required">Location</label>
+                  <app-material-input
+                    [icon]="'person_pin'" [width]="20" formControlName="location" [errorMsg]="formValidationMap.location">
+                  </app-material-input>
+              </fieldset>
+          </form>
             <fieldset>
               <legend>History</legend>
               <app-material-button [label]="'Load Previous'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()"></app-material-button><br><br>
             </fieldset>
             <div formArrayName="receivers" *ngFor="let item of receivers.controls; let i = index">
               <div [formGroupName] = 'i' >
-
             <fieldset>
               <legend>Customer Details</legend>
               <div>

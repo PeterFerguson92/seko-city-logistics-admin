@@ -15,3 +15,9 @@ button{
 .mat-expansion-panel-header-title {
   font-weight: bold;
 }
+
+.divider{
+  width:20px;
+  height:auto;
+  display:inline-block;
+}
