@@ -21,6 +21,7 @@ import { AssignDialogComponent } from './assign-dialog/assign-dialog.component';
     PreviousRecvDialogComponent,
     BookingsReceiversComponent,
     AssignDialogComponent],
-  imports: [CommonModule, SharedModule, CustomerModule]
+  imports: [CommonModule, SharedModule, CustomerModule],
+  exports: [BookingsTableComponent]
 })
 export class BookingModule { }
