@@ -35,7 +35,7 @@ export class BookingsService {
   }
 
   filterBookings(fields: any) {
-    return this.apollo.mutate<IBookingsResponse>({
+    return this.apollo.mutate<any>({
       mutation: FILTER_BOOKINGS,
       variables: { fields }
     });

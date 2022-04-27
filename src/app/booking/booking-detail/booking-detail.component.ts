@@ -78,7 +78,8 @@ export class BookingDetailComponent implements OnInit {
     {
       if (this.booking.customer && this.booking.customer.reference)
       {
-        // updating booking for exist customer
+        // updating booking for existing customer
+        console.log('updating booking for existing customer')
         const fields = this.getDifference(this.booking.sender, this.booking.customer)
         await this.updateCustomer(this.booking.customer.reference, fields);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
@@ -87,7 +88,8 @@ export class BookingDetailComponent implements OnInit {
       }
       else
       {
-        // creating booking for exist customer
+        // creating booking for new customer
+        console.log('creating booking for new customer')
         const senderDetails = await this.saveSender(this.booking.sender);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
         this.saveBooking(senderDetails, recvReference, this.booking)
@@ -95,14 +97,14 @@ export class BookingDetailComponent implements OnInit {
 
     } else
     {
-      // create new booking
+      // create new booking for existing customer
+      console.log('create new booking for existing customer')
       const fields = this.getDifference(this.booking.sender, this.booking.customer);
       await this.updateCustomer(this.booking.customer.reference, fields);
       await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);
       await this.syncItems(this.booking.reference, this.booking.itemsDetails.items)
       this.syncBooking(this.booking)
     }
-
   }
 
   getDifference(obj1, obj2) {
@@ -135,7 +137,8 @@ export class BookingDetailComponent implements OnInit {
   async saveSender(customerDetails) {
     const saved = await lastValueFrom(this.customersService.createCustomer(customerDetails))
      // tslint:disable-next-line:no-string-literal
-    return { reference: saved.data['createCustomer'].reference, fullName: saved.data['createCustomer'].fullName } ;
+    const senderDetails = saved.data['createCustomer'];
+    return { reference: senderDetails.reference, fullName: senderDetails.fullName, id: senderDetails.id } ;
   }
 
   async saveReceivers(receiversDetails) {
@@ -146,10 +149,11 @@ export class BookingDetailComponent implements OnInit {
   }
 
   saveBooking(senderDetails, recvReferences, bookingInfo) {
+    console.log(senderDetails)
     const booking: IBooking = {
       id: null,
       reference: '',
-      senderId: this.booking.customer.id,
+      senderId: senderDetails.id,
       senderReference: senderDetails.reference,
       senderFullName: senderDetails.fullName,
       receiverReferences: recvReferences,

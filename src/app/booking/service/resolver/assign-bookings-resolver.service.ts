@@ -19,7 +19,10 @@ export class AssignBookingsResolverService implements Resolve<IBooking> {
       const message = `shipment reference was not a found: ${id}`;
       return of({ customer: null, error: message });
     }
-    return this.bookingService.getByStatusOrShipmentReference('CREATED', shipmentReference)
-      .pipe(map(data => data.data.bookingsByStatusOrShipmentReference));
+    console.log(shipmentReference)
+    return this.bookingService.filterBookings({name: 'shipmentReference', value: shipmentReference})
+      .pipe(map(data => data.data.filterBookings));
+      // .pipe(map(data => console.log(data)));
+
   }
 }

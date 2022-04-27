@@ -50,7 +50,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       ref: ['', []]
     });
 
-    this.addEditCustomerForm = this.formBuilder.group({
+      this.addEditCustomerForm = this.formBuilder.group({
       type: [this.types[0], [Validators.required]],
       title: [this.titles[0], [Validators.required]],
       name: ['', Validators.required],
@@ -89,6 +89,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         if (data.customerByReference)
         {
           this.customer = data.customerByReference;
+          console.log(this.customer)
           this.populateFields()
         } else
         {

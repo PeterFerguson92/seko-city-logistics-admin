@@ -3,7 +3,6 @@ export interface ICustomersResponse {
 }
 
 export interface ICustomer {
-  // id: number;
   reference: string;
   title: string;
   name: string;

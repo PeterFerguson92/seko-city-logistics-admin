@@ -28,7 +28,6 @@ export class AssignDialogComponent implements OnInit {
   onUpdate() {
     const updateCustomerFields = [{ name: 'status', value: this.getFormControl('status').value },
       { name: 'shipmentReference', value: this.getFormControl('shipmentReference').value }];
-      console.log(updateCustomerFields)
       this.bookingService.updateBooking(this.data.booking.reference, updateCustomerFields).subscribe(
         ({ data }) => {
            location.reload();  // To handle properly

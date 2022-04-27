@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'customers', component: CustomersComponent },
   { path: 'add-customer', component: CustomerDetailComponent },
   { path: 'edit-customer/:reference', component: CustomerDetailComponent, resolve: { customer: CustomerResolverService } },
+  { path: 'add-booking', component: AddEditBookingComponent},
   { path: 'add-booking/:reference', component: AddEditBookingComponent, resolve: { customer: CustomerResolverService } },
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: {booking: BookingsResolverService} },
