@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { id } from '@swimlane/ngx-datatable';
-import { map, Observable, of } from 'rxjs';
+import { forkJoin, map, Observable, of } from 'rxjs';
+import { ShipmentService } from 'src/app/shipment/service/shipment.service';
 import { IBooking } from '../../model';
 import { BookingsService } from '../bookings.service';
 
@@ -10,12 +10,15 @@ import { BookingsService } from '../bookings.service';
 })
 export class AssignBookingsResolver implements Resolve<IBooking> {
 
-  constructor(private bookingService: BookingsService) { }
+  constructor(private bookingsService: BookingsService, private shipmentService: ShipmentService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.bookingService.filterBookings({name: 'status', value: 'SHIPPED'})
-      .pipe(map(data => data.data.filterBookings));
-      // .pipe(map(data => console.log(data)));
+    const call1 = this.bookingsService.filterBookings({name: 'status', value: 'SHIPPED'});
+    const call2 = this.shipmentService.getShipments();
+    return forkJoin([call1, call2])
 
+    // return this.bookingService.filterBookings({name: 'status', value: 'SHIPPED'})
+    //   .pipe(map(data => data.data.filterBookings));
+    //   // .pipe(map(data => console.log(data)));
   }
 }

@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
   { path: 'add-shipment', component: AddEditShipmentComponent },
-  { path: 'assign-bookings', component: AssignBookingsComponent, resolve: { bookings: AssignBookingsResolver }},
+  { path: 'assign-bookings', component: AssignBookingsComponent, resolve: { info: AssignBookingsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'list-bookings/:reference', component: ListBookingsComponent, resolve: { bookings: ListBookingsResolver } },
   { path: 'bookings', component: BookingsComponent },
