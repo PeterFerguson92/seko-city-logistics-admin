@@ -28,6 +28,10 @@ export class ShipmentsComponent implements OnInit {
     })
   }
 
+  onAssign() {
+    this.router.navigate(['/assign-bookings']);
+  }
+
   onAddShipment() {
     this.router.navigate(['/add-shipment']);
   }

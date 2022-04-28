@@ -13,7 +13,7 @@ import { FindShipmentComponent } from './find-shipment/find-shipment.component';
 import { LoginComponent } from './login/login.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AddEditShipmentComponent } from './shipment/add-edit-shipment/add-edit-shipment.component';
-import { AssignBookingsComponent } from './shipment/assign-bookings/assign-bookings.component';
+import { AssignBookingsComponent } from './booking/assign-bookings/assign-bookings.component';
 import { ListBookingsComponent } from './shipment/list-bookings/list-bookings.component';
 import { ShipmentResolver } from './shipment/service/resolver/shipment-resolver';
 import { ShipmentsResolverService } from './shipment/service/resolver/shipments-resolver.service';
@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
   { path: 'add-shipment', component: AddEditShipmentComponent },
-  { path: 'assign-bookings', component: ListBookingsComponent, resolve: { bookings: AssignBookingsResolver }},
+  { path: 'assign-bookings', component: AssignBookingsComponent, resolve: { bookings: AssignBookingsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'list-bookings/:reference', component: ListBookingsComponent, resolve: { bookings: ListBookingsResolver } },
   { path: 'bookings', component: BookingsComponent },
