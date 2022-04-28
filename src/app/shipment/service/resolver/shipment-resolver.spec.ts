@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ShipmentResolverService } from './shipment-resolver.service';
+import { ShipmentResolver} from './shipment-resolver';
 
 describe('ShipmentResolverResolver', () => {
-  let resolver: ShipmentResolverService;
+  let resolver: ShipmentResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    resolver = TestBed.inject(ShipmentResolverService);
+    resolver = TestBed.inject(ShipmentResolver);
   });
 
   it('should be created', () => {

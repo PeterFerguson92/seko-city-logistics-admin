@@ -8,8 +8,7 @@ import { BookingsService } from '../bookings.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AssignBookingsResolverService implements Resolve<IBooking> {
-
+export class ListBookingsResolver implements Resolve<IBooking> {
   constructor(private bookingService: BookingsService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
@@ -19,7 +18,6 @@ export class AssignBookingsResolverService implements Resolve<IBooking> {
       const message = `shipment reference was not a found: ${id}`;
       return of({ customer: null, error: message });
     }
-    console.log(shipmentReference)
     return this.bookingService.filterBookings({name: 'shipmentReference', value: shipmentReference})
       .pipe(map(data => data.data.filterBookings));
       // .pipe(map(data => console.log(data)));

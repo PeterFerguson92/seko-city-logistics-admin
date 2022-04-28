@@ -7,7 +7,7 @@ import { ShipmentService } from '../shipment.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ShipmentResolverService implements Resolve<IShipment> {
+export class ShipmentResolver implements Resolve<IShipment> {
   constructor(private shipmentService: ShipmentService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {

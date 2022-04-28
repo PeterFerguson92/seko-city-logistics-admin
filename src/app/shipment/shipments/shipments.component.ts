@@ -32,8 +32,8 @@ export class ShipmentsComponent implements OnInit {
     this.router.navigate(['/add-shipment']);
   }
 
-  onAssignBooking(reference) {
-    this.router.navigate(['/assign-bookings', reference]);
+  onListBookings(reference) {
+    this.router.navigate(['/list-bookings', reference]);
   }
 
   OnEditShipment(reference) {
