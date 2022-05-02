@@ -85,7 +85,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
       type: 'SMALL BOX',
       description: '',
       bookingReference: '',
-      value: null,
+      value: 0,
       quantity:  1,
       pricePerUnit,
       amount,
@@ -173,8 +173,9 @@ export class ItemsListComponent implements OnInit, OnChanges {
         delete item.__typename;
         delete item.selected;
         delete item.isEdit;
-        delete item.writable
-        delete item.index
+        delete item.writable;
+        delete item.index;
+        delete item.isSelected;
         item.value = parseInt(item.value, 10)
         item.quantity = parseInt(item.quantity, 10)
         item.pricePerUnit = parseInt(item.pricePerUnit, 10)

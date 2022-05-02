@@ -35,7 +35,7 @@ export class BookingsComponent implements OnInit {
       paymentStatus: [this.paymentStatuses[0]],
       fromDate: [fiveDaysAgo],
       toDate: [today],
-      useRange: [true, [Validators.required]]
+      useRange: [false, [Validators.required]]
     })
   }
 
