@@ -49,7 +49,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/c
 @Component({
   selector: 'app-items-list',
   templateUrl: './items-list.component.html',
-  styleUrls: ['./items-list.component.css']
+  styleUrls: ['./items-list.component.css', '../../shared/shared-form.css']
 })
 export class ItemsListComponent implements OnInit, OnChanges {
 
@@ -70,7 +70,8 @@ export class ItemsListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.items.currentValue)
     {
-      const newData = changes.items.currentValue.map((item) => Object.assign({}, item, { selected: false }))
+      const newData = changes.items.currentValue.map((item, index) => Object.assign({}, item, { selected: false, index }))
+      console.log(newData)
       this.dataSource = newData;
     }
   }
@@ -79,9 +80,11 @@ export class ItemsListComponent implements OnInit, OnChanges {
     const pricePerUnit = this.getPricePerUnit('SMALL BOX');
     const amount = this.calculateAmount(pricePerUnit, 1)
     const newRow = {
-      id: this.dataSource.length + 1,
+      index: this.dataSource.length + 1,
+      id: null,
       type: 'SMALL BOX',
       description: '',
+      bookingReference: '',
       value: null,
       quantity:  1,
       pricePerUnit,
@@ -118,12 +121,17 @@ export class ItemsListComponent implements OnInit, OnChanges {
     });
   }
 
-  changeInput(id) {
+  changeInput(id, key) {
     this.dataSource.forEach((element, index) => {
       if (element.id === id)
       {
         const item = this.dataSource[index];
         item.amount = this.calculateAmount(item.pricePerUnit, item.quantity);
+
+        // if (element.type !== 'OTHER')
+        // {
+        //   item.amount = this.calculateAmount(item.pricePerUnit, item.quantity);
+        // }
       }
     });
 
@@ -147,19 +155,45 @@ export class ItemsListComponent implements OnInit, OnChanges {
 
   calculateTotals() {
     let totalAmount = 0;
-    let totalItems= 0;
-    this.dataSource.forEach((element) => {
-      totalAmount = totalAmount + parseInt(element.amount, 10)
-      totalItems = totalItems + parseInt(element.quantity, 10)
-    });
+    let totalItems = 0;
+    if (this.dataSource)
+    {
+      this.dataSource.forEach((element) => {
+        totalAmount = totalAmount + parseInt(element.amount, 10)
+        totalItems = totalItems + parseInt(element.quantity, 10)
+      });
+    }
 
     return { totalAmount, totalItems };
   }
 
   getItemsDataDetails() {
     return {
-      items: this.dataSource,
+      items: this.dataSource.map(item => {
+        delete item.__typename;
+        delete item.selected;
+        delete item.isEdit;
+        delete item.writable
+        delete item.index
+        item.value = parseInt(item.value, 10)
+        item.quantity = parseInt(item.quantity, 10)
+        item.pricePerUnit = parseInt(item.pricePerUnit, 10)
+        item.amount = parseInt(item.pricePerUnit, 10)
+        return item;
+      }),
       totals: this.calculateTotals()
     }
+  }
+
+  numberOnly(event, key): boolean {
+    if (key === 'description')
+    {
+      return true
+    }
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 }

@@ -87,11 +87,6 @@ export class BookingItemsComponent implements OnInit {
 
   getPaymentInfoDetails() {
     const payment: any = { paymentType: '', paymentStatus: '', paymentNotes: ''}
-    if (!this.showItems)
-    {
-      payment.totalAmount = 0;
-      return payment
-    }
     Object.entries(payment).forEach((key) => {
       const attributeName = key[0];
       payment[attributeName] = this.getPaymentFormControl(attributeName).value;

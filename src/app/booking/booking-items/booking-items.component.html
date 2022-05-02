@@ -1,10 +1,39 @@
 <div class="container">
-  <h1 id="title">Customer Form</h1>
-  <p id="description">Please fill the customer details.</p>
+  <h1 id="title">Items</h1>
+  <p id="description">Please fill the items details.</p>
   <div class="row">
     <div class="col-75">
       <div class="container">
           <app-items-list [items]="itemsObjs"></app-items-list>
+          <br>
+          <mat-accordion [multi]="true">
+            <mat-expansion-panel hideToggle [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>Payment Details</mat-panel-title>
+              </mat-expansion-panel-header>
+              <form id="survey-form" [formGroup]="paymentForm">
+                <fieldset>
+                  <legend>Payment</legend>
+                  <div>
+                    <label class="required">Type</label>
+                    <app-material-select-input [label]="'Payment type'"  [width]="30" [options]="paymentTypes" formControlName="paymentType"
+                      (selectionChange)="onSelectionChange($event, 'paymentType', 0)" [value]="paymentTypes[0]">
+                    </app-material-select-input>
+                    <label class="required">Status</label>
+                    <app-material-select-input [label]="'Payment status'"  [width]="30" [options]="paymentStatuses" formControlName="paymentStatus"
+                      (selectionChange)="onSelectionChange($event, 'paymentStatus', 0)" [value]="paymentStatuses[0]">
+                    </app-material-select-input>
+                    <label>Notes</label>
+                    <app-material-input [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
+
+                    <!-- <app-material-text-area-input [placeholder]="'test'" formControlName="paymentNotes">
+
+                    </app-material-text-area-input> -->
+                  </div>
+                </fieldset>
+              </form>
+            </mat-expansion-panel>
+          </mat-accordion>
       </div>
     </div>
   </div>

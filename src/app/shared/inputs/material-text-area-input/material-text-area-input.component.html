@@ -1,6 +1,10 @@
 <mat-form-field appearance="outline" style="width: 60%;">
   <mat-label>{{placeholder}}</mat-label>
-  <textarea matInput cdkTextareaAutosize
+  <textarea  #input
+  (input)="onChange($event.target.value)"
+  (blur)="onTouched()"
+  [(ngModel)]="value"
+  matInput cdkTextareaAutosize
   cdkAutosizeMinRows="1"
   cdkAutosizeMaxRows="5">
   </textarea>

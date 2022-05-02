@@ -101,7 +101,14 @@ export class BookingDetailComponent implements OnInit {
       // create new booking for existing customer
       console.log('create new booking for existing customer')
       const fields = this.getDifference(this.booking.sender, this.booking.customer);
-      await this.updateCustomer(this.booking.customer.reference, fields);
+      if (fields.length > 0)
+      {
+        const senderDetails = await this.updateCustomer(this.booking.customer.reference, fields);
+        this.booking.senderId = senderDetails.id;
+        this.booking.senderReference = senderDetails.reference;
+        this.booking.senderFullName = senderDetails.fullName;
+      }
+
       await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);
       await this.syncItems(this.booking.reference, this.booking.itemsDetails.items)
       this.syncBooking(this.booking)
@@ -123,18 +130,13 @@ export class BookingDetailComponent implements OnInit {
   }
 
   async updateCustomer(reference, fields) {
-    if (fields.length > 0)
-    {
-      this.customersService.updateCustomer(reference, fields).subscribe(
-        ({ data }) => {
-          console.log(data)
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
+    const saved = await lastValueFrom(this.customersService.updateCustomer(reference, fields))
+    // tslint:disable-next-line:no-string-literal
+   const senderDetails = saved.data['updateCustomer'];
+   return { reference: senderDetails.reference, fullName: senderDetails.fullName, id: senderDetails.id } ;
   }
+
+
   async saveSender(customerDetails) {
     const saved = await lastValueFrom(this.customersService.createCustomer(customerDetails))
      // tslint:disable-next-line:no-string-literal
@@ -150,7 +152,6 @@ export class BookingDetailComponent implements OnInit {
   }
 
   saveBooking(senderDetails, recvReferences, bookingInfo) {
-    console.log(senderDetails)
     const booking: IBooking = {
       id: null,
       reference: '',
@@ -188,6 +189,7 @@ export class BookingDetailComponent implements OnInit {
   }
 
   syncItems(bookingReference, items) {
+    console.log(items)
     this.bookingsService.syncItems(bookingReference, items).subscribe(
       ({ data }) => {
         this.redirectToBookings()
@@ -199,6 +201,7 @@ export class BookingDetailComponent implements OnInit {
   }
 
   syncBooking(bookingInfo) {
+    console.log(bookingInfo)
     this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
       ({ data }) => {
         this.redirectToBookings()
@@ -224,18 +227,19 @@ export class BookingDetailComponent implements OnInit {
   }
 
   buildBookingInput(bookingInfo) {
+    console.log(bookingInfo)
     return {
       id: null,
       reference: bookingInfo.reference,
       senderId: this.booking.customer.id,
-      senderReference: '',
-      senderFullName: '',
+      senderReference: this.booking.senderReference,
+      senderFullName: this.booking.senderFullName,
       receiverReferences: [],
       destination: bookingInfo.receiver.destinationInfo.destination,
       location: bookingInfo.receiver.destinationInfo.location,
       items: bookingInfo.itemsDetails.items,
       numberOfItems: bookingInfo.itemsDetails.totalNumberOfItems,
-      totalAmount: bookingInfo.itemsDetails.paymentInfo.totalAmount,
+      totalAmount: bookingInfo.itemsDetails.totalAmount,
       paymentType: bookingInfo.itemsDetails.paymentInfo.paymentType,
       paymentStatus: bookingInfo.itemsDetails.paymentInfo.paymentStatus,
       paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,
@@ -251,9 +255,9 @@ export class BookingDetailComponent implements OnInit {
   }
 
   redirectToBookings() {
-    this.router.navigate(['/bookings']).then(() => {
-      window.location.reload();
-    });
+    // this.router.navigate(['/bookings']).then(() => {
+    //   window.location.reload();
+    // });
   }
 
 }

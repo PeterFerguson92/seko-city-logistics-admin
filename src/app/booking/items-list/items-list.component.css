@@ -1,5 +1,5 @@
 table  {
-  width: 90%;
+  width: 100%;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   text-align: center !important;
   margin-left: auto;
@@ -71,4 +71,11 @@ h2 {
   margin: auto;
   text-align: right;
   margin-bottom: 10px;
+}
+
+
+
+
+.mat-expansion-panel-header-title {
+  font-weight: bold;
 }
