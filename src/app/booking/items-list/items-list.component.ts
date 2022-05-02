@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { MatDialog } from '@angular/material/dialog';
 import { BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES } from 'src/app/constants';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
+import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component';
 
 
   const COLUMNS_SCHEMA = [
@@ -54,6 +55,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/c
 export class ItemsListComponent implements OnInit, OnChanges {
 
   @Input() items;
+
   types = BOOKING_ITEMS_TYPES_DISPLAY_NAMES;
   selectedType;
 
@@ -68,6 +70,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
     if (changes.items.currentValue)
     {
       const newData = changes.items.currentValue.map((item, index) => Object.assign({}, item, { selected: false, index }))
@@ -80,7 +83,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
     const pricePerUnit = this.getPricePerUnit('SMALL BOX');
     const amount = this.calculateAmount(pricePerUnit, 1)
     const newRow = {
-      index: this.dataSource.length + 1,
+      index: this.dataSource ? this.dataSource.length + 1 : 1,
       id: null,
       type: 'SMALL BOX',
       description: '',
@@ -92,8 +95,9 @@ export class ItemsListComponent implements OnInit, OnChanges {
       isEdit: true,
       writable: true,
     };
-    // this.dataSource = [newRow, ...this.dataSource];
-    this.dataSource = [newRow, ...this.dataSource];
+
+    this.dataSource = this.dataSource ? this.dataSource = [newRow, ...this.dataSource] : [newRow]
+
   }
 
   removeRow(id) {
@@ -127,11 +131,6 @@ export class ItemsListComponent implements OnInit, OnChanges {
       {
         const item = this.dataSource[index];
         item.amount = this.calculateAmount(item.pricePerUnit, item.quantity);
-
-        // if (element.type !== 'OTHER')
-        // {
-        //   item.amount = this.calculateAmount(item.pricePerUnit, item.quantity);
-        // }
       }
     });
 
@@ -169,7 +168,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
 
   getItemsDataDetails() {
     return {
-      items: this.dataSource.map(item => {
+      items:  this.dataSource ? this.dataSource.map(item => {
         delete item.__typename;
         delete item.selected;
         delete item.isEdit;
@@ -181,7 +180,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
         item.pricePerUnit = parseInt(item.pricePerUnit, 10)
         item.amount = parseInt(item.pricePerUnit, 10)
         return item;
-      }),
+      }) : [],
       totals: this.calculateTotals()
     }
   }
@@ -196,5 +195,13 @@ export class ItemsListComponent implements OnInit, OnChanges {
       return false;
     }
     return true;
+  }
+
+  assignItem(item) {
+    const dialogRef = this.dialog.open(AssignDialogComponent, {
+      // height: '80%',
+      // width: '65%',
+      data: { item }
+    });
   }
 }

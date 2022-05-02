@@ -11,7 +11,7 @@ import { BookingsService } from '../service/bookings.service';
   styleUrls: ['./assign-dialog.component.css']
 })
 export class AssignDialogComponent implements OnInit {
-  bookingInfoForm: FormGroup;
+  itemInfoForm: FormGroup;
   bookingStatuses = BOOKING_STATUSES;
 
   constructor(private formBuilder: FormBuilder,
@@ -19,23 +19,24 @@ export class AssignDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    this.bookingInfoForm = this.formBuilder.group({
-      status: [this.data.booking.status],
-      shipmentReference: [this.data.booking.shipmentReference],
+    this.itemInfoForm = this.formBuilder.group({
+      status: [''],
+      shipmentReference: [''],
+      containerNumber: [''],
     });
   }
 
   onUpdate() {
-    const updateCustomerFields = [{ name: 'status', value: this.getFormControl('status').value },
-      { name: 'shipmentReference', value: this.getFormControl('shipmentReference').value }];
-      this.bookingService.updateBooking(this.data.booking.reference, updateCustomerFields).subscribe(
-        ({ data }) => {
-           location.reload();  // To handle properly
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    // const updateCustomerFields = [{ name: 'status', value: this.getFormControl('status').value },
+    //   { name: 'shipmentReference', value: this.getFormControl('shipmentReference').value }];
+    //   this.bookingService.updateBooking(this.data.booking.reference, updateCustomerFields).subscribe(
+    //     ({ data }) => {
+    //        location.reload();  // To handle properly
+    //     },
+    //     error => {
+    //       console.log(error);
+    //     }
+    //   );
     }
 
   onSelectionChange(event: any, fControlName: string) {
@@ -47,6 +48,6 @@ export class AssignDialogComponent implements OnInit {
 
 
   getFormControl(fControlName: string) {
-    return this.bookingInfoForm.get(fControlName)
+    return this.itemInfoForm.get(fControlName)
   }
 }

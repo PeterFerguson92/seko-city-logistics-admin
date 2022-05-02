@@ -57,7 +57,7 @@ export class BookingsReceiversComponent implements OnInit {
       this.populateFields();
     } else
     {
-      this.receivers.push(this.buildReceiver(null));
+   //   this.receivers.push(this.buildReceiver(null));
     }
 
   }
@@ -159,6 +159,11 @@ export class BookingsReceiversComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.length > 0)
       {
+        // if (this.receivers.length === 1)
+        // {
+        //   this.receivers.removeAt(0)
+        // }
+
         result.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
       }
     });

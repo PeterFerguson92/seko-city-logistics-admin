@@ -49,19 +49,22 @@ export class BookingItemsComponent implements OnInit {
   }
 
   populateFields() {
-    this.bookingsService.getItemsByBookingReference(this.reference).subscribe(
-      ({ data }) => {
-        const items = data.itemsByBookingReference;
+    if (this.reference)
+    {
+      this.bookingsService.getItemsByBookingReference(this.reference).subscribe(
+        ({ data }) => {
+          const items = data.itemsByBookingReference;
 
-        if (items.length > 0)
-        {
-          this.itemsObjs = items;
+          if (items.length > 0)
+          {
+            this.itemsObjs = items;
+          }
+        },
+        error => {
+          console.log(error);
         }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      );
+    }
   }
 
 

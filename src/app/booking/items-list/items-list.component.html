@@ -16,7 +16,8 @@
             (change)="element.isSelected = $event.checked"
           ></mat-checkbox>
         </ng-container>
-        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+        <div style="text-align: center;" class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button mat-button (click)="assignItem(element)" >Assign</button>
           <button mat-button (click)="element.isEdit = !element.isEdit">Edit</button>
           <button mat-button class="button-remove"(click)="removeRow(element.id)"> Delete </button>
         </div>
