@@ -12,6 +12,7 @@ import { BookingsService } from '../service/bookings.service';
 import { Router } from '@angular/router';
 import { ICustomer } from 'src/app/customer/model';
 import { BookingsReceiversComponent } from '../bookings-receivers/bookings-receivers.component';
+import { ItemsListComponent } from '../items-list/items-list.component';
 
 @Component({
   selector: 'app-booking-detail',
