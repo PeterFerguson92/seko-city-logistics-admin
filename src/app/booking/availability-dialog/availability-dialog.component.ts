@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
-import { BookingsService } from '../service/bookings.service';
+import { BookingsService } from '../service/bookings/bookings.service';
 
 @Component({
   selector: 'app-availability-dialog',

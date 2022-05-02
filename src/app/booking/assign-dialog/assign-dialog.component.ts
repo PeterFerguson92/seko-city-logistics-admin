@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BOOKING_STATUSES } from 'src/app/constants';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
-import { BookingsService } from '../service/bookings.service';
+import { BookingsService } from '../service/bookings/bookings.service';
 
 @Component({
   selector: 'app-assign-dialog',

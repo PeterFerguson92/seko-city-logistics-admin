@@ -18,14 +18,15 @@ import { ListBookingsComponent } from './shipment/list-bookings/list-bookings.co
 import { ShipmentResolver } from './shipment/service/resolver/shipment-resolver';
 import { ShipmentsResolverService } from './shipment/service/resolver/shipments-resolver.service';
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
+import { ShipmentItemsResolver } from './booking/service/resolver/shipment-items.resolver';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
   { path: 'add-shipment', component: AddEditShipmentComponent },
-  { path: 'assign-bookings', component: AssignBookingsComponent, resolve: { info: AssignBookingsResolver }},
+  { path: 'assign-items', component: AssignBookingsComponent, resolve: { info: AssignBookingsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
-  { path: 'list-bookings/:reference', component: ListBookingsComponent, resolve: { bookings: ListBookingsResolver } },
+  { path: 'list-items/:reference', component: ListBookingsComponent, resolve: { items: ShipmentItemsResolver } },
   { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'add-customer', component: CustomerDetailComponent },

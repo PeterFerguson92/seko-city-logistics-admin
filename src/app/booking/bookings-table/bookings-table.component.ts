@@ -8,7 +8,7 @@ import { CommonService } from 'src/app/service/common.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component';
 import { IBooking } from '../model';
-import { BookingsService } from '../service/bookings.service';
+import { BookingsService } from '../service/bookings/bookings.service';
 
 @Component({
   selector: 'app-bookings-table',

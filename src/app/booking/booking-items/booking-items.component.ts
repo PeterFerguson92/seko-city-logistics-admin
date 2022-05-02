@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl, AbstractCon
 import { BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES, PAYMENT_STATUSES, PAYMENT_TYPES } from 'src/app/constants';
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
 import { ItemsListComponent } from '../items-list/items-list.component';
-import { BookingsService } from '../service/bookings.service';
+import { BookingsService } from '../service/bookings/bookings.service';
 
 export interface IItem {
   id: number

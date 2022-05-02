@@ -24,6 +24,6 @@ import { ItemsListComponent } from './items-list/items-list.component';
     AssignDialogComponent,
     ItemsListComponent],
   imports: [CommonModule, SharedModule, CustomerModule],
-  exports: [BookingsTableComponent]
+  exports: [ItemsListComponent]
 })
 export class BookingModule { }

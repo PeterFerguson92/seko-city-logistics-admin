@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ALL_BOOKING_STATUSES, ALL_PAYMENT_STATUSES,  } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
-import { BookingsService } from '../service/bookings.service';
+import { BookingsService } from '../service/bookings/bookings.service';
 
 @Component({
   selector: 'app-bookings',

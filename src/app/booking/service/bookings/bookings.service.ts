@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { IBooking, IBookingsResponse } from '../model';
+import { IBooking, IBookingsResponse } from '../../model';
 import {
   CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS,
   GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE,

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { id } from '@swimlane/ngx-datatable';
 import { map, Observable, of } from 'rxjs';
 import { IBooking } from '../../model';
-import { BookingsService } from '../bookings.service';
+import { BookingsService } from '../bookings/bookings.service';
 
 @Injectable({
   providedIn: 'root'

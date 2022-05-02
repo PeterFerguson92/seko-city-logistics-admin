@@ -9,13 +9,13 @@ import { IBooking } from 'src/app/booking/model';
 })
 export class ListBookingsComponent implements OnInit {
 
-  bookings: [IBooking] = null;
+  items = null;
 
   constructor(private activatedroute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      this.bookings = data.bookings;
+      this.items = data.items;
     })
   }
 

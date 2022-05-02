@@ -29,7 +29,7 @@ export class ShipmentsComponent implements OnInit {
   }
 
   onAssign() {
-    this.router.navigate(['/assign-bookings']);
+    this.router.navigate(['/assign-items']);
   }
 
   onAddShipment() {
@@ -37,7 +37,7 @@ export class ShipmentsComponent implements OnInit {
   }
 
   onListBookings(reference) {
-    this.router.navigate(['/list-bookings', reference]);
+    this.router.navigate(['/list-items', reference]);
   }
 
   OnEditShipment(reference) {

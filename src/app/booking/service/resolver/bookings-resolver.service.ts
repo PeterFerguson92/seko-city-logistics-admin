@@ -4,7 +4,7 @@ import { id } from '@swimlane/ngx-datatable';
 import { Observable, of, map, forkJoin, catchError } from 'rxjs';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { IBooking } from '../../model';
-import { BookingsService } from '../bookings.service';
+import { BookingsService } from '../bookings/bookings.service';
 
 @Injectable({
   providedIn: 'root'
