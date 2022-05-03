@@ -4,6 +4,7 @@ import { IBooking, IBookingsResponse } from '../../model';
 import {
   CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS,
   GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE,
+  GET_BOOKINGS_DESTINATION_REPORT_DATA,
   GET_BOOKING_BY_REFERENCE, GET_ITEMS_BY_BOOKING_REFERENCE, GET_PREVIOUS_RECEIVERS, SYNC_BOOKING,
   SYNC_ITEMS, SYNC_RECEIVERS, UPDATE_BOOKING, UPDATE_BOOKINGS_BY_REFERENCES
 } from './request';
@@ -101,6 +102,12 @@ export class BookingsService {
     return this.apollo.query<any>({
       query: GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE,
       variables: {status, shipmentReference}
+    });
+  }
+
+  getBookingsDestinationReport() {
+    return this.apollo.query<any>({
+      query: GET_BOOKINGS_DESTINATION_REPORT_DATA
     });
   }
 }
