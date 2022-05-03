@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES, PAYMENT_STATUSES, PAYMENT_TYPES } from 'src/app/constants';
-import { BookingReviewComponent } from '../booking-review/booking-review.component';
 import { ItemsListComponent } from '../items-list/items-list.component';
 import { BookingsService } from '../service/bookings/bookings.service';
+import { ItemService } from '../service/items/item.service';
 
 export interface IItem {
   id: number
@@ -37,7 +37,7 @@ export class BookingItemsComponent implements OnInit {
   itemsObjs;
 
 
-  constructor(private formBuilder: FormBuilder, private bookingsService:BookingsService) {}
+  constructor(private formBuilder: FormBuilder, private itemService:ItemService) {}
 
   ngOnInit(): void {
     this.paymentForm = this.formBuilder.group({
@@ -51,10 +51,9 @@ export class BookingItemsComponent implements OnInit {
   populateFields() {
     if (this.reference)
     {
-      this.bookingsService.getItemsByBookingReference(this.reference).subscribe(
+      this.itemService.getItemsByBookingReference(this.reference).subscribe(
         ({ data }) => {
           const items = data.itemsByBookingReference;
-
           if (items.length > 0)
           {
             this.itemsObjs = items;

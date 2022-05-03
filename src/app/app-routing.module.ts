@@ -19,6 +19,8 @@ import { ShipmentResolver } from './shipment/service/resolver/shipment-resolver'
 import { ShipmentsResolverService } from './shipment/service/resolver/shipments-resolver.service';
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 import { ShipmentItemsResolver } from './booking/service/resolver/shipment-items.resolver';
+import { BookingSummaryComponent } from './booking/booking-summary/booking-summary.component';
+import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -34,7 +36,8 @@ const routes: Routes = [
   { path: 'add-booking', component: AddEditBookingComponent},
   { path: 'add-booking/:reference', component: AddEditBookingComponent, resolve: { customer: CustomerResolver } },
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
-  { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: {booking: BookingsResolverService} },
+  { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
+  { path: 'booking-summary/:reference', component: BookingSummaryComponent, resolve: { booking: BookingSummaryResolver } },
   { path: 'find-shipment', component: FindShipmentComponent },
   { path: 'all-shipments', component: AllShipmentsComponent },
   { path: 'reports', component: ReportsComponent },

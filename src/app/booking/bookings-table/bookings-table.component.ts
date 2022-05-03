@@ -41,12 +41,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     this.router.navigate(['/add-booking']);
   }
 
-  assignBooking(booking) {
-    const dialogRef = this.dialog.open(AssignDialogComponent, {
-      // height: '80%',
-      // width: '65%',
-      data: { booking }
-    });
+  viewBooking(reference) {
+    this.router.navigate(['/booking-summary', reference]);
 
   }
 

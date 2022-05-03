@@ -40,6 +40,7 @@ export class BookingReviewComponent implements OnInit {
   isCustomerPersonal(customerType) {
     return this.commonService.isCustomerPersonal(customerType)
   }
+
   getFormattedDate(date) {
     return this.commonService.getFormattedDate(date);
   }

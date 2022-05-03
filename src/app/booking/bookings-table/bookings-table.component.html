@@ -37,8 +37,8 @@
   <ng-container matColumnDef="ACTION">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="Accent" matTooltip="Update booking"  matTooltipPosition="left">
-        <mat-icon (click)="assignBooking(element)">update</mat-icon>
+      <button mat-icon-button color="Accent" matTooltip="Summary booking"  matTooltipPosition="left">
+        <mat-icon (click)="viewBooking(element.reference)">speaker_notes</mat-icon>
       </button>
       <button mat-icon-button color="primary" matTooltip="Edit booking" matTooltipPosition="above">
         <mat-icon (click)="editBooking(element)">edit</mat-icon>

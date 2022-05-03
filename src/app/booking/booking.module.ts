@@ -14,6 +14,7 @@ import { PreviousRecvDialogComponent } from './previous-recv-dialog/previous-rec
 import { BookingsReceiversComponent } from './bookings-receivers/bookings-receivers.component';
 import { AssignDialogComponent } from './assign-dialog/assign-dialog.component';
 import { ItemsListComponent } from './items-list/items-list.component';
+import { BookingSummaryComponent } from './booking-summary/booking-summary.component';
 
 @NgModule({
   declarations: [BookingDetailComponent, AddEditBookingComponent,
@@ -22,7 +23,8 @@ import { ItemsListComponent } from './items-list/items-list.component';
     PreviousRecvDialogComponent,
     BookingsReceiversComponent,
     AssignDialogComponent,
-    ItemsListComponent],
+    ItemsListComponent,
+    BookingSummaryComponent],
   imports: [CommonModule, SharedModule, CustomerModule],
   exports: [ItemsListComponent]
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { GET_ITEMS_BY_SHIPMENT_REFERENCE } from './request';
+import { GET_ITEMS_BY_BOOKING_REFERENCE, GET_ITEMS_BY_SHIPMENT_REFERENCE } from './request';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,13 @@ export class ItemService {
     return this.apollo.query<any>({
       query: GET_ITEMS_BY_SHIPMENT_REFERENCE,
       variables: {shipmentReference}
+    });
+  }
+
+  getItemsByBookingReference(bookingReference: string) {
+    return this.apollo.query<any>({
+      query: GET_ITEMS_BY_BOOKING_REFERENCE,
+      variables: {bookingReference}
     });
   }
 }

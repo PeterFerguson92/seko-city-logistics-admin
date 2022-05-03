@@ -90,13 +90,6 @@ export class BookingsService {
     });
   }
 
-  getItemsByBookingReference(bookingReference: string) {
-    return this.apollo.query<any>({
-      query: GET_ITEMS_BY_BOOKING_REFERENCE,
-      variables: {bookingReference}
-    });
-  }
-
   getPreviousReceivers(senderReference: string) {
     return this.apollo.query<any>({
       query: GET_PREVIOUS_RECEIVERS,
