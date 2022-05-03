@@ -16,7 +16,7 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
   constructor(private activatedroute: ActivatedRoute, private router: Router) {
 
     this.activatedroute.data.subscribe(data => {
-      if (router.url.includes('edit-booking') || router.url.includes('view-booking') )
+      if (router.url.includes('edit-booking'))
       {
         this.mode = router.url.includes('edit-booking') ? EDIT_BOOKING_MODE : VIEW_BOOKING_MODE
         this.booking = Object.assign({selected: false}, data.booking[0].data.bookingByReference);

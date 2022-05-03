@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   ADD_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
-  CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, VIEW_BOOKING_MODE
+  CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, EDIT_CUSTOMER_MODE, VIEW_BOOKING_MODE
 } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
@@ -38,39 +38,49 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   countryCodes = COUNTRY_CODES
   alertOptions = { autoClose: true, keepAfterRouteChange: false };
 
-  constructor(private activatedroute: ActivatedRoute, private formBuilder: FormBuilder, private customersService: CustomersService,
+  constructor(private router: Router,
+    private activatedroute: ActivatedRoute, private formBuilder: FormBuilder, private customersService: CustomersService,
     private commonService: CommonService, private validationService: ValidationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
+      this.setMode();
       this.customer = this.customer && this.customer.reference ? this.customer : data.customer
 
-    this.setAttributes();
-    this.loadCustomerForm = this.formBuilder.group({
+      this.setAttributes();
+      this.loadCustomerForm = this.formBuilder.group({
       ref: ['', []]
-    });
-
+      });
       this.addEditCustomerForm = this.formBuilder.group({
-      type: [this.types[0], [Validators.required]],
-      title: [this.titles[0], [Validators.required]],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      registeredName: [''],
-      registeredNumber: [''],
-      email: ['', [Validators.email]],
-      phoneGroup: this.formBuilder.group({
-        countryCode: [this.countryCodes[0], [Validators.required]],
-        phone: ['', [Validators.required]],
-      }, { validators: [Validators.required, this.validationService.phoneValidator] }),
-      postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
-      address: ['', [Validators.required]],
-      country: [this.countries[0], [Validators.required]]
-    });
-    if (this.customer && this.mode !== ADD_CUSTOMER_MODE)
+        type: [this.types[0], [Validators.required]],
+        title: [this.titles[0], [Validators.required]],
+        name: ['', Validators.required],
+        surname: ['', Validators.required],
+        registeredName: [''],
+        registeredNumber: [''],
+        email: ['', [Validators.email]],
+        phoneGroup: this.formBuilder.group({
+          countryCode: [this.countryCodes[0], [Validators.required]],
+          phone: ['', [Validators.required]],}, { validators: [Validators.required, this.validationService.phoneValidator] }),
+        postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
+        address: ['', [Validators.required]],
+        country: [this.countries[0], [Validators.required]]
+      });
+      if (this.customer && this.mode !== ADD_CUSTOMER_MODE)
+      {
+        this.populateFields()
+      }
+    })
+  }
+
+  setMode() {
+    if (this.router.url.includes('booking'))
     {
-      this.populateFields()
+      this.mode = this.router.url.includes('add-booking') ?  CREATE_BOOKING_MODE : EDIT_BOOKING_MODE
+    } else
+    {
+      this.mode = this.router.url.includes('add-customer') ? ADD_CUSTOMER_MODE : EDIT_CUSTOMER_MODE
     }
-  })
   }
 
   ngAfterViewInit(): void {
@@ -179,7 +189,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const createCustomerData = 'createCustomer'
     this.createCustomer = this.customersService.createCustomer(this.getCustomerDetails()).subscribe(
       ({ data }) => {
-        location.reload();  // To handle properly
+        this.router.navigate(['/customers']).then(() => {
+          window.location.reload();
+        });  // To handle properly
       },
       error => {
         console.log(error);
@@ -206,7 +218,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
             this.alertService.warn('Customer updated correctly', this.alertOptions);
           } else
           {
-            location.reload();  // To handle properly
+            this.router.navigate(['/customers']).then(() => {
+              window.location.reload();
+            });
           }
           this.addEditCustomerForm.markAsPristine();
         },
@@ -311,5 +325,4 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
    ngOnDestroy() {
   //  this.createCustomer.unsubscribe();
   }
-
 }
