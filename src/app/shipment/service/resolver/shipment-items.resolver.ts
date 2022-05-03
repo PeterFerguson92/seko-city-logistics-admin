@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot} from '@angular/router';
 import { map, Observable, of } from 'rxjs';
-import { ItemService } from '../items/item.service';
+import { ItemService } from 'src/app/booking/service/items/item.service';
 
 @Injectable({
   providedIn: 'root'

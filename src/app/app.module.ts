@@ -11,9 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
-import { FindShipmentComponent } from './find-shipment/find-shipment.component';
-import { AllShipmentsComponent } from './all-shipments/all-shipments.component';
-import { AddShippmentConfirmationComponent } from './add-shippment-confirmation/add-shippment-confirmation.component';
 import { CustomerModule } from './customer/customer.module';
 import { BookingModule } from './booking/booking.module';
 import { ShipmentModule } from './shipment/shipment.module';
@@ -23,9 +20,6 @@ import { ShipmentModule } from './shipment/shipment.module';
     AppComponent,
     LoginComponent,
     SideNavComponent,
-    FindShipmentComponent,
-    AllShipmentsComponent,
-    AddShippmentConfirmationComponent,
   ],
   entryComponents: [],
   imports: [

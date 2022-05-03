@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IBooking } from 'src/app/booking/model';
 
 @Component({
-  selector: 'app-list-bookings',
-  templateUrl: './list-bookings.component.html',
-  styleUrls: ['./list-bookings.component.css']
+  selector: 'app-list-items',
+  templateUrl: './list-items.component.html',
+  styleUrls: ['./list-items.component.css']
 })
-export class ListBookingsComponent implements OnInit {
+export class ListItemsComponent implements OnInit {
 
   items = null;
 
@@ -18,5 +17,4 @@ export class ListBookingsComponent implements OnInit {
       this.items = data.items;
     })
   }
-
 }
