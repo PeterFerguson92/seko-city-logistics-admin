@@ -4,6 +4,8 @@ import { lastValueFrom } from 'rxjs';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { CommonService } from 'src/app/service/common.service';
 import { ItemService } from '../service/items/item.service';
+import { jsPDF } from 'jspdf';
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-booking-summary',
@@ -50,5 +52,23 @@ export class BookingSummaryComponent implements OnInit {
 
   getFormattedDate(date) {
     return this.commonService.getFormattedDate(date);
+  }
+
+
+  exportAsPDF() {
+    const summary = document.getElementById('summary');
+    const height = summary.clientHeight;
+    const width = summary.clientWidth;
+    const options = { background: 'white', width , height };
+
+    domtoimage.toPng(summary, options).then((imgData) => {
+      const doc = new jsPDF(width > height ? 'l' : 'p', 'mm', [width, height]);
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      doc.save('booking_'+ this.booking.reference + '.pdf');
+    })
   }
 }

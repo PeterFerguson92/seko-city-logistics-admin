@@ -1,3 +1,4 @@
+<div id="summary">
 <mat-accordion *ngIf="showBookingSummary()" [multi]="true">
   <mat-expansion-panel hideToggle [expanded]="true">
     <mat-expansion-panel-header>
@@ -58,7 +59,7 @@
       </tr>
     </table>
   </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="false">
+  <mat-expansion-panel  [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Receiver Details
@@ -93,7 +94,7 @@
       <p><b>Location:</b> <br>{{booking.location}}</p>
     </table>
   </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="false">
+  <mat-expansion-panel  [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Items Details
@@ -124,7 +125,7 @@
       <p><b>Notes:</b> <br>{{booking.paymentNotes}}</p>
     </table>
   </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="false">
+  <mat-expansion-panel  [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Pick Up Details
@@ -158,4 +159,8 @@
     </table>
   </mat-expansion-panel>
 </mat-accordion>
+<br>
+</div>
+<button type="button" (click)="exportAsPDF()" class="uni-button def">Export to PDF</button>
+<br>
 <br>
