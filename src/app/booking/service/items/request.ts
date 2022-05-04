@@ -16,6 +16,10 @@ export const GET_ITEMS_BY_SHIPMENT_REFERENCE = gql`
   }
 `;
 
-
+export const GET_ITEMS_REPORT_DATA = gql`
+  query {
+    itemsDestinationReport{ type  occurrence quantity amount}
+  }
+`;
 
 

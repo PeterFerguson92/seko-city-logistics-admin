@@ -70,7 +70,6 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
     if (changes.items.currentValue)
     {
       const newData = changes.items.currentValue.map((item, index) => Object.assign({}, item, { selected: false, index }))

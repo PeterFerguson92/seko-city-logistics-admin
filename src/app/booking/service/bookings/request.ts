@@ -109,7 +109,7 @@ export const GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE = gql`
 `;
 
 export const GET_BOOKINGS_DESTINATION_REPORT_DATA = gql`
-query {
- bookingsDestinationReport{ destination occurrence}
-}
+  query {
+  bookingsDestinationReport{ destination occurrence}
+  }
 `;

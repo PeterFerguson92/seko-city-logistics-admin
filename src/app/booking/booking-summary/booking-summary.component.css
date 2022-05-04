@@ -18,3 +18,7 @@ th.details{
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.mat-expansion-panel-header-title {
+  font-weight: bold;
+}

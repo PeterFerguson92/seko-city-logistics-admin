@@ -1,24 +1,58 @@
-<ngx-charts-pie-chart
-    [results]="bookingReportData"
-    [legend]="true"
-    [legendTitle]="'Bookings destinations'"
-    [view]="[1000,300]"
-    [labels]="true" >
-</ngx-charts-pie-chart>
-<ngx-charts-bar-vertical
-    [view]="[1000,400]"
-    [results]="saleData"
-    [xAxisLabel]="'Products'"
-    [legendTitle]="'Product Sale Chart'"
-    [yAxisLabel]="'Sale'"
-    [legend]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxis]="true"
-    [yAxis]="true"
-    [gradient]="true">
-</ngx-charts-bar-vertical>
+<div id="summary">
+<mat-accordion [multi]="true">
+  <mat-expansion-panel hideToggle [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Booking destinations by percentage
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+      <ngx-charts-pie-chart
+        [results]="bookingReportData"
+        [legend]="true"
+        [legendTitle]="'Bookings destinations'"
+        [view]="[1000,300]"
+        [labels]="true" >
+      </ngx-charts-pie-chart>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        The bar chart shows the quantity-to-types relationship for different item types
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ngx-charts-bar-vertical
+      [view]="[1000,400]"
+      [results]="itemQuantityReportData"
+      [xAxisLabel]="'Items'"
+      [legendTitle]="'Items quantity chart'"
+      [yAxisLabel]="'Quantity'"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [gradient]="true">
+    </ngx-charts-bar-vertical>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Revenue percentage from different item types (All totals are expressed in £)
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ngx-charts-pie-grid
+        [results]="itemAmountReportData" >
+    </ngx-charts-pie-grid>
+  </mat-expansion-panel>
+</mat-accordion>
+<br>
+</div>
+<button type="button" (click)="exportAsPDF()" class="uni-button def">Export to PDF</button>
+<br>
+<br>
 
-<ngx-charts-pie-grid
-  [results]="saleData" >
-</ngx-charts-pie-grid>
+
+
+
+
+
