@@ -14,11 +14,14 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { CustomerModule } from './customer/customer.module';
 import { BookingModule } from './booking/booking.module';
 import { ShipmentModule } from './shipment/shipment.module';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    ReportsComponent,
     SideNavComponent,
   ],
   entryComponents: [],
@@ -30,6 +33,7 @@ import { ShipmentModule } from './shipment/shipment.module';
     FlexLayoutModule,
     HttpClientModule,
     ApolloModule,
+    NgxChartsModule,
     CustomerModule,
     BookingModule,
     ShipmentModule

@@ -8,17 +8,34 @@ import { BookingsService } from '../booking/service/bookings/bookings.service';
 })
 export class ReportsComponent implements OnInit {
 
+  bookingReportData;
+  saleData = [
+    { name: 'Mobiles', value: 105000 },
+    { name: 'Laptop', value: 55000 },
+    { name: 'AC', value: 15000 },
+    { name: 'Headset', value: 150000 },
+    { name: 'Fridge', value: 20000 }
+  ];
   constructor(private bookingService: BookingsService) { }
 
   ngOnInit(): void {
     this.bookingService.getBookingsDestinationReport().subscribe(
       ({ data }) => {
-       console.log(data)
+       this.bookingReportData = this.buildData(data.bookingsDestinationReport)
       },
       error => {
         console.log(error);
       }
     )
+  }
+
+  buildData(destinationReportData) {
+    const data = [];
+    destinationReportData.forEach((entry) => {
+      data.push({name: entry.destination, value: entry.occurrence})
+    });
+
+    return data;
   }
 
 }
