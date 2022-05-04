@@ -101,19 +101,24 @@ export class BookingsReceiversComponent implements OnInit {
     }
   }
 
+  onAddReceveirs() {
+    this.receivers.push(this.buildReceiver(null));
+  }
+
   isReceiverValuePopulated(index) {
     return !this.receivers.controls[index].valid;
   }
 
   isDeleteDisabled() {
-    return !(this.receivers.length > 1);
+    return !(this.receivers.length > 1); // TODO to delete is not used anymore
+  }
+
+  isAddItemsVisible() {
+    return this.receivers.length === 0;
   }
 
   onDeleteReceiver(index) {
-    if (this.receivers.length > 1)
-    {
-      this.receivers.removeAt(index)
-    };
+    this.receivers.removeAt(index)
   }
 
   onSelectionChange(event: any, fControlName: string, index) {

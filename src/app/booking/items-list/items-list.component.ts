@@ -73,7 +73,6 @@ export class ItemsListComponent implements OnInit, OnChanges {
     if (changes.items.currentValue)
     {
       const newData = changes.items.currentValue.map((item, index) => Object.assign({}, item, { selected: false, index }))
-      console.log(newData)
       this.dataSource = newData;
     }
   }

@@ -19,8 +19,9 @@
               </fieldset>
           </form>
             <fieldset>
-              <legend>History</legend>
-              <app-material-button [label]="'Load Previous'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()"></app-material-button><br><br>
+              <legend>Actions</legend>
+              <app-material-button [label]="'Load Previous Receivers'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()"></app-material-button><br><br>
+              <app-material-button *ngIf="isAddItemsVisible()" [label]="'Add Receiver'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onAddReceveirs()"></app-material-button><br><br>
             </fieldset>
             <div formArrayName="receivers" *ngFor="let item of receivers.controls; let i = index">
               <div [formGroupName] = 'i' >
@@ -63,7 +64,7 @@
             </fieldset>
             <br>
             <app-material-button
-              [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" [disabled]="isDeleteDisabled()"(click)="onDeleteReceiver(i)">
+              [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" (click)="onDeleteReceiver(i)">
             </app-material-button>
             <div class="divider"></div>
             <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button>
