@@ -18,9 +18,12 @@ import { BookingSummaryComponent } from './booking/booking-summary/booking-summa
 import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
 import { ListItemsComponent } from './shipment/list-items/list-items.component';
 import { ShipmentItemsResolver } from './shipment/service/resolver/shipment-items.resolver';
+import { DriversComponent } from './drivers/drivers/drivers.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
   { path: 'add-shipment', component: AddEditShipmentComponent },
   { path: 'assign-items', component: AssignBookingsComponent, resolve: { info: AssignBookingsResolver }},
@@ -36,6 +39,7 @@ const routes: Routes = [
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'booking-summary/:reference', component: BookingSummaryComponent, resolve: { booking: BookingSummaryResolver } },
   { path: 'reports', component: ReportsComponent },
+  { path: 'drivers', component: DriversComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
