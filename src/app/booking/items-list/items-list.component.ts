@@ -176,7 +176,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
         item.value = parseInt(item.value, 10)
         item.quantity = parseInt(item.quantity, 10)
         item.pricePerUnit = parseInt(item.pricePerUnit, 10)
-        item.amount = parseInt(item.pricePerUnit, 10)
+        item.amount = parseInt(item.amount, 10)
         return item;
       }) : [],
       totals: this.calculateTotals()
