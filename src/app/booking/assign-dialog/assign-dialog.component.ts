@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BOOKING_STATUSES } from 'src/app/constants';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { BookingsService } from '../service/bookings/bookings.service';
+import { ItemService } from '../service/items/item.service';
 
 @Component({
   selector: 'app-assign-dialog',
@@ -15,28 +16,27 @@ export class AssignDialogComponent implements OnInit {
   bookingStatuses = BOOKING_STATUSES;
 
   constructor(private formBuilder: FormBuilder,
-    private bookingService: BookingsService,
+    private itemService: ItemService,
     public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.itemInfoForm = this.formBuilder.group({
-      status: [''],
-      shipmentReference: [''],
+      status: [this.data.item.status],
+      shipmentReference: [this.data.item.shipmentReference],
       containerNumber: [''],
     });
   }
 
   onUpdate() {
-    // const updateCustomerFields = [{ name: 'status', value: this.getFormControl('status').value },
-    //   { name: 'shipmentReference', value: this.getFormControl('shipmentReference').value }];
-    //   this.bookingService.updateBooking(this.data.booking.reference, updateCustomerFields).subscribe(
-    //     ({ data }) => {
-    //        location.reload();  // To handle properly
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     }
-    //   );
+    const updateCustomerFields = [{ name: 'status', value: this.getFormControl('status').value }];
+      this.itemService.updateItem(this.data.item.id, updateCustomerFields).subscribe(
+        ({ data }) => {
+          this.dialogRef.close();
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
 
   onSelectionChange(event: any, fControlName: string) {

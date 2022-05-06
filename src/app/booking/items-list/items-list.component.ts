@@ -72,7 +72,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.items.currentValue)
     {
-      const newData = changes.items.currentValue.map((item, index) => Object.assign({}, item, { selected: false, index }))
+      const newData = changes.items.currentValue.map((item, index) => Object.assign({}, item, { selected: false, index }));
       this.dataSource = newData;
     }
   }
@@ -201,5 +201,8 @@ export class ItemsListComponent implements OnInit, OnChanges {
       // width: '65%',
       data: { item }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    })
   }
 }
