@@ -23,6 +23,15 @@ export const GET_ITEMS_REPORT_DATA = gql`
   }
 `;
 
+
+export const FILTER_ITEMS = gql`
+  query filterItems($fields: [UpdateFieldInput!]) {
+    filterItems(fields: $fields) {
+      id bookingReference shipmentReference quantity type description pricePerUnit value amount status
+    }
+  }
+`;
+
 export const UPDATE_ITEM = gql`
   mutation updateItem($id: Int!, $fields: [UpdateFieldInput!]) {
     updateItem(id: $id, fields: $fields) {

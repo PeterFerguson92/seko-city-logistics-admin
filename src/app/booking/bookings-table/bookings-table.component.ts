@@ -43,7 +43,6 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   viewBooking(reference) {
     this.router.navigate(['/booking-summary', reference]);
-
   }
 
   editBooking(element) {

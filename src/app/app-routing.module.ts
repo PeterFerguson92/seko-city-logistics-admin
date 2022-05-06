@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddEditBookingComponent } from './booking/add-edit-booking/add-edit-booking.component';
 import { BookingsComponent } from './booking/bookings/bookings.component';
-import { AssignBookingsResolver } from './booking/service/resolver/assign-bookings-resolver';
 import { BookingsResolverService } from './booking/service/resolver/bookings-resolver.service';
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { CustomersComponent } from './customer/customers/customers.component';
@@ -20,13 +19,15 @@ import { ListItemsComponent } from './shipment/list-items/list-items.component';
 import { ShipmentItemsResolver } from './shipment/service/resolver/shipment-items.resolver';
 import { DriversComponent } from './drivers/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
+import { AssignItemsResolver } from './shipment/service/resolver/assign-items.resolver';
+import { AssignItemsComponent } from './shipment/assign-items/assign-items.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
   { path: 'add-shipment', component: AddEditShipmentComponent },
-  { path: 'assign-items', component: AssignBookingsComponent, resolve: { info: AssignBookingsResolver }},
+  { path: 'assign-items', component: AssignItemsComponent, resolve: { info: AssignItemsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'list-items/:reference', component: ListItemsComponent, resolve: { items: ShipmentItemsResolver } },
   { path: 'bookings', component: BookingsComponent },

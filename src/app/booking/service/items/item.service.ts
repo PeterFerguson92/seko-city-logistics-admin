@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { GET_ITEMS_BY_BOOKING_REFERENCE, GET_ITEMS_BY_SHIPMENT_REFERENCE, GET_ITEMS_REPORT_DATA, UPDATE_ITEM } from './request';
+import { FILTER_ITEMS, GET_ITEMS_BY_BOOKING_REFERENCE, GET_ITEMS_BY_SHIPMENT_REFERENCE, GET_ITEMS_REPORT_DATA, UPDATE_ITEM } from './request';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,13 @@ export class ItemService {
   getItemsReport() {
     return this.apollo.query<any>({
       query: GET_ITEMS_REPORT_DATA
+    });
+  }
+
+  filterItems(fields: any) {
+    return this.apollo.mutate<any>({
+      mutation: FILTER_ITEMS,
+      variables: { fields }
     });
   }
 

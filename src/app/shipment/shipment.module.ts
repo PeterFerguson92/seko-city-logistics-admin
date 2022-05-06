@@ -6,9 +6,10 @@ import { AssignBookingsComponent } from '../booking/assign-bookings/assign-booki
 import { AddEditShipmentComponent } from './add-edit-shipment/add-edit-shipment.component';
 import { BookingModule } from '../booking/booking.module';
 import { ListItemsComponent } from './list-items/list-items.component';
+import { AssignItemsComponent } from './assign-items/assign-items.component';
 
 @NgModule({
-  declarations: [AddEditShipmentComponent, ShipmentsComponent, AssignBookingsComponent, ListItemsComponent],
+  declarations: [AddEditShipmentComponent, ShipmentsComponent, AssignBookingsComponent, ListItemsComponent, AssignItemsComponent],
   imports: [CommonModule, SharedModule, BookingModule]
 })
 export class ShipmentModule { }
