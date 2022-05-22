@@ -25,7 +25,6 @@ export class AddEditShipmentComponent implements OnInit {
 
   ngOnInit() {
     this.activatedroute.data.subscribe(data => {
-      console.log(this.router.url)
       this.shipment = this.shipment && this.shipment.reference ? this.shipment : data.shipment;
       this.addEditShipmentForm = this.formBuilder.group({
         reference: [null],
@@ -50,7 +49,7 @@ export class AddEditShipmentComponent implements OnInit {
   onSubmit() {
     if (this.router.url.includes('edit-shipment'))
     {
-      console.log('Update')
+      this.updateShipment()
     } else
     {
       this.createShipment();

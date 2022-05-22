@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
+import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { IShipment } from '../model';
+import { ShipmentService } from '../service/shipment.service';
 
 @Component({
   selector: 'app-shipments',
@@ -18,7 +21,8 @@ export class ShipmentsComponent implements OnInit {
   shipments: [IShipment] = null;
   dataSource = null;
 
-  constructor(private router: Router, private activatedroute: ActivatedRoute, private commonService:CommonService) { }
+  constructor(private router: Router, private activatedroute: ActivatedRoute, private commonService: CommonService,
+  private shipmentService: ShipmentService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -45,7 +49,21 @@ export class ShipmentsComponent implements OnInit {
   }
 
   onDeleteShipment(reference) {
-    console.log(reference)
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'true')
+      {
+        this.shipmentService.deleteShipment(reference).subscribe(
+          ({ data }) => {
+            console.log(data)
+            location.reload()
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    })
   }
 
   getFormattedDate(date) {

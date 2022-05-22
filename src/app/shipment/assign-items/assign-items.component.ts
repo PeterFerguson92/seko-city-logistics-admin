@@ -29,7 +29,8 @@ export class AssignItemsComponent implements OnInit {
   height =  '80%';
   width = '65%';
 
-  constructor(private router: Router, private activatedroute:ActivatedRoute, private bookingsService: BookingsService,
+  constructor(private router: Router, private activatedroute: ActivatedRoute,
+    private bookingsService: BookingsService,
     private formBuilder: FormBuilder, private commonService: CommonService) { }
 
   ngOnInit(): void {
@@ -78,15 +79,15 @@ export class AssignItemsComponent implements OnInit {
   }
 
   onAssign() {
-    this.getShipmentReferenceFromSelection()
-    const bookingsToAssignReferences = [];
-    this.dataSource.data.forEach(row => {
-      if (this.selection.isSelected(row) && row.shipmentReference !== this.activatedroute.snapshot.params.reference)
-      {
-        bookingsToAssignReferences.push(row.reference)
-      }
-    });
-    this.assignBookingsToShipment(bookingsToAssignReferences)
+    this.getShipmentReferenceFromSelection();
+    // const bookingsToAssignReferences = [];
+    // this.dataSource.data.forEach(row => {
+    //   if (this.selection.isSelected(row) && row.shipmentReference !== this.activatedroute.snapshot.params.reference)
+    //   {
+    //     bookingsToAssignReferences.push(row.reference)
+    //   }
+    // });
+    // this.assignBookingsToShipment(bookingsToAssignReferences)
   }
 
   assignBookingsToShipment(bookingsToAssignReferences) {

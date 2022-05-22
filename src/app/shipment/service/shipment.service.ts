@@ -42,7 +42,7 @@ export class ShipmentService {
     });
   }
 
-  deleteCustomer(reference: string) {
+  deleteShipment(reference: string) {
     return this.apollo.mutate<boolean>({
       mutation: DELETE_SHIPMENT,
       variables: {reference}

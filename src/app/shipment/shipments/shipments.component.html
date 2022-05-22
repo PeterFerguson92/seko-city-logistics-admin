@@ -5,6 +5,7 @@
 <a mat-fab (click)="onAddShipment()"  class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
 </a>
+<br>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <!-- Position Column -->
   <ng-container matColumnDef={{displayedColumns[0]}}>
@@ -37,10 +38,10 @@
       <button mat-icon-button color="Accent" matTooltip="List assigned bookings"  matTooltipPosition="left">
         <mat-icon (click)="onListBookings(element.reference)">list_alt</mat-icon>
       </button>
-      <button mat-icon-button color="primary" matTooltip="Edit booking" matTooltipPosition="above">
+      <button mat-icon-button color="primary" matTooltip="Edit shipment" matTooltipPosition="above">
         <mat-icon (click)="OnEditShipment(element.reference)">edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" matTooltip="Delete customer" matTooltipPosition="right">
+      <button mat-icon-button color="warn" matTooltip="Delete shipment" matTooltipPosition="right">
         <mat-icon (click)="onDeleteShipment(element.reference)">delete</mat-icon>
       </button>
     </td>

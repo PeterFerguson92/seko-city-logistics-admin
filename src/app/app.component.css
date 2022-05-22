@@ -28,3 +28,7 @@ mat-toolbar mat-icon{
   color: #6D8299;
 
 }
+
+.example-spacer {
+  flex: 1 1 auto;
+}

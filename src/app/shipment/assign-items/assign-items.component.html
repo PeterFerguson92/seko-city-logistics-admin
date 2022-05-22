@@ -1,7 +1,11 @@
-<form [formGroup]="selectedShipmentForm" >
-  <app-material-select-input [label]="'Shipment'"  [width]="15" [options]="shipments" formControlName="selectedShipment"
-  (selectionChange)="onSelectionChange($event, 'selectedShipment')" [value]="shipments[0]"></app-material-select-input>
-</form>
+<div fxLayout fxLayoutAlign="center center">
+  <form [formGroup]="selectedShipmentForm" >
+    <app-material-select-input [label]="'Container Number'"
+      [width]="15" [options]="shipments" formControlName="selectedShipment"
+      (selectionChange)="onSelectionChange($event, 'selectedShipment')" [value]="shipments[0]">
+    </app-material-select-input>
+  </form>
+</div>
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef={{displayedColumns[0]}}>
