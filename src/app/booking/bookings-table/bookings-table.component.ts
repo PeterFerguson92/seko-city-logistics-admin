@@ -19,10 +19,12 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() bookings: [IBooking] = null;
+  @Input() includeArchived = false;
   displayedColumns: string[] = ['ID', 'NAME', 'DESTINATION', 'POSTCODE', 'DATE', 'PAYMENT STATUS', 'BOOKING STATUS', 'ACTION'];
   dataSource = null;
   height = '80%';
   width = '65%';
+  isArchivedEnabled = false;
 
   constructor(private router: Router,
     private bookingsService: BookingsService,
@@ -30,7 +32,9 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     private dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
     this.buildData(changes.bookings.currentValue)
+    this.isArchivedEnabled = changes.includeArchived.currentValue;
   }
 
   ngOnInit(): void {
@@ -64,6 +68,17 @@ export class BookingsTableComponent implements OnInit, OnChanges {
         )
       }
     })
+  }
+
+  archiveBooking(reference) {
+    this.bookingsService.archiveUnarchiveBooking(reference, !this.isArchivedEnabled).subscribe(
+      ({ data }) => {
+        location.reload()
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   getFormattedDate(date) {

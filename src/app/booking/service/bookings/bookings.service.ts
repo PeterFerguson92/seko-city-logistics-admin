@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { IBooking, IBookingsResponse } from '../../model';
 import {
+  ARCHIVE_UNARCHIVE_BOOKING,
   CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS,
   GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE,
   GET_BOOKINGS_DESTINATION_REPORT_DATA,
@@ -88,6 +89,13 @@ export class BookingsService {
     return this.apollo.mutate<boolean>({
       mutation: DELETE_BOOKING,
       variables: {reference}
+    });
+  }
+
+  archiveUnarchiveBooking(reference: string, value: boolean) {
+    return this.apollo.mutate<boolean>({
+      mutation: ARCHIVE_UNARCHIVE_BOOKING,
+      variables: {reference, value}
     });
   }
 

@@ -80,6 +80,12 @@ export const DELETE_BOOKING = gql`
   }
 `;
 
+export const ARCHIVE_UNARCHIVE_BOOKING = gql`
+  mutation archiveUnarchiveBooking($reference: String!, $value: Boolean!) {
+    archiveUnarchiveBooking(reference: $reference, value: $value)
+  }
+`;
+
 export const GET_ITEMS_BY_BOOKING_REFERENCE = gql`
   query itemsByBookingReference($bookingReference: String!) {
     itemsByBookingReference(bookingReference: $bookingReference) {

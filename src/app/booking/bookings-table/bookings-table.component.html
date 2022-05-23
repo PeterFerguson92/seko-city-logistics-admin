@@ -43,6 +43,12 @@
       <button mat-icon-button color="primary" matTooltip="Edit booking" matTooltipPosition="above">
         <mat-icon (click)="editBooking(element)">edit</mat-icon>
       </button>
+      <button *ngIf="!isArchivedEnabled" mat-icon-button class="white-icon" matTooltip="Archive booking" matTooltipPosition="right">
+        <mat-icon (click)="archiveBooking(element.reference)">archive</mat-icon>
+      </button>
+      <button *ngIf="isArchivedEnabled" mat-icon-button class="white-icon" matTooltip="Unarchive booking" matTooltipPosition="right">
+        <mat-icon (click)="archiveBooking(element.reference)">unarchive</mat-icon>
+      </button>
       <button mat-icon-button color="warn" matTooltip="Delete booking" matTooltipPosition="right">
         <mat-icon (click)="deleteBooking(element.reference)">delete</mat-icon>
       </button>

@@ -18,11 +18,13 @@
               <app-material-date-picker-input [label]="'To Date'" (inputChange)="onInputChange($event, 'toDate')" formControlName="toDate"></app-material-date-picker-input>
               <div class="divider"></div>
             </span>
-            <app-material-checkbox [label]="'Enable interval Filter'"  (checkBoxChange)="onSelectionChange($event, 'useRange')" formControlName="useRange"></app-material-checkbox>
+            <app-material-checkbox [label]="'Enable interval Filter'" (checkBoxChange)="onSelectionChange($event, 'useRange')" formControlName="useRange"></app-material-checkbox>
+            <div class="divider"></div>
+            <app-material-checkbox [label]="'Show archived'" (checkBoxChange)="onSelectionChange($event, 'archived')" formControlName="archived"></app-material-checkbox>
             <div class="divider"></div>
           </form>
       </div>
       <app-material-button [label]="'SEARCH'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="30" (click)="onSearch()"></app-material-button>
     </div>
 </div>
-<app-bookings-table [bookings]="bookings"></app-bookings-table>
+<app-bookings-table [bookings]="bookings" [includeArchived]="includeArchive"></app-bookings-table>

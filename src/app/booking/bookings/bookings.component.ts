@@ -16,6 +16,7 @@ export class BookingsComponent implements OnInit {
   bookingStatuses = ALL_BOOKING_STATUSES;
   paymentStatuses = ALL_PAYMENT_STATUSES
   bookings = null;
+  includeArchive = false
 
 
   constructor(private formBuilder: FormBuilder, private bookingsService: BookingsService,
@@ -35,13 +36,14 @@ export class BookingsComponent implements OnInit {
       paymentStatus: [this.paymentStatuses[0]],
       fromDate: [fiveDaysAgo],
       toDate: [today],
-      useRange: [false, [Validators.required]]
+      useRange: [false, [Validators.required]],
+      archived: [false],
     })
   }
 
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
-    const data = fControlName === 'useRange' ? event.checked : event.value;
+    const data = fControlName === 'useRange' || fControlName === 'archived' ? event.checked : event.value;
     fControl.setValue(data);
     fControl.markAsDirty();
   }
@@ -57,6 +59,7 @@ export class BookingsComponent implements OnInit {
       ({ data }) => {
         // tslint:disable-next-line:no-string-literal
         this.bookings = data['filterBookings'];
+        this.includeArchive = this.getFormControl('archived').value;
       },
       error => {
         console.log(error);
@@ -72,8 +75,13 @@ export class BookingsComponent implements OnInit {
     return this.bookingsFilterForm.get(fControlName)
   }
 
+
+
   buildFilterFields() {
-    const filters: any = {status: '', postcode: '', reference: '', paymentStatus: '', fromDate: '', toDate: ''}
+    const filters: any = {
+      status: '', postcode: '', reference: '', paymentStatus: '',
+      fromDate: '', toDate: '', archived: false
+    }
     const fields = []
 
     Object.entries(filters).forEach((key) => {
@@ -85,10 +93,15 @@ export class BookingsComponent implements OnInit {
       }
       else
       {
-
         filter.value = attributeName === 'fromDate' || attributeName === 'toDate' ?
           this.commonService.getFormattedIsoDate(this.getFormControl(attributeName).value) :
           this.getFormControl(attributeName).value;
+      }
+
+      if (attributeName === 'archived')
+      {
+        const value = this.getFormControl(attributeName).value;
+        filter.value = value.toString()
       }
       filter.name = attributeName;
       fields.push(filter)
