@@ -32,7 +32,11 @@
   </ng-container>
    <ng-container matColumnDef={{displayedColumns[6]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[6]}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.status}}
+      <button mat-icon-button color="primary" matTooltip="Update booking" matTooltipPosition="above">
+        <mat-icon (click)="updateBooking(element)">low_priority</mat-icon>
+      </button>
+    </td>
   </ng-container>
   <ng-container matColumnDef="ACTION">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>

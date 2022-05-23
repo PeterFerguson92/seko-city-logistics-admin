@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
-import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component';
+import { BookingUpdateDialogComponent } from '../booking-update-dialog/booking-update-dialog.component';
 import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings/bookings.service';
 
@@ -43,6 +43,17 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   onAddBooking() {
     this.router.navigate(['/add-booking']);
+  }
+
+  updateBooking(booking) {
+    const dialogRef = this.dialog.open(BookingUpdateDialogComponent, {
+      // height: '80%',
+      // width: '65%',
+      data: { booking }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    })
   }
 
   viewBooking(reference) {

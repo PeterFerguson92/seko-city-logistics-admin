@@ -43,7 +43,7 @@ export class BookingsService {
     });
   }
 
-  createBooking(booking: IBooking) {
+  createBooking(booking: any) {
     return this.apollo.mutate<IBooking>({
       mutation: CREATE_BOOKING,
       variables: { input: booking }

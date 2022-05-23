@@ -148,7 +148,7 @@ export class BookingDetailComponent implements OnInit {
   }
 
   saveBooking(senderDetails, recvReferences, bookingInfo) {
-    const booking: IBooking = {
+    const booking = {
       id: null,
       reference: '',
       senderId: senderDetails.id ? senderDetails.id : bookingInfo.customer.id,
@@ -168,7 +168,6 @@ export class BookingDetailComponent implements OnInit {
       pickUpPostCode: bookingInfo.info.postcode,
       pickUpAddress: bookingInfo.info.address,
       updatesViaWhatsapp: bookingInfo.info.updatesViaWhatsapp,
-      status: '',
       shipmentReference: '',
       assignedDriverReference: ''
     };
