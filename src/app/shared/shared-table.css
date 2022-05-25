@@ -1,0 +1,62 @@
+
+table  {
+  width: 90%;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-align: center !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+.mat-header-cell {
+  text-align: center !important;
+}
+
+mat-paginator {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td.mat-cell, th.mat-header-cell {
+  text-align: center;
+  justify-content:center;
+}
+
+ th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  justify-items: center;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+
+ th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  justify-items: center;
+  background-color: #004e92;
+  color: white;
+}
+
+
+.fab-main {
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
+  background-color: #004e92;
+}
+
+.white-icon {
+  color: rgb(246, 150, 6);
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.white-icon svg {
+  fill: white;
+}

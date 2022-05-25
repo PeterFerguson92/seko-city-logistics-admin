@@ -22,3 +22,17 @@ tr:nth-child(even) {
 .mat-expansion-panel-header-title {
   font-weight: bold;
 }
+
+
+.editButton {
+  margin-left: 80px !important;
+  margin-right: 80px !important;
+  background-color:#069370 ;
+  color: white;
+}
+
+.exportButton {
+  background-color:#069370 ;
+  color: white;
+
+}

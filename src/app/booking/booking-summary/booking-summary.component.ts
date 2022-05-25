@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { CommonService } from 'src/app/service/common.service';
@@ -14,7 +14,8 @@ import domtoimage from 'dom-to-image';
 })
 export class BookingSummaryComponent implements OnInit {
 
-  constructor(private activatedroute: ActivatedRoute,
+  constructor(private router: Router,
+    private activatedroute: ActivatedRoute,
     private commonService: CommonService,
     private customersService: CustomersService,
     private itemService: ItemService) { }
@@ -71,5 +72,9 @@ export class BookingSummaryComponent implements OnInit {
       doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       doc.save('booking_'+ this.booking.reference + '.pdf');
     })
+  }
+
+  editBooking() {
+    this.router.navigate(['/edit-booking', this.booking.reference, this.booking.senderReference]);
   }
 }

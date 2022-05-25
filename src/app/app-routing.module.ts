@@ -21,6 +21,7 @@ import { DriversComponent } from './drivers/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
 import { AssignItemsResolver } from './shipment/service/resolver/assign-items.resolver';
 import { AssignItemsComponent } from './shipment/assign-items/assign-items.component';
+import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,7 +30,7 @@ const routes: Routes = [
   { path: 'add-shipment', component: AddEditShipmentComponent },
   { path: 'assign-items', component: AssignItemsComponent, resolve: { info: AssignItemsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
-  { path: 'list-items/:reference', component: ListItemsComponent, resolve: { items: ShipmentItemsResolver } },
+  { path: 'shipment-items/:reference', component: ShipmentItemsComponent, resolve: { items: ShipmentItemsResolver } },
   { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'add-customer', component: CustomerDetailComponent },

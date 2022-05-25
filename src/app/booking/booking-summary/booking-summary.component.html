@@ -161,6 +161,10 @@
 </mat-accordion>
 <br>
 </div>
-<button type="button" (click)="exportAsPDF()" class="uni-button def">Export to PDF</button>
+
+<div align="end">
+  <button mat-raised-button (click)="exportAsPDF()" class="exportButton"><mat-icon>picture_as_pdf</mat-icon> Export booking to PDF</button>
+  <button mat-raised-button  (click)="editBooking()" class="editButton"><mat-icon>edit</mat-icon> Edit booking </button>
+</div>
 <br>
 <br>

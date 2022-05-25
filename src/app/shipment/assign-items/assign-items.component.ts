@@ -30,8 +30,8 @@ export class AssignItemsComponent implements OnInit {
   width = '65%';
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,
-    private itemService: ItemService,
-    private formBuilder: FormBuilder, private commonService: CommonService) { }
+    private itemService: ItemService,private formBuilder: FormBuilder,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -86,7 +86,6 @@ export class AssignItemsComponent implements OnInit {
         itemsIdsToAssign.push(row.id)
       }
     });
-    console.log(itemsIdsToAssign)
     this.assignItemsToShipment(itemsIdsToAssign)
   }
 

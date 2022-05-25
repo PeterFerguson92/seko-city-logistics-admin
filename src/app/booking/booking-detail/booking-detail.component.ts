@@ -31,7 +31,7 @@ export class BookingDetailComponent implements OnInit {
 
   constructor(private router: Router, private customersService: CustomersService, private bookingsService: BookingsService) { }
 
-  ngOnInit(): void { console.log(this.mode) }
+  ngOnInit(): void { }
 
   isDisabled(componentName: string) {
     if (componentName === 'customerDetailComponent')
