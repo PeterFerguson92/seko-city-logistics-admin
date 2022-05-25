@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { FILTER_ITEMS, GET_ITEMS_BY_BOOKING_REFERENCE, GET_ITEMS_BY_SHIPMENT_REFERENCE, GET_ITEMS_REPORT_DATA, UPDATE_ITEM } from './request';
+import {
+  FILTER_ITEMS, GET_ITEMS_BY_BOOKING_REFERENCE,
+  GET_ITEMS_BY_SHIPMENT_REFERENCE, GET_ITEMS_REPORT_DATA, UPDATE_ITEM, UPDATE_ITEMS_BY_ID
+} from './request';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +43,13 @@ export class ItemService {
     return this.apollo.mutate<any>({
       mutation: UPDATE_ITEM,
       variables: { id, fields }
+    });
+  }
+
+updateItemsById(ids: [number], fields: any) {
+    return this.apollo.mutate<any>({
+      mutation: UPDATE_ITEMS_BY_ID,
+      variables: { ids, fields }
     });
   }
 

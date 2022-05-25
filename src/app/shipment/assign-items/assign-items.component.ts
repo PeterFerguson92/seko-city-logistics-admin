@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBooking } from 'src/app/booking/model';
-import { BookingsService } from 'src/app/booking/service/bookings/bookings.service';
+import { ItemService } from 'src/app/booking/service/items/item.service';
 import { CommonService } from 'src/app/service/common.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class AssignItemsComponent implements OnInit {
   width = '65%';
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,
-    private bookingsService: BookingsService,
+    private itemService: ItemService,
     private formBuilder: FormBuilder, private commonService: CommonService) { }
 
   ngOnInit(): void {
@@ -79,20 +79,20 @@ export class AssignItemsComponent implements OnInit {
   }
 
   onAssign() {
-    this.getShipmentReferenceFromSelection();
-    // const bookingsToAssignReferences = [];
-    // this.dataSource.data.forEach(row => {
-    //   if (this.selection.isSelected(row) && row.shipmentReference !== this.activatedroute.snapshot.params.reference)
-    //   {
-    //     bookingsToAssignReferences.push(row.reference)
-    //   }
-    // });
-    // this.assignBookingsToShipment(bookingsToAssignReferences)
+    const itemsIdsToAssign = [];
+    this.dataSource.data.forEach(row => {
+      if (this.selection.isSelected(row))
+      {
+        itemsIdsToAssign.push(row.id)
+      }
+    });
+    console.log(itemsIdsToAssign)
+    this.assignItemsToShipment(itemsIdsToAssign)
   }
 
-  assignBookingsToShipment(bookingsToAssignReferences) {
+  assignItemsToShipment(itemsIdsToAssign) {
     const fieldToUpdate = { name: 'shipmentReference', value: this.getShipmentReferenceFromSelection() };
-    this.bookingsService.updateBookingsByReferences(bookingsToAssignReferences, fieldToUpdate).subscribe(
+    this.itemService.updateItemsById(itemsIdsToAssign, fieldToUpdate).subscribe(
       ({ data }) => {
         location.reload();  // TODO handle properly
       },

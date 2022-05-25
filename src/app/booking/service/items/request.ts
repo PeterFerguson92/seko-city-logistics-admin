@@ -39,3 +39,9 @@ export const UPDATE_ITEM = gql`
     }
   }
 `;
+
+export const UPDATE_ITEMS_BY_ID = gql`
+  mutation updateItem($ids: [Int!]!, $fields: [UpdateFieldInput!]) {
+    updateItemsByIds(ids: $ids, fields: $fields)
+  }
+`;

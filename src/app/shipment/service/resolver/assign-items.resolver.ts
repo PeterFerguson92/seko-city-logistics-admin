@@ -13,7 +13,7 @@ export class AssignItemsResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
 
-    const call1 = this.itemService.filterItems({name: 'status', value: 'LOADED'});
+    const call1 = this.itemService.filterItems([{name: 'status', value: 'LOADED'}]);
     const call2 = this.shipmentService.getShipments();
     return forkJoin([call1, call2]);
   }
