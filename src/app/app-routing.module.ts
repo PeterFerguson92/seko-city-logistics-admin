@@ -9,13 +9,11 @@ import { CustomerResolver } from './customer/service/resolver/customer-resolver'
 import { LoginComponent } from './login/login.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AddEditShipmentComponent } from './shipment/add-edit-shipment/add-edit-shipment.component';
-import { AssignBookingsComponent } from './booking/assign-bookings/assign-bookings.component';
 import { ShipmentResolver } from './shipment/service/resolver/shipment.resolver';
 import { ShipmentsResolverService } from './shipment/service/resolver/shipments.resolver.service';
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 import { BookingSummaryComponent } from './booking/booking-summary/booking-summary.component';
 import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
-import { ListItemsComponent } from './shipment/list-items/list-items.component';
 import { ShipmentItemsResolver } from './shipment/service/resolver/shipment-items.resolver';
 import { DriversComponent } from './drivers/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
