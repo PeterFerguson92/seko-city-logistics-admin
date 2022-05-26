@@ -32,9 +32,11 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     private dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     this.buildData(changes.bookings.currentValue)
-    this.isArchivedEnabled = changes.includeArchived.currentValue;
+    if (changes.includeArchived)
+    {
+      this.isArchivedEnabled = changes.includeArchived.currentValue;
+    };
   }
 
   ngOnInit(): void {

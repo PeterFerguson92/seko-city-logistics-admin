@@ -19,8 +19,7 @@ export class AssignItemsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() bookings: [IBooking] = null;
-  displayedColumns: string[] = ['ASSIGNED', 'BOOKING REFERENCE', 'TYPE', 'DESCRIPTION', 'VALUE',
-    'QUANTITY', 'PRICE PER UNIT', 'AMOUNT', 'ACTION'];
+  displayedColumns: string[] = ['ASSIGNED', 'SENDER FULL NAME','DESTINATION', 'TYPE', 'DESCRIPTION', 'VALUE', 'AMOUNT', 'ACTION'];
   selection = new SelectionModel<IBooking>(true, []);
   selectedShipmentForm: FormGroup;
   shipments;
@@ -35,7 +34,8 @@ export class AssignItemsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      this.dataSource = new MatTableDataSource(data.info[0].data.filterItems);
+      const items = data.info[0].data.eligibleItems;
+      this.dataSource = items.length > 0 ?new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.shipmentsObjs = data.info[1].data.shipments
@@ -43,9 +43,9 @@ export class AssignItemsComponent implements OnInit {
       this.selectedShipmentForm = this.formBuilder.group({ selectedShipment: [this.shipments[0]]});
     })
 
-    this.dataSource.data.forEach(row => {
-      // if (row.shipmentReference === this.activatedroute.snapshot.params.reference) this.selection.select(row);
-    });
+    // this.dataSource.data.forEach(row => {
+    //   // if (row.shipmentReference === this.activatedroute.snapshot.params.reference) this.selection.select(row);
+    // });
   }
 
   getFormattedDate(date) {
@@ -86,7 +86,8 @@ export class AssignItemsComponent implements OnInit {
         itemsIdsToAssign.push(row.id)
       }
     });
-    this.assignItemsToShipment(itemsIdsToAssign)
+    console.log(itemsIdsToAssign)
+   this.assignItemsToShipment(itemsIdsToAssign)
   }
 
   assignItemsToShipment(itemsIdsToAssign) {
@@ -128,6 +129,19 @@ export class AssignItemsComponent implements OnInit {
 
    onViewBooking(reference) {
     this.router.navigate(['/booking-summary', reference]);
+   }
+
+  mergeData(item, booking) {
+    return { ...item, ...booking };
   }
+
+  buildItemsData(results) {
+    const resultData = []
+    for (const result of results) {
+      resultData.push(this.mergeData(result.item, result.booking))
+    }
+    return resultData;
+  }
+
 
 }

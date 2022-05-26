@@ -17,12 +17,22 @@ export const GET_ITEMS_BY_BOOKING_REFERENCE = gql`
   }
 `;
 
+export const GET_ELIGIBLE_ITEMS = gql`
+query {
+  eligibleItems {
+    item { id bookingReference shipmentReference quantity type description pricePerUnit value amount status},
+    booking { id reference senderReference senderFullName receiverReferences destination location numberOfItems
+      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
+      updatesViaWhatsapp status shipmentReference assignedDriverReference }
+  }
+}
+`;
+
 export const GET_ITEMS_REPORT_DATA = gql`
   query {
     itemsDestinationReport{ type  occurrence quantity amount}
   }
 `;
-
 
 export const FILTER_ITEMS = gql`
   query filterItems($fields: [UpdateFieldInput!]) {

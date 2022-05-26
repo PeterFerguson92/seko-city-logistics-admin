@@ -220,7 +220,6 @@ export class BookingDetailComponent implements OnInit {
   }
 
   buildBookingInput(bookingInfo) {
-    console.log(bookingInfo)
     return {
       id: null,
       reference: bookingInfo.reference ? bookingInfo.reference : '',
