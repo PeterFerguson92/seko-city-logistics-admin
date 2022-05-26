@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { lastValueFrom } from 'rxjs';
 import { BOOKING_STATUSES } from 'src/app/constants';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { ShipmentService } from 'src/app/shipment/service/shipment.service';
 import { ItemService } from '../service/items/item.service';
 
 @Component({
@@ -16,19 +18,35 @@ export class AssignDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private itemService: ItemService,
+    private shipmentService: ShipmentService,
     public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.itemInfoForm = this.formBuilder.group({
       status: [this.data.item.status],
-      shipmentReference: [this.data.item.shipmentReference],
-      containerNumber: [''],
+      containerNumber: [null],
     });
   }
 
-  onUpdate() {
-    const updateFields = [{ name: 'status', value: this.getFormControl('status').value }];
-      this.itemService.updateItem(this.data.item.id, updateFields).subscribe(
+  async onUpdate() {
+    const updateFields = [];
+    if (this.getFormControl('status').dirty)
+    {
+      updateFields.push({ name: 'status', value: this.getFormControl('status').value });
+    }
+
+    if (this.getFormControl('containerNumber').dirty)
+    {
+      const shipment = await this.getShipmentFromContainerNumber(this.getFormControl('containerNumber').value)
+      if (shipment)
+      {
+        updateFields.push({name:'shipmentReference', value: shipment.reference});
+      }
+    }
+    console.log(updateFields)
+    if (updateFields.length > 0)
+    {
+         this.itemService.updateItem(this.data.item.id, updateFields).subscribe(
         ({ data }) => {
           this.dialogRef.close();
         },
@@ -37,6 +55,7 @@ export class AssignDialogComponent implements OnInit {
         }
       );
     }
+  }
 
   onSelectionChange(event: any, fControlName: string) {
       const fControl = this.getFormControl(fControlName);
@@ -48,4 +67,20 @@ export class AssignDialogComponent implements OnInit {
   getFormControl(fControlName: string) {
     return this.itemInfoForm.get(fControlName)
   }
+
+  async getShipmentFromReference(reference) {
+    const shipment = (await lastValueFrom(
+      this.shipmentService.getShipmentByReference(reference)))
+      .data.shipmentByReference
+    return shipment;
+  }
+
+  async getShipmentFromContainerNumber(containerNumber) {
+    const shipment = (await lastValueFrom(
+      this.shipmentService.getShipmentByContainerNumber(containerNumber)))
+      .data.shipmentByContainerNumber
+    return shipment;
+  }
+
+
 }

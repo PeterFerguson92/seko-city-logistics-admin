@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { LIMIT, CURSOR } from 'src/app/constants';
 import { IShipment, IShipmentsResponse } from '../model';
-import { CREATE_SHIPMENT, DELETE_SHIPMENT, GET_ALL_SHIPMENTS, GET_SHIPMENT_BY_REFERENCE, UPDATE_SHIPMENT } from './requests';
+import {
+  CREATE_SHIPMENT, DELETE_SHIPMENT, GET_ALL_SHIPMENTS,
+  GET_SHIPMENT_BY_CONTAINER_NUMBER, GET_SHIPMENT_BY_REFERENCE, UPDATE_SHIPMENT
+} from './requests';
 
 
 @Injectable({
@@ -25,6 +28,13 @@ export class ShipmentService {
     return this.apollo.query<any>({
       query: GET_SHIPMENT_BY_REFERENCE,
       variables: {reference}
+    });
+  }
+
+  getShipmentByContainerNumber(containerNumber: string) {
+    return this.apollo.query<any>({
+      query: GET_SHIPMENT_BY_CONTAINER_NUMBER,
+      variables: {containerNumber}
     });
   }
 

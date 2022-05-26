@@ -18,6 +18,14 @@ export const GET_SHIPMENT_BY_REFERENCE = gql`
   }
 `;
 
+export const GET_SHIPMENT_BY_CONTAINER_NUMBER = gql`
+  query shipmentByContainerNumber($containerNumber: String!) {
+    shipmentByContainerNumber(containerNumber: $containerNumber) {
+      id reference,portOfLoading,portOfDischarge, placeOfReceipt, loadingDate consigneeName, consigneeAddress,
+      exporterFullName, exporterPostcode, exporterAdress, exporterArea, exporterCity, containerNumber, blVessel, shipmentDate, status, archived
+    }
+  }
+`;
 
 export const CREATE_SHIPMENT = gql`
   mutation createShipment($shipment: ShipmentInput!) {

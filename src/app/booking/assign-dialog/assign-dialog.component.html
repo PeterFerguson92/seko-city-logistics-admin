@@ -11,8 +11,6 @@
                   <label class="required">Status</label>
                   <app-material-select-input [width]="80" (selectionChange)="onSelectionChange($event, 'status')" formControlName="status" [options]="bookingStatuses">
                   </app-material-select-input>
-                  <label>Shipment reference</label>
-                  <app-material-input [width]="80" formControlName="shipmentReference"></app-material-input>
                   <label>Container number</label>
                   <app-material-input [width]="80" formControlName="containerNumber"></app-material-input>
                 </div>

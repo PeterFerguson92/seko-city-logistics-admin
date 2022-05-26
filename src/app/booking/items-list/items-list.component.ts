@@ -202,7 +202,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
       data: { item }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
+     // console.log(result)
     })
   }
 }

@@ -29,7 +29,6 @@ export class BookingSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.activatedroute.data.subscribe(async data => {
       this.booking = JSON.parse(JSON.stringify(data.booking));
-      console.log(this.booking)
       this.booking.sender =
         (await lastValueFrom(this.customersService.getCustomerByReference(this.booking.senderReference))).data.customerByReference;
       this.booking.receivers =
