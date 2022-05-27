@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import {
+  FILTER_FULL_ITEMS,
   FILTER_ITEMS, GET_ELIGIBLE_ITEMS, GET_ITEMS_BY_BOOKING_REFERENCE,
   GET_ITEMS_BY_SHIPMENT_REFERENCE, GET_ITEMS_REPORT_DATA, UPDATE_ITEM, UPDATE_ITEMS_BY_ID
 } from './request';
@@ -41,6 +42,13 @@ export class ItemService {
   filterItems(fields: any) {
     return this.apollo.mutate<any>({
       mutation: FILTER_ITEMS,
+      variables: { fields }
+    });
+  }
+
+  filteredFullItems(fields: any) {
+    return this.apollo.mutate<any>({
+      mutation: FILTER_FULL_ITEMS,
       variables: { fields }
     });
   }

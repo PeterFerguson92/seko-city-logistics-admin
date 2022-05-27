@@ -16,8 +16,8 @@ export class ShipmentItemsResolver implements Resolve<boolean> {
       const message = `shipment reference was not a found: ${shipmentReference}`;
       return of({ customer: null, error: message });
     }
-    return this.itemService.getItemsByShipmentReference(shipmentReference)
-      .pipe(map(data => data.data.itemsByShipmentReference));
+    return this.itemService.filteredFullItems({name: 'shipmentReference', value: shipmentReference})
+      .pipe(map(data => data.data.filteredFullItems));
       // .pipe(map(data => console.log(data)));
 
   }

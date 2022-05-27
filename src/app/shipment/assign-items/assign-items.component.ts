@@ -35,17 +35,13 @@ export class AssignItemsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
       const items = data.info[0].data.eligibleItems;
-      this.dataSource = items.length > 0 ?new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
+      this.dataSource = items.length > 0 ? new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.shipmentsObjs = data.info[1].data.shipments
       this.shipments = this.getShipmentsDetailsList(this.shipmentsObjs)
       this.selectedShipmentForm = this.formBuilder.group({ selectedShipment: [this.shipments[0]]});
     })
-
-    // this.dataSource.data.forEach(row => {
-    //   // if (row.shipmentReference === this.activatedroute.snapshot.params.reference) this.selection.select(row);
-    // });
   }
 
   getFormattedDate(date) {
@@ -131,10 +127,6 @@ export class AssignItemsComponent implements OnInit {
     this.router.navigate(['/booking-summary', reference]);
    }
 
-  mergeData(item, booking) {
-    return { ...item, ...booking };
-  }
-
   buildItemsData(results) {
     const resultData = []
     for (const result of results) {
@@ -143,5 +135,8 @@ export class AssignItemsComponent implements OnInit {
     return resultData;
   }
 
+ mergeData(item, booking) {
+    return { ...item, ...booking };
+  }
 
 }

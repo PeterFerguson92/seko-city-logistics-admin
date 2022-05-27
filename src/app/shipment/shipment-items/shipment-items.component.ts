@@ -13,8 +13,8 @@ import { ItemService } from 'src/app/booking/service/items/item.service';
 export class ShipmentItemsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['BOOKING REFERENCE', 'TYPE', 'DESCRIPTION', 'VALUE',
-    'QUANTITY', 'PRICE PER UNIT', 'AMOUNT', 'ACTION'];
+  displayedColumns: string[] = ['SENDER NAME', 'DESTINATION', 'TYPE', 'DESCRIPTION', 'VALUE',
+    'AMOUNT', 'ACTION'];
   items = null;
   dataSource = null;
 
@@ -24,9 +24,11 @@ export class ShipmentItemsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      this.items = data.items;
-      this.dataSource = new MatTableDataSource(data.items);
-      this.dataSource.paginator = this.paginator;
+      // this.items = data.items;
+      console.log(data)
+      const items = data.items;
+      this.dataSource = items.length > 0 ?
+        new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null); this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
   }
@@ -44,6 +46,18 @@ export class ShipmentItemsComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  buildItemsData(results) {
+    const resultData = []
+    for (const result of results) {
+      resultData.push(this.mergeData(result.item, result.booking))
+    }
+    return resultData;
+  }
+
+ mergeData(item, booking) {
+    return { ...item, ...booking };
   }
 
 }

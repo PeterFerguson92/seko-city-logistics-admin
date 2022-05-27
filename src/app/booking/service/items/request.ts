@@ -42,6 +42,17 @@ export const FILTER_ITEMS = gql`
   }
 `;
 
+export const FILTER_FULL_ITEMS = gql`
+  query filterItems($fields: [FieldInput!]) {
+    filteredFullItems(fields: $fields) {
+    item { id bookingReference shipmentReference quantity type description pricePerUnit value amount status},
+    booking { id reference senderReference senderFullName receiverReferences destination location numberOfItems
+      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
+      updatesViaWhatsapp status shipmentReference assignedDriverReference }
+    }
+  }
+`;
+
 export const UPDATE_ITEM = gql`
   mutation updateItem($id: Int!, $fields: [UpdateFieldInput!]) {
     updateItem(id: $id, fields: $fields) {
