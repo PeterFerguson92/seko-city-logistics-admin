@@ -95,7 +95,6 @@ export class ItemsListComponent implements OnInit, OnChanges {
     };
 
     this.dataSource = this.dataSource ? this.dataSource = [newRow, ...this.dataSource] : [newRow]
-
   }
 
   removeRow(id) {
@@ -204,5 +203,23 @@ export class ItemsListComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
      // console.log(result)
     })
+  }
+  
+  chooseColor(row) {
+    if (row.value === 0 || row.value === '0')
+    {
+      return '#FFEBCA';
+    }
+  }
+
+  showWarning() {
+    if (this.dataSource)
+    {
+      const errorItemsLength = this.dataSource.filter(item => item.value === 0 || item.value === '0').length;
+      return errorItemsLength > 0;
+    } else
+    {
+      return false;
+    }
   }
 }
