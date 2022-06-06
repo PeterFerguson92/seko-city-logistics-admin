@@ -204,7 +204,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
      // console.log(result)
     })
   }
-  
+
   chooseColor(row) {
     if (row.value === 0 || row.value === '0')
     {
