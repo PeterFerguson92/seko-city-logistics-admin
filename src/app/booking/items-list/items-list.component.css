@@ -48,6 +48,13 @@ tr:hover {background-color: #ddd;}
 .button-add-row {
   background: #1b9e1b;
   color: #ffffff;
+  margin-right: 5px;
+}
+
+.button-add-multi-row {
+  background: #006381;
+  color: #ffffff;
+  margin-right: 5px;
 }
 
 .button-remove-rows {
@@ -80,6 +87,10 @@ h2 {
   font-weight: bold;
 }
 
+.custom-icon-color {
+  color: rgb(246, 150, 6);
+}
+
 .alert {
   padding: 20px;
   background-color: #f44336;
@@ -92,3 +103,4 @@ h2 {
 .alert.success {background-color: #04AA6D;}
 .alert.info {background-color: #2196F3;}
 .alert.warning {background-color: #ff9800;}
+

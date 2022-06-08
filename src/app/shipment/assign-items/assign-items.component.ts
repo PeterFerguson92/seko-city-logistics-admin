@@ -19,7 +19,8 @@ export class AssignItemsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() bookings: [IBooking] = null;
-  displayedColumns: string[] = ['ASSIGNED', 'SENDER FULL NAME','DESTINATION', 'TYPE', 'DESCRIPTION', 'VALUE', 'AMOUNT', 'ACTION'];
+  displayedColumns: string[] = ['ASSIGNED', 'SENDER FULL NAME', 'DESTINATION', 'PICK-UP DATE', 'TYPE',
+    'DESCRIPTION', 'VALUE', 'AMOUNT', 'ACTION'];
   selection = new SelectionModel<IBooking>(true, []);
   selectedShipmentForm: FormGroup;
   shipments;

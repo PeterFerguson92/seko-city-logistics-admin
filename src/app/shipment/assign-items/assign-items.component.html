@@ -32,18 +32,22 @@
   </ng-container>
   <ng-container matColumnDef={{displayedColumns[3]}}>
     <th mat-header-cell *matHeaderCellDef>{{displayedColumns[3]}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    <td mat-cell *matCellDef="let element"> {{getFormattedDate(element.pickUpDate)}} </td>
   </ng-container>
   <ng-container matColumnDef={{displayedColumns[4]}}>
     <th mat-header-cell *matHeaderCellDef>{{displayedColumns[4]}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
   </ng-container>
   <ng-container matColumnDef={{displayedColumns[5]}}>
     <th mat-header-cell *matHeaderCellDef>{{displayedColumns[5]}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.value}}  </td>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
   </ng-container>
   <ng-container matColumnDef={{displayedColumns[6]}}>
     <th mat-header-cell *matHeaderCellDef>{{displayedColumns[6]}}</th>
+    <td mat-cell *matCellDef="let element"> {{element.value}}  </td>
+  </ng-container>
+  <ng-container matColumnDef={{displayedColumns[7]}}>
+    <th mat-header-cell *matHeaderCellDef>{{displayedColumns[7]}}</th>
     <td mat-cell *matCellDef="let element">{{element.amount }} </td>
   </ng-container>
   <ng-container matColumnDef="ACTION">

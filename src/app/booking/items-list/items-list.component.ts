@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES } from 'src/app/constants';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component';
+import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-duplicate-dialog.component';
 
 
   const COLUMNS_SCHEMA = [
@@ -77,20 +78,20 @@ export class ItemsListComponent implements OnInit, OnChanges {
     }
   }
 
-  addRow() {
+  addRow(element) {
     const pricePerUnit = this.getPricePerUnit('SMALL BOX');
     const amount = this.calculateAmount(pricePerUnit, 1)
     const newRow = {
-      index: this.dataSource ? this.dataSource.length + 1 : 1,
+      index : this.dataSource ? this.dataSource.length + 1 : 1,
       id: null,
-      type: 'SMALL BOX',
-      description: '',
-      bookingReference: '',
-      value: 0,
-      quantity:  1,
-      pricePerUnit,
-      amount,
-      isEdit: true,
+      type: element ? element.type : 'SMALL BOX',
+      description: element ? element.description : '',
+      bookingReference: element ? element.description : '' ,
+      value: element ? element.value : 0,
+      quantity: element ? element.quantity :  1,
+      pricePerUnit: element ? element.pricePerUnit : pricePerUnit,
+      amount: element ? element.amount : amount,
+      isEdit: element ? false : true,
       writable: true,
     };
 
@@ -98,9 +99,29 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   removeRow(id) {
-    this.dataSource = this.dataSource.filter((u) => u.id !== id);
+    this.dataSource = this.dataSource.filter((u) => u.index !== id);
   }
 
+  duplicateRow(element) {
+   this.addRow(element)
+  }
+
+  addMultipleRow() {
+    const items = this.dataSource.filter((u: any) => u.isSelected);
+
+    this.dialog.open(ItemDuplicateDialogComponent, {
+      // height: '80%',
+      // width: '65%',
+      data: { }
+    }).afterClosed().subscribe(result => {
+      items.forEach(item => {
+        for (let i = 0; i < result.data; i++)
+        {
+          this.addRow(item)
+        }
+      });
+    });
+  }
   removeSelectedRows() {
     this.dialog.open(ConfirmDialogComponent)
       .afterClosed()
@@ -195,14 +216,17 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   assignItem(item) {
-    const dialogRef = this.dialog.open(AssignDialogComponent, {
-      // height: '80%',
-      // width: '65%',
-      data: { item }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-     // console.log(result)
-    })
+    if (item.id)
+    {
+      const dialogRef = this.dialog.open(AssignDialogComponent, {
+        // height: '80%',
+        // width: '65%',
+        data: { item }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        // console.log(result)
+      })
+    }
   }
 
   chooseColor(row) {
@@ -221,5 +245,10 @@ export class ItemsListComponent implements OnInit, OnChanges {
     {
       return false;
     }
+  }
+
+  isMultipleEnabled() {
+   return this.dataSource && this.dataSource.filter((u: any) => u.isSelected).length > 0;
+
   }
 }

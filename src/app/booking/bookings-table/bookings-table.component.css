@@ -8,10 +8,6 @@ app-material-button {
   justify-content: center;
 }
 
-
-
-
-
 table  {
   width: 90%;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -58,7 +54,6 @@ tr:hover {background-color: #ddd;}
   color: white;
 }
 
-
 .fab-main {
   position: fixed;
   right: 1em;
@@ -66,10 +61,7 @@ tr:hover {background-color: #ddd;}
   background-color: #004e92;
 }
 
-.white-icon {
+.custom-icon-color {
   color: rgb(246, 150, 6);
 }
-/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
-.white-icon svg {
-  fill: white;
-}
+
