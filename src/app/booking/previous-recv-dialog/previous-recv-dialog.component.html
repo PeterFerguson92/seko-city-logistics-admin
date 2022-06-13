@@ -1,13 +1,49 @@
+<!-- <p>
+  <mat-toolbar>
+    <span>Receivers History</span>
+  </mat-toolbar>
+</p>
 <span class="example-list-section">
-  <ul>
-    <li *ngFor="let recv of receivers">
-      <mat-checkbox [(ngModel)]="recv.selected"
-                    [disabled]="recv.disabled"
-                    (ngModelChange)="updateAllComplete(recv.selected, recv)">
-        {{recv.info.fullName}}
-      </mat-checkbox>
-    </li>
-  </ul>
+<ul>
+  <li *ngFor="let recv of receivers">
+    <mat-checkbox [(ngModel)]="recv.selected"
+                  [disabled]="recv.disabled"
+                  (ngModelChange)="updateAllComplete(recv.selected, recv)">
+      {{recv.info.fullName}}
+    </mat-checkbox>
+  </li>
+</ul>
 </span>
-<button mat-button (click)="onNoClick()">Cancel</button>
-<button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
+</mat-dialog-actions> -->
+
+
+<div class="fixActionRow">
+  <p>
+    <mat-toolbar>
+      <span>Receivers History</span>
+    </mat-toolbar>
+  </p>
+  <div mat-dialog-content>
+    <span class="example-list-section">
+      <ul>
+        <li *ngFor="let recv of receivers">
+          <mat-checkbox [(ngModel)]="recv.selected"
+                        [disabled]="recv.disabled"
+                        (ngModelChange)="updateAllComplete(recv.selected, recv)">
+            {{recv.info.fullName}}
+          </mat-checkbox>
+        </li>
+      </ul>
+      </span>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
+  </div>
+</div>
