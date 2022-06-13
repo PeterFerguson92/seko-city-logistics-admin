@@ -83,7 +83,6 @@ export class AssignItemsComponent implements OnInit {
         itemsIdsToAssign.push(row.id)
       }
     });
-    console.log(itemsIdsToAssign)
    this.assignItemsToShipment(itemsIdsToAssign)
   }
 

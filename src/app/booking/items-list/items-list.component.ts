@@ -86,7 +86,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
       id: null,
       type: element ? element.type : 'SMALL BOX',
       description: element ? element.description : '',
-      bookingReference: element ? element.description : '' ,
+      bookingReference: element ? element.bookingReference : '' ,
       value: element ? element.value : 0,
       quantity: element ? element.quantity :  1,
       pricePerUnit: element ? element.pricePerUnit : pricePerUnit,
@@ -250,5 +250,9 @@ export class ItemsListComponent implements OnInit, OnChanges {
   isMultipleEnabled() {
    return this.dataSource && this.dataSource.filter((u: any) => u.isSelected).length > 0;
 
+  }
+
+  test() {
+    console.log(this.getItemsDataDetails());
   }
 }

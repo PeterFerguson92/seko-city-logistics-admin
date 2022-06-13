@@ -11,7 +11,7 @@
     </form>
   </mat-step>
   <mat-step *ngIf="isViewOnlyMode()">
-    <form >
+    <form>
       <ng-template matStepLabel>Fill out receiver details</ng-template>
       <app-bookings-receivers [references]="booking.receiverReferences" [destination]="booking.destination" [location]="booking.location"
       [senderReference]="getSenderRef()"></app-bookings-receivers >
@@ -48,7 +48,7 @@
     <p>Amazing we are now ready to create or update a booking, make sure all information submitted are correct, once you are happy with it
       just click on the create button and I'll take care of the rest.
     </p>
-    <app-booking-review ></app-booking-review>
+    <app-booking-review></app-booking-review>
     <div align="center">
       <br>
       <app-material-button [label]="'SUBMIT'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="30" (click)="onSubmit()"></app-material-button>
