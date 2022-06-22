@@ -16,7 +16,10 @@ export class AppComponent implements AfterViewInit {
   constructor(route: Router) {
 
     route.events.subscribe(event => {
-      this.sidenav.close();
+      if (this.sidenav)
+      {
+        this.sidenav.close();
+      }
       if (event instanceof RoutesRecognized) {
         this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
       }
