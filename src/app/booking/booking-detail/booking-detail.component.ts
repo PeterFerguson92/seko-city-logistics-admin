@@ -71,6 +71,18 @@ export class BookingDetailComponent implements OnInit {
     return this.booking.customer && this.booking.customer.reference ? this.booking.customer.reference : this.booking.senderReference
   }
 
+  getPaymentData() {
+    // console.log(this.booking)
+    return {
+      reference: this.booking.reference,
+      paymentType: this.booking.paymentType,
+      paymentStatus: this.booking.paymentStatus,
+      paymentNotes: this.booking.paymentNotes,
+      amountPaid: this.booking.amountPaid,
+      amountOutstanding: this.booking.amountOutstanding,
+    }
+  }
+
   async onSubmit() {
 
     if (EDIT_BOOKING_MODE === this.mode)
@@ -162,6 +174,8 @@ export class BookingDetailComponent implements OnInit {
       totalAmount: bookingInfo.itemsDetails.totalAmount,
       paymentType: bookingInfo.itemsDetails.paymentInfo.paymentType,
       paymentStatus: bookingInfo.itemsDetails.paymentInfo.paymentStatus,
+      amountPaid: Number(bookingInfo.itemsDetails.paymentInfo.amountPaid),
+      amountOutstanding: Number(bookingInfo.itemsDetails.paymentInfo.amountOutstanding),
       paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,
       pickUpDate: bookingInfo.info.date,
       pickUpTime: bookingInfo.info.time,
@@ -171,7 +185,7 @@ export class BookingDetailComponent implements OnInit {
       shipmentReference: '',
       assignedDriverReference: ''
     };
-
+    console.log(booking)
     this.bookingsService.createBooking(booking).subscribe(
       ({ data }) => {
         this.redirectToBookings()
@@ -195,9 +209,10 @@ export class BookingDetailComponent implements OnInit {
   }
 
   syncBooking(bookingInfo) {
+    console.log(this.buildBookingInput(bookingInfo))
     this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
       ({ data }) => {
-        this.redirectToBookings()
+        // this.redirectToBookings()
       },
       error => {
         console.log(error);
@@ -219,6 +234,7 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
+  // todo merge builders
   buildBookingInput(bookingInfo) {
     return {
       id: null,
@@ -235,6 +251,8 @@ export class BookingDetailComponent implements OnInit {
       paymentType: bookingInfo.itemsDetails.paymentInfo.paymentType,
       paymentStatus: bookingInfo.itemsDetails.paymentInfo.paymentStatus,
       paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,
+      amountPaid: Number(bookingInfo.itemsDetails.paymentInfo.amountPaid),
+      amountOutstanding: Number(bookingInfo.itemsDetails.paymentInfo.amountOutstanding),
       pickUpDate: bookingInfo.info.date,
       pickUpTime: bookingInfo.info.time,
       pickUpPostCode: bookingInfo.info.postcode,

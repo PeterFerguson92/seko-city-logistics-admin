@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES } from 'src/app/constants';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
@@ -56,6 +56,8 @@ import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-dupl
 export class ItemsListComponent implements OnInit, OnChanges {
 
   @Input() items;
+  @Output() updateItemsEvent = new EventEmitter<boolean>();
+
 
   types = BOOKING_ITEMS_TYPES_DISPLAY_NAMES;
   selectedType;
@@ -96,6 +98,8 @@ export class ItemsListComponent implements OnInit, OnChanges {
     };
 
     this.dataSource = this.dataSource ? this.dataSource = [newRow, ...this.dataSource] : [newRow]
+    this.updateItemsEvent.next(true);
+
   }
 
   removeRow(id) {

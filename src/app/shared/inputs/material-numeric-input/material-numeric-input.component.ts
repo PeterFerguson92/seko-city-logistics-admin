@@ -17,11 +17,11 @@ export class MaterialNumericInputComponent implements OnInit, ControlValueAccess
   @Input() width;
   @Input() errorMsg: string;
   @Input() type;
+  @Input() disabled ;
   @Output() inputChange = new EventEmitter<MatInput>();
   value;
 
   inputColor;
-  disabled;
 
   @HostBinding('attr.style')
   public get valueAsStyle(): any {

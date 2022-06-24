@@ -22,7 +22,7 @@ export class MaterialInputComponent implements OnInit, ControlValueAccessor {
   @Input() width;
   @Input() errorMsg: string;
   @Input() type;
-  disabled ;
+  @Input() disabled ;
   value;
   inputColor;
 

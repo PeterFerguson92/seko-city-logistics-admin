@@ -1,6 +1,7 @@
 <mat-form-field appearance="outline" [style.width.%]="width">
   <mat-label>{{getDisplayLabel()}}</mat-label>
   <input [type]="type" matInput #input
+  [disabled]="disabled"
   (input)="onChange($event.target.value)"
   (blur)="onTouched()"
   [(ngModel)]="value">

@@ -14,7 +14,7 @@ export const GET_BOOKING_BY_REFERENCE = gql`
   query bookingByReference($reference: String!) {
     bookingByReference(reference: $reference) {
       id reference senderReference senderFullName receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime  pickUpPostCode pickUpAddress
+      totalAmount paymentType paymentStatus amountPaid amountOutstanding paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
       updatesViaWhatsapp status shipmentReference assignedDriverReference
     }
   }
