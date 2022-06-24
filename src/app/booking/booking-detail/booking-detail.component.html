@@ -24,8 +24,7 @@
   <mat-step *ngIf="isViewOnlyMode()">
     <form >
       <ng-template matStepLabel>Fill out items details</ng-template>
-      <app-booking-items [reference]="booking.reference" [paymentType]="booking.paymentType" [paymentStatus]="booking.paymentStatus"
-      [paymentNotes]="booking.paymentNotes"></app-booking-items>
+      <app-booking-items [paymentData]="getPaymentData()"></app-booking-items>
       <div align="end" >
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="onForward(stepper, 'bookingItemsComponent')"> Next </button>

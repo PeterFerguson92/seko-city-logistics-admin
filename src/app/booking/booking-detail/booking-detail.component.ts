@@ -72,7 +72,6 @@ export class BookingDetailComponent implements OnInit {
   }
 
   getPaymentData() {
-    // console.log(this.booking)
     return {
       reference: this.booking.reference,
       paymentType: this.booking.paymentType,
