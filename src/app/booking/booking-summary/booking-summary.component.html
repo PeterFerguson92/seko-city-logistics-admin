@@ -121,7 +121,13 @@
       <p><b>Number of items:</b> <br>{{booking.numberOfItems}}</p>
       <p><b>Total amount:</b> <br>£{{booking.totalAmount}}</p>
       <p><b>Selected payment type:</b> <br>{{booking.paymentType}}</p>
+      <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Name:</b> <br>{{accountName}}</p>
+      <p *ngIf="isPaymentTypeBankTransfer()"><b>Sort Code:</b> <br>{{accountSortCode}}</p>
+      <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Number:</b> <br>{{accountNumber}}</p>
+      <p *ngIf="isPaymentTypeBankTransfer()"><b>Reference:</b> <br>{{getBankReference()}}</p>
       <p><b>Selected payment status:</b> <br>{{booking.paymentStatus}}</p>
+      <p><b>Amount Paid:</b> <br>£{{booking.amountPaid}}</p>
+      <p><b>Amount Outstanding:</b> <br>£{{booking.amountOutstanding}}</p>
       <p><b>Notes:</b> <br>{{booking.paymentNotes}}</p>
     </table>
   </mat-expansion-panel>

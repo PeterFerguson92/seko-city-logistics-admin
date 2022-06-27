@@ -6,6 +6,7 @@ import { CommonService } from 'src/app/service/common.service';
 import { ItemService } from '../service/items/item.service';
 import { jsPDF } from 'jspdf';
 import domtoimage from 'dom-to-image';
+import { ACCOUNT_NAME, ACCOUNT_NUMBER, ACCOUNT_SORT_CODE, BANK_TRANSFER_PAYMENT_TYPE } from 'src/app/constants';
 
 @Component({
   selector: 'app-booking-summary',
@@ -25,6 +26,9 @@ export class BookingSummaryComponent implements OnInit {
   receivers;
   booking
   show = false;
+  accountName = ACCOUNT_NAME
+  accountSortCode = ACCOUNT_SORT_CODE;
+  accountNumber = ACCOUNT_NUMBER;
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(async data => {
@@ -51,10 +55,17 @@ export class BookingSummaryComponent implements OnInit {
     return this.commonService.isCustomerPersonal(customerType)
   }
 
+  isPaymentTypeBankTransfer() {
+    return this.booking.paymentType === BANK_TRANSFER_PAYMENT_TYPE;
+  }
+
   getFormattedDate(date) {
     return this.commonService.getFormattedDate(date);
   }
 
+  getBankReference() {
+    return this.booking.reference.split('-')[0]
+  }
 
   exportAsPDF() {
     const summary = document.getElementById('summary');
