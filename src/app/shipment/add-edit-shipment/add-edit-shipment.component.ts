@@ -41,7 +41,28 @@ export class AddEditShipmentComponent implements OnInit {
         exporterCity: [this.shipment ? this.shipment.exporterCity: ''],
         containerNumber: [this.shipment ? this.shipment.containerNumber: ''],
         blVessel: [this.shipment ? this.shipment.blVessel: ''],
-        shipmentDate: [this.shipment ? this.shipment.shipmentDate: '']
+        shipmentDate: [this.shipment ? this.shipment.shipmentDate : ''],
+        totalAmountCharged: [0],
+        containerCharge: [0],
+        containerExtraCharge: [0],
+        loadersCost: [0],
+        loadingExtraCost: [0],
+        totalLoadingCost: [0],
+        loadingCostNotes: [''],
+        clearingCharge: [0],
+        incentives: [0],
+        totalGhDriversFood: [0],
+        totalGhDriversTips: [0],
+        thirdyPartyExpenses: [0],
+        carToAccraCheckpoint: [0],
+        carToKumasiCheckpoint: [0],
+        carToOtherCheckpoint:[0],
+        clearingNotes: [''],
+        totalExpenses:[0],
+        profit: [0],
+        notes: ['']
+
+
       })
     })
   }

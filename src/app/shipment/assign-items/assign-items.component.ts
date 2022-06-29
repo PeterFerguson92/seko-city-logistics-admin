@@ -80,17 +80,17 @@ export class AssignItemsComponent implements OnInit {
     this.dataSource.data.forEach(row => {
       if (this.selection.isSelected(row))
       {
-        itemsIdsToAssign.push(row.id)
+        itemsIdsToAssign.push(row.itemId)
       }
     });
-   this.assignItemsToShipment(itemsIdsToAssign)
+  this.assignItemsToShipment(itemsIdsToAssign)
   }
 
   assignItemsToShipment(itemsIdsToAssign) {
     const fieldToUpdate = { name: 'shipmentReference', value: this.getShipmentReferenceFromSelection() };
     this.itemService.updateItemsById(itemsIdsToAssign, fieldToUpdate).subscribe(
       ({ data }) => {
-        location.reload();  // TODO handle properly
+       location.reload();  // TODO handle properly
       },
       error => {
         console.log(error);
@@ -135,8 +135,11 @@ export class AssignItemsComponent implements OnInit {
     return resultData;
   }
 
- mergeData(item, booking) {
-    return { ...item, ...booking };
+  mergeData(item, booking) {
+    const itemCopy = { ...item };
+    // tslint:disable-next-line:no-string-literal
+    itemCopy['itemId'] = item.id
+    return { ...itemCopy, ...booking };
   }
 
 }

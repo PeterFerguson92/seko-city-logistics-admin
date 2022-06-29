@@ -55,7 +55,10 @@ export class ShipmentItemsComponent implements OnInit {
   }
 
  mergeData(item, booking) {
-    return { ...item, ...booking };
+  const itemCopy = { ...item };
+  // tslint:disable-next-line:no-string-literal
+  itemCopy['itemId'] = item.id
+  return { ...itemCopy, ...booking };
   }
 
 }
