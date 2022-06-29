@@ -48,6 +48,10 @@ export class ShipmentsComponent implements OnInit {
     this.router.navigate(['/edit-shipment', reference]);
   }
 
+  OnShipmentAnalysis(reference) {
+    this.router.navigate(['/shipment-analysis', reference]);
+  }
+
   onDeleteShipment(reference) {
     const dialogRef = this.dialog.open(DialogComponent);
     dialogRef.afterClosed().subscribe(result => {
