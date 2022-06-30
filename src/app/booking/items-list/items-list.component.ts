@@ -253,10 +253,5 @@ export class ItemsListComponent implements OnInit, OnChanges {
 
   isMultipleEnabled() {
    return this.dataSource && this.dataSource.filter((u: any) => u.isSelected).length > 0;
-
-  }
-
-  test() {
-    console.log(this.getItemsDataDetails());
   }
 }

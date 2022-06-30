@@ -1,1 +1,71 @@
-<p>shipment-analysis works!</p>
+<div id="summary">
+  <form [formGroup]="shipmentAnalysisForm">
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Loading
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <label>Container charge(£) </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="containerCharge"></app-material-numeric-input >
+      <label>Container extra charge(£) </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="containerExtraCharge"></app-material-numeric-input >
+      <label>Loaders cost </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="loadersCost"></app-material-numeric-input >
+      <label>Loading extra cost </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="loadingExtraCost"></app-material-numeric-input >
+      <label>Total loading cost </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="totalLoadingCost"></app-material-numeric-input >
+      <label>Loading Notes</label>
+      <app-material-input [width]="100"  formControlName="loadingCostNotes"></app-material-input>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Clearing
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <label>Clearing Charged </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="clearingCharge"></app-material-numeric-input >
+      <label>Incentives (£) </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="incentives"></app-material-numeric-input >
+      <label>Total drivers food(£) </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="totalGhDriversFood"></app-material-numeric-input >
+      <label>Total drivers tips(£) </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="totalGhDriversTips"></app-material-numeric-input >
+      <label>Thirdy Party Expenses</label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="thirdyPartyExpenses"></app-material-numeric-input >
+      <label>Car to accra checkpoint </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="carToAccraCheckpoint"></app-material-numeric-input >
+      <label>Car to kumasi checkpoint </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="carToKumasiCheckpoint"></app-material-numeric-input >
+      <label>Car to other checkpoint </label>
+      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="carToOtherCheckpoint"></app-material-numeric-input >
+      <label>Clearing Notes</label>
+      <app-material-input [width]="100" formControlName="loadingCostNotes"></app-material-input>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Totals
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <label>Total Amount Charged(£) </label>
+      <app-material-numeric-input [width]="10" formControlName="totalAmountCharged"></app-material-numeric-input >
+      <label>Total Expenses(£) </label>
+      <app-material-numeric-input [width]="10" formControlName="totalExpenses"></app-material-numeric-input >
+      <label>Profit(£) </label>
+      <app-material-numeric-input [width]="10" formControlName="profit"></app-material-numeric-input >
+      <label>Clearing Notes</label>
+      <app-material-input [width]="100" formControlName="loadingCostNotes"></app-material-input>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+  </form>
+  </div>
+  <div class="submitBtn" align="center">
+    <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
+  </div>
+  <br>
+  <br>

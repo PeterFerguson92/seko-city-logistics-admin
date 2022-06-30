@@ -38,7 +38,7 @@ export class ShipmentService {
     });
   }
 
-  createShipment(shipment: IShipment) {
+  createShipment(shipment: any) {
     return this.apollo.mutate<IShipment>({
       mutation: CREATE_SHIPMENT,
       variables: { shipment }

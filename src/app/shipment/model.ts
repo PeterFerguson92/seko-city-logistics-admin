@@ -3,7 +3,6 @@ export interface IShipmentsResponse {
 }
 
 export interface IShipment{
-
   reference: string;
   portOfLoading: string;
   portOfDischarge: string;
@@ -19,4 +18,23 @@ export interface IShipment{
   containerNumber: string;
   blVessel: string;
   shipmentDate: string;
+  totalAmountCharged: number,
+  containerCharge: number,
+  containerExtraCharge: number,
+  loadersCost: number,
+  loadingExtraCost: number,
+  totalLoadingCost: number,
+  loadingCostNotes: string,
+  clearingCharge: number,
+  incentives: number,
+  totalGhDriversFood: number,
+  totalGhDriversTips: number,
+  thirdyPartyExpenses: number,
+  carToAccraCheckpoint: number,
+  carToKumasiCheckpoint: number,
+  carToOtherCheckpoint: number,
+  clearingNotes: string,
+  totalExpenses: number,
+  profit: number,
+  notes: string
 }
