@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IShipment } from '../model';
 import { ShipmentService } from '../service/shipment.service';
 
@@ -19,13 +19,12 @@ export class ShipmentAnalysisComponent implements OnInit {
   CLEARING_FORM_CONTROL_KEYS = ['clearingCharge', 'incentives', 'totalGhDriversFood', 'totalGhDriversTips',
     'thirdyPartyExpenses', 'carToAccraCheckpoint', 'carToKumasiCheckpoint', 'carToOtherCheckpoint'];
 
-  constructor(private activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
+  constructor(private router: Router, private activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
     private shipmentService: ShipmentService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
       this.shipment = this.shipment && this.shipment.reference ? this.shipment : data.shipment;
-      console.log(this.shipment)
       this.shipmentAnalysisForm = this.formBuilder.group({
         reference: [null],
         totalAmountCharged: [this.shipment ? this.shipment.totalAmountCharged : 0],
@@ -57,8 +56,6 @@ export class ShipmentAnalysisComponent implements OnInit {
     this.shipmentAnalysisForm.get('totalAmountCharged').disable();
     this.shipmentAnalysisForm.get('totalExpenses').disable();
     this.shipmentAnalysisForm.get('profit').disable();
-
-
   }
 
   isDisabled() { return false; }
@@ -123,7 +120,6 @@ export class ShipmentAnalysisComponent implements OnInit {
         }
       }
     });
-    console.log(updateCustomerFields)
     if (updateCustomerFields.length > 0)
     {
       this.shipmentService.updateShipment(this.shipment.reference, updateCustomerFields).subscribe(
@@ -135,5 +131,11 @@ export class ShipmentAnalysisComponent implements OnInit {
         }
       );
     }
+  }
+
+  onGenerateReport() {
+    console.log(this.shipment.reference)
+    this.router.navigate(['/shipment-report', this.shipment.reference]);
+
   }
 }

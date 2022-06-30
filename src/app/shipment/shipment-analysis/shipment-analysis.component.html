@@ -45,7 +45,7 @@
       <label>Total Clearing cost </label>
       <app-material-numeric-input [width]="10" formControlName="totalClearingCost"></app-material-numeric-input >
       <label>Clearing Notes</label>
-      <app-material-input [width]="100" formControlName="loadingCostNotes"></app-material-input>
+      <app-material-input [width]="100" formControlName="clearingNotes"></app-material-input>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
@@ -59,8 +59,8 @@
       <app-material-numeric-input [width]="10" formControlName="totalExpenses"></app-material-numeric-input >
       <label>Profit(£) </label>
       <app-material-numeric-input [width]="10" formControlName="profit"></app-material-numeric-input >
-      <label>Clearing Notes</label>
-      <app-material-input [width]="100" formControlName="loadingCostNotes"></app-material-input>
+      <label>Notes</label>
+      <app-material-input [width]="100" formControlName="notes"></app-material-input>
     </mat-expansion-panel>
 
   </mat-accordion>
@@ -68,6 +68,10 @@
   </div>
   <div class="submitBtn" align="center">
     <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
+  </div>
+  <br>
+  <div class="submitBtn" align="center">
+    <app-material-button [label]="'Generate Report'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onGenerateReport()"></app-material-button>
   </div>
   <br>
   <br>

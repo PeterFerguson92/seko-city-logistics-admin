@@ -21,6 +21,7 @@ import { AssignItemsResolver } from './shipment/service/resolver/assign-items.re
 import { AssignItemsComponent } from './shipment/assign-items/assign-items.component';
 import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items.component';
 import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment-analysis.component';
+import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'assign-items', component: AssignItemsComponent, resolve: { info: AssignItemsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'shipment-items/:reference', component: ShipmentItemsComponent, resolve: { items: ShipmentItemsResolver } },
-  { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver  } },
+  { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver } },
+  { path: 'shipment-report/:reference', component: ShipmentReportComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'add-customer', component: CustomerDetailComponent },

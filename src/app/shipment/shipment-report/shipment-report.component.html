@@ -1,0 +1,159 @@
+<div id="summary">
+  <mat-accordion  [multi]="true">
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Shipment Details
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <table>
+        <tr>
+          <th class="details">Item</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Reference</td>
+          <td>{{shipment.reference}}</td>
+        <tr>
+        <tr>
+          <td>Container Number</td>
+          <td>{{shipment.containerNumber}}</td>
+        <tr>
+        <tr>
+          <td>Bl Vessel</td>
+          <td>{{shipment.blVessel}}</td>
+        <tr>
+        <tr>
+          <td>Loading Date</td>
+          <td>{{getFormattedDate(shipment.loadingDate)}}</td>
+        <tr>
+        <tr>
+          <td>Shipment Date</td>
+          <td>{{getFormattedDate(shipment.shipmentDate)}}</td>
+        <tr>
+      </table>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Loading Cost Details
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <table>
+        <tr>
+          <th class="details">Item</th>
+          <th>Amount</th>
+        </tr>
+        <tr>
+          <td>Container Charge</td>
+          <td>£ {{shipment.containerCharge}}</td>
+        <tr>
+        <tr>
+          <td>Container Extra Charge</td>
+          <td>£ {{shipment.containerExtraCharge}}</td>
+        <tr>
+        <tr>
+          <td>Loaders Cost</td>
+          <td>£ {{shipment.loadersCost}}</td>
+        <tr>
+        <tr>
+          <td>Loaders Extra cost</td>
+          <td>£ {{shipment.loadingExtraCost}}</td>
+        <tr>
+        <tr>
+          <td><b>Total Loading cost</b></td>
+          <td><b>£ {{shipment.totalLoadingCost}}</b></td>
+        <tr>
+        <br>
+        <p><b>Notes:</b> <br>{{shipment.loadingCostNotes}}</p>
+
+      </table>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Clearing Cost Details
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <table>
+        <tr>
+          <th class="details">Item</th>
+          <th>Amount</th>
+        </tr>
+        <tr>
+          <td>Clearing Charge</td>
+          <td>£ {{shipment.clearingCharge}}</td>
+        <tr>
+        <tr>
+          <td>Gh Drivers Food</td>
+          <td>£ {{shipment.totalGhDriversFood}}</td>
+        <tr>
+        <tr>
+          <td>Gh Drivers Tips</td>
+          <td>£ {{shipment.totalGhDriversTips}}</td>
+        <tr>
+        <tr>
+          <td>Thirdy Party Expenses </td>
+          <td>£ {{shipment.thirdyPartyExpenses}}</td>
+        <tr>
+        <tr>
+          <td>Car to Accra checkpoint </td>
+          <td>£ {{shipment.carToAccraCheckpoint}}</td>
+        <tr>
+        <tr>
+          <td>Car to Kumasi checkpoint </td>
+          <td>£ {{shipment.carToKumasiCheckpoint}}</td>
+        <tr>
+        <tr>
+          <td>Car to Other checkpoint </td>
+          <td>£ {{shipment.carToOtherCheckpoint}}</td>
+        <tr>
+        <tr>
+          <td>Incentives</td>
+          <td>£ {{shipment.incentives}}</td>
+        <tr>
+        <tr>
+          <td><b>Total Clearing cost</b></td>
+          <td><b>£ {{shipment.totalClearingCost}}</b></td>
+        <tr>
+        <br>
+        <p><b>Notes:</b> <br>{{shipment.clearingNotes}}</p>
+      </table>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Totals
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <table>
+        <tr>
+          <th class="details">Item</th>
+          <th>Amount</th>
+        </tr>
+        <tr>
+          <td>Total Amount Charged</td>
+          <td>£ {{shipment.totalAmountCharged}}</td>
+        <tr>
+        <tr>
+          <td>Total Expenses</td>
+          <td>£ {{shipment.totalExpenses}}</td>
+        <tr>
+        <tr>
+          <td><b>Profit</b></td>
+          <td><b>£ {{shipment.profit}}</b></td>
+        <tr>
+        <br>
+        <p><b>Notes:</b> <br>{{shipment.notes}}</p>
+      </table>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+  <br>
+  </div>
+
+  <div align="end" >
+    <button mat-raised-button (click)="exportAsPDF()" class="exportButton"><mat-icon>picture_as_pdf</mat-icon> Export booking to PDF</button>
+  </div>
+  <br>
+  <br>
