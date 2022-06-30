@@ -16,7 +16,7 @@
       <label>Loading extra cost </label>
       <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="loadingExtraCost"></app-material-numeric-input >
       <label>Total loading cost </label>
-      <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="totalLoadingCost"></app-material-numeric-input >
+      <app-material-numeric-input [width]="10" formControlName="totalLoadingCost"></app-material-numeric-input >
       <label>Loading Notes</label>
       <app-material-input [width]="100"  formControlName="loadingCostNotes"></app-material-input>
     </mat-expansion-panel>
@@ -42,6 +42,8 @@
       <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="carToKumasiCheckpoint"></app-material-numeric-input >
       <label>Car to other checkpoint </label>
       <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="carToOtherCheckpoint"></app-material-numeric-input >
+      <label>Total Clearing cost </label>
+      <app-material-numeric-input [width]="10" formControlName="totalClearingCost"></app-material-numeric-input >
       <label>Clearing Notes</label>
       <app-material-input [width]="100" formControlName="loadingCostNotes"></app-material-input>
     </mat-expansion-panel>

@@ -33,6 +33,7 @@ export interface IShipment{
   carToAccraCheckpoint: number,
   carToKumasiCheckpoint: number,
   carToOtherCheckpoint: number,
+  totalClearingCost: number,
   clearingNotes: string,
   totalExpenses: number,
   profit: number,

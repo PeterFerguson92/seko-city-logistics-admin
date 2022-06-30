@@ -13,7 +13,11 @@ export class ShipmentAnalysisComponent implements OnInit {
   shipmentAnalysisForm: FormGroup;
   shipment: IShipment;
   EXCLUSIION_FORM_CONTROL_KEYS = ['loadingCostNotes', 'clearingNotes', 'notes', 'totalAmountCharged',
-    'totalExpenses', 'reference', 'profit']
+    'totalExpenses','totalLoadingCost','totalClearingCost', 'reference', 'profit']
+  NOTES_FORM_CONTROL_KEYS = ['loadingCostNotes', 'clearingNotes', 'notes'];
+  LOADING_FORM_CONTROL_KEYS = ['containerCharge', 'containerExtraCharge', 'loadersCost'];
+  CLEARING_FORM_CONTROL_KEYS = ['clearingCharge', 'incentives', 'totalGhDriversFood', 'totalGhDriversTips',
+    'thirdyPartyExpenses', 'carToAccraCheckpoint', 'carToKumasiCheckpoint', 'carToOtherCheckpoint'];
 
   constructor(private activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
     private shipmentService: ShipmentService) { }
@@ -21,6 +25,7 @@ export class ShipmentAnalysisComponent implements OnInit {
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
       this.shipment = this.shipment && this.shipment.reference ? this.shipment : data.shipment;
+      console.log(this.shipment)
       this.shipmentAnalysisForm = this.formBuilder.group({
         reference: [null],
         totalAmountCharged: [this.shipment ? this.shipment.totalAmountCharged : 0],
@@ -38,12 +43,22 @@ export class ShipmentAnalysisComponent implements OnInit {
         carToAccraCheckpoint: [this.shipment ? this.shipment.carToAccraCheckpoint : 0],
         carToKumasiCheckpoint: [this.shipment ? this.shipment.carToKumasiCheckpoint : 0],
         carToOtherCheckpoint: [this.shipment ? this.shipment.carToOtherCheckpoint : 0],
+        totalClearingCost: [this.shipment ? this.shipment.totalClearingCost : 0],
         clearingNotes: [this.shipment ? this.shipment.clearingNotes : ''],
         totalExpenses: [this.shipment ? this.shipment.totalExpenses : 0],
         profit: [this.shipment ? this.shipment.profit : 0],
         notes: [this.shipment ? this.shipment.notes : '']
       })
     })
+
+    this.shipmentAnalysisForm.get('totalLoadingCost').disable();
+    this.shipmentAnalysisForm.get('totalClearingCost').disable();
+    this.shipmentAnalysisForm.get('totalLoadingCost').disable();
+    this.shipmentAnalysisForm.get('totalAmountCharged').disable();
+    this.shipmentAnalysisForm.get('totalExpenses').disable();
+    this.shipmentAnalysisForm.get('profit').disable();
+
+
   }
 
   isDisabled() { return false; }
@@ -54,23 +69,42 @@ export class ShipmentAnalysisComponent implements OnInit {
     const totalExpenses = this.getTotal();
     const totalAmountCharged = parseInt(this.shipmentAnalysisForm.get('totalAmountCharged').value, 10);
 
-    this.shipmentAnalysisForm.get('totalExpenses').setValue(totalExpenses);
-    this.shipmentAnalysisForm.get('profit').setValue(totalAmountCharged - totalExpenses);
+    this.shipmentAnalysisForm.get('totalLoadingCost').setValue(totalExpenses.totalLoadingCost);
+    this.shipmentAnalysisForm.get('totalLoadingCost').markAsDirty();
 
+    this.shipmentAnalysisForm.get('totalClearingCost').setValue(totalExpenses.totalClearingCost);
+    this.shipmentAnalysisForm.get('totalClearingCost').markAsDirty();
+
+    this.shipmentAnalysisForm.get('totalExpenses').setValue(totalExpenses.total);
+    this.shipmentAnalysisForm.get('totalExpenses').markAsDirty();
+
+    this.shipmentAnalysisForm.get('profit').setValue(totalAmountCharged - totalExpenses.total);
+    this.shipmentAnalysisForm.get('profit').markAsDirty()
   }
 
   getTotal() {
-   let total = 0;
+    let total = 0;
+    let totalLoadingCost = 0;
+    let totalClearingCost = 0;
     Object.keys(this.shipmentAnalysisForm.controls).forEach(key => {
       const formControl = this.shipmentAnalysisForm.controls[key]
       if (!this.EXCLUSIION_FORM_CONTROL_KEYS.includes(key))
       {
-        // console.log(parseInt(formControl.value,10))
+        if (this.LOADING_FORM_CONTROL_KEYS.includes(key))
+        {
+          totalLoadingCost = totalLoadingCost + parseInt(formControl.value, 10);
+        }
+
+        if (this.CLEARING_FORM_CONTROL_KEYS.includes(key))
+        {
+          totalClearingCost = totalClearingCost + parseInt(formControl.value, 10);
+        }
+
         total = total + parseInt(formControl.value, 10);
       }
     });
 
-    return total;
+    return { total, totalLoadingCost, totalClearingCost };
   }
 
   onSubmit() {
@@ -79,10 +113,17 @@ export class ShipmentAnalysisComponent implements OnInit {
       const formControl = this.shipmentAnalysisForm.controls[key]
       if (!formControl.pristine && formControl.value !== this.shipment[key])
       {
-        updateCustomerFields.push({ name: key, value: formControl.value });
+        if (!this.NOTES_FORM_CONTROL_KEYS.includes(key))
+        {
+          updateCustomerFields.push({ name: key, value:  formControl.value.toString() });
+        }
+        else
+        {
+          updateCustomerFields.push({ name: key, value: formControl.value });
+        }
       }
     });
-
+    console.log(updateCustomerFields)
     if (updateCustomerFields.length > 0)
     {
       this.shipmentService.updateShipment(this.shipment.reference, updateCustomerFields).subscribe(
