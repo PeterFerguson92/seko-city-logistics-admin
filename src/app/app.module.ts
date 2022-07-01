@@ -16,7 +16,7 @@ import { BookingModule } from './booking/booking.module';
 import { ShipmentModule } from './shipment/shipment.module';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { ReportsComponent } from './reports/reports.component';
-import { DriversModule } from './drivers/drivers.module';
+import { DriversModule } from './driver/drivers.module';
 import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
 

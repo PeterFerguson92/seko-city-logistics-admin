@@ -26,6 +26,16 @@ export const IS_USER_AUTHENTICATED_QUERY = gql`
   }
 `;
 
+export const GET_DRIVERS = gql`
+  query {
+    getDrivers {
+     errors { message }
+     result
+     users {sub email role status name lastName username phoneNumber }
+    }
+  }
+`;
+
 export interface UserResponse {
   signUp: SignUp;
 }

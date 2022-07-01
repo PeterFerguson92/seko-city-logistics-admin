@@ -15,7 +15,7 @@ import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 import { BookingSummaryComponent } from './booking/booking-summary/booking-summary.component';
 import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
 import { ShipmentItemsResolver } from './shipment/service/resolver/shipment-items.resolver';
-import { DriversComponent } from './drivers/drivers/drivers.component';
+import { DriversComponent } from './driver/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
 import { AssignItemsResolver } from './shipment/service/resolver/assign-items.resolver';
 import { AssignItemsComponent } from './shipment/assign-items/assign-items.component';
