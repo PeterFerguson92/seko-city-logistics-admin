@@ -1,0 +1,100 @@
+<div id="summary">
+  <div id="invoiceholder">
+  <div id="invoice" class="effect2">
+
+    <div id="invoice-top">
+      <div class="logo"><img src="../../../assets/login/logo.png" alt="Logo" /></div>
+      <div class="title">
+        <h1><span class="invoiceVal invoice_num">{{booking.reference}}</span></h1>
+      </div>
+    </div>
+    <div id="invoice-mid">
+        <div class="clearfix">
+            <div class="col-left">
+                <div class="clientinfo">
+                    <h2 id="supplier">Customer Details</h2>
+                    <p>
+                      <span>{{booking.senderFullName}}</span><br>
+                      <span>{{booking.sender.title}} {{booking.sender.name}} {{booking.sender.surname}}</span><br>
+                      <span>{{booking.sender.email}}</span><br>
+                      <span>{{booking.sender.countryCode}} {{booking.sender.phone}}</span><br>
+                      <span>{{booking.sender.address}} </span><br>
+                      <span>{{booking.sender.postcode}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-right">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>PO Details</th>
+                            <th>Summary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span>Payment Type</span><label id="quantity_billed">{{booking.paymentType}}</label></td>
+                            <td><span>Payment Status</span><label id="authorization_status">{{booking.paymentStatus}}</label></td>
+                        </tr>
+                        <tr>
+                          <td><span>Account Sort Code</span><label id="quantity_billed">{{accountSortCode}}</label></td>
+                          <td><span>Account Number</span><label id="authorization_status">{{accountNumber}}</label></td>
+                      </tr>
+                        <tr><td colspan="2"><span>Bank accountName</span><label id="note">{{accountName}}</label></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="invoice-bot">
+
+      <div id="table">
+        <table class="table-main">
+          <thead>
+              <tr class="tabletitle">
+                <th>Quantity</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+              </tr>
+          </thead>
+          <tr class="list-item"   *ngFor="let item of booking.items">
+            <td data-label="Line" class="tableitem" id="line_num">{{item.quantity}}</td>
+            <td data-label="Item Code" class="tableitem" id="item_code">{{item.type}}</td>
+            <td data-label="Description" class="tableitem" id="item_description">{{item.description}}</td>
+            <td data-label="Quantity" class="tableitem" id="quantity">{{item.value}}</td>
+            <td data-label="Unit Price" class="tableitem" id="unit_price">£{{item.pricePerUnit}}</td>
+            <td data-label="Recieved" class="tableitem" id="quantity_received">£{{item.amount}}</td>
+
+          </tr>
+            <tr class="list-item total-row">
+                <th colspan="8" class="tableitem">Grand Total</th>
+                <td data-label="Grand Total" class="tableitem">£{{booking.totalAmount}}</td>
+            </tr>
+            <tr class="list-item total-row">
+              <th colspan="8" class="tableitem">Amount Paid</th>
+              <td data-label="Grand Total" class="tableitem">£{{booking.amountPaid}}</td>
+          </tr>
+          <tr class="list-item total-row">
+            <th colspan="8" class="tableitem">Amount Outstanding:</th>
+            <td data-label="Grand Total" class="tableitem">£{{booking.amountOutstanding}}</td>
+        </tr>
+        </table>
+      </div>
+
+
+    </div>
+    <footer>
+      <div id="legalcopy" class="clearfix">
+        <p class="col-right">Our mailing address is:
+            <span class="email"><a href="mailto:supplier.portal@almonature.com">supplier.portal@almonature.com</a></span>
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+

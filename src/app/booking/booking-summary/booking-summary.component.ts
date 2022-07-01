@@ -29,6 +29,7 @@ export class BookingSummaryComponent implements OnInit {
   accountName = ACCOUNT_NAME
   accountSortCode = ACCOUNT_SORT_CODE;
   accountNumber = ACCOUNT_NUMBER;
+  showInvoice = false;
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(async data => {
@@ -86,5 +87,13 @@ export class BookingSummaryComponent implements OnInit {
 
   editBooking() {
     this.router.navigate(['/edit-booking', this.booking.reference, this.booking.senderReference]);
+  }
+
+  generateInvoice() {
+    this.showInvoice = !this.showInvoice;
+  }
+
+  getButtonName() {
+    return this.showInvoice ? 'Show Summary' : 'Generate Invoice' ;
   }
 }
