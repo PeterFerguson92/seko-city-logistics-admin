@@ -17,7 +17,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.apollo.mutate<UserResponse>({
+    return this.apollo.mutate<any>({
         mutation: LOGIN_MUTATION,
         variables: {
           input: { username, password },
@@ -25,12 +25,10 @@ export class AuthenticationService {
       });
   }
 
-  async signUp(username: string, role:string, email: string, password: string) {
-    return this.apollo.mutate<UserResponse>({
+  signUp(input) {
+    return this.apollo.mutate<any>({
       mutation: SIGN_UP_MUTATION,
-      variables: {
-        input: {username, email, role, password },
-      }
+      variables: { input }
     });
   }
 

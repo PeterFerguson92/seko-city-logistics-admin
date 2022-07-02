@@ -18,13 +18,13 @@ html, body {
   z-index: 2;
   line-height: 83px;
   }
-  legend {
+  /* legend {
   padding: 10px;
   font-family: Roboto, Arial, sans-serif;
   font-size: 18px;
   color: #fff;
   background-color: #006622;
-  }
+  } */
   textarea {
   width: calc(100% - 12px);
   padding: 5px;
@@ -46,7 +46,6 @@ html, body {
   .banner {
   position: relative;
   height: 250px;
-  background-image: url("/assets/shipping.png");
   background-size: cover;
   display: flex;
   justify-content: center;

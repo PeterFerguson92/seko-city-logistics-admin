@@ -31,7 +31,7 @@ export const GET_DRIVERS = gql`
     getDrivers {
      errors { message }
      result
-     users {sub email role status name lastName username phoneNumber }
+     users {sub email role status name lastName username phoneNumber country reference}
     }
   }
 `;
@@ -61,3 +61,4 @@ interface UserData {
 interface FieldError {
   message: string;
 }
+

@@ -22,6 +22,7 @@ import { AssignItemsComponent } from './shipment/assign-items/assign-items.compo
 import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items.component';
 import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment-analysis.component';
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
+import { AddEditDriverComponent } from './driver/add-edit-driver/add-edit-driver.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -42,8 +43,9 @@ const routes: Routes = [
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'booking-summary/:reference', component: BookingSummaryComponent, resolve: { booking: BookingSummaryResolver } },
-  { path: 'reports', component: ReportsComponent },
   { path: 'drivers', component: DriversComponent },
+  { path: 'add-driver', component: AddEditDriverComponent },
+  { path: 'reports', component: ReportsComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
