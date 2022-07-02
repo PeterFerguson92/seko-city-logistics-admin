@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import {GET_DRIVERS, IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UserResponse
+import {GET_DRIVER, GET_DRIVERS, IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UserResponse
 } from './mutations';
 
 @Injectable({
@@ -13,6 +13,13 @@ export class AuthenticationService {
   getDrivers() {
     return this.apollo.mutate<any>({
         mutation: GET_DRIVERS,
+    });
+  }
+
+  getDriver(reference) {
+    return this.apollo.mutate<any>({
+      mutation: GET_DRIVER,
+      variables: {reference}
     });
   }
 

@@ -29,7 +29,10 @@ export class DriversComponent implements OnInit {
 
   addDriver() {
     this.router.navigate(['/add-driver'])
+  }
 
+  editDriver(reference) {
+    this.router.navigate(['/edit-driver',reference])
   }
 
 }

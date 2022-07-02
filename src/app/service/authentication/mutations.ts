@@ -36,6 +36,17 @@ export const GET_DRIVERS = gql`
   }
 `;
 
+
+export const GET_DRIVER = gql`
+  query getDriver($reference: String!){
+    getDriver(reference:$reference) {
+     errors { message }
+     result
+     users {sub email role status name lastName username phoneNumber country reference}
+    }
+  }
+`;
+
 export interface UserResponse {
   signUp: SignUp;
 }

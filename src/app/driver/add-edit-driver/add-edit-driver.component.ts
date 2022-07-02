@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { COUNTRIES, COUNTRY_CODES } from 'src/app/constants';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
@@ -12,22 +13,31 @@ import { ValidationService } from 'src/app/service/validation/validation.service
 export class AddEditDriverComponent implements OnInit {
   addEditDriverForm: FormGroup;
   countries = COUNTRIES;
-  countryCodes = COUNTRY_CODES
+  countryCodes = COUNTRY_CODES;
+  driver;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthenticationService,
-    private validationService: ValidationService,) { }
+    private validationService: ValidationService, private activatedroute: ActivatedRoute) { }
 
   ngOnInit(): void {
-
-    this.addEditDriverForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      surname: ['', [Validators.required]],
-      username: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phoneGroup: this.formBuilder.group({
-        countryCode: [this.countryCodes[0], [Validators.required]],
-        phone: ['', [Validators.required]],}, { validators: [Validators.required, this.validationService.phoneValidator] }),
-      country: [this.countries[0], [Validators.required]]
+    this.activatedroute.data.subscribe(data => {
+      let phoneNumberData = null;
+      this.driver = data.driver.getDriver.users[0];
+      if (this.driver)
+      {
+        phoneNumberData = this.splitPhoneNumber(this.driver.phoneNumber)
+      }
+      this.addEditDriverForm = this.formBuilder.group({
+        name: [this.driver ? this.driver.name : '', [Validators.required]],
+        surname: [this.driver ? this.driver.lastName : '', [Validators.required]],
+        username: [this.driver ? this.driver.username : '', [Validators.required]],
+        email: [this.driver ? this.driver.email : '', [Validators.required]],
+        phoneGroup: this.formBuilder.group({
+          countryCode: [this.driver && phoneNumberData ? phoneNumberData.countryCode : this.countryCodes[0], [Validators.required]],
+          phone: [this.driver && phoneNumberData ? phoneNumberData.number : '', [Validators.required]],
+        }, { validators: [Validators.required, this.validationService.phoneValidator] }),
+        country: [this.driver ? this.driver.country : this.countries[0], [Validators.required]]
+      })
     })
   }
 
@@ -61,6 +71,10 @@ export class AddEditDriverComponent implements OnInit {
 
   getPhoneNumber() {
     return this.getFormControl('countryCode').value + this.getFormControl('phone').value;
+  }
+
+  splitPhoneNumber(phoneNumber) {
+    return {countryCode: phoneNumber.substring(0, 3), number: phoneNumber.substring(3, phoneNumber.length) }
   }
 
   isDisabled() {
