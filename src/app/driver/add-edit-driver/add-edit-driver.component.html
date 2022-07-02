@@ -4,7 +4,7 @@
     </div>
     <br/>
     <fieldset>
-      <legend>Reservation Details</legend>
+      <legend>Driver Details</legend>
       <div class="columns">
         <div class="item">
           <label for="fname">First Name <span>*</span></label><br>
@@ -22,20 +22,20 @@
           <label for="lname"> Email <span>*</span></label><br>
           <app-material-input [width]="80" formControlName="email" ></app-material-input>
         </div>
-        <div class="item">
+        <div class="item" formGroupName="phoneGroup">
           <label for="lname"> Phone Number <span>*</span></label><br>
-          <app-material-input [width]="80" formControlName="phone" ></app-material-input>
+          <app-material-select-input [label]="'Code'"  [width]="15" [options]="countryCodes" formControlName="countryCode"
+                (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
+          <app-material-input [width]="30" [label]="'Number'" formControlName="phone" ></app-material-input>
         </div>
         <div class="item">
           <label for="lname"> Country<span>*</span></label><br>
-          <app-material-select-input (selectionChange)="onSelectionChange($event)" [options]="countries" formControlName="country"></app-material-select-input>
+          <app-material-select-input (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
         </div>
       </div>
     </fieldset>
-        <div class="btn-block">
-          <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
-
-    <!-- <button type="submit" >Submit</button> -->
+    <div class="btn-block">
+      <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
     </div>
   </form>
-  </div>
+</div>
