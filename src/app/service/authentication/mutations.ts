@@ -20,6 +20,18 @@ export const SIGN_UP_MUTATION = gql`
   }
 `;
 
+export const UPDATE_USER = gql`
+  mutation updateUser($username: String!, $fields: [UpdateFieldInput!]) {
+    updateUser(username:$username, fields:$fields)
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation deleteUser($username: String!) {
+    deleteUser(username:$username)
+  }
+`;
+
 export const IS_USER_AUTHENTICATED_QUERY = gql`
   query isUserAuthenticated($sub: String!) {
     isUserAuthenticated(sub: $sub)
@@ -35,7 +47,6 @@ export const GET_DRIVERS = gql`
     }
   }
 `;
-
 
 export const GET_DRIVER = gql`
   query getDriver($reference: String!){

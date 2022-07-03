@@ -59,7 +59,6 @@ export class ShipmentsComponent implements OnInit {
       {
         this.shipmentService.deleteShipment(reference).subscribe(
           ({ data }) => {
-            console.log(data)
             location.reload()
           },
           error => {

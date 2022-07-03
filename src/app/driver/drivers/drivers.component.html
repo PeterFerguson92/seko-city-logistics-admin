@@ -1,7 +1,7 @@
 <div class="test">
   <app-section-title [title]="'Drivers'"></app-section-title>
 </div>
-<a mat-fab (click)="addDriver()" class="fab-main">
+<a mat-fab (click)="onAddDriver()" class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
 </a>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -42,7 +42,10 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[7]}}</th>
     <td mat-cell *matCellDef="let element">
       <button mat-icon-button color="primary" matTooltip="Edit driver" matTooltipPosition="above">
-        <mat-icon (click)="editDriver(element.reference)">edit</mat-icon>
+        <mat-icon (click)="onEditDriver(element.reference)">edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" matTooltip="Delete shipment" matTooltipPosition="right">
+        <mat-icon (click)="onDeleteDriver(element.username)">delete</mat-icon>
       </button>
     </td>
   </ng-container>

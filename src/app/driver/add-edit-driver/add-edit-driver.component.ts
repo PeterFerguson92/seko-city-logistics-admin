@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { COUNTRIES, COUNTRY_CODES } from 'src/app/constants';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
@@ -17,28 +17,43 @@ export class AddEditDriverComponent implements OnInit {
   driver;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthenticationService,
-    private validationService: ValidationService, private activatedroute: ActivatedRoute) { }
+    private validationService: ValidationService, private activatedroute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      let phoneNumberData = null;
-      this.driver = data.driver.getDriver.users[0];
-      if (this.driver)
+
+      if (data.driver)
       {
-        phoneNumberData = this.splitPhoneNumber(this.driver.phoneNumber)
+        this.driver = data.driver.getDriver.users[0];
+        const phoneNumberData = this.splitPhoneNumber(this.driver.phoneNumber)
+        this.buildFormGroup(data.driver.getDriver.users[0], phoneNumberData)
       }
-      this.addEditDriverForm = this.formBuilder.group({
-        name: [this.driver ? this.driver.name : '', [Validators.required]],
-        surname: [this.driver ? this.driver.lastName : '', [Validators.required]],
-        username: [this.driver ? this.driver.username : '', [Validators.required]],
-        email: [this.driver ? this.driver.email : '', [Validators.required]],
-        phoneGroup: this.formBuilder.group({
-          countryCode: [this.driver && phoneNumberData ? phoneNumberData.countryCode : this.countryCodes[0], [Validators.required]],
-          phone: [this.driver && phoneNumberData ? phoneNumberData.number : '', [Validators.required]],
-        }, { validators: [Validators.required, this.validationService.phoneValidator] }),
-        country: [this.driver ? this.driver.country : this.countries[0], [Validators.required]]
-      })
+      else
+      {
+        this.buildFormGroup(null, null)
+      }
     })
+  }
+
+  buildFormGroup(driver, phoneNumberData) {
+    this.addEditDriverForm = this.formBuilder.group({
+      name: [driver ? this.driver.name : '', [Validators.required]],
+      lastname: [driver ? this.driver.lastName : '', [Validators.required]],
+      username: [driver ? this.driver.username : '', [Validators.required]],
+      email: [driver ? this.driver.email : '', [Validators.required]],
+      phoneGroup: this.formBuilder.group({
+        countryCode: [driver && phoneNumberData ? phoneNumberData.countryCode : this.countryCodes[0], [Validators.required]],
+        phone: [driver && phoneNumberData ? phoneNumberData.number : '', [Validators.required]],
+      }, { validators: [Validators.required, this.validationService.phoneValidator] }),
+      country: [driver ? this.driver.country : this.countries[0], [Validators.required]]
+    })
+
+    if (driver)
+    {
+      this.addEditDriverForm.get('username').disable();
+    }
+
   }
 
   getFormControl(fControlName: string) {
@@ -53,7 +68,18 @@ export class AddEditDriverComponent implements OnInit {
   }
 
   onSubmit() {
-    const driverDetails = { password: null, role: 'DRIVER', phone: this.getPhoneNumber() };
+    console.log(this.driver);
+    if (this.driver)
+    {
+      this.updateDriver();
+    } else
+    {
+      this.createDriver()
+    }
+  }
+
+  createDriver() {
+     const driverDetails = { password: null, role: 'DRIVER', phone: this.getPhoneNumber() };
 
     Object.keys(this.addEditDriverForm.controls).forEach(key => {
       const formControl = this.addEditDriverForm.controls[key];
@@ -64,9 +90,29 @@ export class AddEditDriverComponent implements OnInit {
     });
 
     this.authService.signUp(driverDetails).subscribe(
-      ({ data }) => { console.log(data); },
+      ({ data }) => { this.router.navigate(['/drivers']); },
       error => { console.log(error); }
     );
+  }
+
+  updateDriver() {
+    const updateDriverFields = []
+    Object.keys(this.addEditDriverForm.controls).forEach(key => {
+      const formControl = this.addEditDriverForm.controls[key]
+      if (!formControl.pristine && formControl.value !== this.driver[key])
+      {
+        updateDriverFields.push({ name: key, value: formControl.value });
+      }
+    });
+
+    console.log(updateDriverFields)
+    if (updateDriverFields.length > 0)
+    {
+      this.authService.updateUser(this.getFormControl('username').value, updateDriverFields).subscribe(
+        ({ data }) => { this.router.navigate(['/drivers']); },
+        error => { console.log(error); }
+      );
+    }
   }
 
   getPhoneNumber() {

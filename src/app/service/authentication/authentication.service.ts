@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import {GET_DRIVER, GET_DRIVERS, IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UserResponse
+import {DELETE_USER, GET_DRIVER, GET_DRIVERS, IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UPDATE_USER, UserResponse
 } from './mutations';
 
 @Injectable({
@@ -36,6 +36,20 @@ export class AuthenticationService {
     return this.apollo.mutate<any>({
       mutation: SIGN_UP_MUTATION,
       variables: { input }
+    });
+  }
+
+  updateUser(username, fields) {
+    return this.apollo.mutate<any>({
+      mutation: UPDATE_USER,
+      variables: { username, fields }
+    });
+  }
+
+  deleteUser(username) {
+    return this.apollo.mutate<any>({
+      mutation: DELETE_USER,
+      variables: { username }
     });
   }
 
