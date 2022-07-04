@@ -39,7 +39,7 @@ export class AddEditDriverComponent implements OnInit {
   buildFormGroup(driver, phoneNumberData) {
     this.addEditDriverForm = this.formBuilder.group({
       name: [driver ? this.driver.name : '', [Validators.required]],
-      lastname: [driver ? this.driver.lastName : '', [Validators.required]],
+      lastName: [driver ? this.driver.lastName : '', [Validators.required]],
       username: [driver ? this.driver.username : '', [Validators.required]],
       email: [driver ? this.driver.email : '', [Validators.required]],
       phoneGroup: this.formBuilder.group({
@@ -52,6 +52,8 @@ export class AddEditDriverComponent implements OnInit {
     if (driver)
     {
       this.addEditDriverForm.get('username').disable();
+      this.addEditDriverForm.get('email').disable();
+
     }
 
   }
@@ -79,8 +81,7 @@ export class AddEditDriverComponent implements OnInit {
   }
 
   createDriver() {
-     const driverDetails = { password: null, role: 'DRIVER', phone: this.getPhoneNumber() };
-
+    const driverDetails = { password: null, role: 'DRIVER', phone: this.getPhoneNumber() };
     Object.keys(this.addEditDriverForm.controls).forEach(key => {
       const formControl = this.addEditDriverForm.controls[key];
       if (!(key === 'phoneGroup'))
@@ -99,9 +100,22 @@ export class AddEditDriverComponent implements OnInit {
     const updateDriverFields = []
     Object.keys(this.addEditDriverForm.controls).forEach(key => {
       const formControl = this.addEditDriverForm.controls[key]
+
       if (!formControl.pristine && formControl.value !== this.driver[key])
       {
-        updateDriverFields.push({ name: key, value: formControl.value });
+        if (key === 'phoneGroup')
+        {
+          const countryCodeFormControl = this.getFormControl('countryCode');
+          const numberFormControl = this.getFormControl('number');
+
+          if (countryCodeFormControl.pristine || numberFormControl.pristine)
+          {
+            updateDriverFields.push({ name: 'phoneNumber', value: this.getPhoneNumber() });
+          }
+        } else
+        {
+          updateDriverFields.push({ name: key, value: formControl.value });
+        }
       }
     });
 
@@ -124,7 +138,7 @@ export class AddEditDriverComponent implements OnInit {
   }
 
   isDisabled() {
-    return false;
+    return this.addEditDriverForm.pristine;
   }
 
 }
