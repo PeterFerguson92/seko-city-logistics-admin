@@ -119,7 +119,6 @@ export class AddEditDriverComponent implements OnInit {
       }
     });
 
-    console.log(updateDriverFields)
     if (updateDriverFields.length > 0)
     {
       this.authService.updateUser(this.getFormControl('username').value, updateDriverFields).subscribe(

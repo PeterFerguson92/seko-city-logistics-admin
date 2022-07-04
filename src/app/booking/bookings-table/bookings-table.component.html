@@ -53,6 +53,9 @@
       <button *ngIf="isArchivedEnabled" mat-icon-button class="custom-icon-color" matTooltip="Unarchive booking" matTooltipPosition="right">
         <mat-icon (click)="archiveBooking(element.reference)">unarchive</mat-icon>
       </button>
+      <button mat-icon-button class="driver-custom-icon-color" matTooltip="Assign Driver" matTooltipPosition="right">
+        <mat-icon (click)="onAssignDriver(element.assignedDriverReference)">directions_walk</mat-icon>
+      </button>
       <button mat-icon-button color="warn" matTooltip="Delete booking" matTooltipPosition="right">
         <mat-icon (click)="deleteBooking(element.reference)">delete</mat-icon>
       </button>

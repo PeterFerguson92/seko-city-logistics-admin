@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { BookingAssignDriverDialogComponent } from '../booking-assign-driver-dialog/booking-assign-driver-dialog.component';
 import { BookingUpdateDialogComponent } from '../booking-update-dialog/booking-update-dialog.component';
 import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings/bookings.service';
@@ -92,6 +93,19 @@ export class BookingsTableComponent implements OnInit, OnChanges {
         console.log(error);
       }
     )
+  }
+
+  onAssignDriver(reference) {
+      {
+        const dialogRef = this.dialog.open(BookingAssignDriverDialogComponent, {
+          // height: '80%',
+          // width: '65%',
+          data: { reference }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          // console.log(result)
+        })
+      }
   }
 
   getFormattedDate(date) {

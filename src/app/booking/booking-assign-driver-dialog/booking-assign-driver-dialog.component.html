@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 id="title">Booking status information</h1>
+  <p id="description">Please update the booking status.</p>
+  <div class="row">
+    <div class="col-75">
+      <div class="container">
+        <form id="survey-form" [formGroup]="assignDriverForm" >
+              <fieldset>
+
+                <legend>Information</legend>
+                <div>
+                  <label class="required">Status</label>
+                  <app-material-input [width]="80" formControlName="currentDriverName" ></app-material-input>
+
+                  <label class="required">Status</label>
+                  <app-material-select-input [width]="80" (selectionChange)="onSelectionChange($event, 'selectedDriverName')" formControlName="selectedDriverName" [options]="driversList">
+                  </app-material-select-input>
+                </div>
+            </fieldset>
+        </form>
+      </div>
+      <br>
+      <div align="center">
+        <br>
+        <app-material-button [label]="'Update'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" (click)="onUpdate()" ></app-material-button>
+      </div>
+    </div>
+  </div>
+</div>
