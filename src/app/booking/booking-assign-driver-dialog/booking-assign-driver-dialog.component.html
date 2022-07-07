@@ -1,19 +1,17 @@
 <div class="container">
-  <h1 id="title">Booking status information</h1>
-  <p id="description">Please update the booking status.</p>
+  <h1 id="title">Assigned Drivers information</h1>
   <div class="row">
     <div class="col-75">
       <div class="container">
         <form id="survey-form" [formGroup]="assignDriverForm" >
               <fieldset>
-
                 <legend>Information</legend>
                 <div>
-                  <label class="required">Status</label>
-                  <app-material-input [width]="80" formControlName="currentDriverName" ></app-material-input>
-
-                  <label class="required">Status</label>
-                  <app-material-select-input [width]="80" (selectionChange)="onSelectionChange($event, 'selectedDriverName')" formControlName="selectedDriverName" [options]="driversList">
+                  <label class="required">Assigned Driver</label>
+                  <app-material-input [width]="80" formControlName="currentDriverUsername" ></app-material-input>
+                    <br>
+                  <label class="required">Available Drivers</label>
+                  <app-material-select-input [width]="80" (selectionChange)="onSelectionChange($event, 'selectedDriverUsername')" formControlName="selectedDriverUsername" [options]="driversUsername">
                   </app-material-select-input>
                 </div>
             </fieldset>

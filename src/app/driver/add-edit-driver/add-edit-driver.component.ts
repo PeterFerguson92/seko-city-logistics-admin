@@ -40,7 +40,7 @@ export class AddEditDriverComponent implements OnInit {
     this.addEditDriverForm = this.formBuilder.group({
       name: [driver ? this.driver.name : '', [Validators.required]],
       lastName: [driver ? this.driver.lastName : '', [Validators.required]],
-      username: [driver ? this.driver.username : '', [Validators.required]],
+      userName: [driver ? this.driver.userName : '', [Validators.required]],
       email: [driver ? this.driver.email : '', [Validators.required]],
       phoneGroup: this.formBuilder.group({
         countryCode: [driver && phoneNumberData ? phoneNumberData.countryCode : this.countryCodes[0], [Validators.required]],
@@ -51,7 +51,7 @@ export class AddEditDriverComponent implements OnInit {
 
     if (driver)
     {
-      this.addEditDriverForm.get('username').disable();
+      this.addEditDriverForm.get('userName').disable();
       this.addEditDriverForm.get('email').disable();
 
     }

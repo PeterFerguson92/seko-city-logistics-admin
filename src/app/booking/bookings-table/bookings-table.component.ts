@@ -95,12 +95,12 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     )
   }
 
-  onAssignDriver(reference) {
+  onAssignDriver(reference, driverReference) {
       {
         const dialogRef = this.dialog.open(BookingAssignDriverDialogComponent, {
           // height: '80%',
           // width: '65%',
-          data: { reference }
+          data: { reference, driverReference }
         });
         dialogRef.afterClosed().subscribe(result => {
           // console.log(result)

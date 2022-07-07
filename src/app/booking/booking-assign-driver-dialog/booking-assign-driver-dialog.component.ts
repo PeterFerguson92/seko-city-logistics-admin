@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { BookingsService } from '../service/bookings/bookings.service';
 
 @Component({
   selector: 'app-booking-assign-driver-dialog',
@@ -15,18 +16,20 @@ export class BookingAssignDriverDialogComponent implements OnInit {
   assignDriverForm: FormGroup;
   currentDriver;
   drivers;
-  driversList;
+  driversUsername;
 
   constructor(private formBuilder: FormBuilder,
+    private bookingService: BookingsService,
     private authService: AuthenticationService,
-    private dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) private data: any) { }
+    private dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit(): void {
-    this.getDrivers()
-    this.currentDriver = this.getCurrentDriverUsername('DUK-11133')
-      this.assignDriverForm = this.formBuilder.group({
-        currentDriverName: [''],
-        selectedDriverName: [''],
+    this.getDriversInfo();
+    console.log(this.data)
+    this.assignDriverForm = this.formBuilder.group({
+      currentDriverUsername: [''],
+      selectedDriverUsername: [''],
       })
   }
 
@@ -40,40 +43,51 @@ export class BookingAssignDriverDialogComponent implements OnInit {
     fControl.markAsDirty();
   }
 
-  async getDrivers() {
+  async getDriversInfo() {
     this.drivers = (await lastValueFrom(this.authService.getDrivers())).data.getDrivers.users;
-    this.driversList = this.getDriversUsername()
-    // this.authService.getDrivers().subscribe(
-    //   ({ data }) => { this.drivers = data.getDrivers.users },
-    //   error => { console.log(error); }
-    // );
+    this.driversUsername = this.getDriversUsername()
+    this.getCurrentDriverUsername(this.data.driverReference)
   }
 
   getDriversUsername() {
-    return this.drivers ? this.drivers.map(a => a.username) : []
+    return this.drivers ? this.drivers.map(a => a.userName) : [];
   }
 
   getCurrentDriverUsername(reference) {
-    console.log(reference)
     if (this.drivers)
     {
-      const d = this.drivers.find(x => x.reference === reference);
-      ;
-      console.log(d[0])
-      // this.getFormControl('currentDriverName').setValue(d[0])
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.drivers.length; i++) {
+        if (this.drivers[i].reference === reference)
+        {
+          this.getFormControl('currentDriverUsername').setValue(this.drivers[i].userName);
+        }
+      }
+    } else {
+        console.log(3737)
+     }
+  }
+
+  getSelectedDriverReference() {
+    let reference;
+    const selectedDriverUsername = this.getFormControl('selectedDriverUsername').value;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.drivers.length; i++) {
+      if (this.drivers[i].userName === selectedDriverUsername)
+      {
+        reference = this.drivers[i].reference;
+      }
     }
+    return reference;
   }
 
   onUpdate() {
-    // const updateFields = [{ name: 'status', value: this.getFormControl('status').value }];
-    //   this.bookingService.updateBooking(this.data.booking.reference, updateFields).subscribe(
-    //     ({ data }) => {
-    //       location.reload();  // TODO handle properly
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     }
-    //   );
+    const reference = this.getSelectedDriverReference();
+    const updateFields = [{ name: 'assignedDriverReference', value: reference }];
+      this.bookingService.updateBooking(this.data.reference, updateFields).subscribe(
+        ({ data }) => { location.reload()},
+        error => { console.log(error);}
+      );
   }
 
 }
