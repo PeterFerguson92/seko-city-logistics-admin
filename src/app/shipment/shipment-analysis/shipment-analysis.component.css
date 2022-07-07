@@ -1,3 +1,15 @@
 .mat-expansion-panel-header-title {
   font-weight: bold;
 }
+
+.mat-expansion-panel-header-title {
+  /* color: whitesmoke */
+}
+
+
+ .mat-expansion-panel-header{
+  padding-left: 0px !important;
+  padding-top: 1px !important;
+  background:  #6D8299!important;
+  padding-bottom: 1px !important;
+}

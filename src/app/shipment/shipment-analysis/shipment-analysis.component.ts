@@ -7,7 +7,7 @@ import { ShipmentService } from '../service/shipment.service';
 @Component({
   selector: 'app-shipment-analysis',
   templateUrl: './shipment-analysis.component.html',
-  styleUrls: ['./shipment-analysis.component.css', '../../shared/shared-form.css']
+  styleUrls: ['./shipment-analysis.component.css', '../../shared/shared-new-form.css']
 })
 export class ShipmentAnalysisComponent implements OnInit {
   shipmentAnalysisForm: FormGroup;

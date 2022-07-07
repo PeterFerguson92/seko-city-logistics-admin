@@ -4,8 +4,12 @@
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Loading
+          <mat-icon >flight_takeoff</mat-icon>
+          LOADING
         </mat-panel-title>
+        <mat-panel-description>
+          Loading cost
+        </mat-panel-description>
       </mat-expansion-panel-header>
       <label>Container charge(£) </label>
       <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="containerCharge"></app-material-numeric-input >
@@ -20,11 +24,15 @@
       <label>Loading Notes</label>
       <app-material-input [width]="100"  formControlName="loadingCostNotes"></app-material-input>
     </mat-expansion-panel>
-    <mat-expansion-panel hideToggle [expanded]="false">
+    <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Clearing
+          <mat-icon >flight_land</mat-icon>
+          CLEARING
         </mat-panel-title>
+        <mat-panel-description>
+          Loading cost
+        </mat-panel-description>
       </mat-expansion-panel-header>
       <label>Clearing Charged </label>
       <app-material-numeric-input [width]="10" (change)="updateTotalExpensesAmount()" formControlName="clearingCharge"></app-material-numeric-input >
@@ -50,8 +58,12 @@
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Totals
+          <mat-icon >account_balance</mat-icon>
+          TOTAL
         </mat-panel-title>
+        <mat-panel-description>
+        A summary of all incoming and outgoing
+        </mat-panel-description>
       </mat-expansion-panel-header>
       <label>Total Amount Charged(£) </label>
       <app-material-numeric-input [width]="10" formControlName="totalAmountCharged"></app-material-numeric-input >
