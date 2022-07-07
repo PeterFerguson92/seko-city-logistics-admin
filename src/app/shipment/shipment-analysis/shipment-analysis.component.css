@@ -3,13 +3,24 @@
 }
 
 .mat-expansion-panel-header-title {
-  /* color: whitesmoke */
+  color: whitesmoke
 }
 
 
  .mat-expansion-panel-header{
-  padding-left: 0px !important;
-  padding-top: 1px !important;
+  /* padding-left: 0px !important;
+  padding-top: 1px !important; */
   background:  #6D8299!important;
-  padding-bottom: 1px !important;
+  /* padding-bottom: 1px !important; */
+}
+
+.banner {
+  background-image: url('../../../assets/money.jpeg');
+}
+
+.center {
+  margin: auto;
+  width: 90%;
+  /* border: 3px solid green; */
+  padding: 10px;
 }
