@@ -35,7 +35,7 @@ export class BookingsLocationsComponent implements OnInit {
     const destination = { lat: 52.916763, lng: -1.485883 };
 
     const loader = new Loader({
-      apiKey: 'AIzaSyD7AtzURBENak8Dwda8CdOOqt9mkHQXu9U'
+      apiKey: ''
     })
 
     loader.load().then(() => {
