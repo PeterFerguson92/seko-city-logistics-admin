@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { styles } from './mapstyles';
 
@@ -21,9 +22,10 @@ export class BookingsLocationsComponent implements OnInit {
 
   currentLocation;
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show()
     this.getGoogleApiKey();
     this.calculateLocations();
     this.places = this.getLocations();
@@ -136,6 +138,7 @@ export class BookingsLocationsComponent implements OnInit {
         })
       })
     }
+    this.spinner.hide()
   }
 
   getLocations() {

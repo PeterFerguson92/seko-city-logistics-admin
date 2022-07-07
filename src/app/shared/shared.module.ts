@@ -22,6 +22,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MaterialCheckboxComponent } from './inputs/material-checkbox/material-checkbox.component';
 import { InputComponent } from './inputs/input/input.component';
 import { ConfirmDialogComponent } from './elements/confirm-dialog/confirm-dialog.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -41,11 +42,12 @@ import { ConfirmDialogComponent } from './elements/confirm-dialog/confirm-dialog
     ConfirmDialogComponent,
     AlertComponent,
     InputComponent],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule,NgxSpinnerModule ],
   exports: [
     ReactiveFormsModule,
     FormsModule,
     MaterialDesignModule,
+    NgxSpinnerModule,
     MaterialButtonComponent,
     MaterialPlusButtonComponent,
     MaterialDatePickerInputComponent,

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,7 +42,7 @@ import { HomeModule } from './home/home.module';
     BookingModule,
     ShipmentModule,
     DriversModule,
-    HomeModule
+    HomeModule,
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
@@ -58,6 +58,7 @@ import { HomeModule } from './home/home.module';
     },
     deps: [HttpLink]
   }],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA], // This is new to version 13 as well,
   bootstrap: [AppComponent]
 })
 export class AppModule {}
