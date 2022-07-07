@@ -12,7 +12,7 @@ import { ShipmentService } from '../service/shipment.service';
 @Component({
   selector: 'app-shipments',
   templateUrl: './shipments.component.html',
-  styleUrls: ['./shipments.component.css']
+  styleUrls: ['./shipments.component.css', '../../shared/shared-table.css']
 })
 export class ShipmentsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
