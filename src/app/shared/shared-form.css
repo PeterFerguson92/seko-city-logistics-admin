@@ -58,6 +58,9 @@ label.required::after {
   }
 }
 
+.custom-icon-color {
+  color: rgb(246, 150, 6);
+}
 
 .submitBtn{
 

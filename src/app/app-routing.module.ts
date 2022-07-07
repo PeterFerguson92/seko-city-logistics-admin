@@ -24,6 +24,7 @@ import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
 import { AddEditDriverComponent } from './driver/add-edit-driver/add-edit-driver.component';
 import { DriverResolverResolver } from './driver/service/driver-resolver.resolver';
+import { BookingsLocationsComponent } from './driver/bookings-locations/bookings-locations.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'drivers', component: DriversComponent },
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolverResolver } },
+  { path: 'locations', component: BookingsLocationsComponent },
   { path: 'reports', component: ReportsComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];

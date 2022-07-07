@@ -34,7 +34,10 @@ export class DriversComponent implements OnInit {
   }
 
   onEditDriver(reference) {
-    this.router.navigate(['/edit-driver',reference])
+    this.router.navigate(['/edit-driver', reference])
+  }
+  onShowBookingLocations() {
+    this.router.navigate(['/locations'])
   }
 
   onDeleteDriver(username) {

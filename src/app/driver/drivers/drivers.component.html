@@ -44,6 +44,9 @@
       <button mat-icon-button color="primary" matTooltip="Edit driver" matTooltipPosition="above">
         <mat-icon (click)="onEditDriver(element.reference)">edit</mat-icon>
       </button>
+      <button mat-icon-button class="custom-icon-color" matTooltip="Show Bookings location" matTooltipPosition="right">
+        <mat-icon (click)="onShowBookingLocations()">location_on</mat-icon>
+      </button>
       <button mat-icon-button color="warn" matTooltip="Delete shipment" matTooltipPosition="right">
         <mat-icon (click)="onDeleteDriver(element.username)">delete</mat-icon>
       </button>
