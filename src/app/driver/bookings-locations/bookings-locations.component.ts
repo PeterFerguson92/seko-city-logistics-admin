@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
-import { CommonService } from 'src/app/service/common.service';
 import { styles } from './mapstyles';
 
 @Component({
@@ -11,58 +10,110 @@ import { styles } from './mapstyles';
 export class BookingsLocationsComponent implements OnInit {
   places: any;
   title = 'google-maps';
-  map: google.maps.Map
+  map: google.maps.Map;
+
+  mockLocations = [
+  { lat: 51.486784, lng: -3.171499, distance: null},
+  { lat: 52.916763, lng: -1.485883, distance: null },
+  { lat: 51.411802, lng: -0.095092, distance: null },
+  { lat: 52.125991, lng: -0.499651, distance: null }];
+
+  currentLocation;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.loadGoogleMaps()
-    this.getDirections()
+    this.calculateLocations()
     this.places = this.getLocations()
   }
 
   calculateLocations() {
-    const locations = [{ lat: 52.041944, lng: -0.69351 },
-      { lat: 52.916763, lng: -1.485883 },
-      { lat: 51.411802, lng: -0.095092 },
-      { lat: 52.125991, lng: -0.499651 }]
+    this.getLocations().then( pos => {
+      // tslint:disable-next-line:no-string-literal
+      this.currentLocation = { lat: pos['lat'], lng: pos['lng'], distance: null };
+      this.mockLocations.unshift(this.currentLocation)
+       // tslint:disable-next-line:prefer-for-of
+      for ( let i = 0; i < this.mockLocations.length; i++) {
+        this.mockLocations[i].distance = this.calculateDistance(
+        this.mockLocations[0].lat,  this.mockLocations[0].lng,
+        this.mockLocations[i].lat,  this.mockLocations[i].lng, 'K');
+      }
+
+      const sortedLocation = this.mockLocations.sort((a, b) => {
+      return a.distance - b.distance;
+      });
+      const locationsData = this.buildFirstMiddleLastList(sortedLocation);
+      this.loadGoogleMaps(locationsData[0], locationsData[1], locationsData[2])
+    });
   }
 
-  loadGoogleMaps() {
+   buildFirstMiddleLastList = (list) => {
+    const { 0: first, [list.length - 1]: last, ...rest } = list;
 
-    const origin = { lat: 52.041944, lng: -0.69351 };
-    const stop = {lat: 51.411802, lng: -0.095092}
-    const destination = { lat: 52.916763, lng: -1.485883 };
+    return [
+      first,
+      Object.values(rest),
+      list.length > 1 ? last : undefined
+    ];
+  };
+
+
+  calculateDistance(lat1, lon1, lat2, lon2, unit) {
+    const radlat1 = Math.PI * lat1/180
+    const radlat2 = Math.PI * lat2/180
+    const radlon1 = Math.PI * lon1/180
+    const radlon2 = Math.PI * lon2/180
+    const theta = lon1-lon2
+    const radtheta = Math.PI * theta/180
+    let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    dist = Math.acos(dist)
+    dist = dist * 180/Math.PI
+    dist = dist * 60 * 1.1515
+    if (unit === 'K') { dist = dist * 1.609344 }
+    if (unit === 'N') { dist = dist * 0.8684 }
+    return dist
+  }
+
+  loadGoogleMaps(originLocation, middleLocations, destinationLocation) {
 
     const loader = new Loader({
       apiKey: ''
     })
 
     loader.load().then(() => {
-      console.log('loaded gmaps')
+      const origin = { lat: originLocation.lat, lng: originLocation.lng };
+      const destination = { lat: destinationLocation.lat, lng: destinationLocation.lng };
 
-      const location = { lat: 52.041944, lng: 	-0.69351 }
+      const waypoints = [];
+
+      // tslint:disable-next-line:prefer-for-of
+      for ( let i = 0; i < middleLocations.length; i++) {
+        waypoints.push({
+          location: new google.maps.LatLng(middleLocations[i].lat, middleLocations[i].lng),
+          stopover: true
+        })
+      }
 
       this.map = new google.maps.Map(document.getElementById('map'), {
-        center: location,
-        zoom: 12,
+        center: origin,
+        zoom: 14,
         styles
       })
 
     const directionService = new google.maps.DirectionsService();
     const directionDisplay = new google.maps.DirectionsRenderer();
-
     directionDisplay.setMap(this.map);
-    const waypts = [{
-      location:   new google.maps.LatLng(stop.lat,stop.lng),
-      stopover: false
-    }];
+
+    // const waypts = [{
+    //   location:   new google.maps.LatLng(stop.lat,stop.lng),
+    //   stopover: false
+    // }];
     const req = {
       origin,
       destination,
       travelMode: google.maps.TravelMode.DRIVING,
       unitSystem: google.maps.UnitSystem.METRIC,
-      waypoints: waypts,
+      waypoints,
     }
 
     directionService.route(req, (result, status) => {
@@ -75,65 +126,21 @@ export class BookingsLocationsComponent implements OnInit {
         this.map.setCenter(origin);
       }
     })
-    })
-  }
-
-  getDirections() {
-    const origin = { lat: 52.041944, lng: -0.69351 };
-    const destination = { lat: 52.916763, lng: -1.485883 };
-    // this.map = new google.maps.Map(document.getElementById('map'), {
-    //   center: origin,
-    //   zoom: 16,
-    //   styles
-    // })
-
-    const directionService = new google.maps.DirectionsService();
-    const directionDisplay = new google.maps.DirectionsRenderer();
-
-    directionDisplay.setMap(this.map);
-
-    const req = {
-      origin,
-      destination,
-      travelMode: google.maps.TravelMode.DRIVING,
-      // transitOptions: TransitOptions,
-      // drivingOptions: google.maps.TravelMode.DRIVING,
-      unitSystem: google.maps.UnitSystem.METRIC,
-      // waypoints[]: DirectionsWaypoint,
-    }
-
-    directionService.route(req, (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK)
-      {
-        console.log(status)
-        directionDisplay.setDirections(result);
-      } else
-      {
-        this.map.setCenter(origin);
-      }
     })
   }
 
   getLocations() {
-    return {
-      locations: [
+    {
+      return new Promise((resolve, reject) => {
 
-        {
-          title: 'Sangam Chowk',
-          latitude: 27.692612,
-          longitude: 85.342982
+        navigator.geolocation.getCurrentPosition(resp => {
+
+          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
         },
-        {
-          title: 'Kharikobot',
-          latitude: 27.690227,
-          longitude: 85.342671
-        },
-        {
-          title: 'Ace Instute Of management',
-          latitude: 27.690693,
-          longitude: 85.339581
-        }
-      ]
+          err => {
+            reject(err);
+          });
+      });
     }
   }
 
