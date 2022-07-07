@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import {DELETE_USER, GET_DRIVER, GET_DRIVERS, IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UPDATE_USER, UserResponse
+import {
+  DELETE_USER, GET_DRIVER, GET_DRIVERS, GET_KEY,
+  IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UPDATE_USER
 } from './mutations';
 
 @Injectable({
@@ -11,14 +13,14 @@ export class AuthenticationService {
   constructor(private apollo: Apollo) { }
 
   getDrivers() {
-    return this.apollo.mutate<any>({
-        mutation: GET_DRIVERS,
+    return this.apollo.query<any>({
+        query: GET_DRIVERS,
     });
   }
 
   getDriver(reference) {
-    return this.apollo.mutate<any>({
-      mutation: GET_DRIVER,
+    return this.apollo.query<any>({
+      query: GET_DRIVER,
       variables: {reference}
     });
   }
@@ -63,4 +65,11 @@ export class AuthenticationService {
       }).toPromise();
     return status.data.isUserAuthenticated;
   }
+
+  getKeys() {
+    return this.apollo.query<any>({
+      query: GET_KEY,
+    });
+  }
+
 }

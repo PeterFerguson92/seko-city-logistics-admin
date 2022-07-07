@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
+import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { styles } from './mapstyles';
 
 @Component({
@@ -11,7 +12,7 @@ export class BookingsLocationsComponent implements OnInit {
   places: any;
   title = 'google-maps';
   map: google.maps.Map;
-
+  googleMapsKey;
   mockLocations = [
   { lat: 51.486784, lng: -3.171499, distance: null},
   { lat: 52.916763, lng: -1.485883, distance: null },
@@ -20,11 +21,19 @@ export class BookingsLocationsComponent implements OnInit {
 
   currentLocation;
 
-  constructor() { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.calculateLocations()
-    this.places = this.getLocations()
+    this.getGoogleApiKey();
+    this.calculateLocations();
+    this.places = this.getLocations();
+  }
+
+  getGoogleApiKey() {
+    this.authService.getKeys().subscribe(
+      ({ data }) => { this.googleMapsKey = data.getKeys.googleMapsKey; },
+      error => { console.log(error); }
+    );
   }
 
   calculateLocations() {
@@ -34,7 +43,7 @@ export class BookingsLocationsComponent implements OnInit {
       this.mockLocations.unshift(this.currentLocation)
        // tslint:disable-next-line:prefer-for-of
       for ( let i = 0; i < this.mockLocations.length; i++) {
-        this.mockLocations[i].distance = this.calculateDistance(
+        this.mockLocations[i].distance = this.calculateDistance (
         this.mockLocations[0].lat,  this.mockLocations[0].lng,
         this.mockLocations[i].lat,  this.mockLocations[i].lng, 'K');
       }
@@ -76,57 +85,57 @@ export class BookingsLocationsComponent implements OnInit {
 
   loadGoogleMaps(originLocation, middleLocations, destinationLocation) {
 
-    const loader = new Loader({
-      apiKey: ''
-    })
-
-    loader.load().then(() => {
-      const origin = { lat: originLocation.lat, lng: originLocation.lng };
-      const destination = { lat: destinationLocation.lat, lng: destinationLocation.lng };
-
-      const waypoints = [];
-
-      // tslint:disable-next-line:prefer-for-of
-      for ( let i = 0; i < middleLocations.length; i++) {
-        waypoints.push({
-          location: new google.maps.LatLng(middleLocations[i].lat, middleLocations[i].lng),
-          stopover: true
-        })
-      }
-
-      this.map = new google.maps.Map(document.getElementById('map'), {
-        center: origin,
-        zoom: 14,
-        styles
+    if (this.googleMapsKey)
+    {
+      const loader = new Loader({
+        apiKey: this.googleMapsKey
       })
 
-    const directionService = new google.maps.DirectionsService();
-    const directionDisplay = new google.maps.DirectionsRenderer();
-    directionDisplay.setMap(this.map);
+      loader.load().then(() => {
+        const origin = { lat: originLocation.lat, lng: originLocation.lng };
+        const destination = { lat: destinationLocation.lat, lng: destinationLocation.lng };
 
-    // const waypts = [{
-    //   location:   new google.maps.LatLng(stop.lat,stop.lng),
-    //   stopover: false
-    // }];
-    const req = {
-      origin,
-      destination,
-      travelMode: google.maps.TravelMode.DRIVING,
-      unitSystem: google.maps.UnitSystem.METRIC,
-      waypoints,
+        const waypoints = [];
+
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < middleLocations.length; i++)
+        {
+          waypoints.push({
+            location: new google.maps.LatLng(middleLocations[i].lat, middleLocations[i].lng),
+            stopover: true
+          })
+        }
+
+        this.map = new google.maps.Map(document.getElementById('map'), {
+          center: origin,
+          zoom: 14,
+          styles
+        })
+
+        const directionService = new google.maps.DirectionsService();
+        const directionDisplay = new google.maps.DirectionsRenderer();
+        directionDisplay.setMap(this.map);
+
+        const req = {
+          origin,
+          destination,
+          travelMode: google.maps.TravelMode.DRIVING,
+          unitSystem: google.maps.UnitSystem.METRIC,
+          waypoints,
+        }
+
+        directionService.route(req, (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK)
+          {
+            console.log(status)
+            directionDisplay.setDirections(result);
+          } else
+          {
+            this.map.setCenter(origin);
+          }
+        })
+      })
     }
-
-    directionService.route(req, (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK)
-      {
-        console.log(status)
-        directionDisplay.setDirections(result);
-      } else
-      {
-        this.map.setCenter(origin);
-      }
-    })
-    })
   }
 
   getLocations() {
