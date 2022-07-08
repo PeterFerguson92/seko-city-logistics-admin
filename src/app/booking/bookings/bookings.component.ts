@@ -9,7 +9,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
-  styleUrls: ['./bookings.component.css', '../../shared/shared.css']
+  styleUrls: ['./bookings.component.css', '../../shared/shared-new-form.css']
 })
 export class BookingsComponent implements OnInit {
   bookingsFilterForm: FormGroup;
@@ -39,6 +39,8 @@ export class BookingsComponent implements OnInit {
       useRange: [false, [Validators.required]],
       archived: [false],
     })
+
+    this.onSearch()
   }
 
   onSelectionChange(event: any, fControlName: string) {
