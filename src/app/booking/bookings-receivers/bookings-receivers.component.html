@@ -1,80 +1,126 @@
-<div class="container">
-  <h1 id="title">Receivers</h1>
-  <p id="description">Please fill the receiver details.</p>
-  <div class="row">
-      <div class="col-75">
-        <div class="container">
-          <form id="survey-form" [formGroup]="receiversCustomerForm">
-            <form [formGroup]="destinationForm">
-              <fieldset>
-                <legend>Destination Details</legend>
-                  <label class="required">Destination</label>
-                  <app-material-select-input  (selectionChange)="onDestinationSelectionChange($event, 'destination')"
-                    [options]="destinations" formControlName="destination"></app-material-select-input>
-                  <div class="divider"></div>
-                  <label class="required">Location</label>
-                  <app-material-input
-                    [icon]="'person_pin'" [width]="20" formControlName="location" [errorMsg]="formValidationMap.location">
-                  </app-material-input>
-              </fieldset>
-          </form>
-            <fieldset>
-              <legend>Actions</legend>
-              <app-material-button [label]="'Load Previous Receivers'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()"></app-material-button><br><br>
-              <app-material-button *ngIf="isAddItemsVisible()" [label]="'Add Receiver'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onAddReceveirs()"></app-material-button><br><br>
-            </fieldset>
-            <div formArrayName="receivers" *ngFor="let item of receivers.controls; let i = index">
-              <div [formGroupName] = 'i' >
-            <fieldset>
-              <legend>Customer Details</legend>
-              <div>
-                <label class="required">Type</label>
-                <app-material-select-input  [options]="types" formControlName="type"
-                (selectionChange)="onSelectionChange($event, 'type', i)"  [width]="10" [value]="types[0]">
-                </app-material-select-input>
-                <label *ngIf="!isCustomerPersonal(i)" class="required">Registered Name</label>
-                    <app-material-input *ngIf="!isCustomerPersonal(i)"  [width]="80" formControlName="registeredName" [errorMsg]="formValidationMap.registeredName"></app-material-input>
-                    <label class="required" *ngIf="!isCustomerPersonal(i)">Registered number</label>
-                    <app-material-input *ngIf="!isCustomerPersonal(i)" [width]="80" formControlName="registeredNumber"></app-material-input>
-              </div>
-            </fieldset>
-            <fieldset>
-              <legend>Personal Information</legend>
-              <div>
-                <label class="required">Title</label>
-                <app-material-select-input [options]="titles" formControlName="title"
-                (selectionChange)="onSelectionChange($event, 'title',i)"  [width]="10" [value]="titles[0]"></app-material-select-input>
-                <label class="required">Name</label>
-                <app-material-input [width]="20" formControlName="name" [width]="80" [errorMsg]="formValidationMap.name"></app-material-input>
-                <label class="required">Surname</label>
-                <app-material-input [width]="20" formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname"></app-material-input>
-              </div>
-            </fieldset>
-            <fieldset>
-                <legend>Contact Information</legend>
-                <div>
-                  <label class="required">Telephone</label>
-                  <div formGroupName="phoneGroup">
-                    <app-material-select-input [label]="'Code'"  [width]="7" [options]="codes" formControlName="countryCode"
-                    (selectionChange)="onSelectionChange($event, 'countryCode', i)" [value]="codes[0]"></app-material-select-input>
-                    <div class="divider"></div>
-                    <app-material-input [label]="'Phone'" [type]="'phone'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
-                  </div>
-                </div>
-            </fieldset>
-            <br>
-            <app-material-button
-              [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" (click)="onDeleteReceiver(i)">
-            </app-material-button>
-            <div class="divider"></div>
-            <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button>
-          </div>
+<div id="summary" class="center">
+  <form [formGroup]="receiversCustomerForm">
+    <mat-accordion [multi]="true">
+      <div [formGroup]="destinationForm">
+      <mat-expansion-panel hideToggle [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon >flight_takeoff</mat-icon>
+            Destination
+          </mat-panel-title>
+          <mat-panel-description>
+            Destination Information
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <br/>
+        <fieldset>
+          <legend>Destination Information Details</legend>
+          <div class="columns">
+            <div class="item">
+              <label for="fname">Destination<span>*</span></label><br>
+              <app-material-select-input  (selectionChange)="onDestinationSelectionChange($event, 'destination')"
+                [options]="destinations" formControlName="destination">
+              </app-material-select-input>
+            </div>
+            <div class="item">
+              <label for="fname">Location</label><br>
+              <app-material-input
+                [width]="60" formControlName="location" [errorMsg]="formValidationMap.location">
+              </app-material-input>
+            </div>
         </div>
-      </form>
+        </fieldset>
+      </mat-expansion-panel>
     </div>
-    </div>
+      <mat-expansion-panel hideToggle [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon >flight_takeoff</mat-icon>
+            Action
+          </mat-panel-title>
+          <mat-panel-description>
+            Manage Receivers
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <br/>
+        <fieldset>
+          <legend>Actions</legend>
+          <div class="columns">
+            <div class="item">
+              <app-material-button
+                [label]="'Load Previous Receivers'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()">
+              </app-material-button>
+            </div>
+            <div class="item">
+              <app-material-button
+                *ngIf="isAddItemsVisible()" [label]="'Add Receiver'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onAddReceveirs()">
+              </app-material-button>
+            </div>
+        </div>
+        </fieldset>
+      </mat-expansion-panel>
+      <div formArrayName="receivers" *ngFor="let item of receivers.controls; let i = index">
+        <div [formGroupName] = 'i'>
+          <mat-expansion-panel hideToggle [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon >flight_takeoff</mat-icon>
+                Receiver {{i + 1}}
+              </mat-panel-title>
+              <mat-panel-description>
+                Receiver {{i + 1}}  Information
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <br/>
+            <fieldset>
+              <legend>Receiver {{i + 1}} Information Details</legend>
+              <div class="columns">
+                <div class="item">
+                  <label for="fname">Type<span>*</span></label><br>
+                  <app-material-select-input  [options]="types" formControlName="type"
+                    (selectionChange)="onSelectionChange($event, 'type', i)"  [width]="30" [value]="types[0]">
+                  </app-material-select-input>
+                </div>
+                <div class="item" formGroupName="phoneGroup">
+                  <label for="lname"> Phone Number <span>*</span></label><br>
+                  <app-material-select-input [label]="'Code'"  [width]="20" [options]="codes" formControlName="countryCode"
+                    (selectionChange)="onSelectionChange($event, 'countryCode', i)" [value]="codes[0]"></app-material-select-input>&nbsp;
+                    <app-material-input [label]="'Phone'" [type]="'phone'" formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
+                </div>
+                <div *ngIf="!isCustomerPersonal(i)" class="item">
+                  <label for="lname">Registered Name</label><br>
+                  <app-material-input
+                    [width]="60" formControlName="registeredName" >
+                  </app-material-input>
+                </div>
+                <div *ngIf="!isCustomerPersonal(i)" class="item">
+                  <label for="lname">Registered Number</label><br>
+                  <app-material-input
+                    [width]="60" formControlName="registeredNumber">
+                  </app-material-input>
+                </div>
+                <div class="item">
+                  <label for="lname">Title</label><br>
+                  <app-material-select-input [options]="titles" formControlName="title"
+                  (selectionChange)="onSelectionChange($event, 'title',i)"  [width]="30" [value]="titles[0]">
+                  </app-material-select-input>
+                </div>
+                <div class="item"></div>
+                <div class="item">
+                  <label for="lname">Name</label><br>
+                  <app-material-input formControlName="name" [width]="80" [errorMsg]="formValidationMap.name"></app-material-input>
+                </div>
+                <div class="item">
+                  <label for="lname">Surname</label><br>
+                  <app-material-input formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname"></app-material-input>
+                </div>
+              </div>
+            </fieldset>
+          </mat-expansion-panel>
+        </div>
+      </div>
+    </mat-accordion>
+</form>
 </div>
-
-
 
 
