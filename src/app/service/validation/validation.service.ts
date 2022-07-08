@@ -133,6 +133,10 @@ export class ValidationService {
 
   getGroupValidationMessage(fGroup: AbstractControl, fMainControl: AbstractControl, fControlName: string): string | null {
     const validationMessages = this.formMap[fControlName];
+    console.log('From service')
+
+    console.log(validationMessages)
+
     if ((fMainControl.touched || fMainControl.dirty ) && fMainControl.errors)
     {
       return Object.keys(fMainControl.errors).map(

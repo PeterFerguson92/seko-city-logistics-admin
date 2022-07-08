@@ -59,11 +59,11 @@
           </div>
           <div class="item"></div>
           <div class="item">
-            <label for="lname">Name</label><br>
+            <label for="lname">Name<span>*</span></label><br>
             <app-material-input formControlName="name" [width]="80" [errorMsg]="formValidationMap.name"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Surname</label><br>
+            <label for="lname">Surname<span>*</span></label><br>
             <app-material-input formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname"></app-material-input>
           </div>
         </div>
@@ -87,14 +87,14 @@
             <label for="lname"> Phone Number <span>*</span></label><br>
             <app-material-select-input [label]="'Code'"  [width]="15" [options]="countryCodes" formControlName="countryCode"
                   (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
-            <app-material-input [width]="30" [label]="'Number'" formControlName="phone" ></app-material-input>
+            <app-material-input [width]="30" [label]="'Number'" formControlName="phone" [errorMsg]="formValidationMap.phone" ></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Email</label><br>
+            <label for="lname">Email<span>*</span></label><br>
             <app-material-input [width]="80" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Postcode</label><br>
+            <label for="lname">Postcode<span>*</span></label><br>
             <app-material-input  [width]="35" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">

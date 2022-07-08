@@ -58,7 +58,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         surname: ['', Validators.required],
         registeredName: [''],
         registeredNumber: [''],
-        email: ['', [Validators.email]],
+        email: ['', [Validators.required, Validators.email]],
         phoneGroup: this.formBuilder.group({
           countryCode: [this.countryCodes[0], [Validators.required]],
           phone: ['', [Validators.required]],}, { validators: [Validators.required, this.validationService.phoneValidator] }),
@@ -99,7 +99,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         if (data.customerByReference)
         {
           this.customer = data.customerByReference;
-          console.log(this.customer)
           this.populateFields()
         } else
         {
