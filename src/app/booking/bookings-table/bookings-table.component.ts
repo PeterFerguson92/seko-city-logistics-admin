@@ -14,7 +14,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 @Component({
   selector: 'app-bookings-table',
   templateUrl: './bookings-table.component.html',
-  styleUrls: ['./bookings-table.component.css']
+  styleUrls: ['./bookings-table.component.css', '../../shared/shared-table.css']
 })
 export class BookingsTableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;

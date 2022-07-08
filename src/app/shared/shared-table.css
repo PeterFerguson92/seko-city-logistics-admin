@@ -41,18 +41,25 @@ tr:hover {background-color: #ddd;}
   padding-bottom: 12px;
   text-align: center;
   justify-items: center;
-  background-color: #004e92;
+  /* background-color: #004e92; */
+  background-color: #6D8299!important;
+
   color: white;
 }
-
 
 .fab-main {
   position: fixed;
   right: 1em;
   bottom: 1em;
-  background-color: #004e92;
+  /* background-color: #004e92; */
+  background-color: #6D8299!important;
+
 }
 
 .custom-icon-color {
   color: rgb(246, 150, 6);
+}
+
+.driver-custom-icon-color {
+  color: rgb(149, 71, 142);
 }
