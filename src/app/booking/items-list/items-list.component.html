@@ -65,23 +65,29 @@
 <div *ngIf="showWarning()" class="alert warning">
   <strong>Warning!</strong> Some items contain invalid values.
 </div>
-<mat-accordion [multi]="true">
-  <mat-expansion-panel hideToggle [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>Items Totals</mat-panel-title>
-    </mat-expansion-panel-header>
-      <fieldset>
-        <legend>Totals</legend>
-        <div>
-          <label>Total Amount (£)</label>
-          <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="20">
-            <input matInput type="text" [(ngModel)]="calculateTotals().totalAmount" readonly>
-          </mat-form-field>
-          <label>Total Number of items</label>
-          <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="20">
-            <input matInput type="text" [(ngModel)]="calculateTotals().totalItems" readonly>
-          </mat-form-field>
-        </div>
-      </fieldset>
-  </mat-expansion-panel>
-</mat-accordion>
+<div id="summary">
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Items Totals</mat-panel-title>
+      </mat-expansion-panel-header><br>
+        <fieldset>
+          <legend>Totals</legend>
+          <div class="columns">
+            <div class="item">
+              <label for="lname">Total Amount (£)</label><br>
+              <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="20">
+                <input matInput type="text" [(ngModel)]="calculateTotals().totalAmount" readonly>
+              </mat-form-field>
+            </div>
+            <div class="item">
+              <label for="lname">Total Number of items</label><br>
+              <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="20">
+                <input matInput type="text" [(ngModel)]="calculateTotals().totalItems" readonly>
+              </mat-form-field>
+            </div>
+          </div>
+        </fieldset>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

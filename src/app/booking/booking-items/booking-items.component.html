@@ -4,40 +4,51 @@
   <div class="row">
     <div class="col-75">
       <div class="container">
-          <app-items-list [items]="itemsObjs" (updateItemsEvent)="updateTotalAmount()" ></app-items-list>
-          <br>
-          <mat-accordion [multi]="true">
-            <mat-expansion-panel hideToggle [expanded]="true">
-              <mat-expansion-panel-header>
-                <mat-panel-title>Payment Details</mat-panel-title>
-              </mat-expansion-panel-header>
-              <form id="survey-form" [formGroup]="paymentForm">
-                <fieldset>
-                  <legend>Payment</legend>
-                  <div>
-                    <label class="required">Type</label>
-                    <app-material-select-input [label]="'Payment type'"  [width]="30" [options]="paymentTypes" formControlName="paymentType"
-                      (selectionChange)="onSelectionChange($event, 'paymentType')" [value]="paymentTypes[0]">
-                    </app-material-select-input>
-                    <label class="required">Status</label>
-                    <app-material-select-input [label]="'Payment status'"  [width]="30" [options]="paymentStatuses" formControlName="paymentStatus"
-                      (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
-                    </app-material-select-input>
-                    <label>Amount Paid (£)</label>
-                    <app-material-numeric-input  [width]="10" formControlName="amountPaid" (change)="updateOutstandingAmount()"  ></app-material-numeric-input >
-                    <label>Amount Outstanding (£) </label>
-                    <app-material-numeric-input [width]="10" formControlName="amountOutstanding"  ></app-material-numeric-input >
-                    <label>Notes</label>
-                    <app-material-input [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
-
-                    <!-- <app-material-text-area-input [placeholder]="'test'" formControlName="paymentNotes">
-
-                    </app-material-text-area-input> -->
-                  </div>
-                </fieldset>
-              </form>
-            </mat-expansion-panel>
-          </mat-accordion>
+          <app-items-list [items]="itemsObjs" (updateItemsEvent)="updateTotalAmount()" ></app-items-list><br>
+          <div id="summary">
+            <mat-accordion [multi]="true">
+              <mat-expansion-panel hideToggle [expanded]="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Payment Details</mat-panel-title>
+                </mat-expansion-panel-header>
+                <form id="survey-form" [formGroup]="paymentForm">
+                  <fieldset>
+                    <legend>Payment</legend>
+                    <div class="columns">
+                      <div class="item">
+                        <label for="lname">Type</label><br>
+                        <app-material-select-input [label]="'Payment type'" [width]="60" [options]="paymentTypes" formControlName="paymentType"
+                          (selectionChange)="onSelectionChange($event, 'paymentType')" [value]="paymentTypes[0]">
+                        </app-material-select-input>
+                      </div>
+                      <div class="item">
+                        <label for="lname">Status</label><br>
+                        <app-material-select-input [label]="'Payment status'" [width]="60" [options]="paymentStatuses" formControlName="paymentStatus"
+                          (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
+                        </app-material-select-input>
+                      </div>
+                      <div class="item">
+                        <label for="lname">Amount Paid (£)</label><br>
+                        <app-material-numeric-input
+                          [width]="10" formControlName="amountPaid" (change)="updateOutstandingAmount()" >
+                        </app-material-numeric-input >
+                      </div>
+                      <div class="item">
+                        <label for="lname">Amount Outstanding (£) </label><br>
+                        <app-material-numeric-input
+                          [width]="10" formControlName="amountOutstanding">
+                        </app-material-numeric-input >
+                      </div>
+                      <div class="item">
+                        <label for="lname">Notes</label><br>
+                        <app-material-input [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </mat-expansion-panel>
+            </mat-accordion>
+        </div>
       </div>
     </div>
   </div>

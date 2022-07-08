@@ -23,7 +23,7 @@ html, body {
   font-family: Roboto, Arial, sans-serif;
   font-size: 18px;
   color: #fff;
-  background-color: # 006622;
+  background-color: #006622;
   } */
   textarea {
   width: calc(100% - 12px);
@@ -173,7 +173,7 @@ html, body {
   margin-top: 10px;
   text-align: center;
   }
-  button {
+  /* button {
   width: 150px;
   padding: 10px;
   border: none;
@@ -185,7 +185,7 @@ html, body {
   }
   button:hover {
   background:  #00b33c;
-  }
+  } */
   @media (min-width: 568px) {
   .name-item, .city-item {
   display: flex;
@@ -202,8 +202,6 @@ html, body {
   padding-bottom:5px;
   }
   }
-
-
   mat-expansion-panel-header-title {
     font-weight: bold;
   }

@@ -51,7 +51,7 @@ import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-dupl
 @Component({
   selector: 'app-items-list',
   templateUrl: './items-list.component.html',
-  styleUrls: ['./items-list.component.css', '../../shared/shared-form.css']
+  styleUrls: ['./items-list.component.css', '../../shared/shared-new-form.css']
 })
 export class ItemsListComponent implements OnInit, OnChanges {
 
