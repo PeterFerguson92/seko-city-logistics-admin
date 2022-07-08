@@ -9,7 +9,7 @@ import { ShipmentService } from '../service/shipment.service';
 @Component({
   selector: 'app-add-edit-shipment',
   templateUrl: './add-edit-shipment.component.html',
-  styleUrls: ['./add-edit-shipment.component.css', './../../shared/shared-form.css']
+  styleUrls: ['./add-edit-shipment.component.css', './../../shared/shared-new-form.css']
 })
 
 export class AddEditShipmentComponent implements OnInit {

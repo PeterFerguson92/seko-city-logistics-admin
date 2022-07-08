@@ -1,71 +1,146 @@
-<div class="container">
-  <h1 id="title">Shipment</h1>
-  <p id="description">Please fill the shipment details.</p>
-  <div class="row">
-    <div class="col-75">
-      <div class="container">
-        <form id="survey-form" [formGroup]="addEditShipmentForm">
-              <fieldset>
-                <legend>Ports information</legend>
-                <div>
-                  <label class="required">Port Of Loading</label>
-                  <app-material-select-input [width]="80" [options]="portsOfLoading"
-                    [value]="portsOfLoading[0]" formControlName="portOfLoading">
-                  </app-material-select-input>
-                  <label class="required">Port Of Discharge</label>
-                  <app-material-select-input [width]="80" [options]="portsOfDischarge"
-                    [value]="portsOfDischarge[0]" formControlName="portOfDischarge">
-                  </app-material-select-input>
-                  <label class="required">Place Of Receipt</label>
-                  <app-material-select-input [width]="80" [options]="placesOfReceipt"
-                    [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
-                  </app-material-select-input>
-                </div>
-            </fieldset>
-            <fieldset>
-              <legend>Exporter Information</legend>
-              <div>
-                  <label>Full Name:</label>
-                  <app-material-input  [width]="80" formControlName="exporterFullName"></app-material-input>
-                  <label>Postcode:</label>
-                  <app-material-input [width]="80" formControlName="exporterPostcode"></app-material-input>
-                  <label>Address:</label>
-                  <app-material-input  [width]="80" formControlName="exporterAddress"></app-material-input>
-                  <label>Area:</label>
-                  <app-material-input  [width]="80" formControlName="exporterArea"></app-material-input>
-                  <label>City:</label>
-                  <app-material-input  [width]="80" formControlName="exporterCity"></app-material-input>
-              </div>
-          </fieldset>
-          <fieldset>
-              <legend>Consignee Information</legend>
-              <div>
-                  <label>Full Name:</label>
-                  <app-material-input  [width]="80" formControlName="consigneeName" ></app-material-input>
-                  <label>Address:</label>
-                  <app-material-input [width]="80" formControlName="consigneeAddress" ></app-material-input>
-              </div>
-          </fieldset>
-          <fieldset>
-            <legend>Details</legend>
-            <div>
-                <label>BL Vessel:</label>
-                <app-material-input  [width]="80" formControlName="blVessel" ></app-material-input>
-                <label>Container Number:</label>
-                <app-material-input  [width]="80" formControlName="containerNumber" ></app-material-input>
-                <label>Loading Date:</label>
-                <app-material-date-picker-input (inputChange)="onInputChange($event, 'loadingDate')" formControlName="loadingDate"></app-material-date-picker-input>
-                <label>Shipment Date:</label>
-                <app-material-date-picker-input (inputChange)="onInputChange($event, 'shipmentDate')" formControlName="shipmentDate"></app-material-date-picker-input>
-              </div>
-          </fieldset>
-        </form>
+<div id="summary" class="center">
+  <form [formGroup]="addEditShipmentForm">
+    <div class="banner"></div><br>
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon >flight_takeoff</mat-icon>
+          Ports
+        </mat-panel-title>
+        <mat-panel-description>
+          Ports Information Details
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <br/>
+      <fieldset>
+        <legend>Ports</legend>
+        <div class="columns">
+        <div class="item">
+          <label for="fname">Port Of Loading</label><br>
+          <app-material-select-input [width]="60" [options]="portsOfLoading"
+            [value]="portsOfLoading[0]" formControlName="portOfLoading">
+          </app-material-select-input>
+        </div>
+        <div class="item">
+          <label for="fname">Port Of Discharge</label><br>
+          <app-material-select-input [width]="60" [options]="portsOfDischarge"
+            [value]="portsOfDischarge[0]" formControlName="portOfDischarge">
+          </app-material-select-input>
+        </div>
+        <div class="item">
+          <label for="fname">Place Of Receipt</label><br>
+          <app-material-select-input [width]="60" [options]="placesOfReceipt"
+            [value]="placesOfReceipt[0]" formControlName="placeOfReceipt">
+          </app-material-select-input>
+        </div>
       </div>
+      </fieldset>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon >flight_land</mat-icon>
+          SHIPMENT
+        </mat-panel-title>
+        <mat-panel-description>
+          Shipment Details
+        </mat-panel-description>
+      </mat-expansion-panel-header>
       <br>
-      <div class="submitBtn" align="center">
-        <br>
-        <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
-      </div>
-    </div>
+      <fieldset>
+        <legend>Shipment Information Details</legend>
+        <div class="columns">
+          <div class="item">
+            <label for="lname">BL Vessel</label><br>
+            <app-material-input  [width]="80" formControlName="blVessel" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Container Number</label><br>
+            <app-material-input  [width]="80" formControlName="containerNumber" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Loading Date</label><br>
+            <app-material-date-picker-input
+              (inputChange)="onInputChange($event, 'loadingDate')" formControlName="loadingDate">
+            </app-material-date-picker-input>
+          </div>
+          <div class="item">
+            <label for="lname">Shipment Date</label><br>
+            <app-material-date-picker-input
+              (inputChange)="onInputChange($event, 'shipmentDate')" formControlName="shipmentDate">
+            </app-material-date-picker-input>
+          </div>
+        </div>
+      </fieldset>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon >flight_land</mat-icon>
+          EXPORTER
+        </mat-panel-title>
+        <mat-panel-description>
+          Exporter Details
+        </mat-panel-description>
+      </mat-expansion-panel-header><br>
+      <fieldset>
+        <legend>Exporter Information Details</legend>
+        <div class="columns">
+          <div class="item">
+            <label for="lname">Full Name </label><br>
+            <app-material-input  [width]="80" formControlName="exporterFullName"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Postcode</label><br>
+            <app-material-input [width]="80" formControlName="exporterPostcode"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Address</label><br>
+            <app-material-input  [width]="80" formControlName="exporterAddress"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Area</label><br>
+            <app-material-input  [width]="80" formControlName="exporterArea"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">City</label><br>
+            <app-material-input  [width]="80" formControlName="exporterCity"></app-material-input>
+          </div>
+        </div>
+      </fieldset>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon >flight_land</mat-icon>
+          CONSIGNEE
+        </mat-panel-title>
+        <mat-panel-description>
+          Consignee Details
+        </mat-panel-description>
+      </mat-expansion-panel-header><br>
+      <fieldset>
+        <legend>Consignee Information Details</legend>
+        <div class="columns">
+          <div class="item">
+            <label for="lname">Full Name </label><br>
+            <app-material-input  [width]="80" formControlName="consigneeName" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Address</label><br>
+            <app-material-input [width]="80" formControlName="consigneeAddress" ></app-material-input>
+          </div>
+        </div>
+      </fieldset>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </form>
   </div>
-</div>
+  <br>
+  <div class="submitBtn" align="center">
+    <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
+  </div>
+  <br>
+  <br>
+

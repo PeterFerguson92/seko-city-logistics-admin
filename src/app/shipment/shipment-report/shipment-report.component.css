@@ -11,7 +11,7 @@ table{
 }
 td{
   padding: 5px 0 5px 15px;
-  border: 1px solid #EEE
+  border: 1px solid antiquewhite
 }
 .tabletitle{
   padding: 5px;
@@ -31,5 +31,5 @@ td{
 }
 
 .mat-expansion-panel-header-title {
-  color: whitesmoke
+  color: antiquewhite
 }

@@ -23,7 +23,7 @@ html, body {
   font-family: Roboto, Arial, sans-serif;
   font-size: 18px;
   color: #fff;
-  background-color: #006622;
+  background-color: # 006622;
   } */
   textarea {
   width: calc(100% - 12px);
@@ -201,4 +201,33 @@ html, body {
   display:block;
   padding-bottom:5px;
   }
+  }
+
+
+  mat-expansion-panel-header-title {
+    font-weight: bold;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: antiquewhite
+  }
+
+  .mat-expansion-panel-header-description {
+    color: antiquewhite;
+  }
+
+
+   .mat-expansion-panel-header{
+    /* padding-left: 0px !important;
+    padding-top: 1px !important; */
+    background:  #6D8299!important;
+    /* padding-bottom: 1px !important; */
+  }
+
+
+  .center {
+    margin: auto;
+    width: 90%;
+    /* border: 3px solid green; */
+    padding: 10px;
   }
