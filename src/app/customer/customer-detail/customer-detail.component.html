@@ -1,7 +1,28 @@
 <div id="summary" class="center">
   <form [formGroup]="addEditCustomerForm">
     <div class="banner"></div><br>
-  <mat-accordion [multi]="true">
+  <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="false">
+    <mat-expansion-panel-header *ngIf="isCreateBookingMode()">
+      <mat-panel-title>
+        <mat-icon >flight_takeoff</mat-icon>
+        Action
+      </mat-panel-title>
+      <mat-panel-description>
+        Manage Sender
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <br/>
+    <fieldset>
+      <legend>Actions</legend>
+      <div class="columns">
+        <div [formGroup]="loadCustomerForm" class="item">
+          <label for="lname">Reference</label><br>
+          <app-material-input formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>&nbsp;
+          <app-material-button [label]="'Load Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
+        </div>
+    </div>
+    </fieldset>
+  </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -108,7 +129,7 @@
   </form>
   </div>
   <br>
-  <div class="submitBtn" align="center">
+  <div *ngIf="!isBookingMode()" class="submitBtn" align="center">
     <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
   </div>
   <br>
