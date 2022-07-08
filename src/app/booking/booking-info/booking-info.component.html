@@ -1,30 +1,49 @@
-<div class="container">
-  <h1 id="title">Pick Up Information Form</h1>
-  <!-- <p id="description">Please fill the customer details.</p> -->
-  <div class="row">
-    <div class="col-75">
-      <div class="container">
-        <form id="survey-form" [formGroup]="bookingInfoForm">
-          <fieldset>
-            <legend>Pick Up Details</legend>
-            <div>
-              <label class="required">Date</label>
-              <app-material-date-picker-input (inputChange)="onInputChange($event, 'date')" formControlName="date"></app-material-date-picker-input>
-              <app-material-button [label]="'Check availability'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onCheckAvailabilty()"></app-material-button><br>
-              <label class="required">Time</label>
-              <app-material-select-input [label]="'Time'" [options]="times" formControlName="time"
-                (selectionChange)="onSelectionChange($event, 'time')"  [width]="20" [value]="times[0]">
-              </app-material-select-input>
-              <label class="required">Postcode</label>
-              <app-material-input [icon]="'person_pin'"[width]="15" formControlName="postcode"></app-material-input>
-              <label class="required">Address</label>
-              <app-material-select-input [width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
-              <label class="required">Updates via whatsapp</label>
-              <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    </div>
+<div id="summary" class="center">
+  <form [formGroup]="bookingInfoForm">
+    <div class="banner"></div><br>
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>groups</mat-icon>
+          PickUp
+        </mat-panel-title>
+        <mat-panel-description>
+          PickUp Information
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <br/>
+      <fieldset>
+        <legend>PickUp Information Details</legend>
+        <div class="columns">
+          <div class="item" >
+            <label for="lname">Date<span>*</span></label><br>
+            <app-material-date-picker-input
+              (inputChange)="onInputChange($event, 'date')" formControlName="date">
+            </app-material-date-picker-input>&nbsp;
+            <app-material-button [label]="'Check availability'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onCheckAvailabilty()"></app-material-button><br>
+          </div>
+          <div class="item">
+            <label for="lname">Time</label><br>
+            <app-material-select-input [options]="times" formControlName="time"
+              (selectionChange)="onSelectionChange($event, 'time')"  [width]="60" [value]="times[0]">
+            </app-material-select-input>
+          </div>
+          <div class="item">
+            <label for="lname">Postcode</label><br>
+            <app-material-input [icon]="'person_pin'"[width]="45" formControlName="postcode"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Address</label><br>
+            <app-material-select-input [width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
+          </div>
+          <div class="item">
+            <label for="lname">Updates via whatsapp</label>&nbsp;
+            <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
+          </div>
+        </div>
+      </fieldset>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </form>
   </div>
-</div>

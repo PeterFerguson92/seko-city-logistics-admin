@@ -42,6 +42,12 @@ tr:nth-child(even) {
   color: white;
 
 }
- /*  ------------------------------         */
 
- 
+.mat-expansion-panel-header{
+  background:  #6D8299!important;
+}
+
+.mat-expansion-panel-header-title {
+  color: antiquewhite
+}
+

@@ -18,3 +18,11 @@ th.details{
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.mat-expansion-panel-header{
+  background:  #6D8299!important;
+}
+
+.mat-expansion-panel-header-title {
+  color: antiquewhite
+}

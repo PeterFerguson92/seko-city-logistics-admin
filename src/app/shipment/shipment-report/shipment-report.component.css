@@ -24,10 +24,7 @@ td{
 }
 
 .mat-expansion-panel-header{
-  /* padding-left: 0px !important;
-  padding-top: 1px !important; */
   background:  #6D8299!important;
-  /* padding-bottom: 1px !important; */
 }
 
 .mat-expansion-panel-header-title {

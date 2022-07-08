@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CREATE_BOOKING_MODE, EDIT_BOOKING_MODE, VIEW_BOOKING_MODE } from 'src/app/constants';
-import { CustomersService } from 'src/app/customer/service/customers.service';
 
 @Component({
   selector: 'app-add-edit-booking',
@@ -23,8 +22,8 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
         this.booking.customer = data.booking[1].data.customerByReference;
       } else
       {
-        this.booking.customer = data.customer
-        this.mode = CREATE_BOOKING_MODE
+        this.booking.customer = data.customer;
+        this.mode = CREATE_BOOKING_MODE;
       }
     })
   }
