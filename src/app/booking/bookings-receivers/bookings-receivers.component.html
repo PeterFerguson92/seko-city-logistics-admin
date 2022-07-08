@@ -114,6 +114,12 @@
                   <label for="lname">Surname</label><br>
                   <app-material-input formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname"></app-material-input>
                 </div>
+                <div class="item" >
+                  <app-material-button
+                    [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" (click)="onDeleteReceiver(i)">
+                  </app-material-button>&nbsp;
+                  <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button>
+                </div>
               </div>
             </fieldset>
           </mat-expansion-panel>
