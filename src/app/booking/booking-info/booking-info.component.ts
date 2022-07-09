@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BOOKING_PICKUP_TIMES } from 'src/app/constants';
@@ -11,7 +11,7 @@ import { AvailabilityDialogComponent } from '../availability-dialog/availability
   templateUrl: './booking-info.component.html',
   styleUrls: ['./booking-info.component.css', '../../shared/shared-new-form.css']
 })
-export class BookingInfoComponent implements OnInit {
+export class BookingInfoComponent implements OnInit, AfterViewInit {
   @Input() pickUpDate;
   @Input() pickUpTime;
   @Input() pickUpPostCode;
@@ -21,6 +21,7 @@ export class BookingInfoComponent implements OnInit {
   bookingInfoForm: FormGroup;
   times = BOOKING_PICKUP_TIMES
   addresses = [];
+  formValidationMap = { postcode: '' };
 
   constructor(private formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -35,6 +36,18 @@ export class BookingInfoComponent implements OnInit {
       address: [this.pickUpAddress ? this.pickUpAddress : '', [Validators.required]],
       updatesViaWhatsapp: [this.updatesViaWhatsapp === null ? this.updatesViaWhatsapp : true, [Validators.required]]
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.validateFormControl('postcode');
+  }
+
+  validateFormControl(fControlName: string) {
+    const fControl = this.getFormControl(fControlName);
+    this.validationService.watchAndValidateFormControl(fControl)
+      .subscribe(() => {
+        this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName);
+      });
   }
 
   onInputChange(event, fControlName) {

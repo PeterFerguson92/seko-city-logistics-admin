@@ -9,15 +9,21 @@
             <mat-accordion [multi]="true">
               <mat-expansion-panel hideToggle [expanded]="true">
                 <mat-expansion-panel-header>
-                  <mat-panel-title>Payment Details</mat-panel-title>
+                  <mat-panel-title>
+                    <mat-icon>credit_card</mat-icon>
+                    Payment
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Payment Information
+                  </mat-panel-description>
                 </mat-expansion-panel-header>
                 <form id="survey-form" [formGroup]="paymentForm">
                   <fieldset>
-                    <legend>Payment</legend>
+                    <legend>Payment Information Details</legend>
                     <div class="columns">
                       <div class="item">
                         <label for="lname">Type</label><br>
-                        <app-material-select-input [label]="'Payment type'" [width]="60" [options]="paymentTypes" formControlName="paymentType"
+                        <app-material-select-input [width]="60" [options]="paymentTypes" formControlName="paymentType"
                           (selectionChange)="onSelectionChange($event, 'paymentType')" [value]="paymentTypes[0]">
                         </app-material-select-input>
                       </div>

@@ -5,16 +5,16 @@
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <mat-icon>groups</mat-icon>
-          PickUp
+          <mat-icon>today</mat-icon>
+          Pick-up
         </mat-panel-title>
         <mat-panel-description>
-          PickUp Information
+          Pick-up Information
         </mat-panel-description>
       </mat-expansion-panel-header>
       <br/>
       <fieldset>
-        <legend>PickUp Information Details</legend>
+        <legend>Pick-up Information Details</legend>
         <div class="columns">
           <div class="item" >
             <label for="lname">Date<span>*</span></label><br>
@@ -31,7 +31,7 @@
           </div>
           <div class="item">
             <label for="lname">Postcode</label><br>
-            <app-material-input [icon]="'person_pin'"[width]="45" formControlName="postcode"></app-material-input>
+            <app-material-input [icon]="'person_pin'"[width]="45" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">
             <label for="lname">Address</label><br>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CUSTOMER_TYPES, CUSTOMER_TITLES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_RECEIVER_ROLE } from 'src/app/constants';
@@ -14,7 +14,7 @@ import { PreviousRecvDialogComponent } from '../previous-recv-dialog/previous-re
   templateUrl: './bookings-receivers.component.html',
   styleUrls: ['./bookings-receivers.component.css', '../../shared/shared-new-form.css']
 })
-export class BookingsReceiversComponent implements OnInit {
+export class BookingsReceiversComponent implements OnInit, AfterViewInit {
 
   @Input() references;
   @Input() destination;
@@ -29,7 +29,10 @@ export class BookingsReceiversComponent implements OnInit {
   destinations = GH_DESTINATIONS;
   showOtherDestinations = false;
   alertOptions = { autoClose: true, keepAfterRouteChange: false };
-  formValidationMap = { name: '', surname: '', registeredName: '', phone: '', location: '' };
+  formValidationMap = { name: '', surname: '', registeredName: '', phone: '' };
+  formValidationMapList = [];
+
+  counter = 0;
 
   get receivers(): FormArray {
     return this.receiversCustomerForm.get('receivers') as FormArray;
@@ -62,11 +65,29 @@ export class BookingsReceiversComponent implements OnInit {
 
   }
 
+  ngAfterViewInit(): void {
+    // this.validateFormControl('registeredName');
+    // this.validateFormControl('name');
+    // this.validateFormControl('surname');
+    // this.validateGroupFormControl('phoneGroup', 'phone')
+  }
+
+  linkReceiverValidators() {
+    this.receivers.controls.forEach((control, index) => {
+      console.log(index);
+      this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
+      this.validateReceiverFormControl('name', index);
+      this.validateReceiverFormControl('surname', index);
+      this.validateGroupFormControl('phoneGroup', 'phone', index)
+
+    });
+  }
+
   buildReceiver(customer: ICustomer): FormGroup {
     return this.formBuilder.group({
       reference: [customer ? customer.reference : null, []],
       type: [customer ? customer.type : this.types[0], [Validators.required]],
-      registeredName: [customer ? customer.registeredName : ''],
+      registeredName: [customer ? customer.registeredName : '', []],
       registeredNumber: [customer ? customer.registeredNumber : ''],
       title: [customer ? customer.title : this.titles[0], [Validators.required]],
       name: [customer ? customer.name : '', Validators.required],
@@ -84,6 +105,7 @@ export class BookingsReceiversComponent implements OnInit {
       ({ data }) => {
         const recvs = data.customersByReferences;
         recvs.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
+        this.linkReceiverValidators();
       },
       error => {
         console.log(error);
@@ -207,18 +229,27 @@ export class BookingsReceiversComponent implements OnInit {
       });
   }
 
-  validateGroupFormControl(formGroupName: string, fControlName: string) {
-    const fGroup = this.getDestinationFormControl(formGroupName);
+  validateReceiverFormControl(fControlName: string, index) {
+    const fControl = this.getReceiversFormControl(fControlName, index);
+    this.validationService.watchAndValidateFormControl(fControl)
+      .subscribe(() => {
+        this.formValidationMapList[index][fControlName] = this.validationService.getValidationMessage(fControl, fControlName);
+      });
+  }
+
+  validateGroupFormControl(formGroupName: string, fControlName: string, index) {
+    const fGroup = this.getReceiversFormControl(formGroupName, index);
     const fMainControl = fGroup.get(fControlName);
     this.validationService.watchAndValidateFormControl(fGroup)
       .subscribe(() => {
-
-        this.formValidationMap.phone = this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName);
+        console.log(this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName));
+        console.log(this.formValidationMapList);
+        this.formValidationMapList[index].phone =
+          this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName);
         if (fGroup.dirty && !fGroup.valid)
         {
           fMainControl.markAsDirty();
           fMainControl.setErrors({ phone: 'Phone number' });
-
         } else
         {
           fGroup.setErrors(null);
