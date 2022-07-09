@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { CommonService } from 'src/app/service/common.service';
 import { styles } from './mapstyles';
+const postcodes = require('node-postcodes.io')
 
 @Component({
   selector: 'app-bookings-locations',
@@ -12,16 +13,9 @@ import { styles } from './mapstyles';
   styleUrls: ['./bookings-locations.component.css']
 })
 export class BookingsLocationsComponent implements OnInit {
-  places: any;
-  title = 'google-maps';
   map: google.maps.Map;
   googleMapsKey;
-  mockLocations = [
-  { lat: 51.486784, lng: -3.171499, distance: null},
-  { lat: 52.916763, lng: -1.485883, distance: null },
-  { lat: 51.411802, lng: -0.095092, distance: null },
-  { lat: 52.125991, lng: -0.499651, distance: null }];
-
+  geoLocations;
   currentLocation;
 
   constructor(private activatedroute: ActivatedRoute, private authService: AuthenticationService,
@@ -29,22 +23,32 @@ export class BookingsLocationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show()
-
     this.activatedroute.data.subscribe(data => {
-      console.log(data.bookings);
       this.getGeoLocations(data.bookings)
+      this.getGoogleApiKey();
+      this.calculateGeoLocationsDistances();
     })
-
-
-    this.getGoogleApiKey();
-    this.calculateGeoLocationsDistances();
-    // this.places = this.getLocations();
   }
 
-  getGeoLocations(bookings) {
+  async getGeoLocations(bookings) {
+    const bookingsPostCodes = [];
     // tslint:disable-next-line:prefer-for-of
     for ( let i = 0; i < bookings.length; i++) {
-      console.log(bookings[i].pickUpPostCode)
+      bookingsPostCodes.push(bookings[i].pickUpPostCode);
+    }
+
+    const result = await postcodes.lookup(bookingsPostCodes, {filter: 'postcode,longitude,latitude'});
+
+    if (result.status === 200)
+    {
+      console.log(result.result)
+      this.geoLocations = result.result.map((item, index) => Object.assign({},
+        {
+          postCode: item.result.postcode,
+          lat: item.result.latitude,
+          lng: item.result.longitude,
+          distance: null
+        }));
     }
   }
 
@@ -59,15 +63,15 @@ export class BookingsLocationsComponent implements OnInit {
     this.getCurrentPosition().then( pos => {
       // tslint:disable-next-line:no-string-literal
       this.currentLocation = { lat: pos['lat'], lng: pos['lng'], distance: null };
-      this.mockLocations.unshift(this.currentLocation)
+      this.geoLocations.unshift(this.currentLocation)
        // tslint:disable-next-line:prefer-for-of
-      for ( let i = 0; i < this.mockLocations.length; i++) {
-        this.mockLocations[i].distance = this.calculateDistance (
-        this.mockLocations[0].lat,  this.mockLocations[0].lng,
-        this.mockLocations[i].lat,  this.mockLocations[i].lng, 'K');
+      for ( let i = 0; i < this.geoLocations.length; i++) {
+        this.geoLocations[i].distance = this.calculateDistance (
+        this.geoLocations[0].lat,  this.geoLocations[0].lng,
+        this.geoLocations[i].lat,  this.geoLocations[i].lng, 'K');
       }
 
-      const sortedLocation = this.mockLocations.sort((a, b) => {
+      const sortedLocation = this.geoLocations.sort((a, b) => {
       return a.distance - b.distance;
       });
       const locationsData = this.buildFirstMiddleLastList(sortedLocation);
@@ -161,14 +165,9 @@ export class BookingsLocationsComponent implements OnInit {
   getCurrentPosition() {
     {
       return new Promise((resolve, reject) => {
-
         navigator.geolocation.getCurrentPosition(resp => {
-
-          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
-        },
-          err => {
-            reject(err);
-          });
+          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });},
+          err => {reject(err);});
       });
     }
   }
