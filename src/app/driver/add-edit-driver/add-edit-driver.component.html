@@ -1,41 +1,50 @@
 <div class="testbox">
   <form [formGroup]="addEditDriverForm">
-    <div class="banner">
-    </div>
+    <div class="banner"></div>
     <br/>
-    <fieldset>
-      <legend>Driver Details</legend>
-      <div class="columns">
-        <div class="item">
-          <label for="fname">First Name <span>*</span></label><br>
-          <app-material-input [width]="80" formControlName="name" ></app-material-input>
+    <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>perm_contact_calendar</mat-icon> DRIVER
+        </mat-panel-title>
+        <mat-panel-description>
+          Driver Information
+        </mat-panel-description>
+      </mat-expansion-panel-header><br/>
+      <fieldset>
+        <legend>Driver Information Details</legend>
+        <div class="columns">
+          <div class="item">
+            <label for="fname">Name <span>*</span></label><br>
+            <app-material-input [width]="80" [errorMsg]="formValidationMap.name"  formControlName="name" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Surname <span>*</span></label><br>
+            <app-material-input [width]="80" [errorMsg]="formValidationMap.lastName" formControlName="lastName" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Username <span>*</span></label><br>
+            <app-material-input [width]="80" formControlName="userName" [errorMsg]="formValidationMap.userName" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname"> Email <span>*</span></label><br>
+            <app-material-input [width]="80" formControlName="email" [errorMsg]="formValidationMap.email" ></app-material-input>
+          </div>
+          <div class="item" formGroupName="phoneGroup">
+            <label for="lname"> Phone Number <span>*</span></label><br>
+            <app-material-select-input [label]="'Code'"  [width]="15"  [options]="countryCodes" formControlName="countryCode"
+                  (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
+            <app-material-input [width]="30" [label]="'Number'" formControlName="phone" [errorMsg]="formValidationMap.phone" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname"> Country<span>*</span></label><br>
+            <app-material-select-input (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
+          </div>
         </div>
-        <div class="item">
-          <label for="lname"> Surname <span>*</span></label><br>
-          <app-material-input [width]="80" formControlName="lastName" ></app-material-input>
-        </div>
-        <div class="item">
-          <label for="lname"> Username <span>*</span></label><br>
-          <app-material-input [width]="80" formControlName="userName" ></app-material-input>
-        </div>
-        <div class="item">
-          <label for="lname"> Email <span>*</span></label><br>
-          <app-material-input [width]="80" formControlName="email" ></app-material-input>
-        </div>
-        <div class="item" formGroupName="phoneGroup">
-          <label for="lname"> Phone Number <span>*</span></label><br>
-          <app-material-select-input [label]="'Code'"  [width]="15" [options]="countryCodes" formControlName="countryCode"
-                (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
-          <app-material-input [width]="30" [label]="'Number'" formControlName="phone" ></app-material-input>
-        </div>
-        <div class="item">
-          <label for="lname"> Country<span>*</span></label><br>
-          <app-material-select-input (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
-        </div>
+      </fieldset>
+      <div class="btn-block">
+        <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
       </div>
-    </fieldset>
-    <div class="btn-block">
-      <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
-    </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </form>
-</div>

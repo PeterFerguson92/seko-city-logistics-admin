@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { COUNTRIES, COUNTRY_CODES } from 'src/app/constants';
@@ -10,11 +10,12 @@ import { ValidationService } from 'src/app/service/validation/validation.service
   templateUrl: './add-edit-driver.component.html',
   styleUrls: ['./add-edit-driver.component.css','../../shared/shared-new-form.css']
 })
-export class AddEditDriverComponent implements OnInit {
+export class AddEditDriverComponent implements OnInit, AfterViewInit {
   addEditDriverForm: FormGroup;
   countries = COUNTRIES;
   countryCodes = COUNTRY_CODES;
   driver;
+  formValidationMap = {name: '', lastName: '', userName: '', email: '', phone: '', country: '' };
 
   constructor(private formBuilder: FormBuilder, private authService: AuthenticationService,
     private validationService: ValidationService, private activatedroute: ActivatedRoute,
@@ -41,7 +42,7 @@ export class AddEditDriverComponent implements OnInit {
       name: [driver ? this.driver.name : '', [Validators.required]],
       lastName: [driver ? this.driver.lastName : '', [Validators.required]],
       userName: [driver ? this.driver.userName : '', [Validators.required]],
-      email: [driver ? this.driver.email : '', [Validators.required]],
+      email: [driver ? this.driver.email : '', [Validators.required, Validators.email]],
       phoneGroup: this.formBuilder.group({
         countryCode: [driver && phoneNumberData ? phoneNumberData.countryCode : this.countryCodes[0], [Validators.required]],
         phone: [driver && phoneNumberData ? phoneNumberData.number : '', [Validators.required]],
@@ -53,9 +54,15 @@ export class AddEditDriverComponent implements OnInit {
     {
       this.addEditDriverForm.get('userName').disable();
       this.addEditDriverForm.get('email').disable();
-
     }
+  }
 
+  ngAfterViewInit(): void {
+    this.validateFormControl('name');
+    this.validateFormControl('lastName');
+    this.validateFormControl('userName');
+    this.validateFormControl('email');
+    this.validateFormControl('phone');
   }
 
   getFormControl(fControlName: string) {
@@ -128,6 +135,14 @@ export class AddEditDriverComponent implements OnInit {
     }
   }
 
+  validateFormControl(fControlName: string) {
+    const fControl = this.getFormControl(fControlName);
+    this.validationService.watchAndValidateFormControl(fControl)
+      .subscribe(() => {
+        this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName);
+      });
+  }
+
   getPhoneNumber() {
     return this.getFormControl('countryCode').value + this.getFormControl('phone').value;
   }
@@ -137,7 +152,7 @@ export class AddEditDriverComponent implements OnInit {
   }
 
   isDisabled() {
-    return this.addEditDriverForm.pristine;
+    return !this.addEditDriverForm.valid;
   }
 
 }
