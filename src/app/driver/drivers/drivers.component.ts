@@ -40,6 +40,10 @@ export class DriversComponent implements OnInit {
     this.router.navigate(['/locations'])
   }
 
+  onShowAssignedBookings(reference) {
+    this.router.navigate(['/assignedBookings', reference])
+  }
+
   onDeleteDriver(username) {
     const dialogRef = this.dialog.open(DialogComponent);
     dialogRef.afterClosed().subscribe(result => {

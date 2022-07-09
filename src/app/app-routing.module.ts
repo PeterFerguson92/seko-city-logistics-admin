@@ -26,6 +26,8 @@ import { AddEditDriverComponent } from './driver/add-edit-driver/add-edit-driver
 import { BookingsLocationsComponent } from './driver/bookings-locations/bookings-locations.component';
 import { DriverResolver } from './driver/service/driver.resolver';
 import { DriversResolver } from './driver/service/drivers.resolver';
+import { DriverBookingsResolver } from './booking/service/resolver/driver-bookings.resolver';
+import { BookingsDriverComponent } from './driver/bookings-driver/bookings-driver.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -49,6 +51,7 @@ const routes: Routes = [
   { path: 'drivers', component: DriversComponent, resolve: { drivers: DriversResolver }  },
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },
+  { path: 'assignedBookings/:reference', component: BookingsDriverComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'locations', component: BookingsLocationsComponent },
   { path: 'reports', component: ReportsComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}

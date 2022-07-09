@@ -56,10 +56,13 @@ tr:hover {background-color: #ddd;}
 
 }
 
-.custom-icon-color {
+.icon-color {
+  color: #6D8299;
+}
+.orange-icon-color {
   color: rgb(246, 150, 6);
 }
 
-.driver-custom-icon-color {
+.fucsia-icon-color {
   color: rgb(149, 71, 142);
 }
