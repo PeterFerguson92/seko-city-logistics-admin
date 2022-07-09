@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 
@@ -20,13 +20,13 @@ export class DriversComponent implements OnInit {
   dataSource = null;
 
   displayedColumns: string[] = ['ID', 'NAME', 'SURNAME', 'USERNAME', 'EMAIL', 'PHONE', 'COUNTRY', 'ACTION'];
-  constructor(private authService: AuthenticationService, private router: Router, private dialog: MatDialog) { }
+  constructor(private authService: AuthenticationService,
+    private router: Router, private dialog: MatDialog, private activatedroute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.authService.getDrivers().subscribe(
-      ({ data }) => { console.log(data);  this.dataSource = new MatTableDataSource(data.getDrivers.users);},
-      error => { console.log(error); }
-    );
+    this.activatedroute.data.subscribe(data => {
+      this.dataSource = new MatTableDataSource(data.drivers);
+    });
   }
 
   onAddDriver() {

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DriversResolverResolver } from './drivers-resolver.resolver';
+import { DriversResolver } from './drivers.resolver';
 
 describe('DriversResolverResolver', () => {
-  let resolver: DriversResolverResolver;
+  let resolver: DriversResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    resolver = TestBed.inject(DriversResolverResolver);
+    resolver = TestBed.inject(DriversResolver);
   });
 
   it('should be created', () => {
