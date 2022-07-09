@@ -75,4 +75,5 @@ export class CommonService {
   isCustomerPersonal(customerType:string) {
     return PERSONAL_CUSTOMER_TYPE === customerType;
   }
+
 }

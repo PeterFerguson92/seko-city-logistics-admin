@@ -52,7 +52,7 @@ const routes: Routes = [
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },
   { path: 'assignedBookings/:reference', component: BookingsDriverComponent, resolve: { bookings: DriverBookingsResolver } },
-  { path: 'locations', component: BookingsLocationsComponent },
+  { path: 'locations/:reference', component: BookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'reports', component: ReportsComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];

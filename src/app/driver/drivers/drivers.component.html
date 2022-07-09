@@ -41,13 +41,13 @@
   <ng-container matColumnDef={{displayedColumns[7]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[7]}}</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button class="icon-color" matTooltip="Edit driver" matTooltipPosition="above">
+      <button mat-icon-button class="icon-color" matTooltip="Edit driver" matTooltipPosition="left">
         <mat-icon (click)="onEditDriver(element.reference)">edit</mat-icon>
       </button>
-      <button mat-icon-button class="icon-color" matTooltip="Show Bookings location" matTooltipPosition="right">
-        <mat-icon (click)="onShowBookingLocations()">location_on</mat-icon>
+      <button mat-icon-button class="icon-color" matTooltip="Show Bookings location" matTooltipPosition="above">
+        <mat-icon (click)="onShowBookingLocations(element.reference)">location_on</mat-icon>
       </button>
-      <button mat-icon-button class="icon-color" matTooltip="Show Assigned Bookings" matTooltipPosition="top">
+      <button mat-icon-button class="icon-color" matTooltip="Show Assigned Bookings" matTooltipPosition="above">
         <mat-icon (click)="onShowAssignedBookings(element.reference)">assignment</mat-icon>
       </button>
       <button mat-icon-button class="icon-color" matTooltip="Delete shipment" matTooltipPosition="right">

@@ -36,8 +36,8 @@ export class DriversComponent implements OnInit {
   onEditDriver(reference) {
     this.router.navigate(['/edit-driver', reference])
   }
-  onShowBookingLocations() {
-    this.router.navigate(['/locations'])
+  onShowBookingLocations(reference) {
+    this.router.navigate(['/locations', reference])
   }
 
   onShowAssignedBookings(reference) {

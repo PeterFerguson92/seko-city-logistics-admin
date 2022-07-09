@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
+import { CommonService } from 'src/app/service/common.service';
 import { styles } from './mapstyles';
 
 @Component({
@@ -22,13 +24,28 @@ export class BookingsLocationsComponent implements OnInit {
 
   currentLocation;
 
-  constructor(private authService: AuthenticationService, private spinner: NgxSpinnerService) { }
+  constructor(private activatedroute: ActivatedRoute, private authService: AuthenticationService,
+    private spinner: NgxSpinnerService, private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.spinner.show()
+
+    this.activatedroute.data.subscribe(data => {
+      console.log(data.bookings);
+      this.getGeoLocations(data.bookings)
+    })
+
+
     this.getGoogleApiKey();
-    this.calculateLocations();
-    this.places = this.getLocations();
+    this.calculateGeoLocationsDistances();
+    // this.places = this.getLocations();
+  }
+
+  getGeoLocations(bookings) {
+    // tslint:disable-next-line:prefer-for-of
+    for ( let i = 0; i < bookings.length; i++) {
+      console.log(bookings[i].pickUpPostCode)
+    }
   }
 
   getGoogleApiKey() {
@@ -38,8 +55,8 @@ export class BookingsLocationsComponent implements OnInit {
     );
   }
 
-  calculateLocations() {
-    this.getLocations().then( pos => {
+  calculateGeoLocationsDistances() {
+    this.getCurrentPosition().then( pos => {
       // tslint:disable-next-line:no-string-literal
       this.currentLocation = { lat: pos['lat'], lng: pos['lng'], distance: null };
       this.mockLocations.unshift(this.currentLocation)
@@ -141,7 +158,7 @@ export class BookingsLocationsComponent implements OnInit {
     this.spinner.hide()
   }
 
-  getLocations() {
+  getCurrentPosition() {
     {
       return new Promise((resolve, reject) => {
 
