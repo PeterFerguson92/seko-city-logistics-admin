@@ -11,7 +11,7 @@ import { CustomersService } from '../service/customers.service';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css', '../../shared/shared.css']
+  styleUrls: ['./customers.component.css', '../../shared/shared-table.css', '../../shared/shared-new-form.css']
 })
 export class CustomersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;

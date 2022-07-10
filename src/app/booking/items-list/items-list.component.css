@@ -40,32 +40,18 @@ tr:hover {background-color: #ddd;}
   padding-bottom: 12px;
   text-align: center;
   justify-items: center;
-  background-color: #004e92;
-  color: white;
+  background-color: #6D8299!important;
+  color: antiquewhite;
 }
 
-
-.button-add-row {
-  background: #1b9e1b;
-  color: #ffffff;
+.action-button {
+  background-color: #6D8299!important;
+  color: antiquewhite;
   margin-right: 5px;
+
 }
 
-.button-add-multi-row {
-  background: #006381;
-  color: #ffffff;
-  margin-right: 5px;
-}
 
-.button-remove-rows {
-  background: red;
-  color: #ffffff;
-  margin-right: 5px;
-}
-
-.button-remove {
-  color: red;
-}
 .btn-edit {
   text-align: right;
 }
@@ -104,3 +90,6 @@ h2 {
 .alert.info {background-color: #2196F3;}
 .alert.warning {background-color: #ff9800;}
 
+.icon-color {
+  color: #6D8299;
+}

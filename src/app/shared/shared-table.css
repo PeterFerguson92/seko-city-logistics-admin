@@ -44,7 +44,7 @@ tr:hover {background-color: #ddd;}
   /* background-color: #004e92; */
   background-color: #6D8299!important;
 
-  color: white;
+  color: antiquewhite;
 }
 
 .fab-main {
@@ -53,6 +53,7 @@ tr:hover {background-color: #ddd;}
   bottom: 1em;
   /* background-color: #004e92; */
   background-color: #6D8299!important;
+  color: antiquewhite;
 
 }
 

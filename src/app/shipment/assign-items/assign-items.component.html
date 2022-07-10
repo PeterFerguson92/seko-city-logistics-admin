@@ -1,11 +1,34 @@
-<div fxLayout fxLayoutAlign="center center">
-  <form [formGroup]="selectedShipmentForm" >
-    <app-material-select-input [label]="'Container Number'"
-      [width]="15" [options]="shipments" formControlName="selectedShipment"
-      (selectionChange)="onSelectionChange($event, 'selectedShipment')" [value]="shipments[0]">
-    </app-material-select-input>
-  </form>
-</div>
+<div id="summary" class="center">
+  <form [formGroup]="selectedShipmentForm">
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel hideToggle [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>local_shipping</mat-icon>
+            Container
+          </mat-panel-title>
+          <mat-panel-description>
+            Select Container
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <br/>
+        <fieldset>
+          <legend>Container Details</legend>
+          <div class="columns">
+            <div class="item">
+              <label for="lname">Container Number / Loading Date'</label><br>
+              <app-material-select-input [width]="205" [options]="shipments" formControlName="selectedShipment"
+                (selectionChange)="onSelectionChange($event, 'selectedShipment')" [value]="shipments[0]">
+              </app-material-select-input>
+            </div>
+
+          </div>
+        </fieldset>
+        <br>
+      </mat-expansion-panel>
+      </mat-accordion>
+    </form>
+  </div>
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef={{displayedColumns[0]}}>
@@ -53,7 +76,7 @@
   <ng-container matColumnDef="ACTION">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="Accent" matTooltip="view booking details"  matTooltipPosition="left">
+      <button mat-icon-button class="icon-color" matTooltip="view booking details"  matTooltipPosition="left">
         <mat-icon (click)="onViewBooking(element.bookingReference)">list_alt</mat-icon>
       </button>
     </td>
@@ -62,4 +85,4 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
-<app-material-button [label]="'Assign'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="30" (click)="onAssign()"></app-material-button>
+<app-material-button [label]="'Assign'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" (click)="onAssign()"></app-material-button>

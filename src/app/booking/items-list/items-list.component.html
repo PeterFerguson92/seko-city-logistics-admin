@@ -1,9 +1,7 @@
 <article class="table-header">
-  <button class="button-remove-rows" mat-button (click)="removeSelectedRows()">
-    Remove Item
-  </button>
-  <button class="button-add-row" mat-button (click)="addRow(null)">Add Item</button>
-  <button class="button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">Add Multiple items</button>
+  <button class="action-button button-remove-rows" mat-button (click)="removeSelectedRows()">Remove Item</button>
+  <button class="action-button button-add-row" mat-button (click)="addRow(null)">Add Item</button>
+  <button class="action-button button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">Add Multiple items</button>
 </article>
 <table mat-table [dataSource]="dataSource">
   <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
@@ -16,17 +14,17 @@
           <mat-checkbox (change)="element.isSelected = $event.checked"></mat-checkbox>
         </ng-container>
         <div style="text-align: center;" class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button [disabled]="!element.id"  mat-icon-button matTooltip="Update item" matTooltipPosition="left">
+          <button [disabled]="!element.id" class="icon-color" mat-icon-button matTooltip="Update item" matTooltipPosition="left">
             <mat-icon (click)="assignItem(element)">low_priority</mat-icon>
           </button>
           <!-- <button mat-button >Edit</button> -->
-          <button mat-icon-button  (click)="element.isEdit = !element.isEdit" color="primary" matTooltip="Edit item" matTooltipPosition="above">
+          <button mat-icon-button class="icon-color" (click)="element.isEdit = !element.isEdit" color="primary" matTooltip="Edit item" matTooltipPosition="above">
             <mat-icon (click)="editBooking(element)">edit</mat-icon>
           </button>
-          <button mat-icon-button class="custom-icon-color" matTooltip="Duplicate item" matTooltipPosition="right">
+          <button mat-icon-button class="icon-color" matTooltip="Duplicate item" matTooltipPosition="right">
             <mat-icon (click)="duplicateRow(element)">ballot</mat-icon>
           </button>
-          <button mat-icon-button color="warn" matTooltip="Delete item" matTooltipPosition="right">
+          <button mat-icon-button class="icon-color" matTooltip="Delete item" matTooltipPosition="right">
             <mat-icon (click)="removeRow(element.index)">delete</mat-icon>
           </button>
           <!-- <button mat-button class="button-remove"(click)="removeRow(element.id)"> Delete </button> -->

@@ -12,7 +12,7 @@ import { CommonService } from 'src/app/service/common.service';
 @Component({
   selector: 'app-assign-items',
   templateUrl: './assign-items.component.html',
-  styleUrls: ['./assign-items.component.css']
+  styleUrls: ['./assign-items.component.css', '../../shared/shared-table.css','../../shared/shared-new-form.css']
 })
 export class AssignItemsComponent implements OnInit {
 
@@ -35,13 +35,14 @@ export class AssignItemsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
+
       const items = data.info[0].data.eligibleItems;
       this.dataSource = items.length > 0 ? new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.shipmentsObjs = data.info[1].data.shipments
       this.shipments = this.getShipmentsDetailsList(this.shipmentsObjs)
-      this.selectedShipmentForm = this.formBuilder.group({ selectedShipment: [this.shipments[0]]});
+      this.selectedShipmentForm = this.formBuilder.group({selectedShipment: [this.shipments[0]]});
     })
   }
 
@@ -107,7 +108,8 @@ export class AssignItemsComponent implements OnInit {
   getShipmentsDetailsList(shipments) {
     const shipmentsDetails: string[] = [];
     shipments.forEach((shipment) => {
-      shipmentsDetails.push(`${shipment.containerNumber}`)
+      console.log(shipment)
+      shipmentsDetails.push(`${shipment.containerNumber}  -  ${this.getFormattedDate(shipment.loadingDate)} `)
     })
     return shipmentsDetails
   }

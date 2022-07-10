@@ -18,7 +18,7 @@
         <div [formGroup]="loadCustomerForm" class="item">
           <label for="lname">Reference</label><br>
           <app-material-input formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>&nbsp;
-          <app-material-button [label]="'Load Customer'" [color]="'primary'" [backgroundColor]="'#004e92'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
+          <app-material-button [label]="'Load Customer'"  [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
         </div>
     </div>
     </fieldset>
@@ -30,12 +30,12 @@
           TYPE
         </mat-panel-title>
         <mat-panel-description>
-         Customer type
+         Customer Type
         </mat-panel-description>
       </mat-expansion-panel-header>
       <br/>
       <fieldset>
-        <legend>Customer details</legend>
+        <legend>Customer Type Details</legend>
         <div class="columns">
           <div class="item">
             <label for="lname">Type</label><br>
@@ -130,7 +130,7 @@
   </div>
   <br>
   <div *ngIf="!isBookingMode()" class="submitBtn" align="center">
-    <app-material-button [label]="'Submit'" [color]="'primary'" [width]="30" [backgroundColor]="'#069370'" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
+    <app-material-button [label]="'Submit'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
   </div>
   <br>
   <br>

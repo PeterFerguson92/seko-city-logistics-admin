@@ -109,10 +109,6 @@ export class AddEditShipmentComponent implements OnInit {
       }
     );
   }
-  onCancel() {
-    console.log(this.addEditShipmentForm)
-    // this.closeDialog.next('closeDialog');
-  }
 
   isDisabled() {
     return !this.addEditShipmentForm.valid;

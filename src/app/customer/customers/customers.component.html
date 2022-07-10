@@ -1,11 +1,37 @@
 <div class="test">
   <app-section-title [title]="'Customers'"></app-section-title>
 </div>
-<div fxLayout fxLayoutAlign="center center">
-  <mat-form-field fxFlex="40%">
-    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
+<div id="summary" class="center">
+  <form >
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel hideToggle [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>search</mat-icon>
+            Filter Customer
+          </mat-panel-title>
+          <mat-panel-description>
+            Filter Customer Details
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <br/>
+        <fieldset>
+          <legend>Filter Customer Details Information</legend>
+          <div class="columns" >
+            <div class="item">
+              <label for="lname">Filter Value</label><br>
+              <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="200">
+                <input matInput type="text" (keyup)="doFilter($event.target.value)">
+              </mat-form-field>
+            </div>
+
+          </div>
+        </fieldset>
+        <br>
+      </mat-expansion-panel>
+      </mat-accordion>
+    </form>
+  </div>
 <a mat-fab (click)="addCustomer()" class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
 </a>
@@ -38,13 +64,13 @@
   <ng-container matColumnDef="ACTION">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="Accent" matTooltip="Create a booking for customer"  matTooltipPosition="left">
+      <button mat-icon-button class="icon-color" matTooltip="Create a booking for customer"  matTooltipPosition="left">
         <mat-icon (click)="bookCustomer(element.reference)">book</mat-icon>
       </button>
-      <button mat-icon-button color="primary" matTooltip="Edit customer" matTooltipPosition="above">
+      <button mat-icon-button class="icon-color" matTooltip="Edit customer" matTooltipPosition="above">
         <mat-icon (click)="editCustomer(element.reference)">edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" matTooltip="Delete customer" matTooltipPosition="right">
+      <button mat-icon-button class="icon-color" matTooltip="Delete customer" matTooltipPosition="right">
         <mat-icon (click)="deleteCustomer(element.reference)">delete</mat-icon>
       </button>
     </td>
@@ -53,8 +79,3 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
-
-<!-- <app-customer-detail [customer]="selectedCustomer"></app-customer-detail> -->
-
-
-<!-- https://www.angularjswiki.com/material/mat-table-filter/ -->
