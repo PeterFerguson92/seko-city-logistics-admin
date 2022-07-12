@@ -14,7 +14,7 @@ import { PreviousRecvDialogComponent } from '../previous-recv-dialog/previous-re
   templateUrl: './bookings-receivers.component.html',
   styleUrls: ['./bookings-receivers.component.css', '../../shared/shared-new-form.css']
 })
-export class BookingsReceiversComponent implements OnInit, AfterViewInit {
+export class BookingsReceiversComponent implements OnInit {
 
   @Input() references;
   @Input() destination;
@@ -63,13 +63,6 @@ export class BookingsReceiversComponent implements OnInit, AfterViewInit {
    //   this.receivers.push(this.buildReceiver(null));
     }
 
-  }
-
-  ngAfterViewInit(): void {
-    // this.validateFormControl('registeredName');
-    // this.validateFormControl('name');
-    // this.validateFormControl('surname');
-    // this.validateGroupFormControl('phoneGroup', 'phone')
   }
 
   linkReceiverValidators() {
