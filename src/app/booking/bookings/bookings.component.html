@@ -17,7 +17,7 @@
           <div class="columns">
             <div class="item">
               <label for="lname">Status</label><br>
-              <app-material-select-input [label]="'Status'"  [width]="50" [options]="bookingStatuses" formControlName="status"
+              <app-material-select-input [width]="50" [options]="bookingStatuses" formControlName="status"
               (selectionChange)="onSelectionChange($event, 'status')" [value]="bookingStatuses[0]"></app-material-select-input>
             </div>
             <div class="item">

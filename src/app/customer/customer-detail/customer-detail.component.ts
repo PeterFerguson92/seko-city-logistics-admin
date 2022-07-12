@@ -44,7 +44,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      this.setMode();
       this.customer = this.customer && this.customer.reference ? this.customer : data.customer
 
       this.setAttributes();
@@ -73,15 +72,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     })
   }
 
-  setMode() {
-    if (this.router.url.includes('booking'))
-    {
-      this.mode = this.router.url.includes('add-booking') ?  CREATE_BOOKING_MODE : EDIT_BOOKING_MODE
-    } else
-    {
-      this.mode = this.router.url.includes('add-customer') ? ADD_CUSTOMER_MODE : EDIT_CUSTOMER_MODE
-    }
-  }
 
   ngAfterViewInit(): void {
     this.validateFormControl('registeredName');

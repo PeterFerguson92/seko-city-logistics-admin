@@ -4,6 +4,7 @@
   [disabled]="disabled"
   (input)="onChange($event.target.value)"
   (blur)="onTouched()"
-  [(ngModel)]="value">
+  [(ngModel)]="value"
+  pattern={{pattern}}>
 </mat-form-field>
 <p style="color: red">{{errorMsg}}</p>

@@ -108,8 +108,7 @@ export class AssignItemsComponent implements OnInit {
   getShipmentsDetailsList(shipments) {
     const shipmentsDetails: string[] = [];
     shipments.forEach((shipment) => {
-      console.log(shipment)
-      shipmentsDetails.push(`${shipment.containerNumber}  -  ${this.getFormattedDate(shipment.loadingDate)} `)
+      shipmentsDetails.push(`${shipment.containerNumber}`) // TODO ADD LOADING DATE
     })
     return shipmentsDetails
   }

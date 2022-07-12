@@ -81,11 +81,11 @@
           <div class="item"></div>
           <div class="item">
             <label for="lname">Name<span>*</span></label><br>
-            <app-material-input formControlName="name" [width]="80" [errorMsg]="formValidationMap.name"></app-material-input>
+            <app-material-input formControlName="name" [width]="80" [errorMsg]="formValidationMap.name" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
           <div class="item">
             <label for="lname">Surname<span>*</span></label><br>
-            <app-material-input formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname"></app-material-input>
+            <app-material-input formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
         </div>
       </fieldset>

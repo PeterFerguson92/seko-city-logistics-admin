@@ -120,11 +120,13 @@ export class BookingsReceiversComponent implements OnInit, AfterViewInit {
     if (!this.isReceiverValuePopulated(index))
     {
       this.receivers.push(this.buildReceiver(null));
+      this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
     }
   }
 
   onAddReceveirs() {
     this.receivers.push(this.buildReceiver(null));
+    this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
   }
 
   isReceiverValuePopulated(index) {

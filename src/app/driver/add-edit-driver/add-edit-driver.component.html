@@ -15,25 +15,25 @@
         <legend>Driver Information Details</legend>
         <div class="columns">
           <div class="item">
-            <label for="fname">Name <span>*</span></label><br>
-            <app-material-input [width]="80" [errorMsg]="formValidationMap.name"  formControlName="name" ></app-material-input>
+            <label for="fname"> Name <span>*</span></label><br>
+            <app-material-input [width]="80" [errorMsg]="formValidationMap.name" formControlName="name" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Surname <span>*</span></label><br>
-            <app-material-input [width]="80" [errorMsg]="formValidationMap.lastName" formControlName="lastName" ></app-material-input>
+            <label for="lname"> Surname <span>*</span></label><br>
+            <app-material-input [width]="80" [errorMsg]="formValidationMap.lastName" formControlName="lastName" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Username <span>*</span></label><br>
-            <app-material-input [width]="80" formControlName="userName" [errorMsg]="formValidationMap.userName" ></app-material-input>
+            <label for="lname"> Username <span>*</span></label><br>
+            <app-material-input [width]="80" formControlName="userName" [errorMsg]="formValidationMap.userName"></app-material-input>
           </div>
           <div class="item">
             <label for="lname"> Email <span>*</span></label><br>
-            <app-material-input [width]="80" formControlName="email" [errorMsg]="formValidationMap.email" ></app-material-input>
+            <app-material-input [width]="80" formControlName="email" [errorMsg]="formValidationMap.email"></app-material-input>
           </div>
           <div class="item" formGroupName="phoneGroup">
             <label for="lname"> Phone Number <span>*</span></label><br>
-            <app-material-select-input [label]="'Code'"  [width]="15"  [options]="countryCodes" formControlName="countryCode"
-                  (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
+            <app-material-select-input [label]="'Code'" [width]="15"  [options]="countryCodes" formControlName="countryCode"
+                (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
             <app-material-input [width]="30" [label]="'Number'" formControlName="phone" [errorMsg]="formValidationMap.phone" ></app-material-input>
           </div>
           <div class="item">

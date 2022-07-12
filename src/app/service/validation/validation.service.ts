@@ -16,6 +16,7 @@ export class ValidationService {
 
   private requiredValidationMessages = {
     required: 'Please enter a value.',
+    pattern: 'Please enter a valid value'
   };
 
   private emailValidationMessages = {
@@ -53,7 +54,7 @@ export class ValidationService {
     email: this.emailValidationMessages,
     address: this.requiredValidationMessages,
     postcode: this.postcodeValidationMessages,
-    location: this.requiredValidationMessages
+    location: this.requiredValidationMessages,
   };
 
   constructor(private commonService: CommonService) { }
