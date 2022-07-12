@@ -107,12 +107,12 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getItemsDetails() {
-    const itemsDetails = this.itemsListComponent.getItemsDataDetails();
-    return {
-      items: itemsDetails.items, paymentInfo: this.getPaymentInfoDetails(),
-      totalNumberOfItems: itemsDetails.totals.totalItems,
-      totalAmount: itemsDetails.totals.totalAmount,
-    }
+      const itemsDetails = this.itemsListComponent.getItemsDataDetails();
+      return {
+        items: itemsDetails.items, paymentInfo: this.getPaymentInfoDetails(),
+        totalNumberOfItems: itemsDetails.totals.totalItems,
+        totalAmount: itemsDetails.totals.totalAmount,
+      }
   }
 
   getPaymentInfoDetails() {
@@ -126,7 +126,7 @@ export class BookingItemsComponent implements OnInit {
 
 
   isDisabled() {
-    return !this.showItems ? false : !this.bookingItemForm.valid;
+    return this.itemsListComponent.showWarning() ? true : !this.showItems ? false : !this.bookingItemForm.valid;
   }
 
   isAmountPaidEnabled() {

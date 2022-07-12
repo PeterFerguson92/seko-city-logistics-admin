@@ -29,7 +29,7 @@
                       </div>
                       <div class="item">
                         <label for="lname">Status</label><br>
-                        <app-material-select-input [label]="'Payment status'" [width]="60" [options]="paymentStatuses" formControlName="paymentStatus"
+                        <app-material-select-input [width]="60" [options]="paymentStatuses" formControlName="paymentStatus"
                           (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
                         </app-material-select-input>
                       </div>

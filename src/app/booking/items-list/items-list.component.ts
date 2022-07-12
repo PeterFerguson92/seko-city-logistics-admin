@@ -126,6 +126,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
       });
     });
   }
+
   removeSelectedRows() {
     this.dialog.open(ConfirmDialogComponent)
       .afterClosed()
@@ -177,20 +178,22 @@ export class ItemsListComponent implements OnInit, OnChanges {
   calculateTotals() {
     let totalAmount = 0;
     let totalItems = 0;
+    let totalValue = 0;
     if (this.dataSource)
     {
       this.dataSource.forEach((element) => {
-        totalAmount = totalAmount + parseInt(element.amount, 10)
-        totalItems = totalItems + parseInt(element.quantity, 10)
+        totalAmount = totalAmount + parseInt(element.amount, 10);
+        totalItems = totalItems + parseInt(element.quantity, 10);
+        totalValue = totalValue + parseInt(element.value, 10)
       });
     }
 
-    return { totalAmount, totalItems };
+    return { totalAmount, totalItems, totalValue };
   }
 
   getItemsDataDetails() {
     return {
-      items:  this.dataSource ? this.dataSource.map(item => {
+      items: this.dataSource ? this.dataSource.map(item => {
         delete item.__typename;
         delete item.selected;
         delete item.isEdit;
