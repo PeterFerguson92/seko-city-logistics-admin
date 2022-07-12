@@ -141,11 +141,12 @@ export class BookingItemsComponent implements OnInit {
   }
 
   updateTotalAmount() {
-    this.updateOutstandingAmount();
     if (this.paymentForm.get('paymentStatus').value === FULL_PAYMENT_STATUS_ALIAS)
     {
       this.paymentForm.get('amountPaid').setValue(this.getItemsDetails().totalAmount);
     }
+    this.updateOutstandingAmount();
+
   }
 
   updateOutstandingAmount() { // toDO  vedere se questo calcolo si puo fare meglio senza dover chiamare items tutte le volte
@@ -153,10 +154,11 @@ export class BookingItemsComponent implements OnInit {
     const totalAmount = this.getItemsDetails().totalAmount;
     let amountPaid = this.paymentForm.get('amountPaid').value;
 
-    if (amountPaid > totalAmount)
+    if (amountPaid >= totalAmount)
     {
       amountPaid = totalAmount;
       this.paymentForm.get('amountPaid').setValue(amountPaid);
+      this.paymentForm.get('paymentStatus').setValue(FULL_PAYMENT_STATUS_ALIAS)
     }
     this.paymentForm.get('amountOutstanding').setValue(totalAmount - amountPaid);
   }
