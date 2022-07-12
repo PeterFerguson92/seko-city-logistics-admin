@@ -65,6 +65,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
   displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
   dataSource;
   columnsSchema: any = COLUMNS_SCHEMA;
+  isAllSelected;
 
   constructor(public dialog: MatDialog) { }
 
@@ -132,7 +133,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((confirm) => {
         if (confirm) {
-          this.dataSource = this.dataSource.filter((u: any) => !u.isSelected);
+          this.dataSource = this.dataSource.filter((u: any) => !u.selected);
         }
       });
   }
@@ -256,5 +257,14 @@ export class ItemsListComponent implements OnInit, OnChanges {
 
   isMultipleEnabled() {
    return this.dataSource && this.dataSource.filter((u: any) => u.isSelected).length > 0;
+  }
+
+  isSelectLabel(label) {
+    return label === 'Selected';
+  }
+
+  selectAll() {
+    this.isAllSelected = !this.isAllSelected
+    this.dataSource = this.dataSource.map((obj) => ({ ...obj, selected: this.isAllSelected }));
   }
 }

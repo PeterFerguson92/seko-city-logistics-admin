@@ -74,12 +74,10 @@ export class BookingsReceiversComponent implements OnInit, AfterViewInit {
 
   linkReceiverValidators() {
     this.receivers.controls.forEach((control, index) => {
-      console.log(index);
       this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
       this.validateReceiverFormControl('name', index);
       this.validateReceiverFormControl('surname', index);
       this.validateGroupFormControl('phoneGroup', 'phone', index)
-
     });
   }
 
@@ -188,11 +186,6 @@ export class BookingsReceiversComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.length > 0)
       {
-        // if (this.receivers.length === 1)
-        // {
-        //   this.receivers.removeAt(0)
-        // }
-
         result.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
       }
     });
@@ -244,8 +237,6 @@ export class BookingsReceiversComponent implements OnInit, AfterViewInit {
     const fMainControl = fGroup.get(fControlName);
     this.validationService.watchAndValidateFormControl(fGroup)
       .subscribe(() => {
-        console.log(this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName));
-        console.log(this.formValidationMapList);
         this.formValidationMapList[index].phone =
           this.validationService.getGroupValidationMessage(fGroup, fMainControl, fControlName);
         if (fGroup.dirty && !fGroup.valid)
