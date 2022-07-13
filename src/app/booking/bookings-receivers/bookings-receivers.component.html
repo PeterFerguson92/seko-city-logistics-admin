@@ -107,12 +107,12 @@
                 </div>
                 <div class="item"></div>
                 <div class="item">
-                  <label for="lname">Name</label><br>
-                  <app-material-input formControlName="name" [errorMsg]="formValidationMapList[i].name" [width]="80"></app-material-input>
+                  <label for="lname">Name  <span>*</span></label><br>
+                  <app-material-input formControlName="name" [errorMsg]="formValidationMapList[i].name" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
                 </div>
                 <div class="item">
-                  <label for="lname">Surname</label><br>
-                  <app-material-input formControlName="surname" [errorMsg]="formValidationMapList[i].surname" [width]="80" ></app-material-input>
+                  <label for="lname">Surname <span>*</span></label><br>
+                  <app-material-input formControlName="surname" [errorMsg]="formValidationMapList[i].surname" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
                 </div>
                 <div class="item" >
                   <app-material-button
@@ -120,9 +120,14 @@
                   </app-material-button>&nbsp;
                   <app-material-button [label]="'+'"  [color]="'antiquewhite'" [backgroundColor]="'#6D8299'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button>
                 </div>
+
+              </div>
+              <div *ngIf="showWarning()" class="alert warning">
+                <strong>Warning!</strong> Please fill in all required field with valid values.
               </div>
             </fieldset>
           </mat-expansion-panel>
+
         </div>
       </div>
     </mat-accordion>

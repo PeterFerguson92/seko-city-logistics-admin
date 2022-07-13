@@ -311,6 +311,11 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
+
+  showWarning() {
+    return !this.addEditCustomerForm.valid;
+  }
+
    ngOnDestroy() {
   //  this.createCustomer.unsubscribe();
   }

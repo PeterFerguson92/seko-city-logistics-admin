@@ -132,6 +132,10 @@ export class BookingsReceiversComponent implements OnInit {
     return this.receivers.length === 0;
   }
 
+  showWarning() {
+    return !this.receiversCustomerForm.valid;
+  }
+
   onDeleteReceiver(index) {
     this.receivers.removeAt(index)
   }
@@ -294,4 +298,6 @@ export class BookingsReceiversComponent implements OnInit {
   getDestinationInfo() {
     return {destination: this.getDestinationFormControl('destination').value, location: this.getDestinationFormControl('location').value}
   }
+
+
 }
