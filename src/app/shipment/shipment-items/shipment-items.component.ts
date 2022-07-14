@@ -1,3 +1,4 @@
+import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,11 +14,11 @@ import { ItemService } from 'src/app/booking/service/items/item.service';
 export class ShipmentItemsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['SENDER NAME', 'DESTINATION',
+  displayedColumns: string[] = ['SELECT', 'SENDER NAME', 'DESTINATION',
     'TYPE', 'DESCRIPTION', 'VALUE', 'AMOUNT', 'ACTION'];
   items = null;
-  dataSource = null;
-
+  dataSource;
+  isAllSelected;
 
   constructor(private router: Router,private activatedroute: ActivatedRoute,
   private itemService: ItemService) { }
@@ -26,7 +27,8 @@ export class ShipmentItemsComponent implements OnInit {
     this.activatedroute.data.subscribe(data => {
       const items = data.items;
       this.dataSource = items.length > 0 ?
-        new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null); this.dataSource.paginator = this.paginator;
+        new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
   }
@@ -37,6 +39,18 @@ export class ShipmentItemsComponent implements OnInit {
 
   onUnassignItem(id) {
     this.itemService.updateItem(id, { name: 'shipmentReference', value: null }).subscribe(
+      ({ data }) => {
+        location.reload();  // TODO handle properly
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  unAssignItems(itemsIdsToUnAssign) {
+    const fieldToUpdate = { name: 'shipmentReference', value: null };
+    this.itemService.updateItemsById(itemsIdsToUnAssign, fieldToUpdate).subscribe(
       ({ data }) => {
         location.reload();  // TODO handle properly
       },
@@ -59,6 +73,22 @@ export class ShipmentItemsComponent implements OnInit {
   // tslint:disable-next-line:no-string-literal
   itemCopy['itemId'] = item.id
   return { ...itemCopy, ...booking };
+ }
+
+ selectAll() {
+   this.isAllSelected = !this.isAllSelected;
+   this.dataSource = this.dataSource.map((obj) => ({ ...obj, selected: this.isAllSelected }));
+ }
+
+ onUnassignItems() {
+   const itemsIdsToUnAssign = [];
+    this.dataSource.data.forEach(row => {
+    if (row.selected)
+      {
+        itemsIdsToUnAssign.push(row.itemId)
+      }
+    });
+   this.unAssignItems(itemsIdsToUnAssign)
   }
 
 }

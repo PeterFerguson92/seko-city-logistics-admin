@@ -67,3 +67,17 @@ tr:hover {background-color: #ddd;}
 .fucsia-icon-color {
   color: rgb(149, 71, 142);
 }
+
+.table-header {
+  width: 90%;
+  margin: auto;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.action-button {
+  background-color: #6D8299!important;
+  color: antiquewhite;
+  margin-right: 5px;
+
+}
