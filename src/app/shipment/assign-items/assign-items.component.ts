@@ -28,6 +28,7 @@ export class AssignItemsComponent implements OnInit {
   dataSource = null;
   height =  '80%';
   width = '65%';
+  SHIPMENT_SELECTION_MESSAGE = 'Please select shipment';
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,
     private itemService: ItemService,private formBuilder: FormBuilder,
@@ -40,7 +41,7 @@ export class AssignItemsComponent implements OnInit {
       this.dataSource = items.length > 0 ? new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.shipmentsObjs = data.info[1].data.shipments
+      this.shipmentsObjs = data.info[1].data.shipments;
       this.shipments = this.getShipmentsDetailsList(this.shipmentsObjs)
       this.selectedShipmentForm = this.formBuilder.group({selectedShipment: [this.shipments[0]]});
     })
@@ -76,37 +77,52 @@ export class AssignItemsComponent implements OnInit {
     return this.selection.selected.length > 0;
   }
 
+  isDisabled() {
+    return this.SHIPMENT_SELECTION_MESSAGE === this.getFormControl('selectedShipment').value;
+  }
+
   onAssign() {
     const itemsIdsToAssign = [];
     this.dataSource.data.forEach(row => {
-      if (this.selection.isSelected(row))
+    if (this.selection.isSelected(row))
       {
         itemsIdsToAssign.push(row.itemId)
       }
     });
-  this.assignItemsToShipment(itemsIdsToAssign)
+    this.assignItemsToShipment(itemsIdsToAssign)
   }
 
   assignItemsToShipment(itemsIdsToAssign) {
-    const fieldToUpdate = { name: 'shipmentReference', value: this.getShipmentReferenceFromSelection() };
-    this.itemService.updateItemsById(itemsIdsToAssign, fieldToUpdate).subscribe(
-      ({ data }) => {
-       location.reload();  // TODO handle properly
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    const shipmentReference = this.getShipmentReferenceFromSelection();
+    if (shipmentReference)
+    {
+      const fieldToUpdate = { name: 'shipmentReference', value: shipmentReference };
+      this.itemService.updateItemsById(itemsIdsToAssign, fieldToUpdate).subscribe(
+        ({ data }) => {
+          location.reload();  // TODO handle properly
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
   }
 
   getShipmentReferenceFromSelection() {
     const shipmentSelection = this.getFormControl('selectedShipment').value;
-    const containerNumber = shipmentSelection.split(' - ')[0];
-    return this.shipmentsObjs.find(shipment => shipment.containerNumber === containerNumber).reference;
+    if (shipmentSelection === this.SHIPMENT_SELECTION_MESSAGE)
+    {
+      return null;
+    } else
+    {
+      const containerNumber = shipmentSelection.split(' - ')[0];
+      return this.shipmentsObjs.find(shipment => shipment.containerNumber === containerNumber).reference;
+    }
   }
 
   getShipmentsDetailsList(shipments) {
     const shipmentsDetails: string[] = [];
+    shipmentsDetails.push(this.SHIPMENT_SELECTION_MESSAGE)
     shipments.forEach((shipment) => {
       shipmentsDetails.push(`${shipment.containerNumber}`) // TODO ADD LOADING DATE
     })
