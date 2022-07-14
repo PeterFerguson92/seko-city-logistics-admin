@@ -1,7 +1,6 @@
-<div class="test">
-  <app-section-title [title]="'Shipments'"></app-section-title>
-</div>
-<app-material-button [label]="'LOADED ITEMS'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" (click)="onAssign()"></app-material-button>
+<article class="table-header">
+  <button class="action-button button-add-row" mat-button (click)="onAssign()">Loaded Items</button>
+</article>
 <a mat-fab (click)="onAddShipment()"  class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
 </a>
