@@ -6,7 +6,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 @Component({
   selector: 'app-availability-dialog',
   templateUrl: './availability-dialog.component.html',
-  styleUrls: ['./availability-dialog.component.css']
+  styleUrls: ['./availability-dialog.component.css', '../../shared/shared-new-form.css']
 })
 export class AvailabilityDialogComponent implements OnInit {
 

@@ -1,32 +1,14 @@
-<!-- <p>
-  <mat-toolbar>
-    <span>Receivers History</span>
-  </mat-toolbar>
-</p>
-<span class="example-list-section">
-<ul>
-  <li *ngFor="let recv of receivers">
-    <mat-checkbox [(ngModel)]="recv.selected"
-                  [disabled]="recv.disabled"
-                  (ngModelChange)="updateAllComplete(recv.selected, recv)">
-      {{recv.info.fullName}}
-    </mat-checkbox>
-  </li>
-</ul>
-</span>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
-</mat-dialog-actions> -->
-
-
-<div class="fixActionRow">
-  <p>
-    <mat-toolbar>
-      <span>Receivers History</span>
-    </mat-toolbar>
-  </p>
-  <div mat-dialog-content>
+<mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon>perm_contact_calendar</mat-icon> History
+    </mat-panel-title>
+    <mat-panel-description>
+      Receivers Information
+    </mat-panel-description>
+  </mat-expansion-panel-header><br/>
+  <fieldset>
+    <legend>Receivers Information Details</legend>
     <span class="example-list-section">
       <ul>
         <li *ngFor="let recv of receivers">
@@ -37,13 +19,11 @@
           </mat-checkbox>
         </li>
       </ul>
-      </span>
-  </div>
-
-  <div class="spacer"></div>
-
-  <div mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
+    </span>
+  </fieldset>
+  <div class="btn-block" align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
   </div>
-</div>
+  </mat-expansion-panel>
+</mat-accordion>

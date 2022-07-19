@@ -1,17 +1,31 @@
-<table>
-  <tr>
-    <th>Reference</th>
-    <th>Sender</th>
-    <th>Postcode</th>
-    <th>Address</th>
-    <th>Time</th>
+<mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon>perm_contact_calendar</mat-icon> Availability
+    </mat-panel-title>
+    <mat-panel-description>
+      Availability Information
+    </mat-panel-description>
+    </mat-expansion-panel-header><br/>
+    <fieldset>
+      <legend>Availability Information Details</legend>
+      <table>
+        <tr>
+          <th>Reference</th>
+          <th>Sender</th>
+          <th>Postcode</th>
+          <th>Address</th>
+          <th>Time</th>
 
-  </tr>
-  <tr *ngFor="let booking of bookings">
-    <td>{{booking.reference}}</td>
-    <td>{{booking.senderFullName}}</td>
-    <td>{{booking.pickUpPostCode}}</td>
-    <td>{{booking.pickUpAddress}}</td>
-    <td>{{booking.pickUpTime}}</td>
-  </tr>
-</table>
+        </tr>
+        <tr *ngFor="let booking of bookings">
+          <td>{{booking.reference}}</td>
+          <td>{{booking.senderFullName}}</td>
+          <td>{{booking.pickUpPostCode}}</td>
+          <td>{{booking.pickUpAddress}}</td>
+          <td>{{booking.pickUpTime}}</td>
+        </tr>
+      </table>
+    </fieldset>
+  </mat-expansion-panel>
+</mat-accordion>
