@@ -183,7 +183,10 @@ export class BookingsReceiversComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.length > 0)
       {
-        result.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
+        result.forEach(customer => {
+          this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
+          this.receivers.push(this.buildReceiver(customer))
+        });
       }
     });
   }

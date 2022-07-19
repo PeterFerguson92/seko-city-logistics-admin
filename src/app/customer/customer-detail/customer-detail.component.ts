@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Outpu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  ADD_BOOKING_CUSTOMER_MODE,
   ADD_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
   CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, EDIT_CUSTOMER_MODE, VIEW_BOOKING_MODE
 } from 'src/app/constants';
@@ -21,7 +22,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() mode;
   @Output() closeDialog = new EventEmitter<string>();
 
-  bookingModes = [CREATE_BOOKING_MODE, VIEW_BOOKING_MODE, EDIT_BOOKING_MODE]
+  bookingModes = [CREATE_BOOKING_MODE, VIEW_BOOKING_MODE, EDIT_BOOKING_MODE, ADD_BOOKING_CUSTOMER_MODE]
   buttonLabel;
   showLoading = false;
   createCustomer;

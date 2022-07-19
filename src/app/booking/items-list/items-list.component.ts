@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES } from 'src/app/constants';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component';
@@ -77,7 +78,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
     if (changes.items.currentValue)
     {
       const newData = changes.items.currentValue.map((item, index) => Object.assign({}, item, { selected: false, index }));
-      this.dataSource = newData;
+      this.dataSource =  new MatTableDataSource(newData);
     }
   }
 
@@ -98,7 +99,10 @@ export class ItemsListComponent implements OnInit, OnChanges {
       writable: true,
     };
 
-    this.dataSource = this.dataSource ? this.dataSource = [newRow, ...this.dataSource] : [newRow]
+    const newData = this.dataSource ? this.dataSource = new MatTableDataSource([newRow, ...this.dataSource.data]) :
+      new MatTableDataSource([newRow]);
+
+    this.dataSource = newData
     this.updateItemsEvent.next(true);
 
   }
@@ -133,16 +137,16 @@ export class ItemsListComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((confirm) => {
         if (confirm) {
-          this.dataSource = this.dataSource.filter((u: any) => !u.selected);
+          this.dataSource = new MatTableDataSource(this.dataSource.data.filter((u: any) => !u.selected));
         }
       });
   }
 
   selectType(event: Event, id) {
-    this.dataSource.forEach((element, index) => {
+    this.dataSource.data.forEach((element, index) => {
       if (element.id === id)
       {
-        const item = this.dataSource[index];
+        const item = this.dataSource.data[index];
         item.pricePerUnit = this.getPricePerUnit(item.type);
         item.amount = this.calculateAmount(item.pricePerUnit, item.quantity);
       }
@@ -150,10 +154,10 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   changeInput(id, key) {
-    this.dataSource.forEach((element, index) => {
+    this.dataSource.data.forEach((element, index) => {
       if (element.id === id)
       {
-        const item = this.dataSource[index];
+        const item = this.dataSource.data[index];
         item.amount = this.calculateAmount(item.pricePerUnit, item.quantity);
       }
     });
@@ -180,9 +184,9 @@ export class ItemsListComponent implements OnInit, OnChanges {
     let totalAmount = 0;
     let totalItems = 0;
     let totalValue = 0;
-    if (this.dataSource)
+    if (this.dataSource && this.dataSource.data)
     {
-      this.dataSource.forEach((element) => {
+      this.dataSource.data.forEach((element) => {
         totalAmount = totalAmount + parseInt(element.amount, 10);
         totalItems = totalItems + parseInt(element.quantity, 10);
         totalValue = totalValue + parseInt(element.value, 10)
@@ -194,7 +198,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
 
   getItemsDataDetails() {
     return {
-      items: this.dataSource ? this.dataSource.map(item => {
+      items: this.dataSource && this.dataSource.data ? this.dataSource.data.map(item => {
         delete item.__typename;
         delete item.selected;
         delete item.isEdit;
@@ -245,9 +249,9 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   showWarning() {
-    if (this.dataSource)
+    if (this.dataSource && this.dataSource.data)
     {
-      const errorItemsLength = this.dataSource.filter(item => item.value === 0 || item.value === '0').length;
+      const errorItemsLength = this.dataSource.data.filter(item => item.value === 0 || item.value === '0').length;
       return errorItemsLength > 0;
     } else
     {
@@ -256,7 +260,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   isMultipleEnabled() {
-   return this.dataSource && this.dataSource.filter((u: any) => u.isSelected).length > 0;
+   return this.dataSource && this.dataSource.data && this.dataSource.data.filter((u: any) => u.isSelected).length > 0;
   }
 
   isSelectLabel(label) {
@@ -264,7 +268,10 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   selectAll() {
-    this.isAllSelected = !this.isAllSelected
-    this.dataSource = this.dataSource.map((obj) => ({ ...obj, selected: this.isAllSelected }));
+    if (this.dataSource && this.dataSource.data)
+    {
+      this.isAllSelected = !this.isAllSelected
+      this.dataSource = new MatTableDataSource(this.dataSource.data.map((obj) => ({ ...obj, selected: this.isAllSelected })));
+    }
   }
 }
