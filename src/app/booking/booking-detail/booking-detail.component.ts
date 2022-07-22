@@ -111,7 +111,7 @@ export class BookingDetailComponent implements OnInit {
           this.booking.senderReference = senderDetails.reference;
           this.booking.senderFullName = senderDetails.fullName;
         }
-        const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
+        const recvReference = await this.getReceiverReferences(this.booking.receiver.receivers);
         this.saveBooking(senderDetails, recvReference, this.booking)
       } else
       {
@@ -136,6 +136,22 @@ export class BookingDetailComponent implements OnInit {
     return updateFields;
   }
 
+  async getReceiverReferences(receivers) {
+    const recvToSave = [];
+    const existingRecvReference = []
+    for (const recv of receivers) {
+      if (recv.reference === null) {
+        recvToSave.push(recv);
+      } else
+      {
+        existingRecvReference.push(recv.reference);
+      }
+    }
+    const savedRecvReferences = await this.saveReceivers(recvToSave);
+    const concat = existingRecvReference.concat(savedRecvReferences);
+    return concat;
+  }
+
   async updateCustomer(reference, fields) {
     const saved = await lastValueFrom(this.customersService.updateCustomer(reference, fields))
     // tslint:disable-next-line:no-string-literal
@@ -153,8 +169,8 @@ export class BookingDetailComponent implements OnInit {
 
   async saveReceivers(receiversDetails) {
     const recvReferences = [];
-    const saved = await lastValueFrom(this.customersService.createCustomers(receiversDetails))
-    saved.data.createCustomers.forEach(recv => {recvReferences.push(recv.reference);})
+    const saved = await lastValueFrom(this.customersService.createCustomers(receiversDetails));
+    saved.data.createCustomers.forEach(recv => { recvReferences.push(recv.reference); });
     return recvReferences;
   }
 
@@ -184,7 +200,6 @@ export class BookingDetailComponent implements OnInit {
       shipmentReference: '',
       assignedDriverReference: ''
     };
-    console.log(booking)
     this.bookingsService.createBooking(booking).subscribe(
       ({ data }) => {
         this.redirectToBookings()
@@ -208,7 +223,6 @@ export class BookingDetailComponent implements OnInit {
   }
 
   syncBooking(bookingInfo) {
-    console.log(this.buildBookingInput(bookingInfo))
     this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
       ({ data }) => {
         // this.redirectToBookings()

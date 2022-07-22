@@ -15,6 +15,8 @@ export class AddEditCustomerDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    console.log(this.data)
+
     this.customer = this.data.customer;
     this.mode = this.data.mode;
   }

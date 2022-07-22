@@ -45,12 +45,11 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
+      console.log(data)
       this.customer = this.customer && this.customer.reference ? this.customer : data.customer
 
-      this.setAttributes();
-      this.loadCustomerForm = this.formBuilder.group({
-      ref: ['', []]
-      });
+      // this.setAttributes(); TODO remove function
+      this.loadCustomerForm = this.formBuilder.group({ref: ['', []]});
       this.addEditCustomerForm = this.formBuilder.group({
         type: [this.types[0], [Validators.required]],
         title: [this.titles[0], [Validators.required]],
@@ -66,6 +65,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         address: ['', [Validators.required]],
         country: [this.countries[0], [Validators.required]]
       });
+      console.log(this.mode)
+
       if (this.customer && this.mode !== ADD_CUSTOMER_MODE)
       {
         this.populateFields()
@@ -172,7 +173,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onAddEdit() {
-    this.mode === ADD_CUSTOMER_MODE ? this.addCustomer() : this.editCustomer();
+    this.mode === EDIT_CUSTOMER_MODE ? this.editCustomer() : this.addCustomer();
   }
 
   addCustomer() {
