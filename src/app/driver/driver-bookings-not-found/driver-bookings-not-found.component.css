@@ -1,7 +1,16 @@
-body {
-  background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/creampaper.png);
-	text-align: center;
-	color: #5e4060;
+.bg {
+  /* The image used */
+  background-image: url("../../../assets/driver.jpeg");
+
+  /* Full height */
+  margin-top: 5%;
+  height: 100%;
+  width: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 div {
@@ -14,6 +23,8 @@ div {
   text-align: center;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
 	text-shadow: 0 2px 1px hsla(0,0%,100%,.2);
+  background-color: whitesmoke;
+  border-style: double;
 }
 
 h1 {

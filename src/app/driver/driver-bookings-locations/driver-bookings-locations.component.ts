@@ -28,26 +28,33 @@ export class DriverBookingsLocationsComponent implements OnInit {
     this.spinner.show()
     this.activatedroute.data.subscribe(data => {
       this.bookings = data.bookings;
-      console.log(this.bookings)
 
       if (data.bookings.length > 1)
       {
         this.getGeoLocations(data.bookings)
         this.getGoogleApiKey();
         this.calculateGeoLocationsDistances();
+      } else
+      {
+              this.spinner.hide()
+
       }
-      this.spinner.hide()
     })
   }
 
   showNoBookingsPage() {
-    console.log(this.bookings.length)
     return this.bookings.length === 0;
   }
 
   async getGeoLocations(bookings) {
     const bookingsPostCodes = [];
-    for ( const booking of bookings ) {
+    const morningBookings = this.getBookingsByPickUpTime('MORNING');
+    const afternoonBookings = this.getBookingsByPickUpTime('AFTERNOON');
+    const eveningBookings = this.getBookingsByPickUpTime('EVENING');
+
+    const sortedBookings = morningBookings.concat(afternoonBookings).concat(eveningBookings);
+
+    for ( const booking of sortedBookings ) {
       bookingsPostCodes.push(booking.pickUpPostCode);
     }
 
@@ -65,6 +72,10 @@ export class DriverBookingsLocationsComponent implements OnInit {
     }
   }
 
+  getBookingsByPickUpTime(pickUpTime: string) {
+    return this.bookings.filter(obj => obj.pickUpTime === pickUpTime);
+  }
+
   getGoogleApiKey() {
     this.authService.getKeys().subscribe(
       ({ data }) => { this.googleMapsKey = data.getKeys.googleMapsKey; },
@@ -77,11 +88,12 @@ export class DriverBookingsLocationsComponent implements OnInit {
       // tslint:disable-next-line:no-string-literal
       this.currentLocation = { lat: pos['lat'], lng: pos['lng'], distance: null };
       this.geoLocations.unshift(this.currentLocation)
-       // tslint:disable-next-line:prefer-for-of
-      for ( let i = 0; i < this.geoLocations.length; i++) {
-        this.geoLocations[i].distance = this.calculateDistance (
-        this.geoLocations[0].lat,  this.geoLocations[0].lng,
-        this.geoLocations[i].lat,  this.geoLocations[i].lng, 'K');
+
+      for (const geolocation of this.geoLocations)
+      {
+        geolocation.distance = this.calculateDistance (
+          geolocation.lat,  geolocation.lng,
+          geolocation.lat, geolocation.lng, 'K');
       }
 
       const sortedLocation = this.geoLocations.sort((a, b) => {
@@ -133,11 +145,10 @@ export class DriverBookingsLocationsComponent implements OnInit {
 
         const waypoints = [];
 
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < middleLocations.length; i++)
+        for (const middleLocation of middleLocations)
         {
           waypoints.push({
-            location: new google.maps.LatLng(middleLocations[i].lat, middleLocations[i].lng),
+            location: new google.maps.LatLng(middleLocation.lat, middleLocation.lng),
             stopover: true
           })
         }
@@ -172,7 +183,7 @@ export class DriverBookingsLocationsComponent implements OnInit {
         })
       })
     }
- //   this.spinner.hide()
+   this.spinner.hide()
   }
 
   getCurrentPosition() {
