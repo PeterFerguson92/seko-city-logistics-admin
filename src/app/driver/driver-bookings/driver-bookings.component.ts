@@ -4,13 +4,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
-
 @Component({
-  selector: 'app-bookings-driver',
-  templateUrl: './bookings-driver.component.html',
-  styleUrls: ['./bookings-driver.component.css', '../../shared/shared-table.css']
+  selector: 'app-driver-bookings',
+  templateUrl: './driver-bookings.component.html',
+  styleUrls: ['./driver-bookings.component.css', '../../shared/shared-table.css']
 })
-export class BookingsDriverComponent implements OnInit {
+export class DriverBookingsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

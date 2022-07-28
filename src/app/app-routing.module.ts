@@ -23,11 +23,11 @@ import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items
 import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment-analysis.component';
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
 import { AddEditDriverComponent } from './driver/add-edit-driver/add-edit-driver.component';
-import { BookingsLocationsComponent } from './driver/bookings-locations/bookings-locations.component';
 import { DriverResolver } from './driver/service/driver.resolver';
 import { DriversResolver } from './driver/service/drivers.resolver';
 import { DriverBookingsResolver } from './booking/service/resolver/driver-bookings.resolver';
-import { BookingsDriverComponent } from './driver/bookings-driver/bookings-driver.component';
+import { DriverBookingsComponent } from './driver/driver-bookings/driver-bookings.component';
+import { DriverBookingsLocationsComponent } from './driver/driver-bookings-locations/driver-bookings-locations.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,8 +51,8 @@ const routes: Routes = [
   { path: 'drivers', component: DriversComponent, resolve: { drivers: DriversResolver }  },
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },
-  { path: 'assignedBookings/:reference', component: BookingsDriverComponent, resolve: { bookings: DriverBookingsResolver } },
-  { path: 'locations/:reference', component: BookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
+  { path: 'assignedBookings/:reference', component: DriverBookingsComponent, resolve: { bookings: DriverBookingsResolver } },
+  { path: 'locations/:reference', component: DriverBookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'reports', component: ReportsComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];

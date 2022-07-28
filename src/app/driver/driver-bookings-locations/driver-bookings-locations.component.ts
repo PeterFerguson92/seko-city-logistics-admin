@@ -8,15 +8,18 @@ import { styles } from './mapstyles';
 const postcodes = require('node-postcodes.io')
 
 @Component({
-  selector: 'app-bookings-locations',
-  templateUrl: './bookings-locations.component.html',
-  styleUrls: ['./bookings-locations.component.css']
+  selector: 'app-driver-bookings-locations',
+  templateUrl: './driver-bookings-locations.component.html',
+  styleUrls: ['./driver-bookings-locations.component.css']
 })
-export class BookingsLocationsComponent implements OnInit {
+export class DriverBookingsLocationsComponent implements OnInit {
+
   map: google.maps.Map;
+  bookings;
   googleMapsKey;
   geoLocations;
   currentLocation;
+  showNoBookings = false;
 
   constructor(private activatedroute: ActivatedRoute, private authService: AuthenticationService,
     private spinner: NgxSpinnerService, private commonService: CommonService) { }
@@ -24,15 +27,22 @@ export class BookingsLocationsComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show()
     this.activatedroute.data.subscribe(data => {
+      this.bookings = data.bookings;
+      console.log(this.bookings)
+
       if (data.bookings.length > 1)
       {
-        console.log(data.bookings)
         this.getGeoLocations(data.bookings)
         this.getGoogleApiKey();
         this.calculateGeoLocationsDistances();
       }
       this.spinner.hide()
     })
+  }
+
+  showNoBookingsPage() {
+    console.log(this.bookings.length)
+    return this.bookings.length === 0;
   }
 
   async getGeoLocations(bookings) {
@@ -45,7 +55,6 @@ export class BookingsLocationsComponent implements OnInit {
 
     if (result.status === 200)
     {
-      console.log(result.result)
       this.geoLocations = result.result.map((item, index) => Object.assign({},
         {
           postCode: item.result.postcode,
@@ -175,5 +184,6 @@ export class BookingsLocationsComponent implements OnInit {
       });
     }
   }
+
 
 }
