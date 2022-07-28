@@ -132,8 +132,8 @@ export class BookingsReceiversComponent implements OnInit {
     return this.receivers.length === 0;
   }
 
-  showWarning() {
-    return !this.receiversCustomerForm.valid;
+  showWarning(index) {
+    return this.isReceiverValuePopulated(index);
   }
 
   onDeleteReceiver(index) {

@@ -11,6 +11,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 export class AvailabilityDialogComponent implements OnInit {
 
   bookings;
+
   constructor(private bookingsService: BookingsService,
     public dialogRef: MatDialogRef<DialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { }
 
