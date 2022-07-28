@@ -1,92 +1,60 @@
-<!-- <form class="form-wrapper cf">
-  <input type="text" placeholder="Reference..." required>
-  <button type="submit">Search</button>
-</form> -->
-
-<!-- 2nd option -->
-<div class="lx-bg">
-  <div class="card-box">
-    <div class="lx-menu" style="background-image: url('../../assets/shipment.jpg')">
-      <div class="lx-card-header">
-        <img class="lx-img" src="" alt="" />
-        <div class="lx-menu-text">
-           <div class="lx-menu-cat">Shipments</div>
-          <p class="lx-menu-title">Manage all shipments</p>
-        </div>
-      </div>
-      <div class="lx-card-body">
-        <a class="lx-button" (click)="navigate('/shipments')" >TAKE ME THERE</a>
-        </div>
-    </div>
-
-    <div class="lx-menu" style="background-image: url('../../assets/booking.jpeg')">
-      <div class="lx-card-header">
-        <img class="lx-img" src="" alt="" />
-        <div class="lx-menu-text">
-           <div class="lx-menu-cat">Bookings</div>
-          <p class="lx-menu-title">Manage all Bookings</p>
-        </div>
-      </div>
-      <div class="lx-card-body">
-        <a class="lx-button" (click)="navigate('/bookings')" >GO TO BOOKINGS</a>
-        </div>
-    </div>
-
-    <div class="lx-menu" style="background-image: url('../../assets/customer.jpeg')">
-      <div class="lx-card-header">
-        <img class="lx-img" src="" alt="" />
-        <div class="lx-menu-text">
-           <div class="lx-menu-cat">Customers</div>
-          <p class="lx-menu-title">Manage all Customers</p>
-        </div>
-      </div>
-      <div class="lx-card-body">
-        <a class="lx-button" (click)="navigate('/customers')" >GO TO CUSTOMERS</a>
-        </div>
-    </div>
-
-    <div class="lx-menu" style="background-image: url('../../assets/driver.jpeg')">
-      <div class="lx-card-header">
-        <img class="lx-img" src="" alt="" />
-        <div class="lx-menu-text">
-           <div class="lx-menu-cat">Reports</div>
-          <p class="lx-menu-title">Manage all Reports</p>
-        </div>
-      </div>
-      <div class="lx-card-body">
-        <a class="lx-button" (click)="navigate('/reports')" >GO TO REPORTS</a>
-        </div>
-    </div>
-
-    <div class="lx-menu" style="background-image: url('../../assets/blackMan.jpeg')">
-      <div class="lx-card-header">
-        <img class="lx-img" src="" alt="" />
-        <div class="lx-menu-text">
-           <div class="lx-menu-cat">Drivers</div>
-          <p class="lx-menu-title">Manage all Drivers</p>
-        </div>
-      </div>
-      <div class="lx-card-body">
-        <a class="lx-button" (click)="navigate('/drivers')" >GO TO DRIVERS</a>
-        </div>
-    </div>
-
-
-
-
-    <div class="lx-menu" style="background: #8f8314;">
-      <div class="lx-card-header">
-        <img class="lx-img" src="https://img.pngio.com/learnnow-transformational-leadership-atd-leadership-png-720_405.png" alt="learnnow-transformational-leadership-atd-leadership-png-720_405.png" alt="fs.png" />
-        <div class="lx-menu-text">
-           <div class="lx-menu-cat">Documents</div>
-          <p class="lx-menu-title">View/Download documents</p>
-        </div>
-
-      </div>
-      <div class="lx-card-body">
-        <a class="lx-button" >TAKE ME THERE</a>
-        </div>
-    </div>
-
-  </div>
+<div class="menu-btn">
+  <i class="fas fa-bars fa-2x"></i>
 </div>
+
+<div class="container">
+  <nav class="main-nav">
+    <img src="assets/login/logo.png" alt="" class="logo">
+
+    <ul class="right-menu">
+      <li>
+        <a href="#">
+          <i class="fas fa-search"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <header class="showcase"></header>
+
+  <section class="home-cards">
+    <div>
+      <img src="assets/shipment.jpg" alt="">
+      <h3>Shipments</h3>
+      <p>
+        All shipments details, history and cost analysis in one place.
+      </p>
+      <a href="/shipments">Manage <i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div>
+      <img src="assets/driver.jpeg" alt="">
+      <h3>Bookings</h3>
+      <p>
+        Create, edit, delete and assign to driver bookings and their items
+      </p>
+      <a href="/bookings">Manage<i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div>
+      <img src="assets/customer.jpeg" alt="">
+      <h3>Customers</h3>
+      <p>
+        Register new customers, create booking or edit exist customers
+      </p>
+      <a href="/customers">Manage <i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div>
+      <img src="assets/driver.jpeg" alt="">
+      <h3>Drivers</h3>
+      <p>
+       Manage bookings assigned to drivers and their itinerary
+      </p>
+      <a href="/drivers">Manage <i class="fas fa-chevron-right"></i></a>
+    </div>
+  </section>
+
+
