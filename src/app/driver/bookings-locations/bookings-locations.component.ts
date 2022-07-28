@@ -24,17 +24,21 @@ export class BookingsLocationsComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show()
     this.activatedroute.data.subscribe(data => {
-      this.getGeoLocations(data.bookings)
-      this.getGoogleApiKey();
-      this.calculateGeoLocationsDistances();
+      if (data.bookings.length > 1)
+      {
+        console.log(data.bookings)
+        this.getGeoLocations(data.bookings)
+        this.getGoogleApiKey();
+        this.calculateGeoLocationsDistances();
+      }
+      this.spinner.hide()
     })
   }
 
   async getGeoLocations(bookings) {
     const bookingsPostCodes = [];
-    // tslint:disable-next-line:prefer-for-of
-    for ( let i = 0; i < bookings.length; i++) {
-      bookingsPostCodes.push(bookings[i].pickUpPostCode);
+    for ( const booking of bookings ) {
+      bookingsPostCodes.push(booking.pickUpPostCode);
     }
 
     const result = await postcodes.lookup(bookingsPostCodes, {filter: 'postcode,longitude,latitude'});
@@ -159,7 +163,7 @@ export class BookingsLocationsComponent implements OnInit {
         })
       })
     }
-    this.spinner.hide()
+ //   this.spinner.hide()
   }
 
   getCurrentPosition() {
