@@ -18,7 +18,7 @@ export class ShipmentItemsComponent implements OnInit {
     'TYPE', 'DESCRIPTION', 'VALUE', 'AMOUNT', 'ACTION'];
   items = null;
   dataSource;
-  isAllSelected;
+  isAllSelected = false;
 
   constructor(private router: Router,private activatedroute: ActivatedRoute,
   private itemService: ItemService) { }
@@ -77,7 +77,7 @@ export class ShipmentItemsComponent implements OnInit {
 
  selectAll() {
    this.isAllSelected = !this.isAllSelected;
-   this.dataSource = this.dataSource.map((obj) => ({ ...obj, selected: this.isAllSelected }));
+   this.dataSource = new MatTableDataSource(this.dataSource.data.map((obj) => ({ ...obj, selected: this.isAllSelected })));
  }
 
  onUnassignItems() {

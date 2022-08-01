@@ -29,6 +29,7 @@ export class AssignItemsComponent implements OnInit {
   height =  '80%';
   width = '65%';
   SHIPMENT_SELECTION_MESSAGE = 'Please select shipment';
+  shipmentList = [];
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,
     private itemService: ItemService,private formBuilder: FormBuilder,
@@ -36,14 +37,13 @@ export class AssignItemsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-
       const items = data.info[0].data.eligibleItems;
       this.dataSource = items.length > 0 ? new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.shipmentsObjs = data.info[1].data.shipments;
       this.shipments = this.getShipmentsDetailsList(this.shipmentsObjs)
-      this.selectedShipmentForm = this.formBuilder.group({selectedShipment: [this.shipments[0]]});
+      this.selectedShipmentForm = this.formBuilder.group({selectedShipment: [this.shipmentList[0]]});
     })
   }
 
@@ -99,7 +99,7 @@ export class AssignItemsComponent implements OnInit {
       const fieldToUpdate = { name: 'shipmentReference', value: shipmentReference };
       this.itemService.updateItemsById(itemsIdsToAssign, fieldToUpdate).subscribe(
         ({ data }) => {
-          location.reload();  // TODO handle properly
+           location.reload();  // TODO handle properly
         },
         error => {
           console.log(error);
@@ -110,29 +110,22 @@ export class AssignItemsComponent implements OnInit {
 
   getShipmentReferenceFromSelection() {
     const shipmentSelection = this.getFormControl('selectedShipment').value;
-    if (shipmentSelection === this.SHIPMENT_SELECTION_MESSAGE)
-    {
-      return null;
-    } else
-    {
-      const containerNumber = shipmentSelection.split(' - ')[0];
-      return this.shipmentsObjs.find(shipment => shipment.containerNumber === containerNumber).reference;
-    }
+    return this.shipmentsObjs.find(shipment =>
+        shipment.containerNumber === shipmentSelection.containerNumber).reference;
   }
 
   getShipmentsDetailsList(shipments) {
     const shipmentsDetails: string[] = [];
     shipmentsDetails.push(this.SHIPMENT_SELECTION_MESSAGE)
     shipments.forEach((shipment) => {
-      shipmentsDetails.push(`${shipment.containerNumber}`) // TODO ADD LOADING DATE
+      this.shipmentList.push({containerNumber: shipment.containerNumber, loadingDate: shipment.loadingDate })
     })
     return shipmentsDetails
   }
 
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
-    const data = fControlName === 'useRange' ? event.checked : event.value;
-    fControl.setValue(data);
+    fControl.setValue(event.value.containerNumber);
     fControl.markAsDirty();
   }
 

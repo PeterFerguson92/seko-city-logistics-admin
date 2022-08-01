@@ -31,7 +31,7 @@ export class AddEditShipmentComponent implements OnInit {
         portOfLoading: [this.portsOfLoading[0]],
         portOfDischarge: [this.portsOfDischarge[0]],
         placeOfReceipt: [this.placesOfReceipt[0]],
-        loadingDate: [this.shipment ? this.shipment.loadingDate: '', Validators.required],
+        loadingDate: [this.shipment ? this.shipment.loadingDate : null, Validators.required],
         consigneeName: [this.shipment ? this.shipment.consigneeName: ''],
         consigneeAddress: [this.shipment ? this.shipment.consigneeAddress: ''],
         exporterFullName: [this.shipment ? this.shipment.exporterFullName: ''],
@@ -70,7 +70,7 @@ export class AddEditShipmentComponent implements OnInit {
     {
       this.shipmentService.updateShipment(this.shipment.reference, updateCustomerFields).subscribe(
         ({ data }) => {
-          location.reload();  // To handle properly
+          this.redirectToShipments();
         },
         error => {
           console.log(error);
@@ -100,15 +100,20 @@ export class AddEditShipmentComponent implements OnInit {
 
     this.shipmentService.createShipment(shipment).subscribe(
       ({ data }) => {
-        this.router.navigate(['/shipments']).then(() => {
-          window.location.reload();
-        });
+        this.redirectToShipments();
       },
       error => {
         console.log(error);
       }
     );
   }
+
+  redirectToShipments() {
+    this.router.navigate(['/shipments']).then(() => {
+      window.location.reload();
+    });
+  }
+
 
   isDisabled() {
     return !this.addEditShipmentForm.valid;

@@ -28,16 +28,14 @@ export class DriverBookingsLocationsComponent implements OnInit {
     this.spinner.show()
     this.activatedroute.data.subscribe(data => {
       this.bookings = data.bookings;
-
-      if (data.bookings.length > 1)
+      if (data.bookings.length > 0)
       {
         this.getGeoLocations(data.bookings)
         this.getGoogleApiKey();
         this.calculateGeoLocationsDistances();
       } else
       {
-              this.spinner.hide()
-
+        this.spinner.hide()
       }
     })
   }

@@ -17,7 +17,7 @@ import { ShipmentService } from '../service/shipment.service';
 export class ShipmentsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['ID', 'SHIPMENT DATE', 'CONTAINER NUMBER', 'BL VESSEL', 'STATUS', 'ACTION'];
+  displayedColumns: string[] = ['ID', 'LOADING DATE', 'CONTAINER NUMBER', 'BL VESSEL', 'STATUS', 'ACTION'];
   shipments: [IShipment] = null;
   dataSource = null;
 

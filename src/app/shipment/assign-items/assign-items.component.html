@@ -1,3 +1,5 @@
+<app-jumbotron title="Loaded Items" imgPath="../../../assets/shipment.jpg"></app-jumbotron>
+<br>
 <div id="summary" class="center">
   <form [formGroup]="selectedShipmentForm">
     <mat-accordion [multi]="true">
@@ -17,9 +19,18 @@
           <div class="columns">
             <div class="item">
               <label for="lname">Container Number / Loading Date'</label><br>
-              <app-material-select-input [width]="205" [options]="shipments" formControlName="selectedShipment"
+              <mat-form-field appearance="outline" [style.width.%]="200">
+                <mat-select #select formControlName="selectedShipment"
+                (selectionChange)="onSelectionChange($event, 'selectedShipment')">
+                  <mat-option *ngFor="let option of shipmentList" [value]="option">
+                    {{option.containerNumber}} - {{getFormattedDate(option.loadingDate)}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <!-- <app-material-select-input [width]="205" [options]="shipments" formControlName="selectedShipment"
                 (selectionChange)="onSelectionChange($event, 'selectedShipment')" [value]="shipments[0]">
-              </app-material-select-input>
+              </app-material-select-input> -->
             </div>
 
           </div>
@@ -85,4 +96,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
-<app-material-button [label]="'Assign'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30"  [disabled]="isDisabled()" (click)="onAssign()"></app-material-button>
+<app-material-button [label]="'Assign'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30"  [disabled]="isDisabled()" (click)="onAssign()"></app-material-button><br>
+
+<br><br>
+
