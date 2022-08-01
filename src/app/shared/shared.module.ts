@@ -23,6 +23,7 @@ import { MaterialCheckboxComponent } from './inputs/material-checkbox/material-c
 import { InputComponent } from './inputs/input/input.component';
 import { ConfirmDialogComponent } from './elements/confirm-dialog/confirm-dialog.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { JumbotronComponent } from './jumbotron/jumbotron.component';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -41,7 +42,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     DialogComponent,
     ConfirmDialogComponent,
     AlertComponent,
-    InputComponent],
+    InputComponent,
+    JumbotronComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule,NgxSpinnerModule ],
   exports: [
     ReactiveFormsModule,
@@ -62,7 +64,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MaterialTableComponent,
     SectionTitleComponent,
     AlertComponent,
-    InputComponent],
+    InputComponent,
+    JumbotronComponent],
     providers: [
       { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
     ]
