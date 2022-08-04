@@ -218,7 +218,7 @@ html, body {
    .mat-expansion-panel-header{
     /* padding-left: 0px !important;
     padding-top: 1px !important; */
-    background:  #6D8299!important;
+    background:  #004e92!important;;
     /* padding-bottom: 1px !important; */
   }
 
@@ -232,6 +232,6 @@ html, body {
 
   .actionBtn {
     margin: 3%;
-    background-color: #6D8299!important;
+    background-color:#004e92!important;
     color: antiquewhite;
   }

@@ -16,10 +16,10 @@ export class AppComponent implements AfterViewInit {
   constructor(route: Router) {
 
     route.events.subscribe(event => {
-      if (this.sidenav)
-      {
-        this.sidenav.close();
-      }
+      // if (this.sidenav)
+      // {
+      //   this.sidenav.close();
+      // }
       if (event instanceof RoutesRecognized) {
         this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
       }
@@ -28,14 +28,14 @@ export class AppComponent implements AfterViewInit {
         this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
         if (this.isVisible)
         {
-          if (this.sidenav) { this.sidenav.toggle() };
+         // if (this.sidenav) { this.sidenav.toggle() };
         }
       }
     });
   }
 
   closeDropdown() {
-    this.sidenav.close();
+   // this.sidenav.close();
   }
 
 

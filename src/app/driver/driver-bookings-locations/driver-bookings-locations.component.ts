@@ -172,7 +172,6 @@ export class DriverBookingsLocationsComponent implements OnInit {
         directionService.route(req, (result, status) => {
           if (status === google.maps.DirectionsStatus.OK)
           {
-            console.log(status)
             directionDisplay.setDirections(result);
           } else
           {

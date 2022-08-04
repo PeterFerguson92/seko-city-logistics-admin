@@ -1,4 +1,4 @@
-<app-jumbotron title="Bookings" imgPath="../../../assets/booking.jpeg"></app-jumbotron>
+<app-jumbotron title="BOOKINGS" imgPath="../../../assets/booking.jpeg"></app-jumbotron>
 <br>
 <div id="summary" class="center">
   <form [formGroup]="bookingsFilterForm">
@@ -14,8 +14,8 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <br/>
-        <fieldset>
-          <legend>Filter Bookings Details</legend>
+        <!-- <fieldset>
+          <legend>Filter Bookings Details</legend> -->
           <div class="columns">
             <div class="item">
               <label for="lname">Status</label><br>
@@ -55,7 +55,7 @@
               <app-material-checkbox [label]="'Show archived'" (checkBoxChange)="onSelectionChange($event, 'archived')" formControlName="archived"></app-material-checkbox>
             </div>
           </div>
-        </fieldset>
+        <!-- </fieldset> -->
         <br>
         <div class="submitBtn" align="center">
           <app-material-button [label]="'SEARCH'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" (click)="onSearch()"></app-material-button>

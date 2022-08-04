@@ -42,9 +42,14 @@ tr:hover {background-color: #ddd;}
   text-align: center;
   justify-items: center;
   /* background-color: #004e92; */
-  background-color: #6D8299!important;
+  /* background-color: #e54d01!important; */
+  background-color: #004e92;
 
-  color: antiquewhite;
+
+  color: white;
+  font-weight: bold;
+  font-size:medium;
+  /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
 }
 
 .fab-main {
@@ -52,13 +57,13 @@ tr:hover {background-color: #ddd;}
   right: 1em;
   bottom: 1em;
   /* background-color: #004e92; */
-  background-color: #6D8299!important;
+  background-color: #004e92!important;
   color: antiquewhite;
 
 }
 
 .icon-color {
-  color: #6D8299;
+  color:#004e92!important;
 }
 .orange-icon-color {
   color: rgb(246, 150, 6);
@@ -76,7 +81,7 @@ tr:hover {background-color: #ddd;}
 }
 
 .action-button {
-  background-color: #6D8299!important;
+  background-color: #004e92!important;
   color: antiquewhite;
   margin-right: 5px;
 
