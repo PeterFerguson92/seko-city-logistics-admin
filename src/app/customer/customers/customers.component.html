@@ -1,61 +1,28 @@
 <app-jumbotron title="Customers" imgPath="../../../assets/customer.jpeg"></app-jumbotron>
 <br>
-<div id="summary" class="center">
-  <form >
-    <mat-accordion [multi]="true">
-      <mat-expansion-panel hideToggle [expanded]="false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>search</mat-icon>
-            Filter Customer
-          </mat-panel-title>
-          <mat-panel-description>
-            Filter Customer Details
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <br/>
-        <fieldset>
-          <legend>Filter Customer Details Information</legend>
-          <div class="columns" >
-            <div class="item">
-              <label for="lname">Filter Value</label><br>
-              <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="200">
-                <input matInput type="text" (keyup)="doFilter($event.target.value)">
-              </mat-form-field>
-            </div>
-
-          </div>
-        </fieldset>
-        <br>
-      </mat-expansion-panel>
-      </mat-accordion>
-    </form>
-  </div>
 <a mat-fab (click)="addCustomer()" class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
 </a>
+<article class="table-header">
+  <input type="text" class="form-control" placeholder="Search..." style="width: 30%;" (keyup)="doFilter($event.target.value)">
+</article>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  <!-- Position Column -->
   <ng-container matColumnDef={{displayedColumns[0]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[0]}}</th>
     <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
   </ng-container>
-    <!-- Position Column -->
   <ng-container matColumnDef={{displayedColumns[1]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[1]}}</th>
     <td mat-cell *matCellDef="let element"> {{getName(element)}} </td>
   </ng-container>
-  <!-- Name Column -->
   <ng-container matColumnDef={{displayedColumns[2]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header  class="centre">{{displayedColumns[2]}}</th>
     <td mat-cell *matCellDef="let element"> {{element.address}} </td>
   </ng-container>
-  <!-- Weight Column -->
   <ng-container matColumnDef={{displayedColumns[3]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[3]}}</th>
     <td mat-cell *matCellDef="let element"> {{element.postcode}} </td>
   </ng-container>
-  <!-- Symbol Column -->
   <ng-container matColumnDef={{displayedColumns[4]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[4]}}</th>
     <td mat-cell *matCellDef="let element"> {{element.type}} </td>

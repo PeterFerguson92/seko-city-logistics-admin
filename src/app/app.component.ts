@@ -20,6 +20,7 @@ export class AppComponent implements AfterViewInit {
       // {
       //   this.sidenav.close();
       // }
+      this.sidenav.open()
       if (event instanceof RoutesRecognized) {
         this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
       }
