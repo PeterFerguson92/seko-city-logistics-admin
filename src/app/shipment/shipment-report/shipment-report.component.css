@@ -11,7 +11,10 @@ table{
 }
 td{
   padding: 5px 0 5px 15px;
-  border: 1px solid antiquewhite
+  /* border: 1px solid black */
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 .tabletitle{
   padding: 5px;
@@ -19,14 +22,14 @@ td{
 }
 
 .exportButton {
-  background-color:#069370 ;
+  background-color:#004e92 ;
   color: white;
 }
 
 .mat-expansion-panel-header{
-  background:  #6D8299!important;
+  background:  #004e92!important;
 }
 
 .mat-expansion-panel-header-title {
-  color: antiquewhite
+  color: white
 }

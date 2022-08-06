@@ -20,7 +20,7 @@ export class ShipmentReportComponent implements OnInit {
   }
 
   getFormattedDate(date) {
-    return this.commonService.getFormattedDate(date);
+    return date ? this.commonService.getFormattedDate(date) : '';
   }
 
   exportAsPDF() {

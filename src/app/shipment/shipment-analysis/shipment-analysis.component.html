@@ -1,5 +1,5 @@
 <div id="summary" class="center">
-  <form [formGroup]="shipmentAnalysisForm">
+  <div [formGroup]="shipmentAnalysisForm">
     <div class="banner"></div><br>
   <mat-accordion [multi]="true">
     <mat-expansion-panel hideToggle [expanded]="true">
@@ -13,136 +13,108 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <br/>
-      <fieldset>
-        <legend>Loading cost details</legend>
-        <div class="columns">
-          <div class="item">
-            <label for="fname">Container charge(£) </label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="containerCharge"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Container extra charge(£) </label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="containerExtraCharge"></app-material-numeric-input >
-          </div>
-          <div class="item">
-            <label for="lname">Loaders cost(£)</label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="loadersCost"></app-material-numeric-input >
-          </div>
-          <div class="item">
-            <label for="lname">Loaders extra cost(£)</label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="loadingExtraCost"></app-material-numeric-input >
-          </div>
-          <div class="item">
-            <label for="lname">Total loading cost </label><br>
-            <app-material-numeric-input [width]="30" formControlName="totalLoadingCost"></app-material-numeric-input >
-          </div>
-          <div class="item">
-            <label for="lname">Loading Notes </label><br>
-            <app-material-input [width]="80"  formControlName="loadingCostNotes"></app-material-input>
-          </div>
+      <div id="parent">
+        <div class="child">
+          <app-material-numeric-input [label]="'Container charge(£)'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="containerCharge"></app-material-numeric-input >
         </div>
-      </fieldset>
+        <div class="child">
+          <app-material-numeric-input [label]="'Container extra charge(£)'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="containerExtraCharge"></app-material-numeric-input >
+        </div>
+        <div class="child">
+          <app-material-numeric-input [label]="'Loaders cost(£)'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="loadersCost"></app-material-numeric-input >
+        </div>
+        <div class="child">
+          <app-material-numeric-input [label]="'Loaders extra cost(£)'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="loadingExtraCost"></app-material-numeric-input >
+        </div>
+      </div>
+      <div id="parent">
+        <div class="child">
+          <app-material-numeric-input [label]="'Total Loading cost(£)'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="totalLoadingCost"></app-material-numeric-input >
+        </div>
+        <div class="child">
+          <app-material-input [width]="250" [label]="'Loading cost notes'"  formControlName="loadingCostNotes"></app-material-input>
+        </div>
+      </div>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon >flight_land</mat-icon>
-          CLEARING
-        </mat-panel-title>
-        <mat-panel-description>
-          Clearing Analysis
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <br/>
-      <fieldset>
-        <legend>Clearing cost details</legend>
-        <div class="columns">
-          <div class="item">
-            <label for="fname">Clearing Charge(£) </label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="clearingCharge"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Incentives (£)</label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="incentives"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Total drivers food(£)</label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="totalGhDriversFood"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Total drivers tips(£)</label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="totalGhDriversTips"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Thirdy Party Expenses</label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="thirdyPartyExpenses"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Car to accra checkpoint </label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="carToAccraCheckpoint"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Car to kumasi checkpoint </label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="carToKumasiCheckpoint"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Car to other checkpoint  </label><br>
-            <app-material-numeric-input [width]="30" (change)="updateTotalExpensesAmount()" formControlName="carToOtherCheckpoint"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Total Clearing cost </label><br>
-            <app-material-numeric-input [width]="30" formControlName="totalClearingCost"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Clearing Notes </label><br>
-            <app-material-input [width]="80" formControlName="clearingNotes"></app-material-input>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon >flight_land</mat-icon>
+            CLEARING
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br/>
+        <div id="parent">
+          <div class="child">
+            <app-material-numeric-input [label]="'Clearing Charge'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="clearingCharge"></app-material-numeric-input >
+          </div>
+          <div class="child">
+            <app-material-numeric-input [label]="'Incentives'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="incentives"></app-material-numeric-input >
+          </div>
+          <div class="child">
+            <app-material-numeric-input [label]="'Total drivers food(£)'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="totalGhDriversFood"></app-material-numeric-input >
+          </div>
+          <div class="child">
+            <app-material-numeric-input [label]="'Total drivers tips(£)'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="totalGhDriversTips"></app-material-numeric-input >
           </div>
         </div>
-      </fieldset>
-    </mat-expansion-panel>
-    <mat-expansion-panel hideToggle [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon >account_balance</mat-icon>
-          TOTAL
-        </mat-panel-title>
-        <mat-panel-description>
-        Analysis Summary
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <br/>
-      <fieldset>
-        <legend>Clearing cost details</legend>
-        <div class="columns">
-          <div class="item">
-            <label for="fname">Total Amount Charged </label><br>
-            <app-material-numeric-input [width]="30" formControlName="totalAmountCharged"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Total Expenses </label><br>
-            <app-material-numeric-input [width]="30" formControlName="totalExpenses"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">PROFIT</label><br>
-            <app-material-numeric-input [width]="30" formControlName="profit"></app-material-numeric-input >
-            </div>
-          <div class="item">
-            <label for="lname">Notes </label><br>
-            <app-material-input [width]="80" formControlName="notes"></app-material-input>
+        <div id="parent">
+          <div class="child">
+            <app-material-numeric-input [label]="'Thirdy Party Expenses'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="thirdyPartyExpenses"></app-material-numeric-input >
+          </div>
+          <div class="child">
+            <app-material-numeric-input [label]="'Car to accra checkpoint '" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="carToAccraCheckpoint"></app-material-numeric-input >
+          </div>
+          <div class="child">
+            <app-material-numeric-input [label]="'Car to kumasi checkpoint'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="carToKumasiCheckpoint"></app-material-numeric-input >
+          </div>
+          <div class="child">
+            <app-material-numeric-input [label]="'Car to other checkpoint  '" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="carToOtherCheckpoint"></app-material-numeric-input >
           </div>
         </div>
-      </fieldset>
+        <div id="parent">
+          <div class="child">
+            <app-material-numeric-input [label]="'Total Clearing cost'" [width]="80" (change)="updateTotalExpensesAmount()" formControlName="totalClearingCost"></app-material-numeric-input >
+          </div>
+          <div class="child">
+            <app-material-input [label]="'Clearing Notes'" [width]="250" formControlName="clearingNotes"></app-material-input>
+          </div>
+        </div>
     </mat-expansion-panel>
-  </mat-accordion>
-  </form>
+
+  <mat-expansion-panel hideToggle [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon >account_balance</mat-icon>
+        TOTAL
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <br/>
+    <div id="parent">
+      <div class="child">
+        <app-material-numeric-input [label]="'Total Amount Charged'" [width]="80" formControlName="totalAmountCharged"></app-material-numeric-input >
+      </div>
+      <div class="child">
+        <app-material-numeric-input [label]="'Total Expenses'" [width]="80" formControlName="totalExpenses"></app-material-numeric-input >
+      </div>
+      <div class="child">
+        <app-material-numeric-input [label]="'Profit'" [width]="80" formControlName="profit"></app-material-numeric-input >
+      </div>
+      <div class="child">
+        <app-material-numeric-input [label]="'Notes'" [width]="250" formControlName="notes"></app-material-numeric-input >
+        </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+</div>
   </div>
   <br>
   <div class="submitBtn" align="center">
-    <app-material-button [label]="'Submit'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'"[width]="30" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
+    <app-material-button [label]="'SUBMIT'" [color]="'white'" [backgroundColor]="'#004e92'"[width]="30" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
   </div>
   <br>
   <div class="submitBtn" align="center">
-    <app-material-button [label]="'Generate Report'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" [disabled]="isDisabled()" (click)="onGenerateReport()"></app-material-button>
+    <app-material-button [label]="'GENERATE REPORT'" [color]="'white'" [backgroundColor]="'#004e92'" [width]="30" [disabled]="isDisabled()" (click)="onGenerateReport()"></app-material-button>
   </div>
   <br>
   <br>
