@@ -9,7 +9,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
-  styleUrls: ['./bookings.component.css', '../../shared/shared-new-form.css']
+  styleUrls: ['./bookings.component.css','../../shared/shared-new-form.css' ]
 })
 export class BookingsComponent implements OnInit {
   bookingsFilterForm: FormGroup;

@@ -204,14 +204,19 @@ html, body {
   }
   mat-expansion-panel-header-title {
     font-weight: bold;
+    font-size:medium;
   }
 
   .mat-expansion-panel-header-title {
-    color: antiquewhite
+    color: white;
+    font-weight: bold;
+    font-size:medium;
   }
 
   .mat-expansion-panel-header-description {
-    color: antiquewhite;
+    color: white;
+    font-weight: bold;
+    font-size:medium;
   }
 
 
@@ -233,5 +238,7 @@ html, body {
   .actionBtn {
     margin: 3%;
     background-color:#004e92!important;
-    color: antiquewhite;
+    color: white;
+    font-weight: bold;
+    font-size:medium;
   }

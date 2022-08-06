@@ -1,67 +1,56 @@
 <app-jumbotron title="BOOKINGS" imgPath="../../../assets/booking.jpeg"></app-jumbotron>
 <br>
-<div id="summary" class="center">
-  <form [formGroup]="bookingsFilterForm">
-    <mat-accordion [multi]="true">
-      <mat-expansion-panel hideToggle [expanded]="false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>search</mat-icon>
-            Filter
+<div [formGroup]="bookingsFilterForm" >
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel hideToggle [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>search</mat-icon>
+            FILTER BOOKINGS
           </mat-panel-title>
-          <mat-panel-description>
-            Filter Bookings
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <br/>
-        <!-- <fieldset>
-          <legend>Filter Bookings Details</legend> -->
-          <div class="columns">
-            <div class="item">
-              <label for="lname">Status</label><br>
-              <app-material-select-input [width]="50" [options]="bookingStatuses" formControlName="status"
-              (selectionChange)="onSelectionChange($event, 'status')" [value]="bookingStatuses[0]"></app-material-select-input>
-            </div>
-            <div class="item">
-              <label for="lname">Postcode</label><br>
-              <app-material-input [icon]="'person_pin'"[width]="50" formControlName="postcode"></app-material-input>
-            </div>
-            <div class="item">
-              <label for="lname">Booking Reference</label><br>
-              <app-material-input [icon]="'person_pin'"[width]="50" formControlName="reference"></app-material-input>
-            </div>
-            <div class="item">
-              <label for="lname">Payment Status</label><br>
-              <app-material-select-input  [width]="50" [options]="paymentStatuses" formControlName="paymentStatus"
-                (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
-              </app-material-select-input>
-            </div>
-            <div *ngIf="isRangeEnabled()" class="item">
-              <label for="lname">From</label><br>
-              <app-material-date-picker-input [label]="'From Date'"
-                (inputChange)="onInputChange($event, 'fromDate')" formControlName="fromDate">
-              </app-material-date-picker-input>
-            </div>
-            <div *ngIf="isRangeEnabled()" class="item">
-              <label for="lname">To</label><br>
-              <app-material-date-picker-input [label]="'To Date'"
-                (inputChange)="onInputChange($event, 'toDate')" formControlName="toDate">
-              </app-material-date-picker-input>
-            </div>
-            <div class="item">
-              <app-material-checkbox [label]="'Enable interval Filter'" (checkBoxChange)="onSelectionChange($event, 'useRange')" formControlName="useRange"></app-material-checkbox>
-            </div>
-            <div class="item">
-              <app-material-checkbox [label]="'Show archived'" (checkBoxChange)="onSelectionChange($event, 'archived')" formControlName="archived"></app-material-checkbox>
-            </div>
-          </div>
-        <!-- </fieldset> -->
-        <br>
-        <div class="submitBtn" align="center">
-          <app-material-button [label]="'SEARCH'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" (click)="onSearch()"></app-material-button>
+      </mat-expansion-panel-header>
+      <br/>
+      <div id="parent">
+        <div class="child">
+          <app-material-select-input [width]="100" [label]="'Status'" [options]="bookingStatuses" formControlName="status"
+          (selectionChange)="onSelectionChange($event, 'status')" [value]="bookingStatuses[0]">
+          </app-material-select-input>
         </div>
-      </mat-expansion-panel>
-      </mat-accordion>
-    </form>
-  </div>
+        <div class="child">
+          <app-material-input [icon]="'person_pin'" [label]="'Postcode'" [width]="100" formControlName="postcode"></app-material-input>
+        </div>
+        <div class="child">
+          <app-material-input [icon]="'person_pin'"[width]="100"  [label]="'Booking Reference'" formControlName="reference"></app-material-input>
+        </div>
+        <div class="child">
+          <app-material-select-input  [width]="100" [label]="'Payment Status'" [options]="paymentStatuses" formControlName="paymentStatus"
+            (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
+          </app-material-select-input>
+        </div>
+        <div class="child">
+          <app-material-checkbox [label]="'Enable interval Filter'" (checkBoxChange)="onSelectionChange($event, 'useRange')" formControlName="useRange"></app-material-checkbox>
+        </div>
+        <div class="child">
+          <app-material-checkbox [label]="'Show archived'" (checkBoxChange)="onSelectionChange($event, 'archived')" formControlName="archived"></app-material-checkbox>
+        </div>
+      </div>
+      <div *ngIf="isRangeEnabled()"  id="parent">
+        <div   class="child">
+          <app-material-date-picker-input [label]="'From Date'"
+            (inputChange)="onInputChange($event, 'fromDate')" formControlName="fromDate">
+          </app-material-date-picker-input>
+        </div>
+        <div  class="child">
+          <app-material-date-picker-input [label]="'To Date'"
+            (inputChange)="onInputChange($event, 'toDate')" formControlName="toDate">
+          </app-material-date-picker-input>
+        </div>
+      </div>
+      <div class="submitBtn" align="center">
+        <app-material-button [label]="'APPLY FILTER'" [color]="'white'" [backgroundColor]="'#004e92'" [width]="30" (click)="onSearch()"></app-material-button>
+      </div>
+  </mat-expansion-panel>
+</mat-accordion>
+</div>
+<br>
 <app-bookings-table [bookings]="bookings" [includeArchived]="includeArchive"></app-bookings-table>

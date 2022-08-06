@@ -24,6 +24,7 @@ export class MaterialInputComponent implements OnInit, ControlValueAccessor {
   @Input() type;
   @Input() disabled;
   @Input() pattern;
+  @Input() placeholder;
   value;
   inputColor;
 
