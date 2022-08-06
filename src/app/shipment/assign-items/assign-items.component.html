@@ -1,46 +1,33 @@
 <app-jumbotron title="Loaded Items" imgPath="../../../assets/shipment.jpg"></app-jumbotron>
 <br>
-<div id="summary" class="center">
-  <form [formGroup]="selectedShipmentForm">
-    <mat-accordion [multi]="true">
-      <mat-expansion-panel hideToggle [expanded]="false">
+<div [formGroup]="selectedShipmentForm">
+  <mat-accordion [multi]="true">
+      <mat-expansion-panel hideToggle [expanded]="true">
         <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>local_shipping</mat-icon>
-            Container
-          </mat-panel-title>
-          <mat-panel-description>
-            Select Container
-          </mat-panel-description>
+          <mat-panel-title><mat-icon>local_shipping</mat-icon>CONTAINER</mat-panel-title>
         </mat-expansion-panel-header>
         <br/>
-        <fieldset>
-          <legend>Container Details</legend>
-          <div class="columns">
-            <div class="item">
-              <label for="lname">Container Number / Loading Date'</label><br>
-              <mat-form-field appearance="outline" [style.width.%]="200">
-                <mat-select #select formControlName="selectedShipment"
-                (selectionChange)="onSelectionChange($event, 'selectedShipment')">
-                  <mat-option *ngFor="let option of shipmentList" [value]="option">
-                    {{option.containerNumber}} - {{getFormattedDate(option.loadingDate)}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <!-- <app-material-select-input [width]="205" [options]="shipments" formControlName="selectedShipment"
-                (selectionChange)="onSelectionChange($event, 'selectedShipment')" [value]="shipments[0]">
-              </app-material-select-input> -->
-            </div>
-
+        <div id="parent">
+          <div class="child">
+            <mat-form-field appearance="outline" [style.width.%]="150">
+              <mat-label>Container Number</mat-label>
+              <mat-select #select formControlName="selectedShipment"
+              (selectionChange)="onSelectionChange($event)">
+                <mat-option *ngFor="let option of shipmentList" [value]="option">
+                  {{option.containerNumber}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-        </fieldset>
+          <div class="child">
+            <app-material-input [icon]="'person_pin'" [label]="'Loading Date'" [width]="100" formControlName="loadingDate"></app-material-input>
+          </div>
+        </div>
         <br>
       </mat-expansion-panel>
       </mat-accordion>
-    </form>
-  </div>
-
+    </div>
+    <br>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef={{displayedColumns[0]}}>
     <th mat-header-cell *matHeaderCellDef>

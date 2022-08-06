@@ -30,6 +30,7 @@ export class AssignItemsComponent implements OnInit {
   width = '65%';
   SHIPMENT_SELECTION_MESSAGE = 'Please select shipment';
   shipmentList = [];
+  loadingDate = null;
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,
     private itemService: ItemService,private formBuilder: FormBuilder,
@@ -43,7 +44,10 @@ export class AssignItemsComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.shipmentsObjs = data.info[1].data.shipments;
       this.shipments = this.getShipmentsDetailsList(this.shipmentsObjs)
-      this.selectedShipmentForm = this.formBuilder.group({selectedShipment: [this.shipmentList[0]]});
+      this.selectedShipmentForm = this.formBuilder.group({
+        selectedShipment: [this.shipmentList[0]],
+        loadingDate: [this.getFormattedDate(this.shipmentList[0].loadingDate)]
+      });
     })
   }
 
@@ -123,10 +127,8 @@ export class AssignItemsComponent implements OnInit {
     return shipmentsDetails
   }
 
-  onSelectionChange(event: any, fControlName: string) {
-    const fControl = this.getFormControl(fControlName);
-    fControl.setValue(event.value.containerNumber);
-    fControl.markAsDirty();
+  onSelectionChange(event: any,) {
+    this.getFormControl('loadingDate').setValue(this.getFormattedDate(event.value.loadingDate))
   }
 
    getFormControl(fControlName: string) {

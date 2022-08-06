@@ -27,24 +27,24 @@ tr:nth-child(even) {
 .editButton {
   margin-left: 80px !important;
   margin-right: 80px !important;
-  background-color:#069370 ;
+  background-color:#004e92!important; ;
   color: white;
 }
 
 .exportButton {
-  background-color:#069370 ;
+  background-color:#004e92!important; ;
   color: white;
 
 }
 
 .generateInvoiceButton {
-  background-color:#069370 ;
+  background-color:#004e92!important; ;
   color: white;
 
 }
 
 .mat-expansion-panel-header{
-  background:  #6D8299!important;
+  background:#004e92!important;;
 }
 
 .mat-expansion-panel-header-title {

@@ -38,7 +38,7 @@ p{
 }
 a {
     text-decoration: none;
-    color: #00a63f;
+    color: #004e92!important;;
 }
 
 #invoiceholder{
@@ -58,7 +58,7 @@ a {
   padding: 20px;
 }
 
-#invoice-top{border-bottom: 2px solid #00a63f;}
+#invoice-top{border-bottom: 2px solid #004e92!important;;}
 #invoice-mid{min-height: 110px;}
 /*#invoice-bot{ min-height: 240px;}*/
 
@@ -121,7 +121,7 @@ h2 {
     font-size: 0.75em;
 }
 .cta-group .btn-primary {
-    background: #00a63f;
+    background: #004e92!important;;
 }
 .cta-group.mobile-btn-group {
     display: none;
