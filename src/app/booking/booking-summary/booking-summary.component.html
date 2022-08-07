@@ -24,8 +24,6 @@
         <td>Registered Name</td>
         <td>{{booking.sender.registeredName}}</td>
       </tr>
-      <tr>
-
       <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
         <td>Registered Number</td>
         <td>{{booking.sender.registeredNumber}}</td>

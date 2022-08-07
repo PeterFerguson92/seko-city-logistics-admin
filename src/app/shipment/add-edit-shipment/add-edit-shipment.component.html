@@ -1,5 +1,5 @@
 <div id="summary" class="center">
-  <form [formGroup]="addEditShipmentForm">
+  <div [formGroup]="addEditShipmentForm">
     <div class="banner"></div><br>
   <mat-accordion [multi]="true">
     <mat-expansion-panel hideToggle [expanded]="true">
@@ -8,13 +8,8 @@
           <mat-icon >flight_takeoff</mat-icon>
           Ports
         </mat-panel-title>
-        <mat-panel-description>
-          Ports Information Details
-        </mat-panel-description>
       </mat-expansion-panel-header>
       <br/>
-      <fieldset>
-        <legend>Ports</legend>
         <div class="columns">
         <div class="item">
           <label for="fname">Port Of Loading</label><br>
@@ -35,7 +30,6 @@
           </app-material-select-input>
         </div>
       </div>
-      </fieldset>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
@@ -43,13 +37,8 @@
           <mat-icon >flight_land</mat-icon>
           SHIPMENT
         </mat-panel-title>
-        <mat-panel-description>
-          Shipment Details
-        </mat-panel-description>
       </mat-expansion-panel-header>
       <br>
-      <fieldset>
-        <legend>Shipment Information Details</legend>
         <div class="columns">
           <div class="item">
             <label for="lname">BL Vessel</label><br>
@@ -72,7 +61,6 @@
             </app-material-date-picker-input>
           </div>
         </div>
-      </fieldset>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="false">
       <mat-expansion-panel-header>
@@ -80,12 +68,7 @@
           <mat-icon >flight_land</mat-icon>
           EXPORTER
         </mat-panel-title>
-        <mat-panel-description>
-          Exporter Details
-        </mat-panel-description>
       </mat-expansion-panel-header><br>
-      <fieldset>
-        <legend>Exporter Information Details</legend>
         <div class="columns">
           <div class="item">
             <label for="lname">Full Name </label><br>
@@ -108,7 +91,6 @@
             <app-material-input  [width]="80" formControlName="exporterCity"></app-material-input>
           </div>
         </div>
-      </fieldset>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="false">
       <mat-expansion-panel-header>
@@ -116,12 +98,7 @@
           <mat-icon >flight_land</mat-icon>
           CONSIGNEE
         </mat-panel-title>
-        <mat-panel-description>
-          Consignee Details
-        </mat-panel-description>
       </mat-expansion-panel-header><br>
-      <fieldset>
-        <legend>Consignee Information Details</legend>
         <div class="columns">
           <div class="item">
             <label for="lname">Full Name </label><br>
@@ -132,14 +109,13 @@
             <app-material-input [width]="80" formControlName="consigneeAddress" ></app-material-input>
           </div>
         </div>
-      </fieldset>
     </mat-expansion-panel>
   </mat-accordion>
-  </form>
+</div>
   </div>
   <br>
   <div class="submitBtn" align="center">
-    <app-material-button [label]="'Submit'" [width]="30" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
+    <app-material-button [label]="'SUBMIT'" [width]="30" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
   </div>
   <br>
   <br>

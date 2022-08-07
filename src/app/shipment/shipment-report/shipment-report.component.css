@@ -28,6 +28,7 @@ tr:nth-child(even) {
 
 .mat-expansion-panel-header{
   background:  #004e92!important;
+  width: 100%;
 }
 
 .mat-expansion-panel-header-title {
