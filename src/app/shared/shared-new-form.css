@@ -76,12 +76,12 @@ html, body {
   padding: 5px;
   }
   .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
-  color:  #006622;
+  color:  #050505;
   }
   .item input:hover, .item select:hover, .item textarea:hover {
   border: 1px solid transparent;
-  box-shadow: 0 0 3px 0  #006622;
-  color: #006622;
+  box-shadow: 0 0 3px 0  #0d0e0d;
+  color: #010101;
   }
   .item {
   position: relative;
@@ -96,7 +96,7 @@ html, body {
   .item i, input[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute;
   font-size: 20px;
-  color: #00b33c;
+  color: #060707;
   }
   .item i {
   right: 1%;
@@ -147,7 +147,7 @@ html, body {
   border: 2px solid #ccc;
   }
   input[type=radio]:checked + label:before, label.radio:hover:before {
-  border: 2px solid  #006622;
+  border: 2px solid  #000000;
   }
   label.radio:after {
   content: "";
@@ -156,7 +156,7 @@ html, body {
   left: 5px;
   width: 8px;
   height: 4px;
-  border: 3px solid  #006622;
+  border: 3px solid  #070707;
   border-top: none;
   border-right: none;
   transform: rotate(-45deg);

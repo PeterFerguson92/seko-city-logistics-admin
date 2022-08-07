@@ -10,7 +10,7 @@ import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component
 @Component({
   selector: 'app-drivers',
   templateUrl: './drivers.component.html',
-  styleUrls: ['./drivers.component.css', '../../shared/shared-table.css']
+  styleUrls: ['./drivers.component.css', '../../shared/shared-table.css', '../../shared/shared-new-form.css']
 })
 export class DriversComponent implements OnInit {
 
@@ -42,6 +42,10 @@ export class DriversComponent implements OnInit {
 
   onShowAssignedBookings(reference) {
     this.router.navigate(['/assignedBookings', reference])
+  }
+
+  onFilter(value: string) {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
   onDeleteDriver(username) {

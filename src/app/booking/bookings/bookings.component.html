@@ -17,13 +17,13 @@
           </app-material-select-input>
         </div>
         <div class="child">
-          <app-material-input [icon]="'person_pin'" [label]="'Postcode'" [width]="100" formControlName="postcode"></app-material-input>
+          <app-material-input [label]="'Postcode'" [width]="100" formControlName="postcode"></app-material-input>
         </div>
         <div class="child">
-          <app-material-input [icon]="'person_pin'"[width]="100"  [label]="'Booking Reference'" formControlName="reference"></app-material-input>
+          <app-material-input [width]="100"  [label]="'Booking Reference'" formControlName="reference"></app-material-input>
         </div>
         <div class="child">
-          <app-material-select-input  [width]="100" [label]="'Payment Status'" [options]="paymentStatuses" formControlName="paymentStatus"
+          <app-material-select-input [width]="100" [label]="'Payment Status'" [options]="paymentStatuses" formControlName="paymentStatus"
             (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
           </app-material-select-input>
         </div>
@@ -34,7 +34,7 @@
           <app-material-checkbox [label]="'Show archived'" (checkBoxChange)="onSelectionChange($event, 'archived')" formControlName="archived"></app-material-checkbox>
         </div>
       </div>
-      <div *ngIf="isRangeEnabled()"  id="parent">
+      <div *ngIf="isRangeEnabled()" id="parent">
         <div   class="child">
           <app-material-date-picker-input [label]="'From Date'"
             (inputChange)="onInputChange($event, 'fromDate')" formControlName="fromDate">
