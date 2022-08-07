@@ -17,8 +17,7 @@ import { BookingSummaryResolver } from './booking/service/resolver/booking-summa
 import { ShipmentItemsResolver } from './shipment/service/resolver/shipment-items.resolver';
 import { DriversComponent } from './driver/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
-import { AssignItemsResolver } from './shipment/service/resolver/assign-items.resolver';
-import { AssignItemsComponent } from './shipment/assign-items/assign-items.component';
+import { LoadedItemsResolver } from './shipment/service/resolver/loaded-items.resolver';
 import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items.component';
 import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment-analysis.component';
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
@@ -28,13 +27,14 @@ import { DriversResolver } from './driver/service/drivers.resolver';
 import { DriverBookingsResolver } from './booking/service/resolver/driver-bookings.resolver';
 import { DriverBookingsComponent } from './driver/driver-bookings/driver-bookings.component';
 import { DriverBookingsLocationsComponent } from './driver/driver-bookings-locations/driver-bookings-locations.component';
+import { LoadedItemsComponent } from './shipment/loaded-items/loaded-items.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
   { path: 'add-shipment', component: AddEditShipmentComponent },
-  { path: 'assign-items', component: AssignItemsComponent, resolve: { info: AssignItemsResolver }},
+  { path: 'loaded-items', component: LoadedItemsComponent, resolve: { info: LoadedItemsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'shipment-items/:reference', component: ShipmentItemsComponent, resolve: { items: ShipmentItemsResolver } },
   { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver } },

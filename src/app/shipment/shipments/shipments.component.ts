@@ -33,7 +33,7 @@ export class ShipmentsComponent implements OnInit {
   }
 
   onAssign() {
-    this.router.navigate(['/assign-items']);
+    this.router.navigate(['/loaded-items']);
   }
 
   onAddShipment() {

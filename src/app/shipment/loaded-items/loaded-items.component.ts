@@ -9,12 +9,13 @@ import { IBooking } from 'src/app/booking/model';
 import { ItemService } from 'src/app/booking/service/items/item.service';
 import { CommonService } from 'src/app/service/common.service';
 
+
 @Component({
-  selector: 'app-assign-items',
-  templateUrl: './assign-items.component.html',
-  styleUrls: ['./assign-items.component.css', '../../shared/shared-table.css','../../shared/shared-new-form.css']
+  selector: 'app-loaded-items',
+  templateUrl: './loaded-items.component.html',
+  styleUrls: ['./loaded-items.component.css','../../shared/shared-table.css','../../shared/shared-new-form.css']
 })
-export class AssignItemsComponent implements OnInit {
+export class LoadedItemsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

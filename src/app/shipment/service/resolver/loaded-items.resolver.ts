@@ -7,7 +7,7 @@ import { ShipmentService } from '../shipment.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AssignItemsResolver implements Resolve<any> {
+export class LoadedItemsResolver implements Resolve<any> {
 
   constructor(private itemService: ItemService, private shipmentService: ShipmentService) { }
 
