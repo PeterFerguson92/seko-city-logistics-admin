@@ -1,6 +1,6 @@
 <div class="bodys">
   <div class="booking-form-w3layouts">
-    <app-material-button [label]="'Load Previous'" [color]="'primary'" [backgroundColor]="'#004e92'" (click)="onLoadPreviousReceivers()"></app-material-button><br><br>
+    <app-material-button [label]="'Load Previous'" (click)="onLoadPreviousReceivers()"></app-material-button><br><br>
       <div class="main-flex-w3ls-sectns">
       <div>
       </div>
@@ -30,9 +30,9 @@
                    <app-material-input [label]="'Phone'" [type]="'phone'" [width]="15" [icon]="'person_pin'"  formControlName="phone" [errorMsg]="formValidationMap.phone"></app-material-input>
                 </span>
                 <div class="divider"></div>
-                <app-material-button [label]="'-'" [color]="'primary'" [backgroundColor]="'#c43b00'" [disabled]="isDeleteDisabled()"(click)="onDeleteReceiver(i)"></app-material-button>
+                <app-material-button [label]="'-'" [disabled]="isDeleteDisabled()"(click)="onDeleteReceiver(i)"></app-material-button>
                    <div class="divider"></div>
-                <app-material-button [label]="'+'" [color]="'primary'" [backgroundColor]="'#004e92'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button><br><br>
+                <app-material-button [label]="'+'" [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button><br><br>
               </div>
             </div>
           </form>

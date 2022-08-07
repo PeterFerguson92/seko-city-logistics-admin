@@ -48,7 +48,7 @@
           <div class="columns">
             <div class="item">
               <app-material-button
-                [label]="'Load Previous Receivers'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'"  (click)="onLoadPreviousReceivers()">
+                [label]="'Load Previous Receivers'" (click)="onLoadPreviousReceivers()">
               </app-material-button>
             </div>
             <div class="item">
@@ -115,10 +115,8 @@
                   <app-material-input formControlName="surname" [errorMsg]="formValidationMapList[i].surname" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
                 </div>
                 <div class="item" >
-                  <app-material-button
-                    [label]="'-'"  [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" (click)="onDeleteReceiver(i)">
-                  </app-material-button>&nbsp;
-                  <app-material-button [label]="'+'"  [color]="'antiquewhite'" [backgroundColor]="'#6D8299'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button>
+                  <app-material-button [label]="'-'" (click)="onDeleteReceiver(i)"></app-material-button>&nbsp;
+                  <app-material-button [label]="'+'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button>
                 </div>
 
               </div>

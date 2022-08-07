@@ -83,7 +83,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
-<app-material-button [label]="'Assign'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30"  [disabled]="isDisabled()" (click)="onAssign()"></app-material-button><br>
+<app-material-button [label]="'Assign'" [width]="30"  [disabled]="isDisabled()" (click)="onAssign()"></app-material-button><br>
 
 <br><br>
 
