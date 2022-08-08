@@ -21,7 +21,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @Input() bookings: [IBooking] = null;
   @Input() includeArchived = false;
-  displayedColumns: string[] = ['ID', 'NAME', 'DESTINATION', 'POSTCODE', 'DATE', 'PAYMENT STATUS', 'BOOKING STATUS', 'ACTION'];
+  displayedColumns: string[] = ['DATE', 'POSTCODE', 'SENDER', 'DESTINATION', 'PAYMENT', 'BOOKING STATUS', 'ID', 'ACTION'];
   dataSource = null;
   height = '80%';
   width = '65%';

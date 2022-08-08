@@ -1,5 +1,5 @@
 <div id="summary" class="center">
-  <form [formGroup]="addEditCustomerForm">
+  <div [formGroup]="addEditCustomerForm">
     <div class="banner"></div><br>
   <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="false">
     <mat-expansion-panel-header *ngIf="isCreateBookingMode()">
@@ -12,8 +12,6 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <br/>
-    <fieldset>
-      <legend>Actions</legend>
       <div class="columns">
         <div [formGroup]="loadCustomerForm" class="item">
           <label for="lname">Reference</label><br>
@@ -21,7 +19,6 @@
           <app-material-button [label]="'Load Customer'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
         </div>
     </div>
-    </fieldset>
   </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
@@ -34,8 +31,6 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <br/>
-      <fieldset>
-        <legend>Customer Type Details</legend>
         <div class="columns">
           <div class="item">
             <label for="lname">Type</label><br>
@@ -56,7 +51,6 @@
             <app-material-input  [width]="60" formControlName="registeredNumber" [errorMsg]="formValidationMap.registeredName"></app-material-input>
           </div>
         </div>
-      </fieldset>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
@@ -69,8 +63,6 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <br/>
-      <fieldset>
-        <legend>Personal Information Details</legend>
         <div class="columns">
           <div class="item">
             <label for="lname">Title</label><br>
@@ -87,23 +79,6 @@
             <label for="lname">Surname<span>*</span></label><br>
             <app-material-input formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
-        </div>
-      </fieldset>
-    </mat-expansion-panel>
-    <mat-expansion-panel hideToggle [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>contacts</mat-icon>
-          CONTACT
-        </mat-panel-title>
-        <mat-panel-description>
-       Contact Information
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <br/>
-      <fieldset>
-        <legend>Contact Information Details</legend>
-        <div class="columns">
           <div class="item" formGroupName="phoneGroup">
             <label for="lname"> Phone Number <span>*</span></label><br>
             <app-material-select-input [label]="'Code'"  [width]="15" [options]="countryCodes" formControlName="countryCode"
@@ -111,7 +86,7 @@
             <app-material-input [width]="30" [label]="'Number'" formControlName="phone" [errorMsg]="formValidationMap.phone" ></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Email<span>*</span></label><br>
+            <label for="lname">Email</label><br>
             <app-material-input [width]="80" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
           </div>
           <div class="item">
@@ -123,13 +98,12 @@
             <app-material-select-input [width]="80" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
           </div>
         </div>
-      </fieldset>
     </mat-expansion-panel>
     <div *ngIf="showWarning()" class="alert warning">
       <strong>Warning!</strong> Please fill in all required field with valid values.
     </div>
   </mat-accordion>
-  </form>
+</div>
   </div>
   <br>
   <div *ngIf="!isBookingMode()" class="submitBtn" align="center">

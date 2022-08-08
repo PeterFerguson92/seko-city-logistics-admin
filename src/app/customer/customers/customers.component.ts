@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { ICustomer } from '../model';
 import { CustomersService } from '../service/customers.service';

@@ -57,7 +57,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         surname: ['', Validators.required],
         registeredName: [''],
         registeredNumber: [''],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', []],
         phoneGroup: this.formBuilder.group({
           countryCode: [this.countryCodes[0], [Validators.required]],
           phone: ['', [Validators.required]],}, { validators: [Validators.required, this.validationService.phoneValidator] }),
