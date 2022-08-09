@@ -28,10 +28,14 @@
               <mat-icon>pie_chart</mat-icon>
               <span>Report</span>
           </button>
+          <button mat-button class="menu-button" (click)="navigate('/tasks')">
+            <mat-icon>rate_review</mat-icon>
+            <span>Tasks</span>
+          </button>
           <button mat-button class="menu-button" (click)="navigate('/drivers')">
             <mat-icon>transfer_within_a_station</mat-icon>
             <span>Drivers</span>
-        </button>
+          </button>
           <button mat-button class="menu-button" (click)="navigate('/login')">
               <mat-icon>exit_to_app</mat-icon>
               <span>Logout</span>

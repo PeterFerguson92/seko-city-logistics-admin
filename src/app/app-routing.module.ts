@@ -28,6 +28,8 @@ import { DriverBookingsResolver } from './booking/service/resolver/driver-bookin
 import { DriverBookingsComponent } from './driver/driver-bookings/driver-bookings.component';
 import { DriverBookingsLocationsComponent } from './driver/driver-bookings-locations/driver-bookings-locations.component';
 import { LoadedItemsComponent } from './shipment/loaded-items/loaded-items.component';
+import { TasksResolver } from './task/service/resolver/tasks.resolver';
+import { TasksComponent } from './task/tasks/tasks.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -54,6 +56,7 @@ const routes: Routes = [
   { path: 'assignedBookings/:reference', component: DriverBookingsComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'locations/:reference', component: DriverBookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'reports', component: ReportsComponent },
+  { path: 'tasks', component: TasksComponent, resolve: { tasks: TasksResolver }  },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

@@ -19,6 +19,8 @@ import { ReportsComponent } from './reports/reports.component';
 import { DriversModule } from './driver/drivers.module';
 import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
+import { TasksComponent } from './task/tasks/tasks.component';
+import { TaskModule } from './task/task.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { HomeModule } from './home/home.module';
     LoginComponent,
     ReportsComponent,
     SideNavComponent,
-    HomeComponent
+    HomeComponent,
+    TasksComponent
   ],
   entryComponents: [],
   imports: [
@@ -43,6 +46,7 @@ import { HomeModule } from './home/home.module';
     ShipmentModule,
     DriversModule,
     HomeModule,
+    TaskModule
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
