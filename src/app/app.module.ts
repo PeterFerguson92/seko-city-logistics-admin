@@ -21,6 +21,7 @@ import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
 import { TasksComponent } from './task/tasks/tasks.component';
 import { TaskModule } from './task/task.module';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { TaskModule } from './task/task.module';
     ShipmentModule,
     DriversModule,
     HomeModule,
-    TaskModule
+    TaskModule,
+    DragDropModule
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
