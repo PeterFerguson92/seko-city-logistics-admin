@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Board } from './models/board.model';
 import { Column } from './models/column.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-task-dialog.component';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+  styleUrls: ['./tasks.component.css', './../../shared/shared-new-form.css']
 })
 export class TasksComponent implements OnInit {
   board: Board = new Board('Test Board', [
@@ -35,7 +37,7 @@ export class TasksComponent implements OnInit {
       'Walk dog'
     ])
   ]);
-  constructor(private activatedroute: ActivatedRoute) { }
+  constructor(private activatedroute: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -53,5 +55,14 @@ export class TasksComponent implements OnInit {
         event.currentIndex);
     }
   }
+  onAddTask() {
+    const dialogRef = this.dialog.open(AddEditTaskDialogComponent, {
+    height: '60%',
+    width: '45%',
+    // data: { booking }
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    console.log(result)
+  })}
 
 }

@@ -1,0 +1,35 @@
+  <div [formGroup]="addEditTaskForm">
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel (click)="$event.preventDefault()" hideToggle [expanded]="true">
+      <mat-expansion-panel-header (click)="$event.preventDefault()">
+        <mat-panel-title>
+          <mat-icon >flight_takeoff</mat-icon>
+           TASK DETAILS
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <br>
+      <div class="columns">
+        <div class="item">
+          <app-material-input [label]="'Title'" [width]="40" formControlName="title" ></app-material-input>
+        </div>
+        <div class="item">
+          <mat-form-field appearance="outline" class="fill-container">
+            <mat-label>Description</mat-label>
+            <textarea  matAutosizeMinRows="78" [rows]="8" [cols]="12"
+            matInput style="width: 100%; max-width: 100%;"
+            matTextareaAutosize></textarea>
+          </mat-form-field>
+        </div>
+        <div class="item">
+          <app-material-date-picker-input [label]="'Action Date'"
+            (inputChange)="onInputChange($event)" formControlName="actionDate">
+          </app-material-date-picker-input>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div align="center">
+    <br>
+    <app-material-button [label]="'SUBMIT'" [width]="30" [disabled]="isDisabled()" (click)="onSubmit()" ></app-material-button>
+  </div>
+</div>
