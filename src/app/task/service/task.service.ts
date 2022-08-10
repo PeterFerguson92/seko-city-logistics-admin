@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { CURSOR, LIMIT } from 'src/app/constants';
-import { GET_ALL_TASKS } from './requests';
+import { CREATE_TASK, GET_ALL_TASKS } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,13 @@ export class TaskService {
       variables: {
         limit: LIMIT, cursor: CURSOR,
       }
+    });
+  }
+
+  createTask(task: any) {
+    return this.apollo.mutate<any>({
+      mutation: CREATE_TASK,
+      variables: { task }
     });
   }
 }

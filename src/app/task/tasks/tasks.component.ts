@@ -57,8 +57,8 @@ export class TasksComponent implements OnInit {
   }
   onAddTask() {
     const dialogRef = this.dialog.open(AddEditTaskDialogComponent, {
-    height: '60%',
-    width: '45%',
+    height: '70%',
+    width: '50%',
     // data: { booking }
   });
   dialogRef.afterClosed().subscribe(result => {

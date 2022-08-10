@@ -43,19 +43,14 @@ export const GET_ALL_TASKS = gql`
 //   }
 // `;
 
-// export const CREATE_SHIPMENT = gql`
-//   mutation createShipment($shipment: ShipmentInput!) {
-//     createShipment(shipment: $shipment) {
-//     id reference,portOfLoading,portOfDischarge,
-//      placeOfReceipt, loadingDate consigneeName, consigneeAddress, exporterFullName,exporterPostcode
-//      exporterAdress, exporterArea, exporterCity, containerNumber, blVessel,shipmentDate, status,
-//     totalAmountCharged, containerCharge, containerExtraCharge, loadersCost, loadingExtraCost, totalLoadingCost, loadingCostNotes,
-//     clearingCharge, incentives, totalGhDriversFood, totalGhDriversTips,
-//     thirdyPartyExpenses, carToAccraCheckpoint,carToKumasiCheckpoint, carToOtherCheckpoint, totalClearingCost,
-//     clearingNotes, totalExpenses, profit, notes, archived
-//     }
-//   }
-// `;
+export const CREATE_TASK = gql`
+  mutation createTask($task: TaskInput!) {
+    createTask(task: $task) {
+    ...taskfragment
+    }
+  }
+  ${TASK_FRAGMENT}
+`;
 
 
 // export const UPDATE_SHIPMENT = gql`
