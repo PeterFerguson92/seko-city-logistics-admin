@@ -23,7 +23,7 @@ export class AddEditTaskDialogComponent implements OnInit {
     this.addEditTaskForm = this.formBuilder.group({
       title: [formValues.title, Validators.required],
       description: [formValues.description, Validators.required],
-      actionDate: [new Date(formValues.actionDate), Validators.required],
+      actionDate: [formValues.actionDate ? new Date(formValues.actionDate) : null, Validators.required],
     })
   }
 

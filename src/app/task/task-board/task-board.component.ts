@@ -31,7 +31,6 @@ export class TaskBoardComponent implements OnInit {
 
   arrangeTasks(tasks) {
     for (const task of tasks ) {
-      console.log(task.status);
       if ('CREATED' === task.status)
       {
         this.toDoList.push(task)
@@ -40,6 +39,7 @@ export class TaskBoardComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -48,6 +48,9 @@ export class TaskBoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+    console.log(event.container.data)
+    console.log(event)
+
   }
 
   onAddTask() {

@@ -16,7 +16,6 @@ export class TaskCardComponent implements OnInit {
   constructor(private commonService: CommonService, private taskService: TaskService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    console.log(this.task)
   }
 
   onViewTask() {
