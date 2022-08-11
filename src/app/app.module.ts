@@ -19,9 +19,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { DriversModule } from './driver/drivers.module';
 import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
-import { TasksComponent } from './task/tasks/tasks.component';
 import { TaskModule } from './task/task.module';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -30,7 +28,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     ReportsComponent,
     SideNavComponent,
     HomeComponent,
-    TasksComponent
   ],
   entryComponents: [],
   imports: [
@@ -48,7 +45,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     DriversModule,
     HomeModule,
     TaskModule,
-    DragDropModule
   ],
   providers: [{
     provide: APOLLO_OPTIONS,

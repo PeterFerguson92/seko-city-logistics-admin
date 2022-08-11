@@ -2,7 +2,7 @@ import { gql } from 'apollo-angular';
 
 const TASK_FRAGMENT = gql`
       fragment taskfragment on Task {
-        id title description actionDate status createdAt updateAt
+        id title description actionDate status priority createdAt updateAt
       }
    `;
 

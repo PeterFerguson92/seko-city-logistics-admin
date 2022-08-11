@@ -7,42 +7,36 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-task-dialog.component';
 
 @Component({
-  selector: 'app-tasks',
-  templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css', './../../shared/shared-new-form.css']
+  selector: 'app-task-board',
+  templateUrl: './task-board.component.html',
+  styleUrls: ['./task-board.component.css']
 })
-export class TasksComponent implements OnInit {
+export class TaskBoardComponent implements OnInit {
+
+  toDoList = []
   board: Board = new Board('Test Board', [
-    new Column('TO DO', [
-      'Some random ideasdsahas',
-      'This is another random idea',
-      'build an awesome application'
-    ]),
-    new Column('IN PROGRESS', [
-      'Lorem ipsum',
-      'foo',
-      'This was in the \'Research\' column'
-    ]),
-    new Column('DONE', [
-      'Get to work',
-      'Pick up groceries',
-      'Go home',
-      'Fall asleep'
-    ]),
-    new Column('BLOCKED', [
-      'Get up',
-      'Brush teeth',
-      'Take a shower',
-      'Check e-mail',
-      'Walk dog'
-    ])
+    new Column('TO DO', this.toDoList),
+    new Column('IN PROGRESS', []),
+    new Column('DONE', []),
+    new Column('BLOCKED', [])
   ]);
+
   constructor(private activatedroute: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-     console.log(data)
+      this.arrangeTasks(data.tasks)
     })
+  }
+
+  arrangeTasks(tasks) {
+    for (const task of tasks ) {
+      console.log(task.status);
+      if ('CREATED' === task.status)
+      {
+        this.toDoList.push(task)
+      }
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -64,5 +58,4 @@ export class TasksComponent implements OnInit {
   dialogRef.afterClosed().subscribe(result => {
     console.log(result)
   })}
-
 }
