@@ -19,11 +19,18 @@ export class AddEditTaskDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    const formValues = this.getFormValue(this.data);
     this.addEditTaskForm = this.formBuilder.group({
-      title: [null, Validators.required],
-      description: [null, Validators.required],
-      actionDate: [null, Validators.required],
+      title: [formValues.title, Validators.required],
+      description: [formValues.description, Validators.required],
+      actionDate: [new Date(formValues.actionDate), Validators.required],
     })
+  }
+
+  getFormValue(data) {
+    return data && data.task ?
+      { title: data.task.title, description: data.task.description, actionDate: data.task.actionDate } :
+      { title: null, description: null, actionDate: null };
   }
 
   isDisabled() {
@@ -37,7 +44,13 @@ export class AddEditTaskDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.createTask()
+    if (this.data && this.data.task)
+    {
+      this.updateTask()
+    } else
+    {
+      this.createTask();
+    }
   }
 
   createTask() {
@@ -46,11 +59,9 @@ export class AddEditTaskDialogComponent implements OnInit {
       description: this.getFormControl('description').value,
       actionDate: this.commonService.getFormattedIsoDate(this.getFormControl('actionDate').value),
     }
-    console.log(task)
 
     this.taskService.createTask(task).subscribe(
       ({ data }) => {
-       // this.redirectToShipments();
         this.dialogRef.close()
       },
       error => {
@@ -59,10 +70,27 @@ export class AddEditTaskDialogComponent implements OnInit {
     );
   }
 
-  redirectToShipments() {
-    this.router.navigate(['/shipments']).then(() => {
-      window.location.reload();
+  updateTask() {
+    const updateFields = []
+    Object.keys(this.addEditTaskForm.controls).forEach(key => {
+      const formControl = this.addEditTaskForm.controls[key]
+      if (!formControl.pristine && formControl.value !== this.data.task[key])
+      {
+        updateFields.push({ name: key, value: formControl.value });
+      }
     });
+
+    if (updateFields.length > 0)
+    {
+      this.taskService.updateTask(this.data.task.id, updateFields).subscribe(
+        ({ data }) => {
+          this.dialogRef.close()
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   getFormControl(fControlName: string) {

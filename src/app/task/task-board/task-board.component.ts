@@ -49,13 +49,14 @@ export class TaskBoardComponent implements OnInit {
         event.currentIndex);
     }
   }
+
   onAddTask() {
     const dialogRef = this.dialog.open(AddEditTaskDialogComponent, {
-    height: '70%',
-    width: '50%',
-    // data: { booking }
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    console.log(result)
-  })}
+      height: '70%',
+      width: '50%',
+      data: {  }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    })}
 }
