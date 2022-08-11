@@ -1,32 +1,21 @@
 <app-jumbotron title="TASKS" imgPath="../../../assets/task.jpeg"></app-jumbotron>
 <a mat-fab (click)="onAddTask()"  class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
-</a><div class="board">
-
+</a>
+<div class="board">
   <div class="board-wrapper">
-
     <div class="board-columns" cdkDropListGroup>
       <div class="board-column" *ngFor="let column of board.columns">
-
         <div class="column-title">
           {{ column.name }}
         </div>
-
-        <div class="tasks-container"
-        cdkDropList
-        [cdkDropListData]="column.tasks"
-        (cdkDropListDropped)="drop($event)">
+        <div class="tasks-container" cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
           <div class="task" *ngFor="let item of column.tasks" cdkDrag>
-              <!-- {{item.title}} -->
               <app-task-card [task]="item"></app-task-card>
-
-        </div>
+          </div>
         </div>
       </div>
-
     </div>
-
   </div>
-
 </div>
 
