@@ -35,7 +35,7 @@ export class TaskBoardComponent implements OnInit {
 
   arrangeTasks(tasks) {
     for (const task of tasks)
-      if ('CREATED' === task.status)
+      if ('TO DO' === task.status)
       {
         this.toDoList.push(task)
       } else
