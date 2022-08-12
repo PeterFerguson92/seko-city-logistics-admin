@@ -43,3 +43,4 @@ export const CURSOR = null;
 export const ACCOUNT_NAME = 'SEKO LOGISTICS LTD';
 export const ACCOUNT_SORT_CODE= '90-34-11';
 export const ACCOUNT_NUMBER= '6373746362';
+export const TASK_PRIORITY_STATUSES = ['LOW', 'MEDIUM', 'HIGH']

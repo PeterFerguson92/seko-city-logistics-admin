@@ -25,6 +25,12 @@
             (inputChange)="onInputChange($event)" formControlName="actionDate">
           </app-material-date-picker-input>
         </div>
+        <div class="item">
+          <app-material-select-input [label]="'Priority'" [width]="20" [options]="priorityStatuses"
+            (selectionChange)="onSelectionChange($event)"
+            formControlName="priority">
+          </app-material-select-input>
+        </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

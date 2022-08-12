@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { TASK_PRIORITY_STATUSES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { TaskService } from '../service/task.service';
@@ -13,6 +14,7 @@ import { TaskService } from '../service/task.service';
 })
 export class AddEditTaskDialogComponent implements OnInit {
   addEditTaskForm: FormGroup;
+  priorityStatuses = TASK_PRIORITY_STATUSES;
 
   constructor(private formBuilder: FormBuilder, private router: Router,
     private taskService: TaskService, private commonService: CommonService,
@@ -24,6 +26,7 @@ export class AddEditTaskDialogComponent implements OnInit {
       title: [formValues.title, Validators.required],
       description: [formValues.description, Validators.required],
       actionDate: [formValues.actionDate ? new Date(formValues.actionDate) : null, Validators.required],
+      priority: [this.priorityStatuses[0], Validators.required],
     })
   }
 
@@ -84,13 +87,19 @@ export class AddEditTaskDialogComponent implements OnInit {
     {
       this.taskService.updateTask(this.data.task.id, updateFields).subscribe(
         ({ data }) => {
-          this.dialogRef.close()
+          window.location.reload()
         },
         error => {
           console.log(error);
         }
       );
     }
+  }
+
+  onSelectionChange(event: any) {
+    const fControl = this.getFormControl('priority');
+    fControl.setValue(event.value);
+    fControl.markAsDirty();
   }
 
   getFormControl(fControlName: string) {
