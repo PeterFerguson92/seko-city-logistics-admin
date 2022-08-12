@@ -5,6 +5,8 @@ import { Board } from './models/board.model';
 import { Column } from './models/column.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-task-dialog.component';
+import { TaskService } from '../service/task.service';
+import { CommonService } from 'src/app/service/common.service';
 
 @Component({
   selector: 'app-task-board',
@@ -13,15 +15,17 @@ import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-tas
 })
 export class TaskBoardComponent implements OnInit {
 
-  toDoList = []
+  toDoList = [];
+  inProgressList = [];
+  doneList = [];
   board: Board = new Board('Test Board', [
     new Column('TO DO', this.toDoList),
-    new Column('IN PROGRESS', []),
-    new Column('DONE', []),
-    new Column('BLOCKED', [])
+    new Column('IN PROGRESS', this.inProgressList),
+    new Column('DONE', this.doneList),
   ]);
 
-  constructor(private activatedroute: ActivatedRoute, private dialog: MatDialog) { }
+  constructor(private activatedroute: ActivatedRoute, private dialog: MatDialog,
+    private taskService: TaskService, private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -30,16 +34,38 @@ export class TaskBoardComponent implements OnInit {
   }
 
   arrangeTasks(tasks) {
-    for (const task of tasks ) {
+    for (const task of tasks)
       if ('CREATED' === task.status)
       {
         this.toDoList.push(task)
+      } else
+      {
+        if ('IN PROGRESS' === task.status)
+        {
+          this.inProgressList.push(task)
+        } else
+        {
+        if ('DONE' === task.status)
+        {
+          this.doneList.push(task)
+        }
       }
     }
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event)
+  isTaskApproaching(taskActionDate) {
+    const myCurrentDate = new Date();
+    const taskDate = new Date(taskActionDate)
+    myCurrentDate.setHours(0, 0, 0, 0);
+
+    const myPastDate = new Date(myCurrentDate);
+    myPastDate.setDate(myPastDate.getDate() + 2);
+    const dayDiff = taskDate.getDate() - myPastDate.getDate();
+    // console.log(dayDiff)
+    return dayDiff <= 3;
+  }
+
+  drop(event: CdkDragDrop<string[]>, columnName) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -48,9 +74,29 @@ export class TaskBoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
-    console.log(event.container.data)
-    console.log(event)
 
+    const taskId = (JSON.parse(JSON.stringify(event.container.data[0])).id)
+
+    // console.log(event)
+    this.updateTask(taskId, columnName)
+  }
+
+  updateTask(taskId, status) {
+    console.log(taskId);
+    console.log(status);
+    const updateFields = [{ name: 'status', value: status }]
+
+    if (updateFields.length > 0)
+    {
+      this.taskService.updateTask(taskId, updateFields).subscribe(
+        ({ data }) => {
+         // window.location.reload()
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   onAddTask() {
@@ -61,5 +107,8 @@ export class TaskBoardComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
-    })}
+    })
+  }
+
+
 }

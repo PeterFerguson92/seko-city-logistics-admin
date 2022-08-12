@@ -5,6 +5,7 @@
   height: 100%;
 }
 .board {
+  margin-left: 10%;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -75,4 +76,8 @@
  background-color: #004e92!important;
  color: antiquewhite;
 
+}
+
+.center {
+  width: 50%!important;
 }
