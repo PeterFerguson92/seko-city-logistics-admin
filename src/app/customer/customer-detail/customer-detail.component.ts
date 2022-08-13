@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   ADD_BOOKING_CUSTOMER_MODE,
   ADD_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
-  CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, EDIT_CUSTOMER_MODE, VIEW_BOOKING_MODE
+  CREATE_ORDER_MODE,
+  CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, EDIT_CUSTOMER_MODE, EDIT_ORDER_MODE, VIEW_BOOKING_MODE
 } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
@@ -22,7 +23,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() mode;
   @Output() closeDialog = new EventEmitter<string>();
 
-  bookingModes = [CREATE_BOOKING_MODE, VIEW_BOOKING_MODE, EDIT_BOOKING_MODE, ADD_BOOKING_CUSTOMER_MODE]
+  bookingOrderModes = [CREATE_BOOKING_MODE, VIEW_BOOKING_MODE, EDIT_BOOKING_MODE, ADD_BOOKING_CUSTOMER_MODE,
+  CREATE_ORDER_MODE, EDIT_ORDER_MODE]
   buttonLabel;
   showLoading = false;
   createCustomer;
@@ -45,7 +47,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      console.log(data)
       this.customer = this.customer && this.customer.reference ? this.customer : data.customer
 
       // this.setAttributes(); TODO remove function
@@ -65,7 +66,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         address: ['', [Validators.required]],
         country: [this.countries[0], [Validators.required]]
       });
-      console.log(this.mode)
 
       if (this.customer && this.mode !== ADD_CUSTOMER_MODE)
       {
@@ -204,7 +204,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     {
       this.customersService.updateCustomer(this.customer.reference, updateCustomerFields).subscribe(
         ({ data }) => {
-          if (this.isBookingMode())
+          if (this.isBookingOrderMode())
           {
             this.alertService.warn('Customer updated correctly', this.alertOptions);
           } else
@@ -234,8 +234,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
      return this.loadCustomerForm.get('ref').value === '';
   }
 
-  isBookingMode() {
-    return this.bookingModes.includes(this.mode);
+  isBookingOrderMode() {
+    return this.bookingOrderModes.includes(this.mode);
   }
 
   isCreateBookingMode() {
@@ -293,7 +293,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
  }
 
   setAttributes() {
-    if (this.mode !== this.isBookingMode())
+    if (this.mode !== this.isBookingOrderMode())
     {
       this.showLoading = false;
       if (this.mode === ADD_CUSTOMER_MODE)

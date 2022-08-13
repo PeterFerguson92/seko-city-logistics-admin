@@ -33,6 +33,7 @@ import { TaskBoardComponent } from './task/task-board/task-board.component';
 import { OrdersComponent } from './order/orders/orders.component';
 import { OrdersResolver } from './order/service/resolver/orders.resolver';
 import { AddEditOrderComponent } from './order/add-edit-order/add-edit-order.component';
+import { OrderResolver } from './order/service/resolver/order.resolver';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -61,7 +62,8 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent },
   { path: 'tasks', component: TaskBoardComponent, resolve: { tasks: TasksResolver } },
   { path: 'orders', component: OrdersComponent, resolve: { orders: OrdersResolver } },
-  { path: 'add-order', component: AddEditOrderComponent},
+  { path: 'add-order', component: AddEditOrderComponent },
+  { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

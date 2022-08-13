@@ -106,7 +106,7 @@
 </div>
   </div>
   <br>
-  <div *ngIf="!isBookingMode()" class="submitBtn" align="center">
+  <div *ngIf="!isBookingOrderMode()" class="submitBtn" align="center">
     <app-material-button [label]="'Submit'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
   </div>
   <br>

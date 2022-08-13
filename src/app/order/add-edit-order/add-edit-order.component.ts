@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderService } from '../service/order.service';
+import { ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
 
 @Component({
   selector: 'app-add-edit-order',
@@ -9,13 +8,22 @@ import { OrderService } from '../service/order.service';
   styleUrls: ['./add-edit-order.component.css', '../../shared/shared-new-form.css']
 })
 export class AddEditOrderComponent implements OnInit {
-  addEditOrderForm: FormGroup;
-
-  constructor(private activatedroute: ActivatedRoute) { }
+  order: any = {};
+  mode = null;
+  constructor(private activatedroute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      console.log(data)
+      if (this.router.url.includes('edit-booking'))
+      {
+        this.mode = EDIT_ORDER_MODE
+        this.order = Object.assign({selected: false}, data.booking[0].data.bookingByReference);
+        this.order.customer = data.order[1].data.customerByReference;
+      } else
+      {
+        this.order.customer = data.customer;
+        this.mode = data.customer ? ADD_ORDER_CUSTOMER_MODE : CREATE_ORDER_MODE;
+      }
     })
   }
 

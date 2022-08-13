@@ -4,10 +4,14 @@ import { AddEditOrderComponent } from './add-edit-order/add-edit-order.component
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from '../shared/shared.module';
 import { CustomerModule } from '../customer/customer.module';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderInfoComponent } from './order-info/order-info.component';
 
 @NgModule({
   declarations: [
-    AddEditOrderComponent
+    AddEditOrderComponent,
+    OrderDetailComponent,
+    OrderInfoComponent
   ],
   imports: [CommonModule,SharedModule, FlexLayoutModule,CustomerModule]
 })

@@ -1,0 +1,46 @@
+<div id="summary" class="center">
+  <form [formGroup]="orderInfoForm">
+    <div class="banner"></div><br>
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>today</mat-icon>
+          Pick-up
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <br/>
+        <div class="columns">
+          <div class="item" >
+            <label for="lname">Date<span>*</span></label><br>
+            <app-material-date-picker-input
+              (inputChange)="onInputChange($event, 'date')" formControlName="date">
+            </app-material-date-picker-input>&nbsp;
+          </div>
+          <div class="item">
+            <label for="lname">Time</label><br>
+            <app-material-select-input [options]="times" formControlName="time"
+              (selectionChange)="onSelectionChange($event, 'time')"  [width]="60" [value]="times[0]">
+            </app-material-select-input>
+          </div>
+          <div class="item">
+            <label for="lname">Postcode</label><br>
+            <app-material-input [icon]="'person_pin'"[width]="45" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname">Address</label><br>
+            <app-material-select-input [width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
+          </div>
+          <div class="item">
+            <label for="lname">Updates via whatsapp</label>&nbsp;
+            <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
+          </div>
+          <div class="item">
+            <label for="lname">Updates via e-mail</label>&nbsp;
+            <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaEmail')" formControlName="updatesViaEmail"></app-material-checkbox>
+          </div>
+        </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </form>
+  </div>
