@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ORDER_PICKUP_TIMES } from 'src/app/constants';
+import { ORDER_PICKUP_TIMES, PAYMENT_STATUSES, PAYMENT_TYPES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
 
@@ -17,6 +17,8 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   times = ORDER_PICKUP_TIMES;
   addresses = [];
   formValidationMap = { postcode: '' };
+  paymentTypes = PAYMENT_TYPES
+  paymentStatuses = PAYMENT_STATUSES;
 
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog,private commonService: CommonService,
     private validationService: ValidationService) { }
@@ -29,7 +31,13 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       [Validators.required, this.validationService.postCodeValidator]],
       address: [this.orderInfo.deliveryAddress ? this.orderInfo.deliveryAddress : '', [Validators.required]],
       updatesViaWhatsapp: [this.orderInfo.updatesViaWhatsapp === null ? this.orderInfo.updatesViaWhatsapp : true, [Validators.required]],
-      updatesViaEmail: [this.orderInfo.updatesViaEmail === null ? this.orderInfo.updatesViaEmail : true, [Validators.required]]
+      updatesViaEmail: [this.orderInfo.updatesViaEmail === null ? this.orderInfo.updatesViaEmail : true, [Validators.required]],
+      paymentType: [this.orderInfo.paymentType ? this.orderInfo.paymentType : this.paymentTypes[0] , [Validators.required]],
+      paymentStatus: [this.orderInfo.paymentStatus ? this.orderInfo.paymentStatus : this.paymentStatuses[0], Validators.required],
+      paymentNotes: [this.orderInfo.paymentNotes ? this.orderInfo.paymentNotes : '', []],
+      amountPaid: [this.orderInfo.amountPaid ? this.orderInfo.amountPaid : 0,  []],
+      amountOutstanding: [this.orderInfo.amountOutstanding ? this.orderInfo.amountOutstanding: 0 , []]
+
     })
   }
 
@@ -84,6 +92,20 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       }
     })
     return info;
+  }
+
+  updateOutstandingAmount() { // toDO  vedere se questo calcolo si puo fare meglio senza dover chiamare items tutte le volte
+    // this.isAmountPaidEnabled()
+    // const totalAmount = this.getItemsDetails().totalAmount;
+    // let amountPaid = this.paymentForm.get('amountPaid').value;
+
+    // if (amountPaid >= totalAmount)
+    // {
+    //   amountPaid = totalAmount;
+    //   this.paymentForm.get('amountPaid').setValue(amountPaid);
+    //   this.paymentForm.get('paymentStatus').setValue(FULL_PAYMENT_STATUS_ALIAS)
+    // }
+    // this.paymentForm.get('amountOutstanding').setValue(totalAmount - amountPaid);
   }
 
 }

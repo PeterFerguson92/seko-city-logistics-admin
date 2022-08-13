@@ -26,6 +26,12 @@ export class OrderDetailComponent implements OnInit {
       deliveryAddress: this.order.deliveryAddress,
       updatesViaWhatsapp: this.order.updatesViaWhatsapp,
       updatesViaEmail: this.order.updatesViaEmail,
+      reference: this.order.reference,
+      paymentType: this.order.paymentType,
+      paymentStatus: this.order.paymentStatus,
+      paymentNotes: this.order.paymentNotes,
+      amountPaid: this.order.amountPaid,
+      amountOutstanding: this.order.amountOutstanding,
     }
   }
 

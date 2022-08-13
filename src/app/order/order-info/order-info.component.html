@@ -1,5 +1,5 @@
 <div id="summary" class="center">
-  <form [formGroup]="orderInfoForm">
+  <div [formGroup]="orderInfoForm">
     <div class="banner"></div><br>
   <mat-accordion [multi]="true">
     <mat-expansion-panel hideToggle [expanded]="true">
@@ -41,6 +41,45 @@
           </div>
         </div>
     </mat-expansion-panel>
+    <mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>today</mat-icon>
+          Pick-up
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <br/>
+      <div class="columns">
+        <div class="item">
+          <label for="lname">Type</label><br>
+          <app-material-select-input [width]="60" [options]="paymentTypes" formControlName="paymentType"
+            (selectionChange)="onSelectionChange($event, 'paymentType')" [value]="paymentTypes[0]">
+          </app-material-select-input>
+        </div>
+        <div class="item">
+          <label for="lname">Status</label><br>
+          <app-material-select-input [width]="60" [options]="paymentStatuses" formControlName="paymentStatus"
+            (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
+          </app-material-select-input>
+        </div>
+        <div class="item">
+          <label for="lname">Amount Paid (£)</label><br>
+          <app-material-numeric-input
+            [width]="10" formControlName="amountPaid" (change)="updateOutstandingAmount()" >
+          </app-material-numeric-input >
+        </div>
+        <div class="item">
+          <label for="lname">Amount Outstanding (£) </label><br>
+          <app-material-numeric-input
+            [width]="10" formControlName="amountOutstanding">
+          </app-material-numeric-input >
+        </div>
+        <div class="item">
+          <label for="lname">Notes</label><br>
+          <app-material-input [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
+        </div>
+      </div>
+    </mat-expansion-panel>
   </mat-accordion>
-  </form>
+</div>
   </div>
