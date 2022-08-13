@@ -18,29 +18,38 @@ export const GET_ALL_ORDERS = gql`
   ${ORDER_FRAGMENT}
 `;
 
-// export const CREATE_TASK = gql`
-//   mutation createTask($task: TaskInput!) {
-//     createTask(task: $task) {
-//     ...taskfragment
-//     }
-//   }
-//   ${TASK_FRAGMENT}
-// `;
+export const GET_ORDER_BY_REFERENCE = gql`
+  query orderByReference($reference: String!) {
+    orderByReference(reference: $reference) {
+      ...orderfragment
+    }
+  }
+  ${ORDER_FRAGMENT}
+`;
 
-// export const UPDATE_TASK = gql`
-//   mutation updateTask($id: Int!, $fields: [UpdateFieldInput!]) {
-//     updateTask(id: $id, fields: $fields) {
-//       ...taskfragment
-//     }
-//   }
-//   ${TASK_FRAGMENT}
-// `;
+export const CREATE_ORDER = gql`
+  mutation createOrder($order: OrderInput!) {
+    createOrder(order: $order) {
+    ...orderfragment
+    }
+  }
+  ${ORDER_FRAGMENT}
+`;
 
-// export const DELETE_TASK = gql`
-//   mutation deleteTask($id: Int!) {
-//     deleteTask(id: $id)
-//   }
-// `;
+export const UPDATE_ORDER = gql`
+  mutation updateOrder($reference: String!, $fields: [UpdateFieldInput!]) {
+    updateOrder(reference: $reference, fields: $fields) {
+      ...orderfragment
+    }
+  }
+  ${ORDER_FRAGMENT}
+`;
+
+export const DELETE_ORDER = gql`
+  mutation deleteOrder($reference: String!) {
+    deleteOrder(reference: $reference)
+  }
+`;
 
 
 

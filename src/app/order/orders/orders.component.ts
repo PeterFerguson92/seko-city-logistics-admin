@@ -35,4 +35,7 @@ export class OrdersComponent implements OnInit {
     return this.commonService.getFormattedDate(date);
   }
 
+  onAddOrder() {
+    this.router.navigate(['/add-order']);
+  }
 }
