@@ -20,6 +20,7 @@ import { DriversModule } from './driver/drivers.module';
 import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
 import { TaskModule } from './task/task.module';
+import { OrdersComponent } from './order/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { TaskModule } from './task/task.module';
     ReportsComponent,
     SideNavComponent,
     HomeComponent,
+    OrdersComponent,
   ],
   entryComponents: [],
   imports: [
