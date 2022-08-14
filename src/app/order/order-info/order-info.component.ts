@@ -208,6 +208,9 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   isDeleteDisabled() {
     return this.items.length === 1;
   }
+  isDisabled() {
+    return !this.orderInfoForm.valid;
+  }
 
   showWarning() {
     return !this.orderInfoForm.valid;

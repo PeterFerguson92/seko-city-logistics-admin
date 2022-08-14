@@ -9,16 +9,27 @@
         <button mat-button (click)="onForward(stepper, 'customerDetailComponent')"> Next</button>
       </div>
     </form>
-  </mat-step> -->
+  </mat-step>
   <mat-step >
     <form >
       <ng-template matStepLabel>Fill out pick up details</ng-template>
       <app-order-info [orderInfo]="getOrderInfo()"></app-order-info>
       <div align="end">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onForward(stepper, 'bookingInfoComponent')"> Next</button>
+        <button mat-button (click)="onForward(stepper, 'orderInfoComponent')"> Next</button>
       </div>
     </form>
+  </mat-step>-->
+  <mat-step> 
+    <ng-template matStepLabel>Confirm</ng-template>
+    <p>Amazing we are now ready to create or update a order, make sure all information submitted are correct, once you are happy with it
+      just click on the create button and I'll take care of the rest.
+    </p>
+    <app-order-review></app-order-review>
+    <div align="center">
+      <br>
+      <app-material-button [label]="'SUBMIT'" [width]="30" (click)="onSubmit()"></app-material-button>
+    </div>
   </mat-step>
   <!-- <mat-step>
     <form>

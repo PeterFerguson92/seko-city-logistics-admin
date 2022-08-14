@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
+import { OrderInfoComponent } from '../order-info/order-info.component';
+import { OrderReviewComponent } from '../order-review/order-review.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -9,6 +11,8 @@ import { CustomerDetailComponent } from 'src/app/customer/customer-detail/custom
 })
 export class OrderDetailComponent implements OnInit {
   @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;
+  @ViewChild(OrderInfoComponent) orderInfoComponent: OrderInfoComponent;
+  @ViewChild(OrderReviewComponent) orderReviewComponent: OrderReviewComponent;
 
   @Input() order;
   @Input() mode
@@ -38,13 +42,22 @@ export class OrderDetailComponent implements OnInit {
   onForward(stepper: MatStepper, componentName: string) {
     if (!this[componentName].isDisabled())
     {
-      if (stepper._getFocusIndex() === 3)
+      if (stepper._getFocusIndex() === 1)
       {
-        // this.buildBook();
-        // this.bookingReviewComponent.updateBook(this.booking)
+        this.buildOrderReviewData();
+        this.orderReviewComponent.updateOrder(this.order)
       }
       stepper.next();
     }
   };
+
+  buildOrderReviewData() {
+    this.order.customer = this.customerDetailComponent.getSenderDetails();
+    this.order.info = this.orderInfoComponent.getOrderInfoDetails();
+  }
+
+  async onSubmit() {
+
+  }
 
 }
