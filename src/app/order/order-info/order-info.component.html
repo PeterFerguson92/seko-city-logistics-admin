@@ -13,19 +13,19 @@
         <div class="columns">
           <div class="item" >
             <app-material-date-picker-input
-              [label]="'Date'" (inputChange)="onInputChange($event, 'date')" formControlName="date">
+              [label]="'Date'" (inputChange)="onInputChange($event, 'deliveryDate')" formControlName="deliveryDate">
             </app-material-date-picker-input>&nbsp;
           </div>
           <div class="item">
-            <app-material-select-input [options]="times" formControlName="time"
-            [label]="'Time'" (selectionChange)="onSelectionChange($event, 'time')"  [width]="60" [value]="times[0]">
+            <app-material-select-input [options]="times" formControlName="deliveryTime"
+            [label]="'Time'" (selectionChange)="onSelectionChange($event, 'deliveryTime')"  [width]="60" [value]="times[0]">
             </app-material-select-input>
           </div>
           <div class="item">
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="deliveryPostCode" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">
-            <app-material-select-input [label]="'Address'"[width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
+            <app-material-select-input [label]="'Address'"[width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'deliveryAddress')" formControlName="deliveryAddress"></app-material-select-input>
           </div>
           <div class="item">
             <label for="lname">Updates via whatsapp</label>&nbsp;
@@ -69,11 +69,13 @@
           </div>
           <div class="child" >
             <app-material-button [label]="'-'" [disabled]="isDeleteDisabled()" (click)="onDeleteItem(i)"></app-material-button>&nbsp;
-
           </div>
           <div class="child" >
             <app-material-button [label]="'+'" (click)="onAddItem(i)"></app-material-button>
+            <app-material-button [label]="'PPEPR'" (click)="getOrderInfoDetails(i)"></app-material-button>
           </div>
+
+
         </div>
       </div>
     </mat-expansion-panel>
@@ -88,7 +90,7 @@
       <div id="parent">
         <div class="child">
           <app-material-numeric-input
-            [label]="'Total (£)'" [width]="60" formControlName="totalAmount"  >
+            [label]="'Total (£)'" [width]="60" formControlName="totalAmount">
           </app-material-numeric-input >
         </div>
         <div class="child">
@@ -119,6 +121,7 @@
       </div>
 
     </mat-expansion-panel>
+
   </mat-accordion>
 </div>
   </div>

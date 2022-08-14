@@ -34,11 +34,11 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.orderInfoForm = this.formBuilder.group({
-      date: [this.orderInfo.deliveryDate ? new Date(this.orderInfo.deliveryDate ) : new Date(), [Validators.required]],
-      time: [this.orderInfo.deliveryTime ? this.orderInfo.deliveryTime :  this.times[0], [Validators.required]],
-      postcode: [this.orderInfo.deliveryPostCode ? this.orderInfo.deliveryPostCode : '',
+      deliveryDate: [this.orderInfo.deliveryDate ? new Date(this.orderInfo.deliveryDate ) : new Date(), [Validators.required]],
+      deliveryTime: [this.orderInfo.deliveryTime ? this.orderInfo.deliveryTime :  this.times[0], [Validators.required]],
+      deliveryPostCode: [this.orderInfo.deliveryPostCode ? this.orderInfo.deliveryPostCode : '',
       [Validators.required, this.validationService.postCodeValidator]],
-      address: [this.orderInfo.deliveryAddress ? this.orderInfo.deliveryAddress : '', [Validators.required]],
+      deliveryAddress: [this.orderInfo.deliveryAddress ? this.orderInfo.deliveryAddress : '', [Validators.required]],
       updatesViaWhatsapp: [this.orderInfo.updatesViaWhatsapp === null ? this.orderInfo.updatesViaWhatsapp : true, [Validators.required]],
       updatesViaEmail: [this.orderInfo.updatesViaEmail === null ? this.orderInfo.updatesViaEmail : true, [Validators.required]],
       paymentType: [this.orderInfo.paymentType ? this.orderInfo.paymentType : this.paymentTypes[0] , [Validators.required]],
@@ -107,7 +107,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.validateFormControl('postcode');
+    this.validateFormControl('deliveryPostCode');
   }
 
   getFormControl(fControlName: string) {
@@ -170,7 +170,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   }
 
   getAddressByPostcode() {
-    const postcodeFormControl = this.getFormControl('postcode');
+    const postcodeFormControl = this.getFormControl('deliveryPostCode');
     if (!postcodeFormControl.invalid)
     {
       this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
@@ -242,4 +242,38 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getOrderInfoDetails() {
+    const orderInfoDetails: any = {};
+    Object.keys(this.orderInfoForm.controls).forEach(key => {
+      const formControl = this.orderInfoForm.controls[key];
+      if (key === 'items')
+      {
+       orderInfoDetails.items = this.getOrderItemsInfoDetails()
+      } else
+      {
+        if (key === 'deliveryDate')
+        {
+          orderInfoDetails[key] = this.commonService.getFormattedIsoDate(formControl.value);
+        } else
+        {
+          orderInfoDetails[key] = formControl.value;
+        }
+      }
+    });
+
+    return orderInfoDetails;
+  }
+
+  getOrderItemsInfoDetails() {
+    const itemsInfo = [];
+    this.items.controls.forEach((control) => {
+      itemsInfo.push({
+        type: control.get('type').value,
+        pricePerUnit: control.get('pricePerUnit').value,
+        quantity: parseInt(control.get('quantity').value, 10),
+        amount: control.get('amount').value,
+      })
+    })
+    return itemsInfo;
+  }
 }
