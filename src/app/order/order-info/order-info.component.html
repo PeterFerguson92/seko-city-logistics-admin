@@ -119,9 +119,10 @@
           <app-material-input [label]="'Notes'" [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
         </div>
       </div>
-
     </mat-expansion-panel>
-
+    <div *ngIf="showWarning()" class="alert warning">
+      <strong>Warning!</strong> Please fill in all required field with valid values.
+    </div>
   </mat-accordion>
 </div>
   </div>

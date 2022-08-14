@@ -209,6 +209,10 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     return this.items.length === 1;
   }
 
+  showWarning() {
+    return !this.orderInfoForm.valid;
+  }
+
   updateTotalAmount() {
     let totalAmount = 0
     this.items.controls.forEach((control) => {
