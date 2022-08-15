@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookingsService } from '../booking/service/bookings/bookings.service';
-import { ItemService } from '../booking/service/items/item.service';
+import { ItemService } from '../items/item.service';
 import { jsPDF } from 'jspdf';
 import domtoimage from 'dom-to-image';
 

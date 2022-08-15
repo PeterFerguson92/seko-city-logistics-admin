@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { CommonService } from 'src/app/service/common.service';
-import { ItemService } from '../service/items/item.service';
+import { ItemService } from '../../items/item.service';
 import { jsPDF } from 'jspdf';
 import domtoimage from 'dom-to-image';
 import { ACCOUNT_NAME, ACCOUNT_NUMBER, ACCOUNT_SORT_CODE, BANK_TRANSFER_PAYMENT_TYPE } from 'src/app/constants';

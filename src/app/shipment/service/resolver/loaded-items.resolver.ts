@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { forkJoin, map, Observable } from 'rxjs';
-import { ItemService } from 'src/app/booking/service/items/item.service';
+import { ItemService } from 'src/app/items/item.service';
 import { ShipmentService } from '../shipment.service';
 
 @Injectable({

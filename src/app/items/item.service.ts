@@ -3,7 +3,8 @@ import { Apollo } from 'apollo-angular';
 import {
   FILTER_FULL_ITEMS,
   FILTER_ITEMS, GET_ELIGIBLE_ITEMS, GET_ITEMS_BY_BOOKING_REFERENCE,
-  GET_ITEMS_BY_SHIPMENT_REFERENCE, GET_ITEMS_REPORT_DATA, UPDATE_ITEM, UPDATE_ITEMS_BY_ID
+  GET_ITEMS_BY_ORDER_REFERENCE,
+  GET_ITEMS_BY_SHIPMENT_REFERENCE, GET_ITEMS_REPORT_DATA, SYNC_ORDER_ITEMS, UPDATE_ITEM, UPDATE_ITEMS_BY_ID
 } from './request';
 
 @Injectable({
@@ -24,6 +25,13 @@ export class ItemService {
     return this.apollo.query<any>({
       query: GET_ITEMS_BY_BOOKING_REFERENCE,
       variables: {bookingReference}
+    });
+  }
+
+  getItemsByOrderReference(orderReference: string) {
+    return this.apollo.query<any>({
+      query: GET_ITEMS_BY_ORDER_REFERENCE,
+      variables: {orderReference}
     });
   }
 
@@ -60,10 +68,17 @@ export class ItemService {
     });
   }
 
-updateItemsById(ids: [number], fields: any) {
+  updateItemsById(ids: [number], fields: any) {
     return this.apollo.mutate<any>({
       mutation: UPDATE_ITEMS_BY_ID,
       variables: { ids, fields }
+    });
+  }
+
+  syncOrderItems(bookingReference: string, items: any) {
+    return this.apollo.mutate<any>({
+      mutation: SYNC_ORDER_ITEMS,
+      variables: { bookingReference, items }
     });
   }
 

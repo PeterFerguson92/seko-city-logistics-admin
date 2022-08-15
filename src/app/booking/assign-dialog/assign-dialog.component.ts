@@ -5,7 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { BOOKING_STATUSES } from 'src/app/constants';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { ShipmentService } from 'src/app/shipment/service/shipment.service';
-import { ItemService } from '../service/items/item.service';
+import { ItemService } from '../../items/item.service';
 
 @Component({
   selector: 'app-assign-dialog',

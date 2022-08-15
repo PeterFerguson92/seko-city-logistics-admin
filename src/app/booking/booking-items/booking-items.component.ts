@@ -6,7 +6,7 @@ import {
   PARTIAL_PAYMENT_STATUS_ALIAS, PAYMENT_STATUSES, PAYMENT_TYPES
 } from 'src/app/constants';
 import { ItemsListComponent } from '../items-list/items-list.component';
-import { ItemService } from '../service/items/item.service';
+import { ItemService } from '../../items/item.service';
 
 export interface IItem {
   id: number

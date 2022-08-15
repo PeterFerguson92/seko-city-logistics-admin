@@ -3,8 +3,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
   FULL_PAYMENT_STATUS_ALIAS, NO_PAYMENT_PAYMENT_STATUS_ALIAS,
-  ORDER_ITEMS, ORDER_ITEMS_TYPES_DISPLAY_NAMES, ORDER_PICKUP_TIMES, PARTIAL_PAYMENT_STATUS_ALIAS, PAYMENT_STATUSES, PAYMENT_TYPES
+  ORDER_ITEMS, ORDER_ITEMS_TYPES_DISPLAY_NAMES, ORDER_PICKUP_TIMES,
+  PARTIAL_PAYMENT_STATUS_ALIAS, PAYMENT_STATUSES, PAYMENT_TYPES
 } from 'src/app/constants';
+import { ItemService } from 'src/app/items/item.service';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
 
@@ -30,7 +32,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog,private commonService: CommonService,
-    private validationService: ValidationService) { }
+    private validationService: ValidationService, private itemService: ItemService) { }
 
   ngOnInit(): void {
     this.orderInfoForm = this.formBuilder.group({
@@ -47,29 +49,41 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       totalAmount: [this.orderInfo.totalAmount ? this.orderInfo.totalAmount : 0,  []],
       amountPaid: [this.orderInfo.amountPaid ? this.orderInfo.amountPaid : 0, []],
       amountOutstanding: [this.orderInfo.amountOutstanding ? this.orderInfo.amountOutstanding : 0, []],
-      items: this.formBuilder.array([this.buildItemGroup(null)])
+      items: this.formBuilder.array([])
     })
+
     this.getFormControl('totalAmount').disable();
     this.getFormControl('amountPaid').disable();
     this.getFormControl('amountOutstanding').disable();
     this.initializeProperties(0);
     this.updateTotalAmount()
 
+    if (this.orderInfo.reference)
+    {
+      this.getOrderItems()
+    } else
+    {
+      this.items.push(this.buildItemGroup(null))
+    }
   }
 
   buildItemGroup(item): FormGroup {
     return this.formBuilder.group({
-      type: [this.types[0], [Validators.required]],
-      pricePerUnit: [this.getPricePerUnit(this.types[0])],
-      quantity: [1],
-      amount: [0]
+      id: [item ? item.id : null ],
+      type: [item ? item.type : this.types[0], [Validators.required]],
+      pricePerUnit: [item ? item.pricePerUnit : this.getPricePerUnit(this.types[0])],
+      quantity: [item ? item.quantity : 1],
+      amount: [item ? item.amount : 0]
     })
   }
 
   initializeProperties(index) {
-    this.getItemsFormControl('pricePerUnit', index).disable()
-    this.getItemsFormControl('amount', index).disable();
-    this.updateItemTotalAmount(index)
+    if (this.items.length > 0)
+    {
+      this.getItemsFormControl('pricePerUnit', index).disable()
+      this.getItemsFormControl('amount', index).disable();
+      this.updateItemTotalAmount(index)
+    }
   }
 
   setPaymentProperties(paymentStatus: string) {
@@ -102,8 +116,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     this.getItemsFormControl('amount', index).setValue(itemPricePerUnit * itemQuantity);
     this.getItemsFormControl('amount', index).markAsDirty();
     this.updateTotalAmount();
-    this.updateOutstandingAmount()
-
+    this.updateOutstandingAmount();
   }
 
   ngAfterViewInit(): void {
@@ -130,7 +143,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
 
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
-    const data = fControlName === 'updatesViaWhatsapp' ||  fControlName === 'updatesViaEmail'? event.checked : event.value;
+    const data = fControlName === 'updatesViaWhatsapp' || fControlName === 'updatesViaEmail' ? event.checked : event.value;
     fControl.setValue(data);
     fControl.markAsDirty();
     if (fControlName === 'paymentStatus')
@@ -165,8 +178,11 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   }
 
   getItemsFormControl(fControlName: string, index: number) {
-    const fControl = this.items.controls[index];
-    return fControl.get(fControlName)
+    if (this.items.length > 0)
+    {
+      const fControl = this.items.controls[index];
+      return fControl.get(fControlName)
+    }
   }
 
   getAddressByPostcode() {
@@ -221,7 +237,6 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     this.items.controls.forEach((control) => {
       totalAmount = totalAmount + control.get('amount').value;
     });
-
     this.getFormControl('totalAmount').setValue(totalAmount);
   }
 
@@ -263,7 +278,13 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
           orderInfoDetails[key] = this.commonService.getFormattedIsoDate(formControl.value);
         } else
         {
-          orderInfoDetails[key] = formControl.value;
+          if (key === 'amountPaid')
+          {
+            orderInfoDetails[key] = parseInt(formControl.value, 10);
+          } else
+          {
+            orderInfoDetails[key] = formControl.value;
+          }
         }
       }
     });
@@ -275,6 +296,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     const itemsInfo = [];
     this.items.controls.forEach((control) => {
       itemsInfo.push({
+        id: control.get('id').value,
         type: control.get('type').value,
         pricePerUnit: control.get('pricePerUnit').value,
         quantity: parseInt(control.get('quantity').value, 10),
@@ -282,5 +304,18 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       })
     })
     return itemsInfo;
+  }
+
+  getOrderItems() {
+    this.itemService.getItemsByOrderReference(this.orderInfo.reference).subscribe(
+      ({ data }) => {
+        const itemsData = data.itemsByOrderReference;
+        itemsData.forEach(item => this.items.push(this.buildItemGroup(item)));
+        this.updateTotalAmount();
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

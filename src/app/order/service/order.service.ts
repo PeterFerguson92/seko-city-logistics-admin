@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { CREATE_ORDER, DELETE_ORDER, GET_ALL_ORDERS, GET_ORDER_BY_REFERENCE, UPDATE_ORDER } from './requests';
+import { CREATE_ORDER, DELETE_ORDER, GET_ALL_ORDERS, GET_ORDER_BY_REFERENCE, SYNC_ORDER, UPDATE_ORDER } from './requests';
 import { CURSOR, LIMIT } from '../../constants';
 
 @Injectable({
@@ -37,6 +37,13 @@ export class OrderService {
     return this.apollo.mutate<any>({
       mutation: UPDATE_ORDER,
       variables: { reference, fields }
+    });
+  }
+
+  syncOrder(order: any) {
+    return this.apollo.mutate<any>({
+      mutation: SYNC_ORDER,
+      variables: { input: order }
     });
   }
 

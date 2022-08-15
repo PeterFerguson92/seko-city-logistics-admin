@@ -8,7 +8,7 @@ import { CommonService } from 'src/app/service/common.service';
 })
 export class OrderReviewComponent implements OnInit {
   order = {
-    customer: {type: '',registeredName: '',registeredNumber: '',title: '', name: '', surname: '',
+    orderCustomer: {type: '',registeredName: '',registeredNumber: '',title: '', name: '', surname: '',
       countryCode: '', phone: '', email: '', postcode: '', address: '',country: '',reference: null, role: ''
     },
    info: {
@@ -40,13 +40,11 @@ export class OrderReviewComponent implements OnInit {
   constructor(private commonService:CommonService) { }
 
   ngOnInit(): void {
-    this.order = JSON.parse('{"customer":{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"sef","surname":"dsfdsf","countryCode":"+44","phone":"07948212772","email":"","postcode":"MK109Ld","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","country":"UNITED KINGDOM","reference":null,"role":"SENDER"},"info":{"deliveryDate":"2022-08-14T00:00:00.000Z","deliveryTime":"MORNING","deliveryPostCode":"se193ty","deliveryAddress":"12 Watkin Terrace, , , , , Northampton, Northamptonshire","updatesViaWhatsapp":true,"updatesViaEmail":true,"paymentType":"BANK TRANSFER","paymentStatus":"NOT PAID","paymentNotes":"07948212772","totalAmount":40,"amountPaid":0,"amountOutstanding":40,"items":[{"type":"BARRELS","pricePerUnit":40,"quantity":1,"amount":40}]}}')
-    console.log(this.order)
+    this.order = JSON.parse('{"orderCustomer":{"type":"PERSONAL","registeredName":"","registeredNumber":"","title":"Mr","name":"sef","surname":"dsfdsf","countryCode":"+44","phone":"07948212772","email":"","postcode":"MK109Ld","address":"2 Watkin Terrace, , , , , Northampton, Northamptonshire","country":"UNITED KINGDOM","reference":null,"role":"SENDER"},"info":{"deliveryDate":"2022-08-14T00:00:00.000Z","deliveryTime":"MORNING","deliveryPostCode":"se193ty","deliveryAddress":"12 Watkin Terrace, , , , , Northampton, Northamptonshire","updatesViaWhatsapp":true,"updatesViaEmail":true,"paymentType":"BANK TRANSFER","paymentStatus":"NOT PAID","paymentNotes":"07948212772","totalAmount":40,"amountPaid":0,"amountOutstanding":40,"items":[{"type":"BARRELS","pricePerUnit":40,"quantity":1,"amount":40}]}}')
   }
 
   updateOrder(data) {
     const x = JSON.stringify(data);
-    console.log(x)
     this.order = data
   }
 

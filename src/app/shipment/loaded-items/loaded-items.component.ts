@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBooking } from 'src/app/booking/model';
-import { ItemService } from 'src/app/booking/service/items/item.service';
+import { ItemService } from 'src/app/items/item.service';
 import { CommonService } from 'src/app/service/common.service';
 
 

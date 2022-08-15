@@ -38,4 +38,8 @@ export class OrdersComponent implements OnInit {
   onAddOrder() {
     this.router.navigate(['/add-order']);
   }
+
+  editOrder(element) {
+    this.router.navigate(['/edit-order', element.reference, element.customerReference]);
+  }
 }

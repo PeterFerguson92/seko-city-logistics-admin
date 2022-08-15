@@ -14,10 +14,10 @@ export class AddEditOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      if (this.router.url.includes('edit-booking'))
+      if (this.router.url.includes('edit-order'))
       {
         this.mode = EDIT_ORDER_MODE
-        this.order = Object.assign({selected: false}, data.booking[0].data.bookingByReference);
+        this.order = Object.assign({}, data.order[0].data.orderByReference);
         this.order.customer = data.order[1].data.customerByReference;
       } else
       {

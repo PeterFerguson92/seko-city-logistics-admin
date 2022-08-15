@@ -12,47 +12,47 @@
       </tr>
       <tr>
         <td>Type</td>
-        <td>{{order.customer.type}}</td>
+        <td>{{order.orderCustomer.type}}</td>
       </tr>
-      <tr *ngIf="!isCustomerPersonal(order.customer.type)">
+      <tr *ngIf="!isCustomerPersonal(order.orderCustomer.type)">
         <td>Registered Name</td>
         <td>{{order.customer.registeredName}}</td>
       </tr>
-      <tr *ngIf="!isCustomerPersonal(order.customer.type)">
+      <tr *ngIf="!isCustomerPersonal(order.orderCustomer.type)">
         <td>Registered Number</td>
         <td>{{order.customer.registeredNumber}}</td>
       </tr>
       <tr>
         <td>Title</td>
-        <td>{{order.customer.title}}</td>
+        <td>{{order.orderCustomer.title}}</td>
       </tr>
       <tr>
         <td>Name</td>
-        <td>{{order.customer.name}}</td>
+        <td>{{order.orderCustomer.name}}</td>
       </tr>
       <tr>
         <td>Surname</td>
-        <td>{{order.customer.surname}}</td>
+        <td>{{order.orderCustomer.surname}}</td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{order.customer.email}}</td>
+        <td>{{order.orderCustomer.email}}</td>
       </tr>
       <tr>
         <td>Code</td>
-        <td>{{order.customer.countryCode}}</td>
+        <td>{{order.orderCustomer.countryCode}}</td>
       </tr>
       <tr>
         <td>Phone</td>
-        <td>{{order.customer.phone}}</td>
+        <td>{{order.orderCustomer.phone}}</td>
       </tr>
       <tr>
         <td>Postcode</td>
-        <td>{{order.customer.postcode}}</td>
+        <td>{{order.orderCustomer.postcode}}</td>
       </tr>
       <tr>
         <td>Address</td>
-        <td>{{order.customer.address}}</td>
+        <td>{{order.orderCustomer.address}}</td>
       </tr>
     </table>
   </mat-expansion-panel>

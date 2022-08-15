@@ -17,6 +17,14 @@ export const GET_ITEMS_BY_BOOKING_REFERENCE = gql`
   }
 `;
 
+export const GET_ITEMS_BY_ORDER_REFERENCE = gql`
+  query itemsByOrderReference($orderReference: String!) {
+    itemsByOrderReference(orderReference: $orderReference) {
+      id bookingReference shipmentReference orderReference quantity type description pricePerUnit value amount status
+    }
+  }
+`;
+
 export const GET_ELIGIBLE_ITEMS = gql`
 query {
   eligibleItems {
@@ -64,5 +72,11 @@ export const UPDATE_ITEM = gql`
 export const UPDATE_ITEMS_BY_ID = gql`
   mutation updateItem($ids: [Int!]!, $fields: [UpdateFieldInput!]) {
     updateItemsByIds(ids: $ids, fields: $fields)
+  }
+`;
+
+export const SYNC_ORDER_ITEMS = gql`
+  mutation syncOrderItems($orderReference: String!, $items: [ItemInput!]) {
+    syncOrderItems(orderReference: $orderReference, items: $items)
   }
 `;

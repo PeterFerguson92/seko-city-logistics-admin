@@ -2,9 +2,10 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { CREATE_ORDER_MODE } from 'src/app/constants';
+import { CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
 import { CustomersService } from 'src/app/customer/service/customers.service';
+import { ItemService } from 'src/app/items/item.service';
 import { OrderInfoComponent } from '../order-info/order-info.component';
 import { OrderReviewComponent } from '../order-review/order-review.component';
 import { OrderService } from '../service/order.service';
@@ -22,7 +23,8 @@ export class OrderDetailComponent implements OnInit {
   @Input() order;
   @Input() mode
 
-  constructor(private router: Router, private orderService: OrderService, private customerService: CustomersService) { }
+  constructor(private router: Router, private orderService: OrderService,
+    private customerService: CustomersService, private itemService: ItemService) { }
 
   ngOnInit(): void {
   }
@@ -57,7 +59,7 @@ export class OrderDetailComponent implements OnInit {
   };
 
   buildOrderReviewData() {
-    this.order.customer = this.customerDetailComponent.getSenderDetails();
+    this.order.orderCustomer = this.customerDetailComponent.getSenderDetails();
     this.order.info = this.orderInfoComponent.getOrderInfoDetails();
   }
 
@@ -65,15 +67,25 @@ export class OrderDetailComponent implements OnInit {
     if (CREATE_ORDER_MODE === this.mode)
     {
       this.createOrder();
+    } else
+    {
+      if (EDIT_ORDER_MODE === this.mode)
+      {
+        this.editOrder();
+      } else
+      {
+        console.log(this.mode)
+      }
     }
   }
 
   async createOrder() {
-    const customerDetails = await this.saveCustomer(this.order.customer);
-    const orderDto = this.createOrderDto(customerDetails.id, customerDetails.reference,
+    const customerDetails = await this.saveCustomer(this.order.orderCustomer);
+    const orderDto = this.buildOrderDto(customerDetails.id, customerDetails.reference,
       customerDetails.fullName, customerDetails.fullPhoneNumber)
     this.createOrderRequest(orderDto);
   }
+
 
   async saveCustomer(customerDetails) {
     const saved = await lastValueFrom(this.customerService.createCustomer(customerDetails))
@@ -84,11 +96,11 @@ export class OrderDetailComponent implements OnInit {
       id: details.id, fullPhoneNumber: details.fullPhoneNumber };
   }
 
-  createOrderDto(customerId: number, customerReference: string,
+  buildOrderDto(customerId: number, customerReference: string,
     customerFullName: string, customerPhone: string) {
     const dto = {
       customerId, customerReference, customerFullName, customerPhone,
-      ...this.order.info, numberOfItems: this.order.info.items.length
+      ...this.order.info, numberOfItems: this.order.info.items.length, reference: this.order.reference
     }
     return dto
   }
@@ -103,6 +115,74 @@ export class OrderDetailComponent implements OnInit {
       }
     )
   }
+
+  async editOrder() {
+    const customerUpdateFields = this.getDifference(this.order.orderCustomer, this.order.customer);
+    if (customerUpdateFields.length > 0)
+      {
+        const senderDetails = await this.updateCustomer(this.order.customer.reference, customerUpdateFields);
+        this.order.senderId = senderDetails.id;
+        this.order.senderReference = senderDetails.reference;
+        this.order.senderFullName = senderDetails.fullName;
+    }
+    const orderDto = this.buildOrderDto(this.order.customer.id,
+      this.order.customer.reference,
+      this.order.customer.fullName,
+      this.order.customer.fullPhoneNumber)
+    this.syncOrder(orderDto)
+  }
+
+  getDifference(obj1, obj2) {
+    const updateFields = []
+    Object.entries(obj1).forEach((key) => {
+      const name = key[0];
+      const value = key[1];
+      if (obj1[name] !== obj2[name])
+      {
+        updateFields.push({name, value})
+      }
+    })
+
+    return updateFields;
+  }
+
+  async updateCustomer(reference, fields) {
+    const saved = await lastValueFrom(this.customerService.updateCustomer(reference, fields))
+    // tslint:disable-next-line:no-string-literal
+    const details = saved.data['updateCustomer'];
+    return {
+      reference: details.reference,
+      fullName: details.fullName,
+      id: details.id,
+      fullPhoneNumber: details.fullPhoneNumber
+    };
+  }
+
+  syncOrderItems(orderReference, items) {
+    this.itemService.syncOrderItems(orderReference, items).subscribe(
+      ({ data }) => {
+        this.redirectToOrders()
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  syncOrder(order) {
+    console.log(order)
+    this.orderService.syncOrder(order).subscribe(
+      ({ data }) => {
+       this.redirectToOrders()
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+
+
 
   redirectToOrders() {
     this.router.navigate(['/orders']).then(() => {
