@@ -1,1 +1,125 @@
-<p>order-review works!</p>
+<mat-accordion [multi]="true">
+  <mat-expansion-panel hideToggle [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Customer Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table>
+      <tr>
+        <th class="details">Details</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Type</td>
+        <td>{{order.customer.type}}</td>
+      </tr>
+      <tr *ngIf="!isCustomerPersonal(order.customer.type)">
+        <td>Registered Name</td>
+        <td>{{order.customer.registeredName}}</td>
+      </tr>
+      <tr *ngIf="!isCustomerPersonal(order.customer.type)">
+        <td>Registered Number</td>
+        <td>{{order.customer.registeredNumber}}</td>
+      </tr>
+      <tr>
+        <td>Title</td>
+        <td>{{order.customer.title}}</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>{{order.customer.name}}</td>
+      </tr>
+      <tr>
+        <td>Surname</td>
+        <td>{{order.customer.surname}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{order.customer.email}}</td>
+      </tr>
+      <tr>
+        <td>Code</td>
+        <td>{{order.customer.countryCode}}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>{{order.customer.phone}}</td>
+      </tr>
+      <tr>
+        <td>Postcode</td>
+        <td>{{order.customer.postcode}}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>{{order.customer.address}}</td>
+      </tr>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Items Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table>
+      <tr>
+        <th class="details">Quantity</th>
+        <th>Type</th>
+        <th>Price per unit</th>
+        <th>Amount</th>
+      </tr>
+      <tr *ngFor="let item of order.info.items">
+        <td>{{item.quantity}}</td>
+        <td>{{item.type}}</td>
+        <td>£{{item.pricePerUnit}}</td>
+        <td>£{{item.amount}}</td>
+      </tr>
+      <br>
+      <p><b>Number of items:</b> <br>{{order.info.items.length}}</p>
+      <p><b>Selected payment type:</b> <br>{{order.info.paymentType}}</p>
+      <p><b>Selected payment status:</b> <br>{{order.info.paymentStatus}}</p>
+      <p><b>Total amount:</b> <br>£{{order.info.totalAmount}}</p>
+      <p><b>Amount Paid:</b> <br>£{{order.info.amountPaid}}</p>
+      <p><b>Amount Outstanding:</b> <br>£{{order.info.amountOutstanding}}</p>
+      <p><b>Notes:</b> <br>{{order.info.paymentNotes}}</p>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Pick Up Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table>
+      <tr>
+        <th class="details">Details</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Date</td>
+        <td>{{getFormattedDate(order.info.deliveryDate)}}</td>
+      </tr>
+      <tr>
+        <td>Time</td>
+        <td>{{order.info.deliveryTime}}</td>
+      </tr>
+      <tr>
+        <td>Postcode</td>
+        <td>{{order.info.deliveryPostCode}}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>{{order.info.deliveryAddress}}</td>
+      </tr>
+      <tr>
+        <td>Updates Via Whatsapp</td>
+        <td>{{order.info.updatesViaWhatsapp ? 'YES': 'NO'}}</td>
+      </tr>
+      <tr>
+        <td>Updates Via e-mail</td>
+        <td>{{order.info.updatesViaEmail ? 'YES': 'NO'}}</td>
+      </tr>
+    </table>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,7 +1,7 @@
 <button mat-raised-button  id="toggle-linear">
 </button>
 <mat-stepper linear #stepper>
-  <!-- <mat-step>
+  <mat-step>
     <form >
       <ng-template matStepLabel>Fill out customer details</ng-template>
       <app-customer-detail [customer]="order.customer" [mode]="mode"></app-customer-detail>
@@ -19,8 +19,8 @@
         <button mat-button (click)="onForward(stepper, 'orderInfoComponent')"> Next</button>
       </div>
     </form>
-  </mat-step>-->
-  <mat-step> 
+  </mat-step>
+  <mat-step>
     <ng-template matStepLabel>Confirm</ng-template>
     <p>Amazing we are now ready to create or update a order, make sure all information submitted are correct, once you are happy with it
       just click on the create button and I'll take care of the rest.

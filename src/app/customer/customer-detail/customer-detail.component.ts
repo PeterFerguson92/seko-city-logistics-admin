@@ -5,8 +5,10 @@ import {
   ADD_BOOKING_CUSTOMER_MODE,
   ADD_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
   CREATE_ORDER_MODE,
+  CUSTOMER_ORDER_ROLE,
   CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, EDIT_CUSTOMER_MODE, EDIT_ORDER_MODE, VIEW_BOOKING_MODE
 } from 'src/app/constants';
+import { CREATE_ORDER } from 'src/app/order/service/requests';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
@@ -288,7 +290,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       sender[attributeName] = this.getFormControl(attributeName).value;
     })
    sender.reference = this.customer ? this.customer.reference : null;
-   sender.role = CUSTOMER_SENDER_ROLE
+   sender.role = this.mode === CREATE_ORDER ? CUSTOMER_ORDER_ROLE : CUSTOMER_SENDER_ROLE
    return sender;
  }
 

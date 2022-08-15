@@ -1,8 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import { CREATE_ORDER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
+import { CustomersService } from 'src/app/customer/service/customers.service';
 import { OrderInfoComponent } from '../order-info/order-info.component';
 import { OrderReviewComponent } from '../order-review/order-review.component';
+import { OrderService } from '../service/order.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -17,7 +22,7 @@ export class OrderDetailComponent implements OnInit {
   @Input() order;
   @Input() mode
 
-  constructor() { }
+  constructor(private router: Router, private orderService: OrderService, private customerService: CustomersService) { }
 
   ngOnInit(): void {
   }
@@ -57,7 +62,52 @@ export class OrderDetailComponent implements OnInit {
   }
 
   async onSubmit() {
+    if (CREATE_ORDER_MODE === this.mode)
+    {
+      this.createOrder();
+    }
+  }
 
+  async createOrder() {
+    const customerDetails = await this.saveCustomer(this.order.customer);
+    const orderDto = this.createOrderDto(customerDetails.id, customerDetails.reference,
+      customerDetails.fullName, customerDetails.fullPhoneNumber)
+    this.createOrderRequest(orderDto);
+  }
+
+  async saveCustomer(customerDetails) {
+    const saved = await lastValueFrom(this.customerService.createCustomer(customerDetails))
+     // tslint:disable-next-line:no-string-literal
+    const details = saved.data['createCustomer'];
+    return {
+      reference: details.reference, fullName: details.fullName,
+      id: details.id, fullPhoneNumber: details.fullPhoneNumber };
+  }
+
+  createOrderDto(customerId: number, customerReference: string,
+    customerFullName: string, customerPhone: string) {
+    const dto = {
+      customerId, customerReference, customerFullName, customerPhone,
+      ...this.order.info, numberOfItems: this.order.info.items.length
+    }
+    return dto
+  }
+
+  createOrderRequest(orderDto) {
+    this.orderService.createOrder(orderDto).subscribe(
+      ({ data }) => {
+        this.redirectToOrders()
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  redirectToOrders() {
+    this.router.navigate(['/orders']).then(() => {
+      window.location.reload();
+    });
   }
 
 }
