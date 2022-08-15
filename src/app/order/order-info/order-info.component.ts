@@ -63,7 +63,9 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       this.getOrderItems()
     } else
     {
-      this.items.push(this.buildItemGroup(null))
+      this.items.push(this.buildItemGroup(null));
+      this.initializeProperties(0);
+      // this.updateTotalAmount();
     }
   }
 
@@ -73,7 +75,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       type: [item ? item.type : this.types[0], [Validators.required]],
       pricePerUnit: [item ? item.pricePerUnit : this.getPricePerUnit(this.types[0])],
       quantity: [item ? item.quantity : 1],
-      amount: [item ? item.amount : 0]
+      amount: [item ? item.amount : this.getPricePerUnit(this.types[0]) * 1]
     })
   }
 
@@ -294,15 +296,18 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
 
   getOrderItemsInfoDetails() {
     const itemsInfo = [];
+    let numberOfItems = 0;
     this.items.controls.forEach((control) => {
       itemsInfo.push({
         id: control.get('id').value,
         type: control.get('type').value,
-        pricePerUnit: control.get('pricePerUnit').value,
+        pricePerUnit: parseInt(control.get('pricePerUnit').value, 10),
         quantity: parseInt(control.get('quantity').value, 10),
-        amount: control.get('amount').value,
+        amount: parseInt(control.get('amount').value, 10),
       })
+      numberOfItems = numberOfItems + parseInt(control.get('quantity').value, 10)
     })
+    // itemsInfo[numberOfItems] = numberOfItems;
     return itemsInfo;
   }
 
@@ -310,7 +315,11 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     this.itemService.getItemsByOrderReference(this.orderInfo.reference).subscribe(
       ({ data }) => {
         const itemsData = data.itemsByOrderReference;
-        itemsData.forEach(item => this.items.push(this.buildItemGroup(item)));
+        itemsData.forEach(item => {
+          this.items.push(this.buildItemGroup(item));
+          this.initializeProperties(this.items.length - 1)
+        }
+      );
         this.updateTotalAmount();
       },
       error => {

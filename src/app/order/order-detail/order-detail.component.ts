@@ -74,7 +74,7 @@ export class OrderDetailComponent implements OnInit {
         this.editOrder();
       } else
       {
-        console.log(this.mode)
+        this.addOrder();
       }
     }
   }
@@ -117,18 +117,17 @@ export class OrderDetailComponent implements OnInit {
   }
 
   async editOrder() {
+    let orderDto = {}
     const customerUpdateFields = this.getDifference(this.order.orderCustomer, this.order.customer);
     if (customerUpdateFields.length > 0)
       {
-        const senderDetails = await this.updateCustomer(this.order.customer.reference, customerUpdateFields);
-        this.order.senderId = senderDetails.id;
-        this.order.senderReference = senderDetails.reference;
-        this.order.senderFullName = senderDetails.fullName;
+      const details = await this.updateCustomer(this.order.customer.reference, customerUpdateFields);
+      orderDto = this.buildOrderDto(details.id, details.reference, details.fullName, details.fullPhoneNumber);
+    } else
+    {
+      orderDto = this.buildOrderDto(this.order.customer.id, this.order.customer.reference,
+        this.order.customer.fullName, this.order.customer.fullPhoneNumber);
     }
-    const orderDto = this.buildOrderDto(this.order.customer.id,
-      this.order.customer.reference,
-      this.order.customer.fullName,
-      this.order.customer.fullPhoneNumber)
     this.syncOrder(orderDto)
   }
 
@@ -142,7 +141,6 @@ export class OrderDetailComponent implements OnInit {
         updateFields.push({name, value})
       }
     })
-
     return updateFields;
   }
 
@@ -170,7 +168,6 @@ export class OrderDetailComponent implements OnInit {
   }
 
   syncOrder(order) {
-    console.log(order)
     this.orderService.syncOrder(order).subscribe(
       ({ data }) => {
        this.redirectToOrders()
@@ -181,7 +178,19 @@ export class OrderDetailComponent implements OnInit {
     )
   }
 
-
+  async addOrder() {
+   let orderDto = {}
+    const customerUpdateFields = this.getDifference(this.order.orderCustomer, this.order.customer);
+    if (customerUpdateFields.length > 0) {
+      const details = await this.updateCustomer(this.order.customer.reference, customerUpdateFields);
+      orderDto = this.buildOrderDto(details.id, details.reference, details.fullName, details.fullPhoneNumber);
+    } else
+    {
+      orderDto = this.buildOrderDto(this.order.customer.id, this.order.customer.reference,
+        this.order.customer.fullName, this.order.customer.fullPhoneNumber);
+    }
+    this.createOrderRequest(orderDto);
+  }
 
 
   redirectToOrders() {

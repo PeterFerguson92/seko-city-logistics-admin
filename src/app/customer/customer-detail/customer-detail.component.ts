@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ADD_BOOKING_CUSTOMER_MODE,
-  ADD_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
+  ADD_CUSTOMER_MODE, ADD_ORDER_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
   CREATE_ORDER_MODE,
   CUSTOMER_ORDER_ROLE,
   CUSTOMER_SENDER_ROLE, CUSTOMER_TITLES, CUSTOMER_TYPES, EDIT_BOOKING_MODE, EDIT_CUSTOMER_MODE, EDIT_ORDER_MODE, VIEW_BOOKING_MODE
@@ -26,7 +26,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   @Output() closeDialog = new EventEmitter<string>();
 
   bookingOrderModes = [CREATE_BOOKING_MODE, VIEW_BOOKING_MODE, EDIT_BOOKING_MODE, ADD_BOOKING_CUSTOMER_MODE,
-  CREATE_ORDER_MODE, EDIT_ORDER_MODE]
+  CREATE_ORDER_MODE, EDIT_ORDER_MODE, ADD_ORDER_CUSTOMER_MODE]
   buttonLabel;
   showLoading = false;
   createCustomer;
@@ -310,11 +310,10 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     } else
     {
       this.titlePrefix = 'Book';
-      this.buttonLabel = 'Update'
+      this.buttonLabel = 'Update';
       this.showLoading = true;
     }
   }
-
 
   showWarning() {
     return !this.addEditCustomerForm.valid;

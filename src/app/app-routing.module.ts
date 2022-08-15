@@ -64,7 +64,8 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent, resolve: { orders: OrdersResolver } },
   { path: 'add-order', component: AddEditOrderComponent },
   { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },
-  { path: '', redirectTo: 'login', pathMatch: 'full'}
+  { path: 'add-order/:reference', component: AddEditOrderComponent, resolve: { customer: CustomerResolver } },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
