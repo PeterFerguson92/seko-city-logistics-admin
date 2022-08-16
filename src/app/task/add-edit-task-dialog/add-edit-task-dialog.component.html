@@ -1,41 +1,33 @@
-  <div [formGroup]="addEditTaskForm">
-  <mat-accordion [multi]="true">
-    <mat-expansion-panel (click)="$event.preventDefault()" hideToggle [expanded]="true">
-      <mat-expansion-panel-header (click)="$event.preventDefault()">
-        <mat-panel-title>
-          <mat-icon >flight_takeoff</mat-icon>
-           TASK DETAILS
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <br>
-      <div class="columns">
-        <div class="item">
-          <app-material-input [label]="'Title'" [width]="40" formControlName="title" ></app-material-input>
-        </div>
-        <div class="item">
-          <mat-form-field appearance="outline" class="fill-container">
-            <mat-label>Description</mat-label>
-            <textarea  matAutosizeMinRows="78" [rows]="8" [cols]="12"
-            matInput style="width: 100%; max-width: 100%;" formControlName="description"
-            matTextareaAutosize></textarea>
-          </mat-form-field>
-        </div>
-        <div class="item">
-          <app-material-date-picker-input [label]="'Action Date'"
-            (inputChange)="onInputChange($event)" formControlName="actionDate">
-          </app-material-date-picker-input>
-        </div>
-        <div class="item">
-          <app-material-select-input [label]="'Priority'" [width]="20" [options]="priorityStatuses"
-            (selectionChange)="onSelectionChange($event)"
-            formControlName="priority">
-          </app-material-select-input>
-        </div>
+
+ <h2 mat-dialog-title>Update Order</h2>
+ <div [formGroup]="addEditTaskForm">
+  <mat-dialog-content class="mat-typography">
+    <form id="survey-form" [formGroup]="addEditTaskForm" >
+      <div class="item">
+        <app-material-input [label]="'Title'" [width]="40" formControlName="title" ></app-material-input>
       </div>
-    </mat-expansion-panel>
-  </mat-accordion>
-  <div align="center">
-    <br>
-    <app-material-button [label]="'SUBMIT'" [width]="30" [disabled]="isDisabled()" (click)="onSubmit()" ></app-material-button>
-  </div>
-</div>
+      <div class="item">
+        <mat-form-field appearance="outline" class="fill-container">
+          <mat-label>Description</mat-label>
+          <textarea  matAutosizeMinRows="78" [rows]="8" [cols]="12"
+          matInput style="width: 100%; max-width: 100%;" formControlName="description"
+          matTextareaAutosize></textarea>
+        </mat-form-field>
+      </div>
+      <div class="item">
+        <app-material-date-picker-input [label]="'Action Date'"
+          (inputChange)="onInputChange($event)" formControlName="actionDate">
+        </app-material-date-picker-input>
+      </div>
+      <div class="item">
+        <app-material-select-input [label]="'Priority'" [width]="20" [options]="priorityStatuses"
+          (selectionChange)="onSelectionChange($event)"
+          formControlName="priority">
+        </app-material-select-input>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" [disabled]="isDisabled()" (click)="onSubmit()" cdkFocusInitial>Update</button>
+  </mat-dialog-actions>

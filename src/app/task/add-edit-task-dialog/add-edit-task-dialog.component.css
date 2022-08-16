@@ -1,27 +1,9 @@
 
-mat-form-field {
-  width: 100%;
-}
-.mat-expansion-panel-header{
-  /* padding-left: 0px !important;
-  padding-top: 1px !important; */
-  background:  #004e92!important;;
-  /* padding-bottom: 1px !important; */
-}
-
-.mat-expansion-panel-header-title {
+.mat-dialog-title {
+  margin: -24px -24px 20px -24px;
+  display: block;
+  padding: 24px; /* optional you can remove if don't want padding for dialog title */
+  background:var(--main-color);
   color: white;
-  font-weight: bold;
-  font-size:medium;
-}
-
-.mat-expansion-panel-header-description {
-  color: white;
-  font-weight: bold;
-  font-size:medium;
-}
-
-.summary {
-  width: 100%;
-  height: 100%;
+  text-align: center;
 }
