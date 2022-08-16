@@ -35,18 +35,12 @@
       <button mat-icon-button class="icon-color" matTooltip="Edit booking" matTooltipPosition="above">
         <mat-icon (click)="editOrder(element)">edit</mat-icon>
       </button>
-      <!-- <button mat-icon-button class="icon-color" matTooltip="Assigned items"  matTooltipPosition="left">
-        <mat-icon (click)="onListBookings(element.reference)">dns</mat-icon>
+      <button mat-icon-button class="icon-color" matTooltip="Update booking" matTooltipPosition="above">
+        <mat-icon (click)="updateOrder(element)">low_priority</mat-icon>
       </button>
-      <button mat-icon-button class="icon-color" matTooltip="Edit shipment" matTooltipPosition="above">
-        <mat-icon (click)="OnEditShipment(element.reference)">edit</mat-icon>
+      <button mat-icon-button class="icon-color"  matTooltip="Delete booking" matTooltipPosition="right">
+        <mat-icon (click)="deleteOrder(element.reference)">delete</mat-icon>
       </button>
-      <button mat-icon-button class="icon-color" matTooltip="analyze shipment" matTooltipPosition="right">
-        <mat-icon (click)="OnShipmentAnalysis(element.reference)">bar_chart</mat-icon>
-      </button>
-      <button mat-icon-button class="icon-color" matTooltip="Delete shipment" matTooltipPosition="right">
-        <mat-icon (click)="onDeleteShipment(element.reference)">delete</mat-icon>
-      </button> -->
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

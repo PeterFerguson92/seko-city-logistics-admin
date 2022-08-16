@@ -1,0 +1,8 @@
+.mat-dialog-title {
+  margin: -24px -24px 20px -24px;
+  display: block;
+  padding: 24px; /* optional you can remove if don't want padding for dialog title */
+  background:var(--main-color);
+  color: white;
+  text-align: center;
+}

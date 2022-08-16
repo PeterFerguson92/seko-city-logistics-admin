@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
+import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { OrderUpdateDialogComponent } from '../order-update-dialog/order-update-dialog.component';
 import { OrderService } from '../service/order.service';
 
 @Component({
@@ -41,5 +43,33 @@ export class OrdersComponent implements OnInit {
 
   editOrder(element) {
     this.router.navigate(['/edit-order', element.reference, element.customerReference]);
+  }
+
+  updateOrder(order) {
+    const dialogRef = this.dialog.open(OrderUpdateDialogComponent, {
+      // height: '80%',
+      width: '25%',
+      data: { order }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    })
+  }
+
+  deleteOrder(reference) {
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'true')
+      {
+        this.orderService.deleteOrder(reference).subscribe(
+          ({ data }) => {
+            location.reload()
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    })
   }
 }

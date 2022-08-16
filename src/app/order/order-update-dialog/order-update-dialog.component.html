@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Update Order</h2>
+<mat-dialog-content class="mat-typography">
+  <form id="survey-form" [formGroup]="orderInfoForm" >
+      <div class="item">
+        <app-material-select-input [label]="'Status'" [options]="orderStatuses" formControlName="status"
+            (selectionChange)="onSelectionChange($event, 'status')"  [width]="60" [value]="orderStatuses[0]">
+        </app-material-select-input>
+      </div>
+      <div class="item">
+        <app-material-select-input [label]="'Payment Status'" [options]="paymentStatuses" formControlName="paymentStatus"
+            (selectionChange)="onSelectionChange($event, 'paymentStatus')"  [width]="60" [value]="paymentStatuses[0]">
+        </app-material-select-input>
+      </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" [disabled]="isDisabled()" (click)="onUpdate()" cdkFocusInitial>Update</button>
+</mat-dialog-actions>
