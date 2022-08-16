@@ -10,7 +10,7 @@ import { TaskService } from '../service/task.service';
 @Component({
   selector: 'app-add-edit-task-dialog',
   templateUrl: './add-edit-task-dialog.component.html',
-  styleUrls: ['./add-edit-task-dialog.component.css']
+  styleUrls: ['./add-edit-task-dialog.component.css', '../../shared/shared.dialog.css']
 })
 export class AddEditTaskDialogComponent implements OnInit {
   addEditTaskForm: FormGroup;
@@ -65,7 +65,7 @@ export class AddEditTaskDialogComponent implements OnInit {
 
     this.taskService.createTask(task).subscribe(
       ({ data }) => {
-        this.dialogRef.close()
+        window.location.reload()
       },
       error => {
         console.log(error);
