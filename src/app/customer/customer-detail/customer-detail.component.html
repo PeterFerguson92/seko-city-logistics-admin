@@ -79,11 +79,11 @@
           </div>
           <div class="item">
             <label for="lname">Postcode<span>*</span></label><br>
-            <app-material-input  [width]="35" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [width]="35" formControlName="postcode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">
             <label for="lname">Address</label><br>
-            <app-material-select-input [width]="80" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
+            <app-material-select-input [width]="80" [options]="addresses" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
           </div>
         </div>
     </mat-expansion-panel>

@@ -178,6 +178,11 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     this.mode === EDIT_CUSTOMER_MODE ? this.editCustomer() : this.addCustomer();
   }
 
+  onPostcodeChange() {
+    const postcodeFormControl = this.getFormControl('postcode');
+    this.getAddressByPostcode()
+  }
+
   addCustomer() {
     const createCustomerData = 'createCustomer'
     this.createCustomer = this.customersService.createCustomer(this.getCustomerDetails()).subscribe(
@@ -191,6 +196,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       }
     );
   }
+
 
   editCustomer() {
     const updateCustomerFields = []
@@ -253,8 +259,17 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     const postcodeFormControl = this.getFormControl('postcode');
     if (!postcodeFormControl.invalid)
     {
-      this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
-      return this.addresses;
+      this.commonService.getAddresses(postcodeFormControl.value).subscribe(
+        ({ data }) => {
+          this.addresses = data.addressesInfo.addresses;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else
+    {
+      this.addresses = [];
     }
   }
 

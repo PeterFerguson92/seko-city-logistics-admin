@@ -86,7 +86,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
     const pricePerUnit = this.getPricePerUnit('SMALL BOX');
     const amount = this.calculateAmount(pricePerUnit, 1)
     const newRow = {
-      index : this.dataSource ? this.dataSource.length + 1 : 1,
+      index : this.dataSource ? this.dataSource.data.length + 1 : 1,
       id: null,
       type: element ? element.type : 'SMALL BOX',
       description: element ? element.description : '',
@@ -108,7 +108,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   removeRow(id) {
-    this.dataSource = this.dataSource.filter((u) => u.index !== id);
+    this.dataSource = this.dataSource.data.filter((u) => u.index !== id);
   }
 
   duplicateRow(element) {
@@ -116,7 +116,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   addMultipleRow() {
-    const items = this.dataSource.filter((u: any) => u.isSelected);
+    const items = this.dataSource.data.filter((u: any) => u.isSelected);
 
     this.dialog.open(ItemDuplicateDialogComponent, {
       // height: '80%',
