@@ -1,20 +1,14 @@
 <div id="summary" class="center">
-  <form [formGroup]="receiversCustomerForm">
+  <div [formGroup]="receiversCustomerForm">
     <mat-accordion [multi]="true">
       <div [formGroup]="destinationForm">
       <mat-expansion-panel hideToggle [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon >flight_takeoff</mat-icon>
-            Destination
+            DESTINATION
           </mat-panel-title>
-          <mat-panel-description>
-            Destination Information
-          </mat-panel-description>
         </mat-expansion-panel-header>
         <br/>
-        <fieldset>
-          <legend>Destination Information Details</legend>
           <div class="columns">
             <div class="item">
               <label for="fname">Destination<span>*</span></label><br>
@@ -28,23 +22,16 @@
                 [width]="60" formControlName="location">
               </app-material-input>
             </div>
-        </div>
-        </fieldset>
+          </div>
       </mat-expansion-panel>
     </div>
       <mat-expansion-panel hideToggle [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon >flight_takeoff</mat-icon>
-            Action
+            MANAGE RECEIVERS
           </mat-panel-title>
-          <mat-panel-description>
-            Manage Receivers
-          </mat-panel-description>
         </mat-expansion-panel-header>
-        <br/>
-        <fieldset>
-          <legend>Actions</legend>
+          <br/>
           <div class="columns">
             <div class="item">
               <app-material-button
@@ -56,24 +43,15 @@
                 *ngIf="isAddItemsVisible()" [label]="'Add Receiver'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" (click)="onAddReceveirs()">
               </app-material-button>
             </div>
-        </div>
-        </fieldset>
-      </mat-expansion-panel>
-      <div formArrayName="receivers" *ngFor="let item of receivers.controls; let i = index">
-        <div [formGroupName] = 'i'>
-          <mat-expansion-panel hideToggle [expanded]="true">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon >flight_takeoff</mat-icon>
-                Receiver {{i + 1}}
-              </mat-panel-title>
-              <mat-panel-description>
-                Receiver {{i + 1}}  Information
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <br/>
-            <fieldset>
-              <legend>Receiver {{i + 1}} Information Details</legend>
+          </div>
+        </mat-expansion-panel>
+        <div formArrayName="receivers" *ngFor="let item of receivers.controls; let i = index">
+          <div [formGroupName] = 'i'>
+            <mat-expansion-panel hideToggle [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>RECEIVER {{i + 1}}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <br/>
               <div class="columns">
                 <div class="item">
                   <label for="fname">Type<span>*</span></label><br>
@@ -105,7 +83,6 @@
                   (selectionChange)="onSelectionChange($event, 'title',i)"  [width]="30" [value]="titles[0]">
                   </app-material-select-input>
                 </div>
-                <div class="item"></div>
                 <div class="item">
                   <label for="lname">Name  <span>*</span></label><br>
                   <app-material-input formControlName="name" [errorMsg]="formValidationMapList[i].name" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
@@ -118,18 +95,15 @@
                   <app-material-button [label]="'-'" (click)="onDeleteReceiver(i)"></app-material-button>&nbsp;
                   <app-material-button [label]="'+'"  [disabled]="isReceiverValuePopulated(i)" (click)="onAddReceveir(i)"></app-material-button>
                 </div>
-
               </div>
               <div *ngIf="showWarning(i)" class="alert warning">
                 <strong>Warning!</strong> Please fill in all required field with valid values.
               </div>
-            </fieldset>
-          </mat-expansion-panel>
-
+            </mat-expansion-panel>
+          </div>
         </div>
-      </div>
     </mat-accordion>
-</form>
+  </div>
 </div>
 
 

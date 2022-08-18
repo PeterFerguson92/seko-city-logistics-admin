@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES } from 'src/app/constants';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
+import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component';
 import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-duplicate-dialog.component';
 
@@ -108,7 +109,13 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   removeRow(id) {
-    this.dataSource = this.dataSource.data.filter((u) => u.index !== id);
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'true')
+      {
+        this.dataSource = this.dataSource.data.filter((u) => u.index !== id);
+      }
+    })
   }
 
   duplicateRow(element) {

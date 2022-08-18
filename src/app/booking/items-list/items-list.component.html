@@ -60,49 +60,39 @@
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngStyle]="{'background-color': chooseColor(row),'min-height':'81px'}" ></tr>
-  <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr> -->
 
 </table>
 <br>
-<!-- <p >CI SONO ERRORI </p> -->
 <div *ngIf="showWarning()" class="alert warning">
   <strong>Warning!</strong> Some items contain invalid values.
 </div>
-<div id="summary">
+<div>
   <mat-accordion [multi]="true">
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>money</mat-icon>
-          Totals
-        </mat-panel-title>
-        <mat-panel-description>
-          Totals Information
-        </mat-panel-description>
-      </mat-expansion-panel-header><br>
-        <fieldset>
-          <legend>Totals Information Details</legend>
-          <div class="columns">
-            <div class="item">
-              <label for="lname">Total Amount (£)</label><br>
-              <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="35">
-                <input matInput type="text" [(ngModel)]="calculateTotals().totalAmount" readonly>
-              </mat-form-field>
-            </div>
-            <div class="item">
-              <label for="lname">Total Number of items</label><br>
-              <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="35">
-                <input matInput type="text" [(ngModel)]="calculateTotals().totalItems" readonly>
-              </mat-form-field>
-            </div>
-            <div class="item">
-              <label for="lname">Total Value (£)</label><br>
-              <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="35">
-                <input matInput type="text" [(ngModel)]="calculateTotals().totalValue" readonly>
-              </mat-form-field>
-            </div>
+        <mat-panel-title> Totals Information </mat-panel-title>
+      </mat-expansion-panel-header>
+        <br>
+        <div class="columns">
+          <div class="item">
+            <label for="lname">Total Amount (£)</label><br>
+            <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="35">
+              <input matInput type="text" [(ngModel)]="calculateTotals().totalAmount" readonly>
+            </mat-form-field>
           </div>
-        </fieldset>
+          <div class="item">
+            <label for="lname">Total Number of items</label><br>
+            <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="35">
+              <input matInput type="text" [(ngModel)]="calculateTotals().totalItems" readonly>
+            </mat-form-field>
+          </div>
+          <div class="item">
+            <label for="lname">Total Value (£)</label><br>
+            <mat-form-field class="example-form-field" appearance="outline" [style.width.%]="35">
+              <input matInput type="text" [(ngModel)]="calculateTotals().totalValue" readonly>
+            </mat-form-field>
+          </div>
+        </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

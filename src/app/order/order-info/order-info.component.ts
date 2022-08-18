@@ -9,6 +9,7 @@ import {
 import { ItemService } from 'src/app/items/item.service';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
+import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 
 @Component({
   selector: 'app-order-info',
@@ -173,11 +174,18 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   onDeleteItem(index) {
     if (this.items.length > 1)
     {
-      this.items.removeAt(index)
-      this.updateTotalAmount();
-      this.updateOutstandingAmount()
+      const dialogRef = this.dialog.open(DialogComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'true')
+        {
+          this.items.removeAt(index)
+          this.updateTotalAmount();
+          this.updateOutstandingAmount()
+        }
+      })
     }
   }
+
 
   getItemsFormControl(fControlName: string, index: number) {
     if (this.items.length > 0)

@@ -1,20 +1,11 @@
 <div id="summary" class="center">
-  <form [formGroup]="bookingInfoForm">
-    <div class="banner"></div><br>
-  <mat-accordion [multi]="true">
-    <mat-expansion-panel hideToggle [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>today</mat-icon>
-          Pick-up
-        </mat-panel-title>
-        <mat-panel-description>
-          Pick-up Information
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <br/>
-      <fieldset>
-        <legend>Pick-up Information Details</legend>
+  <div [formGroup]="bookingInfoForm">
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel hideToggle [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title> Pick-up Information </mat-panel-title>
+        </mat-expansion-panel-header>
+        <br/>
         <div class="columns">
           <div class="item" >
             <label for="lname">Date<span>*</span></label><br>
@@ -42,8 +33,8 @@
             <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
           </div>
         </div>
-      </fieldset>
-    </mat-expansion-panel>
-  </mat-accordion>
-  </form>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
+</div>
+

@@ -5,20 +5,14 @@
     <div class="col-75">
       <div class="container">
           <app-items-list [items]="itemsObjs" (updateItemsEvent)="updateTotalAmount()" ></app-items-list><br>
-          <div id="summary">
+          <div>
             <mat-accordion [multi]="true">
               <mat-expansion-panel hideToggle [expanded]="true">
                 <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <mat-icon>credit_card</mat-icon>
-                    Payment
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    Payment Information
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <form id="survey-form" [formGroup]="paymentForm">
-                  <fieldset>
+                  <mat-panel-title>Payment</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div [formGroup]="paymentForm">
+                    <br>
                     <legend>Payment Information Details</legend>
                     <div class="columns">
                       <div class="item">
@@ -50,8 +44,7 @@
                         <app-material-input [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
                       </div>
                     </div>
-                  </fieldset>
-                </form>
+                  </div>
               </mat-expansion-panel>
             </mat-accordion>
         </div>

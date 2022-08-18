@@ -1,6 +1,8 @@
 <mat-form-field appearance="outline" [style.width.%]="width">
   <mat-label>{{label}}</mat-label>
   <input matInput #input
+    min="0"
+    step="1"
     type="number"
     matInput
     value="1"
