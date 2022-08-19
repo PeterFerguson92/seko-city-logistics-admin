@@ -12,11 +12,7 @@ import { AvailabilityDialogComponent } from '../availability-dialog/availability
   styleUrls: ['./booking-info.component.css', '../../shared/shared-new-form.css']
 })
 export class BookingInfoComponent implements OnInit, AfterViewInit {
-  @Input() pickUpDate;
-  @Input() pickUpTime;
-  @Input() pickUpPostCode;
-  @Input() pickUpAddress;
-  @Input() updatesViaWhatsapp;
+  @Input() bookingInfo
 
   bookingInfoForm: FormGroup;
   times = BOOKING_PICKUP_TIMES
@@ -30,11 +26,13 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.bookingInfoForm = this.formBuilder.group({
-      date: [this.pickUpDate ? new Date(this.pickUpDate) : new Date(), [Validators.required]],
-      time: [this.pickUpTime ? this. pickUpTime :  this.times[0], [Validators.required]],
-      postcode: [this.pickUpPostCode ? this.pickUpPostCode : '', [Validators.required, this.validationService.postCodeValidator]],
-      address: [this.pickUpAddress ? this.pickUpAddress : '', [Validators.required]],
-      updatesViaWhatsapp: [this.updatesViaWhatsapp === null ? this.updatesViaWhatsapp : true, [Validators.required]]
+      date: [this.bookingInfo.pickUpDate ? new Date(this.bookingInfo.pickUpDate) : new Date(), [Validators.required]],
+      time: [this.bookingInfo.pickUpTime ? this.bookingInfo.pickUpTime :  this.times[0], [Validators.required]],
+      postcode: [this.bookingInfo.pickUpPostCode ? this.bookingInfo.pickUpPostCode : '', [Validators.required,
+      this.validationService.postCodeValidator]],
+      address: [this.bookingInfo.pickUpAddress ? this.bookingInfo.pickUpAddress : '', [Validators.required]],
+      updatesViaWhatsapp: [this.bookingInfo.updatesViaWhatsapp, [Validators.required]],
+      updatesViaEmail: [this.bookingInfo.updatesViaEmail, [Validators.required]]
     })
   }
 
@@ -58,7 +56,7 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
 
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
-    const data = fControlName === 'updatesViaWhatsapp' ? event.checked : event.value;
+    const data = fControlName === 'updatesViaWhatsapp' || fControlName === 'updatesViaEmail' ? event.checked : event.value;
     fControl.setValue(data);
     fControl.markAsDirty();
   }
@@ -89,17 +87,16 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
   }
 
   getInfoDetails() {
-    const info: any = { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '' }
-    Object.entries(info).forEach((key) => {
-      const attributeName = key[0];
-      if (attributeName === 'date')
+    const info = {};
+    Object.keys(this.bookingInfoForm.controls).forEach((control: string) => {
+      if (control === 'date')
       {
-        info[attributeName] = this.commonService.getFormattedIsoDate(this.getFormControl(attributeName).value);
+        info[control] = this.commonService.getFormattedIsoDate(this.getFormControl(control).value);
       } else
       {
-        info[attributeName] = this.getFormControl(attributeName).value;
+        info[control] = this.getFormControl(control).value;
       }
-    })
+    });
     return info;
   }
 

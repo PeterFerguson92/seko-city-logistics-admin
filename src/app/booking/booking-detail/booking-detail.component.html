@@ -34,8 +34,7 @@
   <mat-step >
     <form >
       <ng-template matStepLabel>Fill out pick up details</ng-template>
-      <app-booking-info [pickUpDate]="booking.pickUpDate" [pickUpTime]="booking.pickUpTime" [pickUpPostCode]="booking.pickUpPostCode"
-      [pickUpAddress]="booking.pickUpAddress"  [updatesViaWhatsapp]="booking.updatesViaWhatsapp"></app-booking-info>
+      <app-booking-info [bookingInfo]="getBookingInfoData()"></app-booking-info>
       <div align="end">
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="onForward(stepper, 'bookingInfoComponent')"> Next</button>

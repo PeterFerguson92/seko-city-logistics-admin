@@ -32,6 +32,10 @@
             <label for="lname">Updates via whatsapp</label>&nbsp;
             <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
           </div>
+          <div class="item">
+            <label for="lname">Updates via e-mail</label>&nbsp;
+            <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaEmail')" formControlName="updatesViaEmail"></app-material-checkbox>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>

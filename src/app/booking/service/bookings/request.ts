@@ -1,54 +1,57 @@
 import { gql } from 'apollo-angular';
 
+const BOOKING_FRAGMENT = gql`
+      fragment bookingfragment on Booking {
+        id reference senderReference senderFullName senderPhone receiverReferences destination location numberOfItems
+      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
+      updatesViaWhatsapp updatesViaEmail status shipmentReference assignedDriverReference
+    }
+`;
+
 export const GET_ALL_BOOKINGS = gql`
   query bookings($limit: Int!, $cursor: String) {
-    customers(limit:$limit, cursor: $cursor) {
-      id reference senderReference senderPhone receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
-      updatesViaWhatsapp status shipmentReference assignedDriverReference
+    bookings(limit:$limit, cursor: $cursor) {
+      ...bookingfragment
     }
   }
+  ${BOOKING_FRAGMENT}
 `;
 
 export const GET_BOOKING_BY_REFERENCE = gql`
   query bookingByReference($reference: String!) {
     bookingByReference(reference: $reference) {
-      id reference senderReference senderFullName senderPhone receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus amountPaid amountOutstanding paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
-      updatesViaWhatsapp status shipmentReference assignedDriverReference
+     ...bookingfragment
     }
   }
+  ${BOOKING_FRAGMENT}
 `;
 
 // completo
 export const FILTER_BOOKINGS = gql`
   query filterBookings($fields: [UpdateFieldInput!]) {
     filterBookings(fields: $fields) {
-      id reference senderReference senderFullName senderPhone receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
-      updatesViaWhatsapp status shipmentReference assignedDriverReference
+      ...bookingfragment
     }
   }
+  ${BOOKING_FRAGMENT}
 `;
 
 export const CREATE_BOOKING = gql`
   mutation createBooking($input: BookingInput!) {
     createBooking(input: $input) {
-      id reference senderReference senderFullName receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
-      updatesViaWhatsapp status shipmentReference assignedDriverReference
+      ...bookingfragment
     }
   }
+  ${BOOKING_FRAGMENT}
 `;
 
 export const UPDATE_BOOKING = gql`
   mutation updateBooking($reference: String!, $fields: [UpdateFieldInput!]) {
     updateBooking(reference: $reference, fields: $fields) {
-      id reference senderReference senderFullName receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
-      updatesViaWhatsapp status shipmentReference assignedDriverReference
+      ...bookingfragment
     }
   }
+  ${BOOKING_FRAGMENT}
 `;
 
 export const UPDATE_BOOKINGS_BY_REFERENCES = gql`
@@ -108,11 +111,10 @@ export const GET_PREVIOUS_RECEIVERS = gql`
 export const GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE = gql`
   query bookingsByStatusOrShipmentReference($status: String!, $shipmentReference: String!) {
     bookingsByStatusOrShipmentReference(status: $status, shipmentReference:$shipmentReference) {
-      id reference senderReference senderFullName receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
-      updatesViaWhatsapp status shipmentReference assignedDriverReference
+      ...bookingfragment
     }
   }
+  ${BOOKING_FRAGMENT}
 `;
 
 export const GET_BOOKINGS_DESTINATION_REPORT_DATA = gql`

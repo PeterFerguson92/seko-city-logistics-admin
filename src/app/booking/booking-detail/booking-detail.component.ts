@@ -82,6 +82,18 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
+  getBookingInfoData() {
+    return {
+      pickUpDate: this.booking.pickUpDate,
+      pickUpTime: this.booking.pickUpTime,
+      pickUpPostCode: this.booking.pickUpPostCode,
+      paymentNotes: this.booking.paymentNotes,
+      pickUpAddress: this.booking.pickUpAddress,
+      updatesViaWhatsapp: this.booking.updatesViaWhatsapp,
+      updatesViaEmail: this.booking.updatesViaEmail,
+    }
+  }
+
   async onSubmit() {
 
     if (EDIT_BOOKING_MODE === this.mode)
@@ -197,6 +209,8 @@ export class BookingDetailComponent implements OnInit {
       pickUpPostCode: bookingInfo.info.postcode,
       pickUpAddress: bookingInfo.info.address,
       updatesViaWhatsapp: bookingInfo.info.updatesViaWhatsapp,
+      updatesViaEmail: bookingInfo.info.updatesViaEmail,
+
       shipmentReference: '',
       assignedDriverReference: ''
     };
@@ -271,6 +285,7 @@ export class BookingDetailComponent implements OnInit {
       pickUpPostCode: bookingInfo.info.postcode,
       pickUpAddress: bookingInfo.info.address,
       updatesViaWhatsapp: bookingInfo.info.updatesViaWhatsapp,
+      updatesViaEmail: bookingInfo.info.updatesViaEmail,
       status: bookingInfo.status,
       shipmentReference: bookingInfo.shipmentReference,
       assignedDriverReference: bookingInfo.assignedDriverReference
