@@ -43,9 +43,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   countryCodes = COUNTRY_CODES
   alertOptions = { autoClose: true, keepAfterRouteChange: false };
 
-  constructor(private router: Router,
-    private activatedroute: ActivatedRoute, private formBuilder: FormBuilder, private customersService: CustomersService,
-    private commonService: CommonService, private validationService: ValidationService, private alertService: AlertService) { }
+  constructor(private router: Router, private activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
+    private customersService: CustomersService, private commonService: CommonService,
+    private validationService: ValidationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -108,7 +108,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   populateFields() {
     const mainFormControl = this.addEditCustomerForm;
     const phoneGroupFormControl = this.addEditCustomerForm.get('phoneGroup');
-
     mainFormControl.patchValue({
       type: this.customer.type === '' ? this.types[0] : this.customer.type,
       title: this.customer.title,
@@ -121,6 +120,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       postcode: this.customer.postcode,
       country: this.customer.country === '' ? this.countries[0] : this.customer.country
     });
+
+    this.getAddressByPostcode()
 
     phoneGroupFormControl.patchValue({
       countryCode: this.customer.countryCode,
@@ -179,7 +180,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onPostcodeChange() {
-    const postcodeFormControl = this.getFormControl('postcode');
     this.getAddressByPostcode()
   }
 

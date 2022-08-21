@@ -20,10 +20,10 @@
             </app-material-select-input>
           </div>
           <div class="item">
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="deliveryPostCode" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="deliveryPostCode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">
-            <app-material-select-input [label]="'Address'"[width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'deliveryAddress')" formControlName="deliveryAddress"></app-material-select-input>
+            <app-material-select-input [label]="'Address'"[width]="80" [options]="addresses" (selectionChange)="onSelectionChange($event, 'deliveryAddress')" formControlName="deliveryAddress"></app-material-select-input>
           </div>
           <div class="item">
             <label for="lname">Updates via whatsapp</label>&nbsp;

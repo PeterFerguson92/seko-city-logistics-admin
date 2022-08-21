@@ -150,3 +150,4 @@ node_modules
 .firebase
 .firebaserc
 .angular
+.DS_Store

@@ -53,6 +53,8 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       items: this.formBuilder.array([])
     })
 
+    this.getAddressByPostcode()
+
     this.getFormControl('totalAmount').disable();
     this.getFormControl('amountPaid').disable();
     this.getFormControl('amountOutstanding').disable();
@@ -186,6 +188,9 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onPostcodeChange() {
+    this.getAddressByPostcode()
+  }
 
   getItemsFormControl(fControlName: string, index: number) {
     if (this.items.length > 0)
@@ -199,8 +204,17 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     const postcodeFormControl = this.getFormControl('deliveryPostCode');
     if (!postcodeFormControl.invalid)
     {
-      this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
-      return this.addresses;
+      this.commonService.getAddresses(postcodeFormControl.value).subscribe(
+        ({ data }) => {
+          this.addresses = data.addressesInfo.addresses;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else
+    {
+      this.addresses = [];
     }
   }
 

@@ -4,7 +4,7 @@ const ORDER_FRAGMENT = gql`
       fragment orderfragment on Order {
         id reference customerReference customerFullName customerPhone
         totalAmount amountPaid amountOutstanding paymentType paymentStatus paymentNotes
-        deliveryDate deliveryTime deliveryPostCode deliveryAddress displayDeliveryAddress
+        deliveryDate deliveryTime deliveryPostCode deliveryAddress
         updatesViaWhatsapp  updatesViaEmail status archived
       }
 `;
