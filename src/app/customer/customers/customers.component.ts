@@ -39,7 +39,6 @@ export class CustomersComponent implements OnInit {
 
   addCustomer() {
     this.router.navigate(['/add-customer'])
-
   }
 
   editCustomer(reference) {

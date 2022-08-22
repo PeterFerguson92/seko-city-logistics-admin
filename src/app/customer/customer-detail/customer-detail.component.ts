@@ -49,9 +49,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
+      this.setMode();
       this.customer = this.customer && this.customer.reference ? this.customer : data.customer
 
-      // this.setAttributes(); TODO remove function
       this.loadCustomerForm = this.formBuilder.group({ref: ['', []]});
       this.addEditCustomerForm = this.formBuilder.group({
         type: [this.types[0], [Validators.required]],
@@ -74,6 +74,23 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
         this.populateFields()
       }
     })
+  }
+
+  setMode() {
+    if (this.router.url.includes('edit-customer'))
+    {
+      this.mode = EDIT_CUSTOMER_MODE;
+    } else
+    {
+      if (this.router.url.includes('add-customer'))
+      {
+        this.mode = ADD_CUSTOMER_MODE;
+
+      } else
+      {
+        this.mode = ADD_ORDER_CUSTOMER_MODE
+      }
+    }
   }
 
 
@@ -176,6 +193,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onAddEdit() {
+    // console.log(this.mode)
     this.mode === EDIT_CUSTOMER_MODE ? this.editCustomer() : this.addCustomer();
   }
 
