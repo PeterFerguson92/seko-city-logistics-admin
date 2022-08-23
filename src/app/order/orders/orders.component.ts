@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,15 +23,17 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   dataSource = null;
 
   constructor(private router: Router, private activatedroute: ActivatedRoute, private commonService: CommonService,
-    private orderService: OrderService, private dialog: MatDialog) { }
+    private orderService: OrderService, private dialog: MatDialog, private cdRef : ChangeDetectorRef) {
+    }
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.activatedroute.data.subscribe(data => {
       this.dataSource = new MatTableDataSource(data.orders);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.cdRef.detectChanges();
     })
   }
 
