@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -14,7 +14,7 @@ import { ShipmentService } from '../service/shipment.service';
   templateUrl: './shipments.component.html',
   styleUrls: ['./shipments.component.css', '../../shared/shared-table.css']
 })
-export class ShipmentsComponent implements OnInit {
+export class ShipmentsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['ID', 'LOADING DATE', 'CONTAINER NUMBER', 'BL VESSEL', 'STATUS', 'ACTION'];
@@ -24,9 +24,11 @@ export class ShipmentsComponent implements OnInit {
   constructor(private router: Router, private activatedroute: ActivatedRoute, private commonService: CommonService,
   private shipmentService: ShipmentService, private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngAfterViewInit() {
     this.activatedroute.data.subscribe(data => {
-      this.dataSource = new MatTableDataSource(data.shipments);
+      this.dataSource = new MatTableDataSource(data.orders);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     })
