@@ -41,12 +41,12 @@ tr:hover {background-color: #ddd;}
   text-align: center;
   justify-items: center;
   background-color: #004e92!important;
-  color: antiquewhite;
+  color: white;
 }
 
 .action-button {
   background-color: #004e92!important;
-  color: antiquewhite;
+  color: white;
   margin-right: 5px;
 
 }

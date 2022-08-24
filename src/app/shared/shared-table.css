@@ -86,3 +86,8 @@ tr:hover {background-color: #ddd;}
   margin-right: 5px;
 
 }
+
+.mat-paginator {
+  display: flex;
+  justify-content: center;
+}

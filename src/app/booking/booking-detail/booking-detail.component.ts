@@ -79,6 +79,7 @@ export class BookingDetailComponent implements OnInit {
       paymentNotes: this.booking.paymentNotes,
       amountPaid: this.booking.amountPaid,
       amountOutstanding: this.booking.amountOutstanding,
+      totalAmount: this.booking.totalAmount
     }
   }
 

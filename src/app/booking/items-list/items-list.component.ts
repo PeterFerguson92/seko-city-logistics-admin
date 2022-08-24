@@ -12,42 +12,42 @@ import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-dupl
     {
       key: 'isSelected',
       type: 'isSelected',
-      label: 'Selected',
+      label: 'SELECTED',
     },
     {
       key: 'type',
       type: 'select',
-      label: 'Type',
+      label: 'TYPE',
     },
     {
       key: 'description',
       type: 'text',
-      label: 'Description',
+      label: 'DESCRIPTION',
     },
     {
       key: 'value',
       type: 'number',
-      label: 'Value (£)',
+      label: 'VALUE (£)',
     },
     {
       key: 'quantity',
       type: 'number',
-      label: 'Quantity',
+      label: 'QUANTITY',
     },
     {
       key: 'pricePerUnit',
       type: 'number',
-      label: 'Price per unit (£)',
+      label: 'PRICE PER UNIT (£)',
     },
     {
       key: 'amount',
       type: 'number',
-      label: 'Amount (£)',
+      label: 'AMOUNT (£)',
     },
     {
       key: 'isEdit',
       type: 'isEdit',
-      label: 'Actions',
+      label: 'ACTIONS',
     },
   ];
 @Component({
@@ -161,6 +161,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
   }
 
   changeInput(id, key) {
+    console.log(key)
     this.dataSource.data.forEach((element, index) => {
       if (element.id === id)
       {
@@ -168,6 +169,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
         item.amount = this.calculateAmount(item.pricePerUnit, item.quantity);
       }
     });
+  //  this.updateItemsEvent.next(true);
 
   }
 
@@ -232,6 +234,12 @@ export class ItemsListComponent implements OnInit, OnChanges {
       return false;
     }
     return true;
+  }
+
+  onAddButton(element) {
+    element.isEdit = !element.isEdit;
+       this.updateItemsEvent.next(true);
+
   }
 
   assignItem(item) {

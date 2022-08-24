@@ -39,6 +39,7 @@ export class BookingItemsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private itemService:ItemService) {}
 
   ngOnInit(): void {
+    console.log(this.paymentData)
     this.paymentForm = this.formBuilder.group({
       paymentType: [this.paymentData.paymentType ? this.paymentData.paymentType : this.paymentTypes[0] , [Validators.required]],
       paymentStatus: [this.paymentData.paymentStatus ? this.paymentData.paymentStatus : this.paymentStatuses[0], Validators.required],
@@ -47,6 +48,7 @@ export class BookingItemsComponent implements OnInit {
       amountOutstanding: [this.paymentData.amountOutstanding ? this.paymentData.amountOutstanding: 0 , []]
 
     })
+    console.log(this.paymentForm.get('paymentStatus').value)
     this.paymentForm.get('amountOutstanding').disable();
     this.isAmountPaidEnabled();
     this.populateFields()
@@ -61,6 +63,7 @@ export class BookingItemsComponent implements OnInit {
           if (items.length > 0)
           {
             this.itemsObjs = items;
+            this.updateTotalAmount()
           }
         },
         error => {
@@ -72,14 +75,40 @@ export class BookingItemsComponent implements OnInit {
 
 
   onSelectionChange(event: any, fControlName: string) {
-    if (fControlName === 'paymentType' || fControlName === 'paymentStatus')
+    this.paymentForm.get(fControlName).setValue(event.value);
+    if (fControlName === 'paymentStatus')
     {
-      this.paymentForm.get(fControlName).setValue(event.value);
-      const amounts = this.getAmountPaidValueByPaymentStatus(event.value);
-      this.paymentForm.get('amountPaid').setValue(amounts.amountPaid);
-      this.paymentForm.get('amountOutstanding').setValue(amounts.amountOutstanding);
-      this.isAmountPaidEnabled();
+      this.setPaymentProperties(event.value)
+      // const amounts = this.getAmountPaidValueByPaymentStatus(event.value);
+      // this.paymentForm.get('amountPaid').setValue(amounts.amountPaid);
+      // this.paymentForm.get('amountOutstanding').setValue(amounts.amountOutstanding);
+      // this.isAmountPaidEnabled();
     }
+  }
+
+  setPaymentProperties(paymentStatus: string) {
+    const totalAmount = this.getItemsDetails().totalAmount;
+    const totalAmountControl =  this.paymentForm.get('totalAmount');
+    const amountPaidControl =  this.paymentForm.get('amountPaid');
+    const outstandingPaidControl =  this.paymentForm.get('amountOutstanding');
+
+    switch(paymentStatus) {
+      case FULL_PAYMENT_STATUS_ALIAS:
+        amountPaidControl.setValue(totalAmount);
+        outstandingPaidControl.setValue(0);
+        amountPaidControl.disable();
+        break;
+      case PARTIAL_PAYMENT_STATUS_ALIAS:
+        outstandingPaidControl.setValue(outstandingPaidControl.value)
+        amountPaidControl.enable();
+        break;
+      case NO_PAYMENT_PAYMENT_STATUS_ALIAS:
+        amountPaidControl.setValue(0);
+        outstandingPaidControl.setValue(totalAmount);
+        amountPaidControl.disable();
+        break;
+    }
+
   }
 
 
@@ -150,17 +179,38 @@ export class BookingItemsComponent implements OnInit {
   }
 
   updateOutstandingAmount() { // toDO  vedere se questo calcolo si puo fare meglio senza dover chiamare items tutte le volte
-    this.isAmountPaidEnabled()
-    const totalAmount = this.getItemsDetails().totalAmount;
-    let amountPaid = this.paymentForm.get('amountPaid').value;
+    // this.isAmountPaidEnabled()
+    // const totalAmount = this.getItemsDetails().totalAmount;
+    // let amountPaid = this.paymentForm.get('amountPaid').value;
 
-    if (amountPaid >= totalAmount)
+    // if (amountPaid >= totalAmount)
+    // {
+    //   amountPaid = totalAmount;
+    //   this.paymentForm.get('amountPaid').setValue(amountPaid);
+    //   this.paymentForm.get('paymentStatus').setValue(FULL_PAYMENT_STATUS_ALIAS)
+    // }
+    // this.paymentForm.get('amountOutstanding').setValue(totalAmount - amountPaid);
+    const totalAmount = this.getItemsDetails().totalAmount;
+    const amountPaidControl = this.paymentForm.get('amountPaid');
+    const outstandingPaidControl = this.paymentForm.get('amountOutstanding');
+    if (parseInt(amountPaidControl.value, 10) <= 0)
     {
-      amountPaid = totalAmount;
-      this.paymentForm.get('amountPaid').setValue(amountPaid);
-      this.paymentForm.get('paymentStatus').setValue(FULL_PAYMENT_STATUS_ALIAS)
+      amountPaidControl.setValue(0);
+      outstandingPaidControl.setValue(totalAmount);
+      this.paymentForm.get('paymentStatus').setValue(NO_PAYMENT_PAYMENT_STATUS_ALIAS)
+    } else
+    {
+      if (amountPaidControl.value >= totalAmount)
+      {
+        amountPaidControl.setValue(totalAmount);
+        this.paymentForm.get('paymentStatus').setValue(FULL_PAYMENT_STATUS_ALIAS)
+        outstandingPaidControl.setValue(0);
+      } else
+      {
+        this.paymentForm.get('paymentStatus').setValue(PARTIAL_PAYMENT_STATUS_ALIAS)
+        outstandingPaidControl.setValue(totalAmount - amountPaidControl.value);
+      }
     }
-    this.paymentForm.get('amountOutstanding').setValue(totalAmount - amountPaid);
   }
 
 }
