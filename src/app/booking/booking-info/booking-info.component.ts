@@ -31,8 +31,8 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
       postcode: [this.bookingInfo.pickUpPostCode ? this.bookingInfo.pickUpPostCode : '', [Validators.required,
       this.validationService.postCodeValidator]],
       address: [this.bookingInfo.pickUpAddress ? this.bookingInfo.pickUpAddress : '', [Validators.required]],
-      updatesViaWhatsapp: [this.bookingInfo.updatesViaWhatsapp, [Validators.required]],
-      updatesViaEmail: [this.bookingInfo.updatesViaEmail, [Validators.required]]
+      updatesViaWhatsapp: [this.bookingInfo.updatesViaWhatsapp ? this.bookingInfo.updatesViaWhatsapp : true, [Validators.required]],
+      updatesViaEmail: [this.bookingInfo.updatesViaEmail ? this.bookingInfo.updatesViaEmail : true, [Validators.required]]
     })
   }
 

@@ -3,49 +3,125 @@
   <p id="description">Please fill the items details.</p>
   <div class="row">
     <div class="col-75">
-      <div class="container">
-          <app-items-list [items]="itemsObjs" (updateItemsEvent)="updateTotalAmount()" ></app-items-list><br>
-          <div>
-            <mat-accordion [multi]="true">
-              <mat-expansion-panel hideToggle [expanded]="true">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>PAYMENT</mat-panel-title>
+      <div class="container" >
+          <article class="table-header">
+            <button class="action-button button-add-row" mat-button (click)="addRow(null)">Add Item</button>
+            <button class="action-button button-remove-rows" mat-button (click)="removeSelectedRows()" [disabled]="!isMultipleEnabled()">Remove Item</button>
+            <button class="action-button button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">Add Multiple items</button>
+          </article>
+          <table mat-table [dataSource]="dataSource">
+            <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+              <section *ngIf="!isSelectLabel(col.label)">
+                <th mat-header-cell *matHeaderCellDef> {{ col.label }}</th>
+              </section>
+              <section *ngIf="isSelectLabel(col.label)">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="selectAll()" [(ngModel)]="isAllSelected"></mat-checkbox>  Name </th>
+              </section>
+              <td mat-cell *matCellDef="let element" [style.background-color]="color">
+                <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+                  <ng-container *ngSwitchCase="'isSelected'">
+                    <mat-checkbox (change)="element.selected = $event.checked" [(ngModel)]="element.selected"></mat-checkbox>
+                  </ng-container>
+                  <div style="text-align: center;" class="btn-edit" *ngSwitchCase="'isEdit'">
+                    <button [disabled]="!element.id" class="icon-color" mat-icon-button matTooltip="Update item" matTooltipPosition="left">
+                      <mat-icon (click)="assignItem(element)">low_priority</mat-icon>
+                    </button>
+                    <!-- <button mat-button >Edit</button> -->
+                    <button mat-icon-button class="icon-color" (click)="element.isEdit = !element.isEdit" color="primary" matTooltip="Edit item" matTooltipPosition="above">
+                      <mat-icon >edit</mat-icon>
+                    </button>
+                    <button mat-icon-button class="icon-color" matTooltip="Duplicate item" matTooltipPosition="right">
+                      <mat-icon (click)="duplicateRow(element)">ballot</mat-icon>
+                    </button>
+                    <button mat-icon-button class="icon-color" matTooltip="Delete item" matTooltipPosition="right">
+                      <mat-icon (click)="removeRow(element.index)">delete</mat-icon>
+                    </button>
+                    <!-- <button mat-button class="button-remove"(click)="removeRow(element.id)"> Delete </button> -->
+                  </div>
+                  <span *ngSwitchCase="'date'">
+                    {{ element[col.key] | date: 'mediumDate' }}
+                  </span>
+                  <span *ngSwitchDefault>
+                    {{ element[col.key] }}
+                  </span>
+                </div>
+                <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+                  <div *ngSwitchCase="'isSelected'"></div>
+                  <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                    <button mat-button (click)='onConfirmButton(element)'>Confirm</button>
+                  </div>
+                  <mat-form-field class="form-input" width="100" *ngSwitchCase="'select'" appearance="outline">
+                      <mat-select mat-select [(value)]="element.type" matNativeControl (selectionChange)="selectType($event, element.id)">
+                        <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="form-input" *ngSwitchDefault>
+                    <input  matInput [type]="col.type"  [(ngModel)]="element[col.key]" min="0" step="1" (keypress)="numberOnly($event, col.key)"
+                    (change)="changeInput(element.id)" />
+                  </mat-form-field>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngStyle]="{'background-color': chooseColor(row),'min-height':'81px'}" ></tr>
+
+          </table>
+          <br>
+          <div *ngIf="showWarning()" class="alert warning">
+            <strong>Warning!</strong> Some items contain invalid values.
+          </div>
+          <div [formGroup]="paymentForm">
+            <div>
+              <mat-accordion [multi]="true">
+                <mat-expansion-panel hideToggle [expanded]="true">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title> PAYMENT INFORMATION </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <div [formGroup]="paymentForm">
                     <br>
+                    <div id="parent">
+                      <div class="child">
+                        <app-material-numeric-input
+                          [label]="'Number of items'" [width]="60" formControlName="numberOfItems">
+                        </app-material-numeric-input >
+                      </div>
+                      <div class="child">
+                        <app-material-numeric-input
+                          [label]="'Total Amount(£)'" [width]="60" formControlName="totalAmount">
+                        </app-material-numeric-input >
+                      </div>
+                      <div class="child">
+                        <app-material-numeric-input
+                          [label]="'Paid (£)'" [width]="60" formControlName="amountPaid" (change)="updateOutstandingAmount()" >
+                        </app-material-numeric-input >
+                      </div>
+                      <div class="child">
+                        <app-material-numeric-input
+                          [label]="'Outstanding (£)'" [width]="60" formControlName="amountOutstanding">
+                        </app-material-numeric-input >
+                      </div>
+                    </div>
                     <div class="columns">
                       <div class="item">
-                        <label for="lname">Type</label><br>
-                        <app-material-select-input [width]="60" [options]="paymentTypes" formControlName="paymentType"
+                        <app-material-select-input [label]="'Type'" [width]="40" [options]="paymentTypes" formControlName="paymentType"
                           (selectionChange)="onSelectionChange($event, 'paymentType')" [value]="paymentTypes[0]">
                         </app-material-select-input>
                       </div>
                       <div class="item">
-                        <label for="lname">Status</label><br>
-                        <app-material-select-input [width]="60" [options]="paymentStatuses" formControlName="paymentStatus"
+                        <app-material-select-input [label]="'Status'" [width]="40" [options]="paymentStatuses" formControlName="paymentStatus"
                           (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
                         </app-material-select-input>
                       </div>
                       <div class="item">
-                        <label for="lname">Amount Paid (£)</label><br>
-                        <app-material-numeric-input
-                          [width]="10" formControlName="amountPaid" (change)="updateOutstandingAmount()" >
-                        </app-material-numeric-input >
-                      </div>
-                      <div class="item">
-                        <label for="lname">Amount Outstanding (£) </label><br>
-                        <app-material-numeric-input
-                          [width]="10" formControlName="amountOutstanding">
-                        </app-material-numeric-input >
-                      </div>
-                      <div class="item">
-                        <label for="lname">Notes</label><br>
-                        <app-material-input [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
+                        <app-material-input [label]="'Notes'" [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
                       </div>
                     </div>
-                  </div>
-              </mat-expansion-panel>
-            </mat-accordion>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+          <br>
+          <div>
         </div>
       </div>
     </div>

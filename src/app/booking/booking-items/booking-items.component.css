@@ -1,23 +1,96 @@
-form {
-  width: 155%;
-/* background: gray; */
-margin: 0 auto;
+table  {
+  width: 100%;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-align: center !important;
+  margin-left: auto;
+  margin-right: auto;
 }
-button{
-  /*Change the width as much as you like, but make sure
-  margin-left and margin-right + width = 100%*/
-  width:50%;
-  margin-left:25%;
-  margin-right:25%;
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
 }
+.mat-header-cell {
+  text-align: center !important;
+}
+
+mat-paginator {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td.mat-cell, th.mat-header-cell {
+  text-align: center;
+  justify-content:center;
+}
+
+ th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  justify-items: center;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+
+ th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  justify-items: center;
+  background-color: #004e92!important;
+  color: antiquewhite;
+}
+
+.action-button {
+  background-color: #004e92!important;
+  color: antiquewhite;
+  margin-right: 5px;
+
+}
+
+
+.btn-edit {
+  text-align: right;
+}
+h2 {
+  text-align: center;
+  padding-top: 20px;
+}
+.table-header {
+  width: 90%;
+  margin: auto;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+
 
 
 .mat-expansion-panel-header-title {
   font-weight: bold;
 }
 
-.divider{
-  width:20px;
-  height:auto;
-  display:inline-block;
+.custom-icon-color {
+  color: rgb(246, 150, 6);
 }
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+
+.alert.success {background-color: #04AA6D;}
+.alert.info {background-color: #2196F3;}
+.alert.warning {background-color: #ff9800;}
+
+.icon-color {
+  color: #6D8299;
+}
+

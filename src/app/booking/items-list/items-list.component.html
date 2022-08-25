@@ -9,9 +9,8 @@
       <th mat-header-cell *matHeaderCellDef> {{ col.label }}</th>
     </section>
     <section *ngIf="isSelectLabel(col.label)">
-      <th mat-header-cell *matHeaderCellDef><mat-checkbox
-        (change)="selectAll()">
-      </mat-checkbox> NAME </th>
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="selectAll()" [(ngModel)]="isAllSelected"></mat-checkbox> NAME </th>
     </section>
     <td mat-cell *matCellDef="let element" [style.background-color]="color">
       <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
@@ -44,7 +43,7 @@
       <div [ngSwitch]="col.type" *ngIf="element.isEdit">
         <div *ngSwitchCase="'isSelected'"></div>
         <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="onAddButton(element)">Confirm</button>
+          <button mat-button (click)="onConfirmButton(element)">Confirm</button>
         </div>
         <mat-form-field class="form-input" width="100" *ngSwitchCase="'select'" appearance="outline">
             <mat-select mat-select [(value)]="element.type" matNativeControl (selectionChange)="selectType($event, element.id)">

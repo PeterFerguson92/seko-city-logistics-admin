@@ -236,7 +236,7 @@ export class ItemsListComponent implements OnInit, OnChanges {
     return true;
   }
 
-  onAddButton(element) {
+  onConfirmButton(element) {
     element.isEdit = !element.isEdit;
        this.updateItemsEvent.next(true);
 
@@ -288,5 +288,9 @@ export class ItemsListComponent implements OnInit, OnChanges {
       this.isAllSelected = !this.isAllSelected
       this.dataSource = new MatTableDataSource(this.dataSource.data.map((obj) => ({ ...obj, selected: this.isAllSelected })));
     }
+  }
+
+  allEnabled() {
+    this.dataSource.data.every(obj => obj.selected === true)
   }
 }

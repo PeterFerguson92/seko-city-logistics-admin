@@ -3,7 +3,7 @@ import { gql } from 'apollo-angular';
 const BOOKING_FRAGMENT = gql`
       fragment bookingfragment on Booking {
         id reference senderReference senderFullName senderPhone receiverReferences destination location numberOfItems
-      totalAmount paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
+      totalAmount amountPaid amountOutstanding paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress
       updatesViaWhatsapp updatesViaEmail status shipmentReference assignedDriverReference
     }
 `;
