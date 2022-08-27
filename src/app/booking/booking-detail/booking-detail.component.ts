@@ -266,7 +266,7 @@ export class BookingDetailComponent implements OnInit {
   // todo merge builders
   buildBookingInput(bookingInfo) {
     return {
-      id: null,
+      id: bookingInfo.id,
       reference: bookingInfo.reference ? bookingInfo.reference : '',
       senderId: this.booking.customer.id,
       senderReference: this.booking.senderReference,

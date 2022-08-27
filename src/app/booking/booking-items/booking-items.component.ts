@@ -145,7 +145,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   addMultipleRow() {
-    const items = this.dataSource.data.filter((u: any) => u.isSelected);
+    const items = this.dataSource.data.filter((u: any) => u.selected);
 
     this.dialog.open(ItemDuplicateDialogComponent, {
       data: { }

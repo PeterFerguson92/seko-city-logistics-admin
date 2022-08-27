@@ -23,7 +23,6 @@ export class ItemDuplicateDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(94949449494949)
     const value = +this.itemsDuplicateForm.get('quantity').value
     if (value > 1)
     {

@@ -22,11 +22,11 @@
           </div>
           <div class="item">
             <label for="lname">Postcode</label><br>
-            <app-material-input [icon]="'person_pin'"[width]="45" formControlName="postcode" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [icon]="'person_pin'"[width]="45" formControlName="postcode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">
             <label for="lname">Address</label><br>
-            <app-material-select-input [width]="60" [options]="getAddressByPostcode()" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
+            <app-material-select-input [options]="addresses" [width]="80" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
           </div>
           <div class="item">
             <label for="lname">Updates via whatsapp</label>&nbsp;

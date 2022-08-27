@@ -1,14 +1,7 @@
 <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
   <mat-expansion-panel-header>
-    <mat-panel-title>
-      <mat-icon>perm_contact_calendar</mat-icon> History
-    </mat-panel-title>
-    <mat-panel-description>
-      Receivers Information
-    </mat-panel-description>
+    <mat-panel-title>Receivers Information</mat-panel-title>
   </mat-expansion-panel-header><br/>
-  <fieldset>
-    <legend>Receivers Information Details</legend>
     <span class="example-list-section">
       <ul>
         <li *ngFor="let recv of receivers">
@@ -20,7 +13,6 @@
         </li>
       </ul>
     </span>
-  </fieldset>
   <div class="btn-block" align="end">
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>

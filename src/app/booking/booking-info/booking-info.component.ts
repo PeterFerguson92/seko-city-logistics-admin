@@ -54,6 +54,10 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
     fControl.markAsDirty();
   }
 
+  onPostcodeChange() {
+    this.getAddressByPostcode()
+  }
+
   onSelectionChange(event: any, fControlName: string) {
     const fControl = this.getFormControl(fControlName);
     const data = fControlName === 'updatesViaWhatsapp' || fControlName === 'updatesViaEmail' ? event.checked : event.value;
@@ -73,14 +77,33 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
     return this.bookingInfoForm.get(fControlName)
   }
 
+  // getAddressByPostcode() {
+  //   const postcodeFormControl = this.getFormControl('postcode');
+  //   if (!postcodeFormControl.invalid)
+  //   {
+  //     this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
+  //     return this.addresses;
+  //   }
+  // }
+
   getAddressByPostcode() {
     const postcodeFormControl = this.getFormControl('postcode');
     if (!postcodeFormControl.invalid)
     {
-      this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
-      return this.addresses;
+      this.commonService.getAddresses(postcodeFormControl.value).subscribe(
+        ({ data }) => {
+          this.addresses = data.addressesInfo.addresses;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else
+    {
+      this.addresses = [];
     }
   }
+
 
   isDisabled() {
     return !this.bookingInfoForm.valid;
