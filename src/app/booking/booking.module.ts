@@ -34,6 +34,6 @@ import { BookingAssignDriverDialogComponent } from './booking-assign-driver-dial
     BookingInvoiceComponent,
     BookingAssignDriverDialogComponent],
   imports: [CommonModule, SharedModule, CustomerModule],
-  exports: [ItemsListComponent]
+  exports: [ItemsListComponent, BookingsTableComponent]
 })
 export class BookingModule { }

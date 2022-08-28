@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ALL_BOOKING_STATUSES, ALL_PAYMENT_STATUSES,  } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
@@ -17,7 +16,6 @@ export class BookingsComponent implements OnInit {
   paymentStatuses = ALL_PAYMENT_STATUSES
   bookings = null;
   includeArchive = false
-
 
   constructor(private formBuilder: FormBuilder, private bookingsService: BookingsService,
     private validationService: ValidationService,
