@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { CURSOR, LIMIT } from 'src/app/constants';
-import { CREATE_TASK, DELETE_TASK, GET_ALL_TASKS, UPDATE_TASK } from './requests';
+import { CREATE_TASK, DELETE_TASK, GET_ACTIVE_TASKS, GET_ALL_TASKS, GET_APPROACHING_TASKS, UPDATE_TASK } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,18 @@ export class TaskService {
       variables: {
         limit: LIMIT, cursor: CURSOR,
       }
+    });
+  }
+
+  getActiveTasks() {
+    return this.apollo.query<any>({
+      query: GET_ACTIVE_TASKS,
+    });
+  }
+
+  getApproachingTasks() {
+    return this.apollo.query<any>({
+      query: GET_APPROACHING_TASKS,
     });
   }
 

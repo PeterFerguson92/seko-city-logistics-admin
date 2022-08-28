@@ -1,60 +1,79 @@
-<div class="menu-btn">
-  <i class="fas fa-bars fa-2x"></i>
+<div class="mainContent">
+  <!-- My Box Content -->
+  <div class="boxContent">
+
+    <br>
+      <div class="firstRow">
+          <div class="cardOne">
+              <div class="description">
+                  <p>Total invoices</p>
+                  <h3>98765</h3>
+              </div>
+          </div>
+          <div class="cardTwo">
+              <div class="description">
+                  <p>Total invoices</p>
+                  <h3>98765</h3>
+              </div>
+          </div>
+          <div class="cardThree">
+              <div class="description">
+                  <p>Total invoices</p>
+                  <h3>98765</h3>
+              </div>
+          </div>
+          <div class="cardFour">
+              <div class="description">
+                  <p>Total invoices</p>
+                  <h3>98765</h3>
+              </div>
+          </div>
+      </div>
+      <div class="secondRow">
+          <div class="cardChart">
+            <div class="heading">
+              TO DO / IN PROGRESS
+            </div>
+            <ul  *ngFor="let task of activeTasks">
+              <li>
+                <span><b>{{task.title}}</b></span><br>
+                <span>Due date: {{getFormattedDate(task.actionDate)}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="cardChart">
+            <div class="heading">
+              APPROACHING
+            </div>
+            <ul  *ngFor="let task of approachingTasks">
+              <li>
+                <span><b>{{task.title}}</b></span><br>
+                <span>Due date: {{getFormattedDate(task.actionDate)}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="cardChart">
+            <ngx-charts-bar-vertical
+            [view]="[1000,400]"
+            [results]="itemQuantityReportData"
+            [xAxisLabel]="'Items'"
+            [legendTitle]="'Items quantity chart'"
+            [yAxisLabel]="'Quantity'"
+            [legend]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [gradient]="true">
+          </ngx-charts-bar-vertical>
+          <div align="center">
+            <br>
+            <app-material-button [label]="'See More'" [width]="30" (click)="onSeeMoreReport()"></app-material-button>
+          </div>
+          </div>
+      </div>
+      <div class="thirdRow">
+        <app-bookings-table [bookings]="bookings" [includeArchived]="includeArchive"></app-bookings-table>
+      </div>
+  </div>
 </div>
-
-<div class="container">
-  <nav class="main-nav">
-    <img src="assets/login/logo.png" alt="" class="logo">
-
-    <ul class="right-menu">
-      <li>
-        <a href="#">
-          <i class="fas fa-search"></i>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <i class="fas fa-shopping-cart"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <header class="showcase"></header>
-
-  <section class="home-cards">
-    <div>
-      <img src="assets/shipment.jpg" alt="">
-      <h3>Shipments</h3>
-      <p>
-        All shipments details, history and cost analysis in one place.
-      </p>
-      <a href="/shipments">Manage <i class="fas fa-chevron-right"></i></a>
-    </div>
-    <div>
-      <img src="assets/driver.jpeg" alt="">
-      <h3>Bookings</h3>
-      <p>
-        Create, edit, delete and assign to driver bookings and their items
-      </p>
-      <a href="/bookings">Manage<i class="fas fa-chevron-right"></i></a>
-    </div>
-    <div>
-      <img src="assets/customer.jpeg" alt="">
-      <h3>Customers</h3>
-      <p>
-        Register new customers, create booking or edit exist customers
-      </p>
-      <a href="/customers">Manage <i class="fas fa-chevron-right"></i></a>
-    </div>
-    <div>
-      <img src="assets/driver.jpeg" alt="">
-      <h3>Drivers</h3>
-      <p>
-       Manage bookings assigned to drivers and their itinerary
-      </p>
-      <a href="/drivers">Manage <i class="fas fa-chevron-right"></i></a>
-    </div>
-  </section>
-
-

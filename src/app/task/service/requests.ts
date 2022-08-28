@@ -15,6 +15,24 @@ export const GET_ALL_TASKS = gql`
   ${TASK_FRAGMENT}
 `;
 
+export const GET_ACTIVE_TASKS = gql`
+  query {
+    activeTasks {
+      ...taskfragment
+    }
+  }
+  ${TASK_FRAGMENT}
+`;
+
+export const GET_APPROACHING_TASKS = gql`
+  query {
+    approachingTasks {
+      ...taskfragment
+    }
+  }
+  ${TASK_FRAGMENT}
+`;
+
 export const CREATE_TASK = gql`
   mutation createTask($task: TaskInput!) {
     createTask(task: $task) {

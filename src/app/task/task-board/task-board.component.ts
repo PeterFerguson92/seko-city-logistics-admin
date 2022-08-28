@@ -101,7 +101,7 @@ export class TaskBoardComponent implements OnInit {
 
   onAddTask() {
     const dialogRef = this.dialog.open(AddEditTaskDialogComponent, {
-      height: '70%',
+      height: '65%',
       width: '50%',
       data: {  }
     });
