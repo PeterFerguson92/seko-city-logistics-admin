@@ -81,3 +81,17 @@
 .center {
   width: 50%!important;
 }
+
+.heading {
+  text-align: center;
+  padding: 15px 0 5px 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  font-size: large;
+  /* font-family: "Gugi", cursive; */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-transform: uppercase;
+  cursor: grab;
+  background-color: var(--main-color);
+}
