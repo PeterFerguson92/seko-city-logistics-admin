@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BookingsService } from '../booking/service/bookings/bookings.service';
 import { ItemService } from '../items/item.service';
 import { jsPDF } from 'jspdf';
 import domtoimage from 'dom-to-image';
+import { OrderService } from '../order/service/order.service';
+import { takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent implements OnInit, OnDestroy {
 
   bookingReportData;
   itemTypeOccurrenceReportData;
   itemQuantityReportData;
   itemAmountReportData;
+  yearOrderAmountReportData;
+  yearBookingsAmountReportData;
   saleData = [
     { name: 'Mobiles', value: 105000 },
     { name: 'Laptop', value: 55000 },
@@ -22,26 +27,26 @@ export class ReportsComponent implements OnInit {
     { name: 'Headset', value: 150000 },
     { name: 'Fridge', value: 20000 }
   ];
-  constructor(private bookingService: BookingsService, private itemService: ItemService) { }
+  componentDestroyed$: Subject<boolean> = new Subject();
+
+  constructor(private bookingService: BookingsService, private itemService: ItemService,
+    private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.getBookingDestinationReportData();
     this.getItemsReportData();
+    this.getOrdersReport();
+    this.getBookingsReport()
 
   }
 
   getItemsReportData() {
     this.itemService.getItemsReport().subscribe(
       ({ data }) => {
-        // console.log(data.itemsDestinationReport)
         const result = this.buildItemData(data.itemsDestinationReport)
         this.itemTypeOccurrenceReportData = result.typeData
         this.itemQuantityReportData = result.quantityData
         this.itemAmountReportData = result.amountData
-
-     //   console.log( this.bookingReportData)
-
-      //  this.bookingReportData = this.buildBookingDestinationData(data.bookingsDestinationReport)
       },
       error => {
         console.log(error);
@@ -82,6 +87,44 @@ export class ReportsComponent implements OnInit {
     return { typeData, quantityData, amountData };
   }
 
+  getBookingsReport() {
+    const currentMonthId = new Date().getMonth() + 1;
+    this.bookingService.getBookingsReport()
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(
+      ({ data }) => {
+        console.log(data)
+        this.yearBookingsAmountReportData = this.buildActivityReportData(data.bookingsReport.monthly).yearAmountReportData;
+
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  getOrdersReport() {
+    this.orderService.getOrdersReport()
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(
+      ({ data }) => {
+        this.yearOrderAmountReportData = this.buildActivityReportData(data.ordersReport.monthly).yearAmountReportData;
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  buildActivityReportData(reportData) {
+    const yearAmountReportData = []
+    console.log(reportData)
+    reportData.forEach((entry) => {
+      yearAmountReportData.push({ name: entry.monthName, value: entry.totalAmount })
+    });
+    return { yearAmountReportData };
+  }
+
   exportAsPDF() {
     const summary = document.getElementById('summary');
     const height = summary.clientHeight;
@@ -97,5 +140,10 @@ export class ReportsComponent implements OnInit {
       doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       doc.save('report_'+ new Date() + '.pdf');
     })
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 }

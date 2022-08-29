@@ -37,6 +37,46 @@
   <mat-expansion-panel  [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
+        The bar chart shows the orders during the year
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ngx-charts-bar-vertical
+      [view]="[1000,400]"
+      [results]="yearOrderAmountReportData"
+      [xAxisLabel]="'Month'"
+      [legendTitle]="'Items quantity chart'"
+      [yAxisLabel]="'Amount'"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [gradient]="true">
+    </ngx-charts-bar-vertical>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        The bar chart shows the booking during the year
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ngx-charts-bar-vertical
+      [view]="[1000,400]"
+      [results]="yearBookingsAmountReportData"
+      [xAxisLabel]="'Month'"
+      [legendTitle]="'Items quantity chart'"
+      [yAxisLabel]="'Amount'"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [gradient]="true">
+    </ngx-charts-bar-vertical>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
         Revenue percentage from different item types (All totals are expressed in £)
       </mat-panel-title>
     </mat-expansion-panel-header>

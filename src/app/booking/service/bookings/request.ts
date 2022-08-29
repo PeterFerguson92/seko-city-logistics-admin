@@ -126,6 +126,6 @@ export const GET_BOOKINGS_DESTINATION_REPORT_DATA = gql`
 export const GET_BOOKINGS_REPORT_DATA = gql`
   query {
     bookingsReport{ totalAmount  total
-      monthly {monthId total, totalAmount}}
+      monthly {monthId monthName total totalAmount}}
   }
 `;
