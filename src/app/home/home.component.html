@@ -3,27 +3,35 @@
       <div class="firstRow">
           <div class="cardOne">
               <div class="description">
-                  <p>Total invoices</p>
-                  <h3>98765</h3>
+                  <p>Total bookings</p>
+                  <h3>{{totalBookings}}</h3>
+                  <p>Total amount</p>
+                  <h3>£{{totalBookingsAmount}}</h3>
               </div>
           </div>
           <div class="cardTwo">
-              <div class="description">
-                  <p>Total invoices</p>
-                  <h3>98765</h3>
-              </div>
+            <div class="description">
+              <p>Current Month bookings</p>
+              <h3>{{currentMonthTotalBookings}}</h3>
+              <p>Current Month Total amount</p>
+              <h3>£{{currentMonthTotalBookingsAmount}}</h3>
+            </div>
           </div>
           <div class="cardThree">
-              <div class="description">
-                  <p>Total invoices</p>
-                  <h3>98765</h3>
-              </div>
+            <div class="description">
+              <p>Total orders</p>
+              <h3>{{totalOrders}}</h3>
+              <p>Total amount</p>
+              <h3>£{{totalOrdersAmount}}</h3>
+            </div>
           </div>
           <div class="cardFour">
-              <div class="description">
-                  <p>Total invoices</p>
-                  <h3>98765</h3>
-              </div>
+            <div class="description">
+              <p>Current Month orders</p>
+              <h3>{{currentMonthTotalOrders}}</h3>
+              <p>Current Month Total amount</p>
+              <h3>£{{currentMonthTotalOrdersAmount}}</h3>
+            </div>
           </div>
       </div>
       <div class="secondRow">
@@ -59,9 +67,9 @@
               [yAxis]="true"
               [gradient]="true">
             </ngx-charts-bar-vertical>
-            <div align="center">
+            <!-- <div align="center">
               <app-material-button [label]="'See More'" [width]="30" (click)="onSeeMoreReport()"></app-material-button>
-            </div>
+            </div> -->
           </div>
       </div>
       <div class="thirdRow">

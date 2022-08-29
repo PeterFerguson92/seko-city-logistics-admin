@@ -122,3 +122,10 @@ export const GET_BOOKINGS_DESTINATION_REPORT_DATA = gql`
   bookingsDestinationReport{ destination occurrence}
   }
 `;
+
+export const GET_BOOKINGS_REPORT_DATA = gql`
+  query {
+    bookingsReport{ totalAmount  total
+      monthly {monthId total, totalAmount}}
+  }
+`;

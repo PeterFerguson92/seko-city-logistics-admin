@@ -6,6 +6,7 @@ import { ItemService } from '../items/item.service';
 import { TaskService } from '../task/service/task.service';
 import { takeUntil } from 'rxjs/operators'
 import { CommonService } from '../service/common.service';
+import { OrderService } from '../order/service/order.service';
 
 @Component({
   selector: 'app-home',
@@ -13,21 +14,32 @@ import { CommonService } from '../service/common.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  bookingReportData;
-  itemTypeOccurrenceReportData;
-  itemQuantityReportData;
-  itemAmountReportData;
   activeTasks;
   approachingTasks;
-  componentDestroyed$: Subject<boolean> = new Subject();
   bookings;
+  bookingReportData;
+  itemAmountReportData;
+  itemQuantityReportData;
   includeArchive = true;
+  itemTypeOccurrenceReportData;
+  totalBookings;
+  totalBookingsAmount;
+  currentMonthTotalBookings;
+  currentMonthTotalBookingsAmount;
 
+  totalOrders;
+  totalOrdersAmount;
+  currentMonthTotalOrders;
+  currentMonthTotalOrdersAmount;
+
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(private router: Router, private bookingService: BookingsService, private itemService: ItemService,
-  private taskService: TaskService, private commonService: CommonService) { }
+  private taskService: TaskService, private commonService: CommonService, private orderService: OrderService) { }
 
   ngOnInit(): void {
+    this.getBookingsReport();
+    this.getOrdersReport();
     this.getItemsReportData();
     this.getActiveTasks();
     this.getApproachingTasks();
@@ -48,7 +60,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     )
   }
 
-
   buildItemData(destinationReportData) {
     const typeData = [];
     const quantityData = [];
@@ -58,16 +69,50 @@ export class HomeComponent implements OnInit, OnDestroy {
       quantityData.push({ name: entry.type, value: entry.quantity })
       amountData.push({name: entry.type, value: entry.amount})
     });
-
     return { typeData, quantityData, amountData };
   }
 
-  navigate(url) {
-    this.router.navigateByUrl(url)
+  getBookingsReport() {
+    const currentMonthId = new Date().getMonth() + 1;
+    this.bookingService.getBookingsReport()
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(
+      ({ data }) => {
+        console.log(data)
+        this.totalBookings = data.bookingsReport.total;
+        this.totalBookingsAmount = data.bookingsReport.totalAmount;
+        const current = data.bookingsReport.monthly.find(x => x.monthId === currentMonthId);
+        this.currentMonthTotalBookings = current.total;
+        this.currentMonthTotalBookingsAmount = current.totalAmount;
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  getOrdersReport() {
+    const currentMonthId = new Date().getMonth() + 1;
+    this.orderService.getOrdersReport()
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(
+      ({ data }) => {
+        this.totalOrders = data.ordersReport.total;
+        this.totalOrdersAmount = data.ordersReport.totalAmount;
+        const current = data.ordersReport.monthly.find(x => x.monthId === currentMonthId);
+        this.currentMonthTotalOrders = current.total;
+        this.currentMonthTotalOrdersAmount = current.totalAmount;
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   getActiveTasks() {
-    this.taskService.getActiveTasks().subscribe(
+    this.taskService.getActiveTasks()
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe(
       ({ data }) => {
         this.activeTasks = data.activeTasks
       },
@@ -98,7 +143,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       ({ data }) => {
         // tslint:disable-next-line:no-string-literal
         this.bookings = data['filterBookings'];
-        console.log(this.bookings)
       },
       error => {
         console.log(error);
@@ -110,9 +154,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.commonService.getFormattedDate(date);
   }
 
-  onSeeMoreReport() {
-
+  navigate(url) {
+    this.router.navigateByUrl(url)
   }
+
+  onSeeMoreReport() {}
 
   ngOnDestroy() {
     this.componentDestroyed$.next(true)
