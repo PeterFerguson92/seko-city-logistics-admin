@@ -29,11 +29,6 @@ nav .user
 
 /* CSS of Box Content */
 
-.boxContent
-{
-    /* padding: 70px 30px; */
-}
-
 /* CSS of First Row */
 
 .firstRow, .secondRow
@@ -127,4 +122,11 @@ nav .user
   text-transform: uppercase;
   cursor: grab;
   background-color: var(--main-color);
+}
+
+
+.ScrollStyle
+{
+    max-height: 100%;
+    overflow-y: scroll;
 }

@@ -88,7 +88,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   getBookingsReport() {
-    const currentMonthId = new Date().getMonth() + 1;
     this.bookingService.getBookingsReport()
     .pipe(takeUntil(this.componentDestroyed$))
     .subscribe(
@@ -118,7 +117,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
 
   buildActivityReportData(reportData) {
     const yearAmountReportData = []
-    console.log(reportData)
     reportData.forEach((entry) => {
       yearAmountReportData.push({ name: entry.monthName, value: entry.totalAmount })
     });

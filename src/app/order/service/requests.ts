@@ -59,7 +59,7 @@ export const DELETE_ORDER = gql`
 
 export const GET_ORDERS_REPORT_DATA = gql`
   query {
-    ordersReport{ totalAmount total
+    ordersReport { totalAmount total
       monthly {monthId monthName total totalAmount}
       }
   }

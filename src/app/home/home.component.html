@@ -35,7 +35,7 @@
           </div>
       </div>
       <div class="secondRow">
-        <div class="cardChart">
+        <div class="cardChart ScrollStyle">
           <div class="heading">TO DO / IN PROGRESS</div>
           <ul  *ngFor="let task of activeTasks">
             <li>
@@ -44,7 +44,7 @@
             </li>
           </ul>
         </div>
-        <div class="cardChart">
+        <div class="cardChart ScrollStyle">
           <div class="heading">APPROACHING</div>
           <ul *ngFor="let task of approachingTasks">
             <li>
@@ -55,18 +55,17 @@
         </div>
           <div class="cardChart">
             <ngx-charts-bar-vertical
-              [view]="[800,400]"
-              [results]="itemQuantityReportData"
-              [xAxisLabel]="'Items'"
-              [legendTitle]="'Items quantity chart'"
-              [yAxisLabel]="'Quantity'"
-              [legend]="true"
-              [showXAxisLabel]="true"
-              [showYAxisLabel]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [gradient]="true">
-            </ngx-charts-bar-vertical>
+      [view]="[800,400]"
+      [results]="yearBookingsAmountReportData"
+      [xAxisLabel]="'Month'"
+      [legendTitle]="'Items quantity chart'"
+      [yAxisLabel]="'Amount'"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [gradient]="true">
+    </ngx-charts-bar-vertical>
             <!-- <div align="center">
               <app-material-button [label]="'See More'" [width]="30" (click)="onSeeMoreReport()"></app-material-button>
             </div> -->

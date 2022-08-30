@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   totalBookingsAmount;
   currentMonthTotalBookings;
   currentMonthTotalBookingsAmount;
+  yearBookingsAmountReportData
 
   totalOrders;
   totalOrdersAmount;
@@ -41,10 +42,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getBookingsReport();
     this.getOrdersReport();
     this.getItemsReportData();
-    this.getActiveTasks();
-    this.getApproachingTasks();
     this.getTodayBookings();
-  }
+    this.getDisplayTasks()
+    }
 
   getItemsReportData() {
     this.itemService.getItemsReport().subscribe(
@@ -78,12 +78,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.componentDestroyed$))
     .subscribe(
       ({ data }) => {
-        console.log(data)
         this.totalBookings = data.bookingsReport.total;
         this.totalBookingsAmount = data.bookingsReport.totalAmount;
         const current = data.bookingsReport.monthly.find(x => x.monthId === currentMonthId);
         this.currentMonthTotalBookings = current.total;
         this.currentMonthTotalBookingsAmount = current.totalAmount;
+        this.yearBookingsAmountReportData = this.buildActivityReportData(data.bookingsReport.monthly).yearAmountReportData;
       },
       error => {
         console.log(error);
@@ -109,25 +109,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     )
   }
 
-  getActiveTasks() {
-    this.taskService.getActiveTasks()
-    .pipe(takeUntil(this.componentDestroyed$))
-    .subscribe(
-      ({ data }) => {
-        this.activeTasks = data.activeTasks
-      },
-      error => {
-        console.log(error);
-      }
-    )
+  buildActivityReportData(reportData) {
+    const yearAmountReportData = []
+    reportData.forEach((entry) => {
+      yearAmountReportData.push({ name: entry.monthName, value: entry.totalAmount })
+    });
+    return { yearAmountReportData };
   }
 
-  getApproachingTasks() {
-    this.taskService.getApproachingTasks()
+  getDisplayTasks() {
+    this.taskService.getDisplayTasks()
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(
-      ({ data }) => {
-        this.approachingTasks = data.approachingTasks
+        ({ data }) => {
+          this.activeTasks = data.displayTask.active;
+          this.approachingTasks = data.displayTask.approaching;
       },
       error => {
         console.log(error);

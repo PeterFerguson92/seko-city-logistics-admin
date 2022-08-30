@@ -15,19 +15,11 @@ export const GET_ALL_TASKS = gql`
   ${TASK_FRAGMENT}
 `;
 
-export const GET_ACTIVE_TASKS = gql`
+export const GET_DISPLAY_TASKS = gql`
   query {
-    activeTasks {
-      ...taskfragment
-    }
-  }
-  ${TASK_FRAGMENT}
-`;
-
-export const GET_APPROACHING_TASKS = gql`
-  query {
-    approachingTasks {
-      ...taskfragment
+    displayTask {
+      active {...taskfragment }
+      approaching {...taskfragment }
     }
   }
   ${TASK_FRAGMENT}
