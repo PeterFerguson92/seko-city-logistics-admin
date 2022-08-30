@@ -6,7 +6,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 @Component({
   selector: 'app-previous-recv-dialog',
   templateUrl: './previous-recv-dialog.component.html',
-  styleUrls: ['./previous-recv-dialog.component.css', './../../shared/shared-new-form.css']
+  styleUrls: ['./previous-recv-dialog.component.css', './../../shared/shared-new-form.css', '../../shared/shared.dialog.css']
 })
 export class PreviousRecvDialogComponent implements OnInit {
 

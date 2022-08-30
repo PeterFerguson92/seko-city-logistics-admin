@@ -68,7 +68,7 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
   onCheckAvailabilty() {
     this.dialog.open(AvailabilityDialogComponent, {
       height: '50%',
-      width: '50%',
+      width: '60%',
       data: { date: this.commonService.getFormattedIsoDate(this.getFormControl('date').value) }
     });
   }
@@ -76,15 +76,6 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
   getFormControl(fControlName: string) {
     return this.bookingInfoForm.get(fControlName)
   }
-
-  // getAddressByPostcode() {
-  //   const postcodeFormControl = this.getFormControl('postcode');
-  //   if (!postcodeFormControl.invalid)
-  //   {
-  //     this.addresses = this.commonService.getAddressesByPostcode(postcodeFormControl.value);
-  //     return this.addresses;
-  //   }
-  // }
 
   getAddressByPostcode() {
     const postcodeFormControl = this.getFormControl('postcode');
@@ -103,7 +94,6 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
       this.addresses = [];
     }
   }
-
 
   isDisabled() {
     return !this.bookingInfoForm.valid;

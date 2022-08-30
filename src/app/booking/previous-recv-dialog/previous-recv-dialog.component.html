@@ -1,7 +1,5 @@
-<mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
-  <mat-expansion-panel-header>
-    <mat-panel-title>Receivers Information</mat-panel-title>
-  </mat-expansion-panel-header><br/>
+<div>
+  <h2 mat-dialog-title>Receivers Information</h2>
     <span class="example-list-section">
       <ul>
         <li *ngFor="let recv of receivers">
@@ -13,9 +11,8 @@
         </li>
       </ul>
     </span>
-  <div class="btn-block" align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
-  </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    <mat-dialog-actions align="end" style="position: relative; top: 5rem;">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button [mat-dialog-close]="selectedReferences" cdkFocusInitial>Ok</button>
+    </mat-dialog-actions>
+</div>
