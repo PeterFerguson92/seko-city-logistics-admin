@@ -258,7 +258,10 @@ export class BookingItemsComponent implements OnInit {
   assignItem(item) {
     if (item.id)
     {
-      const dialogRef = this.dialog.open(AssignDialogComponent, {data: { item }});
+      const dialogRef = this.dialog.open(AssignDialogComponent,{
+        height: '38%',
+        width: '30%',
+         data: { item } });
       dialogRef.afterClosed().subscribe()
     }
   }

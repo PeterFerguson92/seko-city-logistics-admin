@@ -50,8 +50,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   updateBooking(booking) {
     const dialogRef = this.dialog.open(BookingUpdateDialogComponent, {
-      height: '40%',
-      width: '35%',
+      height: '38%',
+      width: '25%',
       data: { booking }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -98,8 +98,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   onAssignDriver(reference, driverReference) {
       {
         const dialogRef = this.dialog.open(BookingAssignDriverDialogComponent, {
-          // height: '80%',
-          // width: '65%',
+          height: '47%',
+          width: '30%',
           data: { reference, driverReference }
         });
         dialogRef.afterClosed().subscribe(result => {

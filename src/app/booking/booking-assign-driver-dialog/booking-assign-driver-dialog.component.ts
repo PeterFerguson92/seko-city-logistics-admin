@@ -10,7 +10,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 @Component({
   selector: 'app-booking-assign-driver-dialog',
   templateUrl: './booking-assign-driver-dialog.component.html',
-  styleUrls: ['./booking-assign-driver-dialog.component.css']
+  styleUrls: ['./booking-assign-driver-dialog.component.css', '../../shared/shared.dialog.css']
 })
 export class BookingAssignDriverDialogComponent implements OnInit {
   assignDriverForm: FormGroup;
@@ -21,16 +21,15 @@ export class BookingAssignDriverDialogComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private bookingService: BookingsService,
     private authService: AuthenticationService,
-    private dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit(): void {
     this.getDriversInfo();
-    console.log(this.data)
     this.assignDriverForm = this.formBuilder.group({
       currentDriverUsername: [''],
       selectedDriverUsername: [''],
-      })
+    })
+    this.assignDriverForm.get('currentDriverUsername').disable();
   }
 
   getFormControl(fControlName: string) {
@@ -81,7 +80,7 @@ export class BookingAssignDriverDialogComponent implements OnInit {
     return reference;
   }
 
-  onUpdate() {
+  onSubmit() {
     const reference = this.getSelectedDriverReference();
     const updateFields = [{ name: 'assignedDriverReference', value: reference }];
       this.bookingService.updateBooking(this.data.reference, updateFields).subscribe(

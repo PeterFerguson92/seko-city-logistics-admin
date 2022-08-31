@@ -10,7 +10,7 @@ import { ItemService } from '../../items/item.service';
 @Component({
   selector: 'app-assign-dialog',
   templateUrl: './assign-dialog.component.html',
-  styleUrls: ['./assign-dialog.component.css']
+  styleUrls: ['./assign-dialog.component.css', '../../shared/shared.dialog.css']
 })
 export class AssignDialogComponent implements OnInit {
   itemInfoForm: FormGroup;
@@ -28,7 +28,7 @@ export class AssignDialogComponent implements OnInit {
     });
   }
 
-  async onUpdate() {
+  async onSubmit() {
     const updateFields = [];
     if (this.getFormControl('status').dirty)
     {
@@ -43,7 +43,6 @@ export class AssignDialogComponent implements OnInit {
         updateFields.push({name:'shipmentReference', value: shipment.reference});
       }
     }
-    console.log(updateFields)
     if (updateFields.length > 0)
     {
          this.itemService.updateItem(this.data.item.id, updateFields).subscribe(

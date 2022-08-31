@@ -1,27 +1,17 @@
-<div class="container">
-  <h1 id="title">Assigned Drivers information</h1>
-  <div class="row">
-    <div class="col-75">
-      <div class="container">
-        <form id="survey-form" [formGroup]="assignDriverForm" >
-              <fieldset>
-                <legend>Information</legend>
-                <div>
-                  <label class="required">Assigned Driver</label>
-                  <app-material-input [width]="80" formControlName="currentDriverUsername" ></app-material-input>
-                    <br>
-                  <label class="required">Available Drivers</label>
-                  <app-material-select-input [width]="80" (selectionChange)="onSelectionChange($event, 'selectedDriverUsername')" formControlName="selectedDriverUsername" [options]="driversUsername">
-                  </app-material-select-input>
-                </div>
-            </fieldset>
-        </form>
+<h2 mat-dialog-title>ASSIGN DRIVER</h2>
+<br>
+<mat-dialog-content class="mat-typography">
+  <form id="survey-form" [formGroup]="assignDriverForm" >
+      <div class="item">
+        <app-material-input [label]="'Assigned Driver'" [width]="80" formControlName="currentDriverUsername" ></app-material-input>
       </div>
-      <br>
-      <div align="center">
-        <br>
-        <app-material-button [label]="'Update'" (click)="onUpdate()" ></app-material-button>
+      <div class="item">
+        <app-material-select-input [label]="'Select Driver'" [width]="80" (selectionChange)="onSelectionChange($event, 'selectedDriverUsername')" formControlName="selectedDriverUsername" [options]="driversUsername">
+        </app-material-select-input>
       </div>
-    </div>
-  </div>
-</div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" (click)="onSubmit()" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

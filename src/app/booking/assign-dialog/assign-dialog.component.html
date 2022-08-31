@@ -1,27 +1,15 @@
-<div class="container">
-  <h1 id="title">Item information</h1>
-  <p id="description">Please update the Item status and shipment.</p>
-  <div class="row">
-    <div class="col-75">
-      <div class="container">
-        <form id="survey-form" [formGroup]="itemInfoForm" >
-              <fieldset>
-                <legend>Information</legend>
-                <div>
-                  <label class="required">Status</label>
-                  <app-material-select-input [width]="80" (selectionChange)="onSelectionChange($event, 'status')" formControlName="status" [options]="bookingStatuses">
-                  </app-material-select-input>
-                  <label>Container number</label>
-                  <app-material-input [width]="80" formControlName="containerNumber"></app-material-input>
-                </div>
-            </fieldset>
-        </form>
+<h2 mat-dialog-title>UPDATE ITEM</h2>
+<mat-dialog-content class="mat-typography">
+  <form id="survey-form" [formGroup]="itemInfoForm" >
+      <div class="item">
+        <app-material-select-input [width]="80" [label]="'Status'"
+        (selectionChange)="onSelectionChange($event, 'status')"
+          formControlName="status" [options]="bookingStatuses">
+        </app-material-select-input>
       </div>
-      <br>
-      <div align="center">
-        <br>
-        <app-material-button [label]="'Update'" (click)="onUpdate()" ></app-material-button>
-      </div>
-    </div>
-  </div>
-</div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" (click)="onSubmit()" cdkFocusInitial>Update</button>
+</mat-dialog-actions>
