@@ -50,8 +50,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   updateBooking(booking) {
     const dialogRef = this.dialog.open(BookingUpdateDialogComponent, {
-      // height: '80%',
-      // width: '65%',
+      height: '40%',
+      width: '35%',
       data: { booking }
     });
     dialogRef.afterClosed().subscribe(result => {

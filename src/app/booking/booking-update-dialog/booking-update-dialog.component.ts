@@ -8,7 +8,7 @@ import { BookingsService } from '../service/bookings/bookings.service';
 @Component({
   selector: 'app-booking-update-dialog',
   templateUrl: './booking-update-dialog.component.html',
-  styleUrls: ['./booking-update-dialog.component.css']
+  styleUrls: ['./booking-update-dialog.component.css', '../../shared/shared.dialog.css']
 })
 export class BookingUpdateDialogComponent implements OnInit {
 
@@ -31,17 +31,16 @@ export class BookingUpdateDialogComponent implements OnInit {
     fControl.markAsDirty();
   }
 
-  onUpdate() {
-    const updateFields = [{ name: 'status', value: this.getFormControl('status').value }];
-      this.bookingService.updateBooking(this.data.booking.reference, updateFields).subscribe(
+  onSubmit() {
+      this.bookingService.updateBookingStatus(this.data.booking.reference, this.getFormControl('status').value).subscribe(
         ({ data }) => {
-          location.reload();  // TODO handle properly
+          location.reload();
         },
         error => {
           console.log(error);
         }
       );
-  }
+   }
 
   getFormControl(fControlName: string) {
     return this.bookingInfoForm.get(fControlName)

@@ -54,6 +54,15 @@ export const UPDATE_BOOKING = gql`
   ${BOOKING_FRAGMENT}
 `;
 
+export const UPDATE_BOOKING_STATUS = gql`
+  mutation updateBookingStatus($reference: String!, $status: String!) {
+    updateBookingStatus(reference: $reference, status: $status) {
+      ...bookingfragment
+    }
+  }
+  ${BOOKING_FRAGMENT}
+`;
+
 export const UPDATE_BOOKINGS_BY_REFERENCES = gql`
   mutation updateBookingsByReference($references: [String!]!, $fields: [UpdateFieldInput!]) {
     updateBookingsByReference(references: $references, fields: $fields)

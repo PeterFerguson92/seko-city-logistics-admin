@@ -45,6 +45,15 @@ export const UPDATE_ORDER = gql`
   ${ORDER_FRAGMENT}
 `;
 
+export const UPDATE_ORDER_STATUS = gql`
+  mutation updateOrderStatus($reference: String!, $status: String!) {
+    updateOrderStatus(reference: $reference, status: $status) {
+      ...orderfragment
+    }
+  }
+  ${ORDER_FRAGMENT}
+`;
+
 export const SYNC_ORDER = gql`
   mutation syncOrder($input: OrderInput!) {
     syncOrder(input: $input)

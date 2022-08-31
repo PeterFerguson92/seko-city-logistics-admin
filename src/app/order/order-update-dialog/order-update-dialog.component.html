@@ -6,14 +6,9 @@
             (selectionChange)="onSelectionChange($event, 'status')"  [width]="60" [value]="orderStatuses[0]">
         </app-material-select-input>
       </div>
-      <div class="item">
-        <app-material-select-input [label]="'Payment Status'" [options]="paymentStatuses" formControlName="paymentStatus"
-            (selectionChange)="onSelectionChange($event, 'paymentStatus')"  [width]="60" [value]="paymentStatuses[0]">
-        </app-material-select-input>
-      </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" [disabled]="isDisabled()" (click)="onUpdate()" cdkFocusInitial>Update</button>
+  <button mat-button [mat-dialog-close]="true" (click)="onSubmit()" cdkFocusInitial>Update</button>
 </mat-dialog-actions>

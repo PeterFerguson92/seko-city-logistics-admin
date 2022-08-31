@@ -25,8 +25,6 @@ export class BookingsComponent implements OnInit {
     const today:any = new Date();
     const days = 86400000;
     const fiveDaysAgo = new Date(today - (7 * days));
-
-
     this.bookingsFilterForm = this.formBuilder.group({
       status: [this.bookingStatuses[0]],
       postcode: ['', [this.validationService.postCodeValidator]],
@@ -74,7 +72,6 @@ export class BookingsComponent implements OnInit {
   getFormControl(fControlName: string) {
     return this.bookingsFilterForm.get(fControlName)
   }
-
 
 
   buildFilterFields() {

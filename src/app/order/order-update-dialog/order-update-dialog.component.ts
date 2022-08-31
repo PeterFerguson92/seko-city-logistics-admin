@@ -23,8 +23,7 @@ export class OrderUpdateDialogComponent implements OnInit {
   ngOnInit(): void {
     this.order = this.data.order;
     this.orderInfoForm = this.formBuilder.group({
-      status: [this.data.order.status],
-      paymentStatus: [this.data.order.paymentStatus],
+      status: [this.data.order.status]
     });
   }
 
@@ -34,27 +33,16 @@ export class OrderUpdateDialogComponent implements OnInit {
     fControl.markAsDirty();
   }
 
-  onUpdate() {
-    const updateCustomerFields = []
-    Object.keys(this.orderInfoForm.controls).forEach(key => {
-      const formControl = this.orderInfoForm.controls[key]
-      if (!formControl.pristine && formControl.value !== this.order[key])
-      {
-        updateCustomerFields.push({ name: key, value: formControl.value });
+  onSubmit() {
+    this.orderService.updateOrderStatus(this.data.order.reference, this.getFormControl('status').value).subscribe(
+      ({ data }) => {
+        location.reload();
+      },
+      error => {
+        console.log(error);
       }
-    });
-    if (updateCustomerFields.length > 0)
-    {
-      this.orderService.updateOrder(this.order.reference, updateCustomerFields).subscribe(
-        ({ data }) => {
-          location.reload();
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-  }
+    );
+ }
 
   getFormControl(fControlName: string) {
     return this.orderInfoForm.get(fControlName)
