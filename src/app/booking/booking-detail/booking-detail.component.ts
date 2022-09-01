@@ -12,6 +12,8 @@ import { BookingsService } from '../service/bookings/bookings.service';
 import { Router } from '@angular/router';
 import { ICustomer } from 'src/app/customer/model';
 import { BookingsReceiversComponent } from '../bookings-receivers/bookings-receivers.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AttachInvoiceDialogComponent } from '../attach-invoice-dialog/attach-invoice-dialog.component';
 
 @Component({
   selector: 'app-booking-detail',
@@ -29,7 +31,10 @@ export class BookingDetailComponent implements OnInit {
   @Input() mode
   senderFullName: string;
 
-  constructor(private router: Router, private customersService: CustomersService, private bookingsService: BookingsService) { }
+  constructor(private router: Router,
+    private dialog: MatDialog,
+    private customersService: CustomersService,
+    private bookingsService: BookingsService) { }
 
   ngOnInit(): void { }
 
@@ -96,7 +101,20 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  onSubmit() {
+    const dialogRef = this.dialog.open(AttachInvoiceDialogComponent, {
+      // data: { date: this.commonService.getFormattedIsoDate(this.getFormControl('date').value) }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      const attachInvoice = result === 'true';
+      console.log(attachInvoice)
+      this.processBooking(attachInvoice)
+    })
+  }
+
+  async processBooking(attachInvoice) {
 
     if (EDIT_BOOKING_MODE === this.mode)
     {
@@ -110,7 +128,7 @@ export class BookingDetailComponent implements OnInit {
       }
       await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);
       await this.syncItems(this.booking.reference, this.booking.itemsDetails.items)
-      this.syncBooking(this.booking)
+      this.syncBooking(this.booking, attachInvoice)
     }
     else
     {
@@ -126,12 +144,12 @@ export class BookingDetailComponent implements OnInit {
           this.booking.senderFullName = senderDetails.fullName;
         }
         const recvReference = await this.getReceiverReferences(this.booking.receiver.receivers);
-        this.saveBooking(senderDetails, recvReference, this.booking)
+        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice)
       } else
       {
         const senderDetails = await this.saveSender(this.booking.sender);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
-        this.saveBooking(senderDetails, recvReference, this.booking)
+        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice)
       }
     }
   }
@@ -188,7 +206,7 @@ export class BookingDetailComponent implements OnInit {
     return recvReferences;
   }
 
-  saveBooking(senderDetails, recvReferences, bookingInfo) {
+  saveBooking(senderDetails, recvReferences, bookingInfo, attachInvoice) {
     const booking = {
       id: null,
       reference: '',
@@ -216,7 +234,7 @@ export class BookingDetailComponent implements OnInit {
       shipmentReference: '',
       assignedDriverReference: ''
     };
-    this.bookingsService.createBooking(booking).subscribe(
+    this.bookingsService.createBooking(booking, attachInvoice).subscribe(
       ({ data }) => {
         this.redirectToBookings()
       },
@@ -238,8 +256,8 @@ export class BookingDetailComponent implements OnInit {
     )
   }
 
-  syncBooking(bookingInfo) {
-    this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo)).subscribe(
+  syncBooking(bookingInfo, attachInvoice) {
+    this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo), attachInvoice).subscribe(
       ({ data }) => {
         // this.redirectToBookings()
       },

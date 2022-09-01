@@ -37,8 +37,8 @@ export const FILTER_BOOKINGS = gql`
 `;
 
 export const CREATE_BOOKING = gql`
-  mutation createBooking($input: BookingInput!) {
-    createBooking(input: $input) {
+  mutation createBooking($input: BookingInput!, $attachInvoice: Boolean!) {
+    createBooking(input: $input, attachInvoice: $attachInvoice) {
       ...bookingfragment
     }
   }
@@ -46,8 +46,8 @@ export const CREATE_BOOKING = gql`
 `;
 
 export const UPDATE_BOOKING = gql`
-  mutation updateBooking($reference: String!, $fields: [UpdateFieldInput!]) {
-    updateBooking(reference: $reference, fields: $fields) {
+  mutation updateBooking($reference: String!, $fields: [UpdateFieldInput!], $attachInvoice: Boolean!) {
+    updateBooking(reference: $reference, fields: $fields, attachInvoice: $attachInvoice) {
       ...bookingfragment
     }
   }
@@ -70,8 +70,8 @@ export const UPDATE_BOOKINGS_BY_REFERENCES = gql`
 `;
 
 export const SYNC_BOOKING = gql`
-  mutation syncBooking($input: BookingInput!) {
-    syncBooking(input: $input)
+  mutation syncBooking($input: BookingInput!, $attachInvoice: Boolean!) {
+    syncBooking(input: $input, attachInvoice: $attachInvoice)
   }
 `;
 

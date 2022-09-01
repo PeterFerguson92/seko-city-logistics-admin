@@ -44,17 +44,17 @@ export class BookingsService {
     });
   }
 
-  createBooking(booking: any) {
+  createBooking(booking: any, attachInvoice: boolean) {
     return this.apollo.mutate<IBooking>({
       mutation: CREATE_BOOKING,
-      variables: { input: booking }
+      variables: { input: booking, attachInvoice }
     });
   }
 
-  updateBooking(reference: string, fields: any) {
+  updateBooking(reference: string, fields: any, attachInvoice: boolean) {
     return this.apollo.mutate<IBooking>({
       mutation: UPDATE_BOOKING,
-      variables: { reference, fields }
+      variables: { reference, fields, attachInvoice }
     });
   }
 
@@ -72,10 +72,10 @@ export class BookingsService {
     });
   }
 
-  syncBooking(booking: IBooking) {
+  syncBooking(booking: IBooking, attachInvoice: boolean) {
     return this.apollo.mutate<IBooking>({
       mutation: SYNC_BOOKING,
-      variables: { input: booking }
+      variables: { input: booking, attachInvoice }
     });
   }
 

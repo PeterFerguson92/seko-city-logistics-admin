@@ -19,6 +19,7 @@ import { BookingUpdateDialogComponent } from './booking-update-dialog/booking-up
 import { ItemDuplicateDialogComponent } from './item-duplicate-dialog/item-duplicate-dialog.component';
 import { BookingInvoiceComponent } from './booking-invoice/booking-invoice.component';
 import { BookingAssignDriverDialogComponent } from './booking-assign-driver-dialog/booking-assign-driver-dialog.component';
+import { AttachInvoiceDialogComponent } from './attach-invoice-dialog/attach-invoice-dialog.component';
 
 @NgModule({
   declarations: [BookingDetailComponent, AddEditBookingComponent,
@@ -32,7 +33,8 @@ import { BookingAssignDriverDialogComponent } from './booking-assign-driver-dial
     BookingUpdateDialogComponent,
     ItemDuplicateDialogComponent,
     BookingInvoiceComponent,
-    BookingAssignDriverDialogComponent],
+    BookingAssignDriverDialogComponent,
+    AttachInvoiceDialogComponent],
   imports: [CommonModule, SharedModule, CustomerModule],
   exports: [ItemsListComponent, BookingsTableComponent]
 })

@@ -83,7 +83,7 @@ export class BookingAssignDriverDialogComponent implements OnInit {
   onSubmit() {
     const reference = this.getSelectedDriverReference();
     const updateFields = [{ name: 'assignedDriverReference', value: reference }];
-      this.bookingService.updateBooking(this.data.reference, updateFields).subscribe(
+      this.bookingService.updateBooking(this.data.reference, updateFields, false).subscribe(
         ({ data }) => { location.reload()},
         error => { console.log(error);}
       );
