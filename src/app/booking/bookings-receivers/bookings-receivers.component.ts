@@ -184,8 +184,8 @@ export class BookingsReceiversComponent implements OnInit {
 
   onLoadPreviousReceivers() {
     const dialogRef =  this.dialog.open(PreviousRecvDialogComponent, {
-      height: '40%',
-      width: '50%',
+      height: '35%',
+      width: '25%',
       data: { senderReference: this.senderReference, currentReferences: this.getReceiversReference()}
     });
 

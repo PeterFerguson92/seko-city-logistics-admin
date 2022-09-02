@@ -54,9 +54,14 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     })
 
     this.getAddressByPostcode()
-
+    if (this.getFormControl('paymentStatus').value === PARTIAL_PAYMENT_STATUS_ALIAS)
+    {
+      this.getFormControl('amountPaid').enable();
+    } else
+    {
+      this.getFormControl('amountPaid').disable();
+    }
     this.getFormControl('totalAmount').disable();
-    this.getFormControl('amountPaid').disable();
     this.getFormControl('amountOutstanding').disable();
     this.initializeProperties(0);
     this.updateTotalAmount()
@@ -103,7 +108,8 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
         amountPaidControl.disable();
         break;
       case PARTIAL_PAYMENT_STATUS_ALIAS:
-        outstandingPaidControl.setValue(outstandingPaidControl.value)
+        outstandingPaidControl.setValue(outstandingPaidControl.value);
+        amountPaidControl.setValue(this.orderInfo.amountPaid)
         amountPaidControl.enable();
         break;
       case NO_PAYMENT_PAYMENT_STATUS_ALIAS:

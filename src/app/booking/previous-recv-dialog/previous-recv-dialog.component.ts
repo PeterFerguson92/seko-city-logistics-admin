@@ -19,7 +19,6 @@ export class PreviousRecvDialogComponent implements OnInit {
   ngOnInit(): void {
     this.bookingsService.getPreviousReceivers(this.data.senderReference).subscribe(
       ({ data }) => {
-        console.log(data)
         // tslint:disable-next-line:no-string-literal
         this.buildRecvCheckBox(data['previousReceiversBySender']);
       },
