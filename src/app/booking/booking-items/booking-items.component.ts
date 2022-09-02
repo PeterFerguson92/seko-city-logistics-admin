@@ -90,9 +90,7 @@ export class BookingItemsComponent implements OnInit {
           if (items.length > 0)
           {
             const newData = items.map((item, index) => Object.assign({}, item, { selected: false, index }));
-            console.log(newData)
             this.dataSource =  new MatTableDataSource(newData);
-            // this.updateTotalAmount()
           }
         },
         error => {

@@ -74,6 +74,12 @@ export class BookingsReceiversComponent implements OnInit {
     });
   }
 
+  validateReceiver(index) {
+    this.validateReceiverFormControl('name',  index);
+    this.validateReceiverFormControl('surname', index);
+    this.validateGroupFormControl('phoneGroup', 'phone', index)
+  }
+
   buildReceiver(customer: ICustomer): FormGroup {
     return this.formBuilder.group({
       reference: [customer ? customer.reference : null, []],
@@ -95,7 +101,7 @@ export class BookingsReceiversComponent implements OnInit {
     this.customersService.getCustomersByReferences(this.references).subscribe(
       ({ data }) => {
         const recvs = data.customersByReferences;
-        recvs.forEach(customer => this.receivers.push(this.buildReceiver(customer)));
+        recvs.forEach(customer => { this.receivers.push(this.buildReceiver(customer)) });
         this.linkReceiverValidators();
       },
       error => {
@@ -112,12 +118,14 @@ export class BookingsReceiversComponent implements OnInit {
     {
       this.receivers.push(this.buildReceiver(null));
       this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
+      this.validateReceiver(this.formValidationMapList.length -1)
     }
   }
 
   onAddReceveirs() {
     this.receivers.push(this.buildReceiver(null));
-    this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
+    this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' });
+    this.validateReceiver(this.formValidationMapList.length -1)
   }
 
   isReceiverValuePopulated(index) {
@@ -138,6 +146,7 @@ export class BookingsReceiversComponent implements OnInit {
 
   onDeleteReceiver(index) {
     this.receivers.removeAt(index)
+    this.formValidationMapList.splice(index, 1)
   }
 
   onSelectionChange(event: any, fControlName: string, index) {
@@ -184,8 +193,9 @@ export class BookingsReceiversComponent implements OnInit {
       if (result && result.length > 0)
       {
         result.forEach(customer => {
-          this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' })
-          this.receivers.push(this.buildReceiver(customer))
+          this.formValidationMapList.push({ name: '', surname: '', registeredName: '', phone: '' });
+          this.receivers.push(this.buildReceiver(customer));
+          this.validateReceiver(this.formValidationMapList.length - 1);
         });
       }
     });

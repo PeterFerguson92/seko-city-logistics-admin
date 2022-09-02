@@ -63,7 +63,7 @@
                   <label for="lname"> Phone Number <span>*</span></label><br>
                   <app-material-select-input [label]="'Code'"  [width]="20" [options]="codes" formControlName="countryCode"
                     (selectionChange)="onSelectionChange($event, 'countryCode', i)" [value]="codes[0]"></app-material-select-input>&nbsp;
-                    <app-material-input [label]="'Phone'" [type]="'phone'" formControlName="phone"></app-material-input>
+                    <app-material-input [label]="'Phone'" [type]="'phone'" [errorMsg]="formValidationMapList[i].phone" formControlName="phone"></app-material-input>
                 </div>
                 <div *ngIf="!isCustomerPersonal(i)" class="item">
                   <label for="lname">Registered Name</label><br>
