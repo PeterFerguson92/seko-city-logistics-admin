@@ -21,6 +21,7 @@ import { BookingInvoiceComponent } from './booking-invoice/booking-invoice.compo
 import { BookingAssignDriverDialogComponent } from './booking-assign-driver-dialog/booking-assign-driver-dialog.component';
 import { AttachInvoiceDialogComponent } from './attach-invoice-dialog/attach-invoice-dialog.component';
 import { BookingsCustomerHistoryComponent } from './bookings-customer-history/bookings-customer-history.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [BookingDetailComponent, AddEditBookingComponent,
@@ -37,7 +38,7 @@ import { BookingsCustomerHistoryComponent } from './bookings-customer-history/bo
     BookingAssignDriverDialogComponent,
     AttachInvoiceDialogComponent,
     BookingsCustomerHistoryComponent],
-  imports: [CommonModule, SharedModule, CustomerModule],
+  imports: [CommonModule, SharedModule, CustomerModule, NgxChartsModule],
   exports: [ItemsListComponent, BookingsTableComponent]
 })
 export class BookingModule { }

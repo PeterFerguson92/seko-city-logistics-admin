@@ -21,7 +21,6 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @Input() bookings: [IBooking] = null;
   @Input() includeArchived = false;
-  @Input() showHistory = false;
   displayedColumns: string[] = ['DATE', 'POSTCODE', 'SENDER', 'DESTINATION', 'PAYMENT', 'BOOKING STATUS', 'ID', 'ACTION'];
   dataSource = null;
   height = '80%';
@@ -66,10 +65,6 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
   editBooking(element) {
     this.router.navigate(['/edit-booking', element.reference, element.senderReference]);
-  }
-
-  onHistory(senderReference) {
-    this.router.navigate(['/bookings-history', senderReference]);
   }
 
   deleteBooking(reference) {

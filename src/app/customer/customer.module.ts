@@ -6,11 +6,14 @@ import { AddEditCustomerDialogComponent } from './add-edit-customer-dialog/add-e
 import { SharedModule } from '../shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReceiverComponent } from './receiver/receiver.component';
+import { CustomerBookingHistoryComponent } from './customer-booking-history/customer-booking-history.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
-  declarations: [CustomersComponent, CustomerDetailComponent, AddEditCustomerDialogComponent, ReceiverComponent],
-  imports: [CommonModule, SharedModule, FlexLayoutModule],
+  declarations: [CustomersComponent, CustomerDetailComponent,
+    AddEditCustomerDialogComponent, ReceiverComponent, CustomerBookingHistoryComponent],
+  imports: [CommonModule, SharedModule, FlexLayoutModule, NgxChartsModule],
   exports: [CustomerDetailComponent, ReceiverComponent]
 })
 export class CustomerModule { }

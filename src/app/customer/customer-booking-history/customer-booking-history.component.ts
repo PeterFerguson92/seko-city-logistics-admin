@@ -1,18 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CustomersService } from 'src/app/customer/service/customers.service';
+import { CustomersService } from '../service/customers.service';
 
 @Component({
-  selector: 'app-bookings-customer-history',
-  templateUrl: './bookings-customer-history.component.html',
-  styleUrls: ['./bookings-customer-history.component.css']
+  selector: 'app-customer-booking-history',
+  templateUrl: './customer-booking-history.component.html',
+  styleUrls: ['./customer-booking-history.component.css']
 })
-export class BookingsCustomerHistoryComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  dataSource = null;
+export class CustomerBookingHistoryComponent implements OnInit {
+
   bookings
   includeArchive = false;
   bookingReportData;
@@ -77,5 +73,6 @@ export class BookingsCustomerHistoryComponent implements OnInit {
     });
     return { yearAmountReportData };
   }
+
 
 }

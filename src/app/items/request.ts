@@ -38,7 +38,7 @@ query {
 
 export const GET_ITEMS_REPORT_DATA = gql`
   query {
-    itemsDestinationReport{ type  occurrence quantity amount}
+    itemsDestinationReport{ type  occurrence quantity amount }
   }
 `;
 
