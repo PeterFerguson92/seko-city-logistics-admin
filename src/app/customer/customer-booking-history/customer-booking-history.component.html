@@ -69,27 +69,6 @@
               <button mat-icon-button class="icon-color" matTooltip="Summary booking"  matTooltipPosition="left">
                 <mat-icon (click)="viewBooking(element.reference)">speaker_notes</mat-icon>
               </button>
-              <button mat-icon-button class="icon-color" matTooltip="Edit booking" matTooltipPosition="above">
-                <mat-icon (click)="editBooking(element)">edit</mat-icon>
-              </button>
-              <button *ngIf="!isArchivedEnabled" class="icon-color" matTooltip="Archive booking" matTooltipPosition="right">
-                <mat-icon (click)="archiveBooking(element.reference)">archive</mat-icon>
-              </button>
-              <button *ngIf="isArchivedEnabled" class="icon-color" matTooltip="Unarchive booking" matTooltipPosition="right">
-                <mat-icon (click)="archiveBooking(element.reference)">unarchive</mat-icon>
-              </button>
-              <button mat-icon-button class="icon-color" matTooltip="Update booking" matTooltipPosition="above">
-                <mat-icon (click)="updateBooking(element)">low_priority</mat-icon>
-              </button>
-              <button mat-icon-button class="icon-color" matTooltip="Assign Driver" matTooltipPosition="right">
-                <mat-icon (click)="onAssignDriver(element.reference, element.assignedDriverReference)">directions_walk</mat-icon>
-              </button>
-              <button *ngIf="showHistory" mat-icon-button class="icon-color" matTooltip="Bookings history" matTooltipPosition="right">
-                <mat-icon (click)="onHistory(element.senderReference)">chrome_reader_mode</mat-icon>
-              </button>
-              <button mat-icon-button class="icon-color" matTooltip="Delete booking" matTooltipPosition="right">
-                <mat-icon (click)="deleteBooking(element.reference)">delete</mat-icon>
-              </button>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

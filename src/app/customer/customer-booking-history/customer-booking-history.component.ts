@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { CustomersService } from '../service/customers.service';
 
@@ -24,18 +24,16 @@ export class CustomerBookingHistoryComponent implements OnInit {
   yearBookingsAmountReportData;
   dataSource
 
-  constructor(private activatedroute: ActivatedRoute,
+  constructor(private router: Router, private activatedroute: ActivatedRoute,
     private customerService: CustomersService, private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
       const reference = data.bookings.reference;
       this.bookings = data.bookings.data;
-      console.log(this.bookings)
       this.dataSource = new MatTableDataSource(this.bookings);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      console.log(data)
       this.getReportData(reference)
     });
   }
@@ -43,7 +41,6 @@ export class CustomerBookingHistoryComponent implements OnInit {
   getReportData(reference) {
     this.customerService.getCustomerReport(reference).subscribe(
       ({ data }) => {
-        console.log(data)
         this.bookingReportData = this.buildBookingDestinationData(data.customerReport.bookings);
         this.yearBookingsAmountReportData = this.buildActivityReportData(data.customerReport.monthly).yearAmountReportData;
         const result = this.buildItemData(data.customerReport.items)
@@ -90,5 +87,8 @@ export class CustomerBookingHistoryComponent implements OnInit {
     return this.commonService.getFormattedDate(date);
   }
 
+  viewBooking(reference) {
+    this.router.navigate(['/booking-summary', reference]);
+  }
 
 }
