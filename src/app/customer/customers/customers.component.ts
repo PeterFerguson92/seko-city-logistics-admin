@@ -33,6 +33,10 @@ export class CustomersComponent implements OnInit {
     this.router.navigate(['/add-booking', reference]);
   }
 
+  onHistory(reference) {
+    this.router.navigate(['/customer-history/bookings', reference]);
+  }
+
   orderCustomer(reference) {
     this.router.navigate(['/add-order', reference]);
   }

@@ -40,6 +40,16 @@ export const GET_CUSTOMERS_BY_REFERENCES = gql`
   }
 `;
 
+export const GET_CUSTOMERS_REPORT = gql`
+  query customerReport($reference: String!) {
+    customerReport(reference: $reference) {
+      items { type  occurrence quantity amount }
+      bookings { destination occurrence }
+      monthly {monthId  monthName total, totalAmount}
+    }
+  }
+`;
+
 export const CREATE_CUSTOMER = gql`
   mutation createCustomer($input: CustomerInput!) {
     createCustomer(input: $input) {
