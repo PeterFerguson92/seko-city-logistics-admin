@@ -17,6 +17,15 @@ export const GET_ALL_BOOKINGS = gql`
   ${BOOKING_FRAGMENT}
 `;
 
+export const GET_BOOKINGS_BY_SENDER = gql`
+  query bookingsBySender($senderReference: String!) {
+    bookingsBySender(senderReference: $senderReference) {
+     ...bookingfragment
+    }
+  }
+  ${BOOKING_FRAGMENT}
+`;
+
 export const GET_BOOKING_BY_REFERENCE = gql`
   query bookingByReference($reference: String!) {
     bookingByReference(reference: $reference) {

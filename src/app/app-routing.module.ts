@@ -34,6 +34,8 @@ import { OrdersComponent } from './order/orders/orders.component';
 import { OrdersResolver } from './order/service/resolver/orders.resolver';
 import { AddEditOrderComponent } from './order/add-edit-order/add-edit-order.component';
 import { OrderResolver } from './order/service/resolver/order.resolver';
+import { BookingsCustomerHistoryComponent } from './booking/bookings-customer-history/bookings-customer-history.component';
+import { BookingCustomerHistoryResolver } from './booking/service/resolver/booking-customer-history.resolver';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -54,7 +56,11 @@ const routes: Routes = [
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'booking-summary/:reference', component: BookingSummaryComponent, resolve: { booking: BookingSummaryResolver } },
-  { path: 'drivers', component: DriversComponent, resolve: { drivers: DriversResolver }  },
+  {
+    path: 'bookings-history/:senderReference', component: BookingsCustomerHistoryComponent,
+    resolve: { bookings: BookingCustomerHistoryResolver }
+  },
+  { path: 'drivers', component: DriversComponent, resolve: { drivers: DriversResolver } },
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },
   { path: 'assignedBookings/:reference', component: DriverBookingsComponent, resolve: { bookings: DriverBookingsResolver } },

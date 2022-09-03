@@ -4,6 +4,7 @@ import { IBooking, IBookingsResponse } from '../../model';
 import {
   ARCHIVE_UNARCHIVE_BOOKING,
   CREATE_BOOKING, DELETE_BOOKING, FILTER_BOOKINGS, GET_ALL_BOOKINGS,
+  GET_BOOKINGS_BY_SENDER,
   GET_BOOKINGS_BY_STATUS_OR_SHIPMENT_REFERENCE,
   GET_BOOKINGS_DESTINATION_REPORT_DATA,
   GET_BOOKINGS_REPORT_DATA,
@@ -27,6 +28,13 @@ export class BookingsService {
       variables: {
         limit: LIMIT, cursor: CURSOR,
       }
+    });
+  }
+
+  getBookingsBySender(senderReference: string) {
+    return this.apollo.query<any>({
+      query: GET_BOOKINGS_BY_SENDER,
+      variables: {senderReference}
     });
   }
 

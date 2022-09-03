@@ -55,7 +55,10 @@
       <button mat-icon-button class="icon-color" matTooltip="Assign Driver" matTooltipPosition="right">
         <mat-icon (click)="onAssignDriver(element.reference, element.assignedDriverReference)">directions_walk</mat-icon>
       </button>
-      <button mat-icon-button class="icon-color"  matTooltip="Delete booking" matTooltipPosition="right">
+      <button *ngIf="showHistory" mat-icon-button class="icon-color" matTooltip="Bookings history" matTooltipPosition="right">
+        <mat-icon (click)="onHistory(element.senderReference)">chrome_reader_mode</mat-icon>
+      </button>
+      <button mat-icon-button class="icon-color" matTooltip="Delete booking" matTooltipPosition="right">
         <mat-icon (click)="deleteBooking(element.reference)">delete</mat-icon>
       </button>
     </td>
