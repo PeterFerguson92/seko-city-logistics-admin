@@ -8,6 +8,7 @@
             <button class="action-button button-add-row" mat-button (click)="addRow(null)">Add Item</button>
             <button class="action-button button-remove-rows" mat-button (click)="removeSelectedRows()" [disabled]="!isMultipleEnabled()">Remove Item</button>
             <button class="action-button button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">Add Multiple items</button>
+            <button class="action-button button-add-multi-row" mat-button (click)="updateStatus()" [disabled]="!isMultipleEnabled()">Update items status</button>
           </article>
           <table mat-table [dataSource]="dataSource">
             <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
@@ -24,9 +25,9 @@
                     <mat-checkbox (change)="element.selected = $event.checked" [(ngModel)]="element.selected"></mat-checkbox>
                   </ng-container>
                   <div style="text-align: center;" class="btn-edit" *ngSwitchCase="'isEdit'">
-                    <button [disabled]="!element.id" class="icon-color" mat-icon-button matTooltip="Update item" matTooltipPosition="left">
+                    <!-- <button [disabled]="!element.id" class="icon-color" mat-icon-button matTooltip="Update item" matTooltipPosition="left">
                       <mat-icon (click)="assignItem(element)">low_priority</mat-icon>
-                    </button>
+                    </button> -->
                     <!-- <button mat-button >Edit</button> -->
                     <button mat-icon-button class="icon-color" (click)="element.isEdit = !element.isEdit" color="primary" matTooltip="Edit item" matTooltipPosition="above">
                       <mat-icon >edit</mat-icon>

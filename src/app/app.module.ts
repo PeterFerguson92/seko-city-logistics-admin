@@ -21,6 +21,7 @@ import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
 import { TaskModule } from './task/task.module';
 import { OrdersComponent } from './order/orders/orders.component';
+import { UpdateItemsDialogComponent } from './items/update-items-dialog/update-items-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { OrdersComponent } from './order/orders/orders.component';
     SideNavComponent,
     HomeComponent,
     OrdersComponent,
+    UpdateItemsDialogComponent,
   ],
   entryComponents: [],
   imports: [

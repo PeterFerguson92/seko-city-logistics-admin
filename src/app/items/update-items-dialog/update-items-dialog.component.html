@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>UPDATE ITEMS</h2><mat-dialog-content class="mat-typography">
+  <br>
+  <br>
+  <form id="survey-form" [formGroup]="itemInfoForm" >
+      <div class="item">
+        <app-material-select-input
+          [width]="80" [label]="'Status'" (selectionChange)="onSelectionChange($event, 'status')" formControlName="status" [options]="itemStatuses">
+        </app-material-select-input>
+      </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

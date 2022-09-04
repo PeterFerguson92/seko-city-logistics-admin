@@ -12,6 +12,7 @@ import { AssignDialogComponent } from '../assign-dialog/assign-dialog.component'
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-duplicate-dialog.component';
+import { UpdateItemsDialogComponent } from 'src/app/items/update-items-dialog/update-items-dialog.component';
 
 export interface IItem {
   id: number
@@ -30,7 +31,8 @@ const COLUMNS_SCHEMA = [
   { key: 'value', type: 'number', label: 'VALUE (£)',},
   { key: 'quantity', type: 'number', label: 'QUANTITY'},
   { key: 'pricePerUnit', type: 'number', label: 'PRICE PER UNIT (£)'},
-  { key: 'amount', type: 'number', label: 'AMOUNT (£)'},
+  { key: 'amount', type: 'number', label: 'AMOUNT (£)' },
+  { key: 'status', type: 'text', label: 'STATUS'},
   { key: 'isEdit', type: 'isEdit', label: 'ACTIONS'},
 ];
 
@@ -171,6 +173,21 @@ export class BookingItemsComponent implements OnInit {
           this.updateItemsInfo()
         }
       });
+  }
+
+  updateStatus() {
+    const items = this.dataSource.data.filter((u: any) => u.selected);
+    const itemsIds = items.map(a => a.id);
+    const dialogRef = this.dialog.open(UpdateItemsDialogComponent, {
+      data: { itemsIds }
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      itemsIds.forEach((id, i) => {
+        const foundIndex = this.dataSource.data.findIndex(x => x.id === id);
+        this.dataSource.data[foundIndex].status = result.updatedStatus;
+      });
+    })
   }
 
   selectType(event: Event, id) {
