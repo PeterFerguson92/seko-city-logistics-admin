@@ -111,6 +111,7 @@
         <th>Value</th>
         <th>Price per unit</th>
         <th>Amount</th>
+        <th>Status</th>
       </tr>
       <tr *ngFor="let item of booking.items">
         <td>{{item.quantity}}</td>
@@ -119,6 +120,7 @@
         <td>£{{item.value}}</td>
         <td>£{{item.pricePerUnit}}</td>
         <td>£{{item.amount}}</td>
+        <td>{{item.status}}</td>
       </tr>
       <br>
       <p><b>Number of items:</b> <br>{{booking.numberOfItems}}</p>

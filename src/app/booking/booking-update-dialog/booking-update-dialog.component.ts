@@ -14,6 +14,8 @@ export class BookingUpdateDialogComponent implements OnInit {
 
   bookingInfoForm: FormGroup;
   bookingStatuses = BOOKING_STATUSES;
+  errorText;
+  showErrorText;
 
   constructor(private formBuilder: FormBuilder,
     private bookingService: BookingsService,
@@ -34,7 +36,14 @@ export class BookingUpdateDialogComponent implements OnInit {
   onSubmit() {
       this.bookingService.updateBookingStatus(this.data.booking.reference, this.getFormControl('status').value).subscribe(
         ({ data }) => {
-          location.reload();
+          if (data.updateBookingStatus.isInError)
+          {
+            this.showErrorText = true
+            this.errorText = data.updateBookingStatus.errorMessage
+          } else
+          {
+            location.reload();
+          }
         },
         error => {
           console.log(error);

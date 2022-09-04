@@ -67,7 +67,7 @@ export class BookingsService {
   }
 
   updateBookingStatus(reference: string, status: string) {
-    return this.apollo.mutate<IBooking>({
+    return this.apollo.mutate<any>({
       mutation: UPDATE_BOOKING_STATUS,
       variables: { reference, status }
     });

@@ -66,7 +66,9 @@ export const UPDATE_BOOKING = gql`
 export const UPDATE_BOOKING_STATUS = gql`
   mutation updateBookingStatus($reference: String!, $status: String!) {
     updateBookingStatus(reference: $reference, status: $status) {
-      ...bookingfragment
+      isInError
+      errorMessage
+      data { ...bookingfragment }
     }
   }
   ${BOOKING_FRAGMENT}

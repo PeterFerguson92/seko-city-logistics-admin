@@ -8,9 +8,10 @@
         </app-material-select-input>
       </div>
   </form>
+  <app-error-message [showErrorText]=showErrorText [errorText]="errorText"></app-error-message>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" (click)="onSubmit()" cdkFocusInitial>Submit</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Submit</button>
 </mat-dialog-actions>
 
