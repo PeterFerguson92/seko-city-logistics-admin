@@ -7,12 +7,14 @@
           <th>Postcode</th>
           <th>Address</th>
           <th>Time</th>
+          <th>Type</th>
         </tr>
-        <tr *ngFor="let booking of bookings">
-          <td>{{booking.reference}}</td>
-          <td>{{booking.senderFullName}}</td>
-          <td>{{booking.pickUpPostCode}}</td>
-          <td>{{booking.pickUpAddress}}</td>
-          <td>{{booking.pickUpTime}}</td>
+        <tr *ngFor="let activity of activities">
+          <td>{{activity.reference}}</td>
+          <td>{{getCustomerName(activity)}}</td>
+          <td>{{getPostcode(activity)}}</td>
+          <td>{{getAddress(activity)}}</td>
+          <td>{{getTime(activity)}}</td>
+          <td>{{activity.type}}</td>
         </tr>
       </table>

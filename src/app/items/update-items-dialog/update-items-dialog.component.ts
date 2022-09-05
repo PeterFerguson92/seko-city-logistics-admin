@@ -14,9 +14,7 @@ export class UpdateItemsDialogComponent implements OnInit, OnDestroy {
   itemInfoForm: FormGroup;
   itemStatuses = ITEM_STATUSES;
   updatedStatus;
-
   componentDestroyed$: Subject<boolean> = new Subject();
-
 
   constructor(private formBuilder: FormBuilder,
     private itemService: ItemService,

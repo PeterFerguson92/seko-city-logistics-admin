@@ -1,6 +1,6 @@
 import { gql } from 'apollo-angular';
 
-const BOOKING_FRAGMENT = gql`
+export const BOOKING_FRAGMENT = gql`
       fragment bookingfragment on Booking {
         id reference senderReference senderFullName senderPhone receiverReferences destination location numberOfItems
       totalAmount amountPaid amountOutstanding paymentType paymentStatus paymentNotes pickUpDate pickUpTime pickUpPostCode pickUpAddress

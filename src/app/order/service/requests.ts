@@ -1,6 +1,6 @@
 import { gql } from 'apollo-angular';
 
-const ORDER_FRAGMENT = gql`
+export const ORDER_FRAGMENT = gql`
       fragment orderfragment on Order {
         id reference customerReference customerFullName customerPhone
         totalAmount amountPaid amountOutstanding paymentType paymentStatus paymentNotes
