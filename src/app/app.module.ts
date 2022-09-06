@@ -14,7 +14,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { CustomerModule } from './customer/customer.module';
 import { BookingModule } from './booking/booking.module';
 import { ShipmentModule } from './shipment/shipment.module';
-import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ReportsComponent } from './reports/reports.component';
 import { DriversModule } from './driver/drivers.module';
 import { HomeComponent } from './home/home.component';

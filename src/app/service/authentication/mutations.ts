@@ -43,7 +43,7 @@ export const GET_DRIVERS = gql`
     getDrivers {
      errors { message }
      result
-     users {sub email role status name lastName userName phoneNumber country reference}
+     users {sub email role status name lastName username phoneNumber country reference}
     }
   }
 `;
@@ -53,7 +53,7 @@ export const GET_DRIVER = gql`
     getDriver(reference:$reference) {
      errors { message }
      result
-     users {sub email role status name lastName userName phoneNumber country reference}
+     users {sub email role status name lastName username phoneNumber country reference}
     }
   }
 `;

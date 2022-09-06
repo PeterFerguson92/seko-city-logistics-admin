@@ -15,7 +15,7 @@ export class AddEditDriverComponent implements OnInit, AfterViewInit {
   countries = COUNTRIES;
   countryCodes = COUNTRY_CODES;
   driver;
-  formValidationMap = {name: '', lastName: '', userName: '', email: '', phone: '', country: '' };
+  formValidationMap = {name: '', lastName: '', username: '', email: '', phone: '', country: '' };
 
   constructor(private formBuilder: FormBuilder, private authService: AuthenticationService,
     private validationService: ValidationService, private activatedroute: ActivatedRoute,
@@ -41,7 +41,7 @@ export class AddEditDriverComponent implements OnInit, AfterViewInit {
     this.addEditDriverForm = this.formBuilder.group({
       name: [driver ? this.driver.name : '', [Validators.required]],
       lastName: [driver ? this.driver.lastName : '', [Validators.required]],
-      userName: [driver ? this.driver.userName : '', [Validators.required]],
+      username: [driver ? this.driver.username : '', [Validators.required]],
       email: [driver ? this.driver.email : '', [Validators.required, Validators.email]],
       phoneGroup: this.formBuilder.group({
         countryCode: [driver && phoneNumberData ? phoneNumberData.countryCode : this.countryCodes[0], [Validators.required]],
@@ -52,7 +52,7 @@ export class AddEditDriverComponent implements OnInit, AfterViewInit {
 
     if (driver)
     {
-      this.addEditDriverForm.get('userName').disable();
+      this.addEditDriverForm.get('username').disable();
       this.addEditDriverForm.get('email').disable();
     }
   }
@@ -60,7 +60,7 @@ export class AddEditDriverComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.validateFormControl('name');
     this.validateFormControl('lastName');
-    this.validateFormControl('userName');
+    this.validateFormControl('username');
     this.validateFormControl('email');
     this.validateFormControl('phone');
   }
@@ -98,7 +98,9 @@ export class AddEditDriverComponent implements OnInit, AfterViewInit {
     });
 
     this.authService.signUp(driverDetails).subscribe(
-      ({ data }) => { this.router.navigate(['/drivers']); },
+      ({ data }) => { this.router.navigate(['/drivers']).then(() => {
+        window.location.reload();
+      }); },
       error => { console.log(error); }
     );
   }
@@ -129,7 +131,9 @@ export class AddEditDriverComponent implements OnInit, AfterViewInit {
     if (updateDriverFields.length > 0)
     {
       this.authService.updateUser(this.getFormControl('username').value, updateDriverFields).subscribe(
-        ({ data }) => { this.router.navigate(['/drivers']); },
+        ({ data }) => { this.router.navigate(['/drivers']).then(() => {
+          window.location.reload();
+        }); },
         error => { console.log(error); }
       );
     }
