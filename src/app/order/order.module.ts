@@ -17,6 +17,6 @@ import { OrderUpdateDialogComponent } from './order-update-dialog/order-update-d
     OrderReviewComponent,
     OrderUpdateDialogComponent,
   ],
-  imports: [CommonModule,SharedModule, FlexLayoutModule,CustomerModule]
+  imports: [CommonModule, SharedModule, FlexLayoutModule, CustomerModule]
 })
 export class OrderModule { }

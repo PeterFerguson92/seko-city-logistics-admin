@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import {
-  DELETE_USER, GET_DRIVER, GET_DRIVERS, GET_KEY,
+  DELETE_USER, GET_DRIVER, GET_DRIVERS,
   IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UPDATE_USER
 } from './mutations';
 
@@ -64,12 +64,6 @@ export class AuthenticationService {
         }
       }).toPromise();
     return status.data.isUserAuthenticated;
-  }
-
-  getKeys() {
-    return this.apollo.query<any>({
-      query: GET_KEY,
-    });
   }
 
 }

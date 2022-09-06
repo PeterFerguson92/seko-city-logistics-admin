@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   itemQuantityReportData;
   includeArchive = true;
   itemTypeOccurrenceReportData;
+
   totalBookings;
   totalBookingsAmount;
   currentMonthTotalBookings;
@@ -35,8 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router, private bookingService: BookingsService, private itemService: ItemService,
-  private taskService: TaskService, private commonService: CommonService, private orderService: OrderService) { }
+  constructor(private bookingService: BookingsService, private itemService: ItemService,
+    private taskService: TaskService, private commonService: CommonService, private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.getBookingsReport();
@@ -149,12 +150,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   getFormattedDate(date) {
     return this.commonService.getFormattedDate(date);
   }
-
-  navigate(url) {
-    this.router.navigateByUrl(url)
-  }
-
-  onSeeMoreReport() {}
 
   ngOnDestroy() {
     this.componentDestroyed$.next(true)

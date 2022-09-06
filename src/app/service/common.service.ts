@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PERSONAL_CUSTOMER_TYPE } from '../constants';
-import { GET_ACTIVITY_AVAILABILITY, GET_ADDRESSES_BY_POSTCODE } from './request';
+import { GET_ACTIVITY_AVAILABILITY, GET_ADDRESSES_BY_POSTCODE, GET_KEY } from './request';
 import { Apollo } from 'apollo-angular';
 
 
@@ -90,6 +90,12 @@ export class CommonService {
 
   isCustomerPersonal(customerType:string) {
     return PERSONAL_CUSTOMER_TYPE === customerType;
+  }
+
+  getKeys() {
+    return this.apollo.query<any>({
+      query: GET_KEY,
+    });
   }
 
 }

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../service/authentication/authentication.service';
 import { REDIRECT_SECTION_AFTER_LOGIN } from '../constants';
 import { ValidationService } from '../service/validation/validation.service';
+import { CommonService } from '../service/common.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private validationService: ValidationService) { }
+    private validationService: ValidationService,
+    private commonService: CommonService) { }
 
   ngAfterViewInit(): void {
     // window.location.reload();
@@ -51,7 +54,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.showLoader = false;
         if (data[authenticationMode].result)
         {
-          this.router.navigate([`/${REDIRECT_SECTION_AFTER_LOGIN}`])
+          this.encript(data[authenticationMode].userData.sub)
         } else
         {
           this.showErrorText = true;
@@ -61,6 +64,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
       error => {
         console.log(error);
       }
+    );
+  }
+
+  encript(sub) {
+    this.commonService.getKeys().subscribe(
+      ({ data }) => {
+        const encrypted = CryptoJS.AES.encrypt(sub,  data.getKeys.encryptionKey).toString();
+        localStorage.setItem('id', encrypted);
+        this.router.navigate([`/${REDIRECT_SECTION_AFTER_LOGIN}`])
+
+        // const decrypted = CryptoJS.AES.decrypt(encrypted,  data.getKeys.encryptionKey).toString(CryptoJS.enc.Utf8);
+        // console.log(decrypted);
+
+      },
+      error => { console.log(error); }
     );
   }
 

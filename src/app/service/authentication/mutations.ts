@@ -58,14 +58,6 @@ export const GET_DRIVER = gql`
   }
 `;
 
-export const GET_KEY = gql`
-  query {
-    getKeys {
-      googleMapsKey
-    }
-  }
-`;
-
 export interface UserResponse {
   signUp: SignUp;
 }

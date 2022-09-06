@@ -24,3 +24,12 @@ query activityAvailability($date: String!) {
 ${BOOKING_FRAGMENT}
 ${ORDER_FRAGMENT}
 `;
+
+export const GET_KEY = gql`
+  query {
+    getKeys {
+      googleMapsKey
+      encryptionKey
+    }
+  }
+`;

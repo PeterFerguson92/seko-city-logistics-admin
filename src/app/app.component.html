@@ -11,10 +11,10 @@
                     <span class="example-spacer"></span>
                     <span>Administration area</span>
                     <span class="example-spacer"></span>
-                    <button mat-icon-button class="example-icon account_circle" aria-label="Example icon-button with heart icon">
+                    <button mat-icon-button (click)="onViewProfile()" class="example-icon account_circle" aria-label="Example icon-button with heart icon">
                       <mat-icon>account_circle</mat-icon>
                     </button>
-                    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                    <button mat-icon-button (click)="onLogout()" class="example-icon" aria-label="Example icon-button with share icon">
                       <mat-icon>exit_to_app</mat-icon>
                     </button>
                 </mat-toolbar>

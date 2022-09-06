@@ -75,7 +75,7 @@ export class DriverBookingsLocationsComponent implements OnInit {
   }
 
   getGoogleApiKey() {
-    this.authService.getKeys().subscribe(
+    this.commonService.getKeys().subscribe(
       ({ data }) => { this.googleMapsKey = data.getKeys.googleMapsKey; },
       error => { console.log(error); }
     );

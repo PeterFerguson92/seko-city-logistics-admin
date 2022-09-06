@@ -36,6 +36,7 @@ import { AddEditOrderComponent } from './order/add-edit-order/add-edit-order.com
 import { OrderResolver } from './order/service/resolver/order.resolver';
 import { CustomerBookingHistoryComponent } from './customer/customer-booking-history/customer-booking-history.component';
 import { CustomerBookingHistoryResolver } from './customer/service/resolver/customer-booking-history.resolver';
+import { ProfileComponent } from './profile/profile/profile.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -71,6 +72,7 @@ const routes: Routes = [
   { path: 'add-order', component: AddEditOrderComponent },
   { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },
   { path: 'add-order/:reference', component: AddEditOrderComponent, resolve: { customer: CustomerResolver } },
+  { path: 'profile', component: ProfileComponent, resolve: { customer: CustomerResolver } },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 

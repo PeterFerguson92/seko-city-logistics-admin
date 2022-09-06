@@ -13,7 +13,7 @@ export class AppComponent implements AfterViewInit {
   isVisible = true;
   LOGIN_URL = '/login'
 
-  constructor(route: Router) {
+  constructor(private router: Router, route: Router) {
 
     route.events.subscribe(event => {
       if (this.sidenav)
@@ -51,6 +51,15 @@ export class AppComponent implements AfterViewInit {
     //     this.sidenav.open()
     //   }
     // })
+  }
+
+  onViewProfile() {
+    this.router.navigateByUrl('/profile');
+  }
+
+  onLogout() {
+    localStorage.removeItem('id');
+    this.router.navigateByUrl('/login');
   }
 
 }
