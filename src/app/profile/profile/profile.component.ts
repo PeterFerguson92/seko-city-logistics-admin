@@ -266,10 +266,12 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             this.getFormControl('username').setValue(null);
             this.getFormControl('oldPassword').setValue(null);
             this.getFormControl('newPassword').setValue(null);
+            this.clearNotification();
           } else
           {
             this.showErrorText = true;
             this.errorText = data.changePassword.errors[0].message;
+            this.clearNotification();
           }
           this.spinner.hide();
         },
@@ -278,11 +280,21 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       this.showErrorText = true;
       this.errorText = 'Passwords do not match';
+      this.clearNotification();
     }
   }
 
   resetPassword() {
-    console.log('Reset Password')
+    console.log('Reset Password');
   }
 
+
+  clearNotification() {
+    setTimeout(function() {
+      this.showConfirmText = false;
+      this.showErrorText = false;
+      this.confirmText = null;
+      this.errorText = null;
+  }.bind(this), 3000);
+  }
 }
