@@ -79,10 +79,8 @@
             <app-material-input [type]="'password'" [width]="50" [label]="'New Password'"  formControlName="confirmResetNewPassword"></app-material-input>
           </div>
         </div>
-        <app-error-message [showErrorText]=showErrorText [errorText]="errorText"></app-error-message>
-        <div *ngIf=showConfirmText>
-          <p>{{confirmText}}</p>
-        </div>
+        <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'red'"></app-notification-message>
+        <app-notification-message [showText]="showConfirmText" [text]="confirmText" [color]="'green'"></app-notification-message>
       <div class="btn-block">
         <app-material-button [label]="'SUBMIT'" [disabled]="isSubmitDisabled()" [width]="30" (click)="onSubmit()"></app-material-button>
       </div>

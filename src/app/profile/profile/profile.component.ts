@@ -255,7 +255,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       this.authService.changePassword(username, oldPassword, newPassword)
         .pipe(takeUntil(this.componentDestroyed$))
         .subscribe(({ data }) => {
-          if (data.result)
+          if (data.changePassword.result)
           {
             this.showErrorText = false;
             this.errorText = null;

@@ -24,6 +24,7 @@ import { InputComponent } from './inputs/input/input.component';
 import { ConfirmDialogComponent } from './elements/confirm-dialog/confirm-dialog.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
+import { NotificationMessageComponent } from './notification-message/notification-message.component';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -43,7 +44,8 @@ import { JumbotronComponent } from './jumbotron/jumbotron.component';
     ConfirmDialogComponent,
     AlertComponent,
     InputComponent,
-    JumbotronComponent],
+    JumbotronComponent,
+    NotificationMessageComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule,NgxSpinnerModule ],
   exports: [
     ReactiveFormsModule,
@@ -65,7 +67,8 @@ import { JumbotronComponent } from './jumbotron/jumbotron.component';
     SectionTitleComponent,
     AlertComponent,
     InputComponent,
-    JumbotronComponent],
+    JumbotronComponent,
+    NotificationMessageComponent],
     providers: [
       { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
     ]
