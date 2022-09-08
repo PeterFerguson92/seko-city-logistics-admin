@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { PERSONAL_CUSTOMER_TYPE } from '../constants';
 import { GET_ACTIVITY_AVAILABILITY, GET_ADDRESSES_BY_POSTCODE, GET_KEY } from './request';
 import { Apollo } from 'apollo-angular';
+import * as CryptoJS from 'crypto-js';
 
 
 @Injectable({
@@ -96,6 +97,14 @@ export class CommonService {
     return this.apollo.query<any>({
       query: GET_KEY,
     });
+  }
+
+  encryptMessage(message, encryptionKey): string {
+    return CryptoJS.AES.encrypt(message, encryptionKey).toString();
+  }
+
+  decryptMessage(message, encryptionKey): string {
+    return CryptoJS.AES.decrypt(message,  encryptionKey).toString(CryptoJS.enc.Utf8);;
   }
 
 }

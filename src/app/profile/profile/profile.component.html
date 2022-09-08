@@ -1,1 +1,91 @@
-<p>profile works!</p>
+
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  <div [formGroup]="profileForm">
+    <div class="banner"></div>
+    <br/>
+    <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>perm_contact_calendar</mat-icon> DETAILS
+        </mat-panel-title>
+      </mat-expansion-panel-header><br/>
+        <div class="columns">
+          <div class="item">
+            <label for="fname"> Name <span>*</span></label><br>
+            <app-material-input [width]="80" [errorMsg]="formValidationMap.name" formControlName="name" [pattern]="'[a-zA-Z ]*'"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname"> Surname <span>*</span></label><br>
+            <app-material-input [width]="80" [errorMsg]="formValidationMap.lastName" formControlName="lastName" [pattern]="'[a-zA-Z ]*'"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname"> Username <span>*</span></label><br>
+            <app-material-input [width]="80" formControlName="username" [errorMsg]="formValidationMap.username"></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname"> Email <span>*</span></label><br>
+            <app-material-input [width]="80" formControlName="email" [errorMsg]="formValidationMap.email"></app-material-input>
+          </div>
+          <div class="item" formGroupName="phoneGroup">
+            <label for="lname"> Phone Number <span>*</span></label><br>
+            <app-material-select-input [label]="'Code'" [width]="15"  [options]="countryCodes" formControlName="countryCode"
+                (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
+            <app-material-input [width]="30" [label]="'Number'" formControlName="phone" [errorMsg]="formValidationMap.phone" ></app-material-input>
+          </div>
+          <div class="item">
+            <label for="lname"> Country<span>*</span></label><br>
+            <app-material-select-input (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
+          </div>
+        </div>
+      <div class="btn-block">
+        <app-material-button [label]="'UPDATE'" [disabled]="isDisabled()" [width]="30" (click)="onUpdateDriver()"></app-material-button>
+      </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+    <br>
+    <div [formGroup]="passwordMgmtForm">
+
+    <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>perm_contact_calendar</mat-icon> PASSWORD MANAGEMENT
+        </mat-panel-title>
+      </mat-expansion-panel-header><br/>
+        <div class="columns">
+          <div class="item">
+            <app-material-button [label]="'Change Password'" (click)="onChangePassword()"></app-material-button><br>
+          </div>
+          <div class="item">
+            <app-material-button [label]="'Reset Password'" (click)="onResetPassword()"></app-material-button><br>
+          </div>
+
+          <div *ngIf="showChangedPasswordFields" class="item">
+            <app-material-input [type]="'password'" [width]="50" [label]="'Old Password'" [errorMsg]="formValidationMap.oldPassword" formControlName="oldPassword" ></app-material-input>
+          </div>
+          <div *ngIf="showChangedPasswordFields" class="item"></div>
+          <div *ngIf="showChangedPasswordFields" class="item">
+            <app-material-input [type]="'password'" [width]="50" [label]="'New Password'" [errorMsg]="formValidationMap.newPassword" formControlName="newPassword" ></app-material-input>
+          </div>
+          <div *ngIf="showChangedPasswordFields" class="item">
+            <app-material-input [type]="'password'" [width]="50" [label]="'Confirm Password'" [errorMsg]="formValidationMap.confirmNewPassword" formControlName="confirmNewPassword" ></app-material-input>
+          </div>
+          <div *ngIf="showResetPasswordFields" class="item">
+            <app-material-input [type]="'number'" [width]="50" [label]="'Verification Code'"  formControlName="verificationCode"></app-material-input>
+          </div>
+          <div *ngIf="showResetPasswordFields" class="item">
+            <app-material-input [type]="'password'" [width]="50" [label]="'New Password'"  formControlName="confirmResetNewPassword"></app-material-input>
+          </div>
+        </div>
+        <app-error-message [showErrorText]=showErrorText [errorText]="errorText"></app-error-message>
+        <div *ngIf=showConfirmText>
+          <p>{{confirmText}}</p>
+        </div>
+      <div class="btn-block">
+        <app-material-button [label]="'SUBMIT'" [disabled]="isSubmitDisabled()" [width]="30" (click)="onSubmit()"></app-material-button>
+      </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>

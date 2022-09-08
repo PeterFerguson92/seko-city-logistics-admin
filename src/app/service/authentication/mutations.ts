@@ -20,6 +20,27 @@ export const SIGN_UP_MUTATION = gql`
   }
 `;
 
+
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation changePassword($username: String!, $oldPassword: String!, $newPassword: String!) {
+    changePassword(username: $username, oldPassword: $oldPassword, newPassword: $newPassword ) {
+      errors { message }
+      result
+    }
+  }
+`;
+
+
+export const GET_USER = gql`
+  query getUser($sub: String!){
+    getUser(sub:$sub) {
+     errors { message }
+     result
+     users {sub email role status name lastName username phoneNumber country reference}
+    }
+  }
+`;
+
 export const UPDATE_USER = gql`
   mutation updateUser($username: String!, $fields: [UpdateFieldInput!]) {
     updateUser(username:$username, fields:$fields)

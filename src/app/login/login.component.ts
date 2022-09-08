@@ -78,13 +78,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(
       ({ data }) => {
-        const encrypted = CryptoJS.AES.encrypt(sub,  data.getKeys.encryptionKey).toString();
+        const encrypted = this.commonService.encryptMessage(sub,  data.getKeys.encryptionKey);
         localStorage.setItem('id', encrypted);
         this.router.navigate([`/${REDIRECT_SECTION_AFTER_LOGIN}`])
-
-        // const decrypted = CryptoJS.AES.decrypt(encrypted,  data.getKeys.encryptionKey).toString(CryptoJS.enc.Utf8);
-        // console.log(decrypted);
-
       },
       error => { console.log(error); }
     );
