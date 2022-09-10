@@ -192,7 +192,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showPasswordMgmtButton = true;
     this.showChangedPasswordFields = false;
     this.showResetPasswordFields = true;
-  //  this.onRequestResetPassword();
+    this.onRequestResetPassword();
   }
 
   onRequestResetPassword() {

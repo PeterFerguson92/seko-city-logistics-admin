@@ -1,19 +1,19 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../service/authentication/authentication.service';
 import { REDIRECT_SECTION_AFTER_LOGIN } from '../constants';
 import { ValidationService } from '../service/validation/validation.service';
 import { CommonService } from '../service/common.service';
-import * as CryptoJS from 'crypto-js';
 import { Subject, takeUntil } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
 
   authForm: FormGroup;
   showErrorText: boolean;
@@ -31,14 +31,10 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private validationService: ValidationService,
-    private commonService: CommonService) { }
-
-  ngAfterViewInit(): void {
-    // window.location.reload();
-  }
+    private commonService: CommonService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.showLoader = false;
     this.authForm = this.formBuilder.group({
       usernameInput: ['', [Validators.required]],
       passwordInput: ['', [Validators.required]],
@@ -48,8 +44,12 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     this.validateFormControl('passwordInput');
   }
 
+  getFormControl(fControlName: string) {
+   return this.authForm.get(fControlName)
+  }
+
   onAuthenticate() {
-    this.showLoader = true;
+    this.spinner.show();
     this.showErrorText = false;
     const authenticationMode = 'login';
     this.authService.login(this.authForm.get('usernameInput').value,
@@ -60,15 +60,21 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showLoader = false;
         if (data[authenticationMode].result)
         {
-          this.encript(data[authenticationMode].userData.sub)
+          this.encript(data[authenticationMode].userData.sub);
         } else
         {
           this.showErrorText = true;
           this.errorText = data[authenticationMode].errors[0].message;
+          this.clearFields();
+          this.clearNotification();
         }
+        this.spinner.hide();
       },
       error => {
-        console.log(error);
+        this.showErrorText = true;
+        this.errorText = 'Something went wrong, Please contact support';
+        this.clearFields();
+        this.clearNotification();
       }
     );
   }
@@ -95,5 +101,17 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.componentDestroyed$.next(true)
     this.componentDestroyed$.complete()
+  }
+
+  clearNotification() {
+    setTimeout(function() {
+      this.showErrorText = false;
+      this.errorText = null;
+    }.bind(this), 3000);
+  }
+
+  clearFields() {
+    this.getFormControl('usernameInput').reset();
+    this.getFormControl('passwordInput').reset();
   }
 }

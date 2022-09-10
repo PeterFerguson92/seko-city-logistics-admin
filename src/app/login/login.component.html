@@ -1,11 +1,14 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <section>
   <div class="imgBx">
     <img src="assets/login/door2door.jpeg">
   </div>
   <div class="contentBx">
     <div class="formBx">
-      <!-- <img src="assets/login/logo.png"> -->
-      <h2>Welcome</h2>
+      <img src="assets/login/logo.png">
+      <!-- <h2>Welcome</h2> -->
       <form (ngSubmit)="onAuthenticate()" [formGroup]="authForm">
         <div class="inputBx">
           <span>Username</span>
@@ -17,8 +20,7 @@
           <input type="password" name="" formControlName="passwordInput"/>
           <app-error-message [showErrorText]=true [errorText]=formValidationMap.passwordInput></app-error-message>
          </div>
-         <app-material-spinner [diameter]="30" [showLoader]=showLoader></app-material-spinner>
-         <app-error-message [showErrorText]=showErrorText [errorText]="errorText"></app-error-message>
+         <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
         <div class="inputBx">
           <app-material-button [label]="'LOGIN'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="100" [disabled]="!authForm.valid"></app-material-button>
         </div>
