@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { lastValueFrom } from 'rxjs';
 import { CommonService } from '../common.service';
 import {
   CHANGE_PASSWORD_MUTATION,
+  CONFIRM_RESET_PASSWORD_MUTATION,
   DELETE_USER, GET_DRIVER, GET_DRIVERS,
   GET_USER,
-  IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, SIGN_UP_MUTATION, UPDATE_USER
+  IS_USER_AUTHENTICATED_QUERY, LOGIN_MUTATION, RESET_PASSWORD_MUTATION, SIGN_UP_MUTATION, UPDATE_USER
 } from './mutations';
 
 @Injectable({
@@ -57,6 +57,20 @@ export class AuthenticationService {
     return this.apollo.mutate<any>({
       mutation: CHANGE_PASSWORD_MUTATION,
       variables: { username, oldPassword, newPassword }
+    });
+  }
+
+  resetPassword(username: string) {
+    return this.apollo.mutate<any>({
+      mutation: RESET_PASSWORD_MUTATION,
+      variables: { username }
+    });
+  }
+
+  confirmResetPassword(username: string, verificationCode: string, newPassword: string) {
+    return this.apollo.mutate<any>({
+      mutation: CONFIRM_RESET_PASSWORD_MUTATION,
+      variables: { username, verificationCode, newPassword }
     });
   }
 

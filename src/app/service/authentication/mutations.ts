@@ -30,6 +30,23 @@ export const CHANGE_PASSWORD_MUTATION = gql`
   }
 `;
 
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation resetPassword($username: String!) {
+    resetPassword(username: $username) {
+      errors { message }
+      result
+    }
+  }
+`;
+
+export const CONFIRM_RESET_PASSWORD_MUTATION = gql`
+  mutation confirmResetPassword($username: String!, $verificationCode: String!, $newPassword: String!) {
+    confirmResetPassword(username: $username, verificationCode: $verificationCode, newPassword: $newPassword) {
+      errors { message }
+      result
+    }
+  }
+`;
 
 export const GET_USER = gql`
   query getUser($sub: String!){

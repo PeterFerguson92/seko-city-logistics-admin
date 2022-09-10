@@ -17,9 +17,8 @@ export class BookingUpdateDialogComponent implements OnInit {
   errorText;
   showErrorText;
 
-  constructor(private formBuilder: FormBuilder,
-    private bookingService: BookingsService,
-    public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private formBuilder: FormBuilder, private bookingService: BookingsService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.bookingInfoForm = this.formBuilder.group({

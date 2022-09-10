@@ -1,6 +1,5 @@
 <h2 mat-dialog-title>UPDATE BOOKING</h2><mat-dialog-content class="mat-typography">
   <br>
-  <br>
   <form id="survey-form" [formGroup]="bookingInfoForm" >
       <div class="item">
         <app-material-select-input
@@ -8,7 +7,7 @@
         </app-material-select-input>
       </div>
   </form>
-  <app-error-message [showErrorText]=showErrorText [errorText]="errorText"></app-error-message>
+  <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>

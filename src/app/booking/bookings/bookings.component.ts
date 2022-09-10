@@ -73,7 +73,6 @@ export class BookingsComponent implements OnInit {
     return this.bookingsFilterForm.get(fControlName)
   }
 
-
   buildFilterFields() {
     const filters: any = {
       status: '', postcode: '', reference: '', paymentStatus: '',

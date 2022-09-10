@@ -7,36 +7,28 @@
     <br/>
     <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>perm_contact_calendar</mat-icon> DETAILS
-        </mat-panel-title>
+        <mat-panel-title> DETAILS </mat-panel-title>
       </mat-expansion-panel-header><br/>
         <div class="columns">
           <div class="item">
-            <label for="fname"> Name <span>*</span></label><br>
-            <app-material-input [width]="80" [errorMsg]="formValidationMap.name" formControlName="name" [pattern]="'[a-zA-Z ]*'"></app-material-input>
+            <app-material-input [label]="'Name'" [width]="80" [errorMsg]="formValidationMap.name" formControlName="name" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname"> Surname <span>*</span></label><br>
-            <app-material-input [width]="80" [errorMsg]="formValidationMap.lastName" formControlName="lastName" [pattern]="'[a-zA-Z ]*'"></app-material-input>
+            <app-material-input [label]="'Surname'" [width]="80" [errorMsg]="formValidationMap.lastName" formControlName="lastName" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname"> Username <span>*</span></label><br>
-            <app-material-input [width]="80" formControlName="username" [errorMsg]="formValidationMap.username"></app-material-input>
+            <app-material-input [label]="'Username'" [width]="80" formControlName="username" [errorMsg]="formValidationMap.username"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname"> Email <span>*</span></label><br>
-            <app-material-input [width]="80" formControlName="email" [errorMsg]="formValidationMap.email"></app-material-input>
+            <app-material-input  [label]="'Email'" [width]="80" formControlName="email" [errorMsg]="formValidationMap.email"></app-material-input>
           </div>
           <div class="item" formGroupName="phoneGroup">
-            <label for="lname"> Phone Number <span>*</span></label><br>
             <app-material-select-input [label]="'Code'" [width]="15"  [options]="countryCodes" formControlName="countryCode"
                 (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
             <app-material-input [width]="30" [label]="'Number'" formControlName="phone" [errorMsg]="formValidationMap.phone" ></app-material-input>
           </div>
           <div class="item">
-            <label for="lname"> Country<span>*</span></label><br>
-            <app-material-select-input (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
+            <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
           </div>
         </div>
       <div class="btn-block">
@@ -50,16 +42,14 @@
 
     <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>perm_contact_calendar</mat-icon> PASSWORD MANAGEMENT
-        </mat-panel-title>
+        <mat-panel-title> PASSWORD MANAGEMENT </mat-panel-title>
       </mat-expansion-panel-header><br/>
         <div class="columns">
           <div class="item">
             <app-material-button [label]="'Change Password'" (click)="onChangePassword()"></app-material-button><br>
           </div>
           <div class="item">
-            <app-material-button [label]="'Reset Password'" (click)="onResetPassword()"></app-material-button><br>
+            <app-material-button [label]="'Request reset password'" (click)="onResetPassword()"></app-material-button><br>
           </div>
 
           <div *ngIf="showChangedPasswordFields" class="item">
@@ -73,16 +63,22 @@
             <app-material-input [type]="'password'" [width]="50" [label]="'Confirm Password'" [errorMsg]="formValidationMap.confirmNewPassword" formControlName="confirmNewPassword" ></app-material-input>
           </div>
           <div *ngIf="showResetPasswordFields" class="item">
-            <app-material-input [type]="'number'" [width]="50" [label]="'Verification Code'"  formControlName="verificationCode"></app-material-input>
+            <app-material-input [type]="'number'" [width]="50" [label]="'Verification Code'" [errorMsg]="formValidationMap.verificationCode" formControlName="verificationCode"></app-material-input>
           </div>
           <div *ngIf="showResetPasswordFields" class="item">
-            <app-material-input [type]="'password'" [width]="50" [label]="'New Password'"  formControlName="confirmResetNewPassword"></app-material-input>
+          </div>
+          <div *ngIf="showResetPasswordFields" class="item">
+            <app-material-input [type]="'password'" [width]="50" [label]="'New Password'" [errorMsg]="formValidationMap.resetNewPassword" formControlName="resetNewPassword"></app-material-input>
+          </div>
+          <div *ngIf="showResetPasswordFields" class="item">
+            <app-material-input [type]="'password'" [width]="50" [label]="'Confirm New Password'" [errorMsg]="formValidationMap.confirmResetNewPassword" formControlName="confirmResetNewPassword"></app-material-input>
           </div>
         </div>
         <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
         <app-notification-message [showText]="showConfirmText" [text]="confirmText" [color]="'green'"></app-notification-message>
-      <div class="btn-block">
-        <app-material-button [label]="'SUBMIT'" [disabled]="isSubmitDisabled()" [width]="30" (click)="onSubmit()"></app-material-button>
+        <app-notification-message [showText]="showInfoText" [text]="infoText" [color]="'#2196F3'"></app-notification-message>
+        <div class="btn-block">
+        <app-material-button *ngIf="showPasswordMgmtButton" [label]="'SUBMIT'" [disabled]="isSubmitDisabled()" [width]="30" (click)="onSubmit()"></app-material-button>
       </div>
       </mat-expansion-panel>
     </mat-accordion>

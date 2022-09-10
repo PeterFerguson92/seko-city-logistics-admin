@@ -15,16 +15,19 @@ import { ValidationService } from 'src/app/service/validation/validation.service
 })
 export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  PASSWORD_MANAGEMENT_FIELDS = ['oldPassword', 'newPassword', 'confirmNewPassword',
-    'confirmResetNewPassword', 'verificationCode']
+  PASSWORD_MANAGEMENT_FIELDS = ['oldPassword', 'newPassword', 'confirmNewPassword', 'verificationCode',
+    'resetNewPassword', 'confirmResetNewPassword']
 
   user;
   showChangedPasswordFields = false;
   showResetPasswordFields = false;
+  showPasswordMgmtButton = false;
   showErrorText: boolean;
   errorText: string;
   showConfirmText: boolean;
   confirmText: string;
+  showInfoText: boolean;
+  infoText: string;
 
   profileForm: FormGroup;
   passwordMgmtForm: FormGroup;
@@ -32,7 +35,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   countryCodes = COUNTRY_CODES;
   formValidationMap = {
     name: '', lastName: '', username: '', email: '', phone: '', country: '', oldPassword: '', newPassword: '',
-    confirmNewPassword: '', verificationCode: '', confirmResetNewPassword: ''
+    confirmNewPassword: '', verificationCode: '', resetNewPassword: '', confirmResetNewPassword: ''
   };
 
   componentDestroyed$: Subject<boolean> = new Subject();
@@ -42,7 +45,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-   this.spinner.show();
+  this.spinner.show();
     this.profileForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
@@ -59,8 +62,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       oldPassword: [null, [Validators.required]],
       newPassword: [null, [Validators.required]],
       confirmNewPassword: [null, [Validators.required]],
+      verificationCode: [null, [Validators.required]],
+      resetNewPassword: [null, [Validators.required]],
       confirmResetNewPassword: [null, [Validators.required]],
-      verificationCode: [null, [Validators.required]]
     })
 
     this.commonService.getKeys()
@@ -97,8 +101,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.validateFormControl('lastName');
     this.validateFormControl('oldPassword');
     this.validateFormControl('newPassword');
-    // this.validateFormControl('confirmResetNewPassword');
-    // this.validateFormControl('verificationCode')
+    this.validateFormControl('resetNewPassword');
+    this.validateFormControl('confirmResetNewPassword');
+    this.validateFormControl('verificationCode')
    this.validateGroupFormControl('phoneGroup', 'phone')
   }
 
@@ -178,13 +183,39 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onChangePassword() {
+    this.showPasswordMgmtButton = true;
     this.showChangedPasswordFields = true;
     this.showResetPasswordFields = false;
   }
 
   onResetPassword() {
+    this.showPasswordMgmtButton = true;
     this.showChangedPasswordFields = false;
     this.showResetPasswordFields = true;
+  //  this.onRequestResetPassword();
+  }
+
+  onRequestResetPassword() {
+    const username = this.getFormControl('username').value;
+    this.spinner.show();
+    this.authService.resetPassword(username)
+    .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(({ data }) => {
+        if (data.resetPassword.result)
+        {
+          this.showInfoText = true;
+          this.infoText = 'A verification code has been sent to your email. Please use that to reset your password';
+          this.clearNotification();
+        } else
+        {
+          this.showErrorText = true;
+          this.errorText = data.resetPassword.errors[0].message;
+          this.clearFields();
+          this.clearNotification();
+        }
+        this.spinner.hide();
+      },
+      error => { console.log(error); })
   }
 
   onUpdateDriver() {
@@ -230,7 +261,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       return !this.getFormControl('confirmResetNewPassword').valid && !this.getFormControl('verificationCode').valid;
     }
-
   }
 
   onSubmit() {
@@ -263,19 +293,22 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             this.showConfirmText = true;
             this.confirmText = 'Password changed sucessfully';
 
-            this.getFormControl('username').setValue(null);
-            this.getFormControl('oldPassword').setValue(null);
-            this.getFormControl('newPassword').setValue(null);
+            this.clearFields();
             this.clearNotification();
           } else
           {
             this.showErrorText = true;
             this.errorText = data.changePassword.errors[0].message;
+            this.clearFields();
             this.clearNotification();
           }
           this.spinner.hide();
         },
-          error => { console.log(error); })
+          error => {
+            this.showErrorText = true;
+            this.errorText = 'Something went wrong, Please contact support';
+            this.spinner.hide();
+          })
     } else
     {
       this.showErrorText = true;
@@ -285,16 +318,66 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resetPassword() {
-    console.log('Reset Password');
-  }
+    const username = this.getFormControl('username').value;
+    const verificationCode = this.getFormControl('verificationCode').value;
+    const resetNewPassword = this.getFormControl('resetNewPassword').value;
+    const confirmResetNewPassword = this.getFormControl('confirmResetNewPassword').value;
 
+    if (resetNewPassword === confirmResetNewPassword)
+    {
+      this.spinner.show();
+      this.authService.confirmResetPassword(username, verificationCode, confirmResetNewPassword)
+        .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe(({ data }) => {
+          if (data.confirmResetPassword.result)
+          {
+            this.showErrorText = false;
+            this.errorText = null;
+
+            this.showConfirmText = true;
+            this.confirmText = 'Password changed sucessfully';
+
+            this.clearFields();
+            this.clearNotification();
+          } else
+          {
+            this.showErrorText = true;
+            this.errorText = data.confirmResetPassword.errors[0].message;
+            this.clearFields();
+            this.clearNotification();
+          }
+          this.spinner.hide();
+        },
+          error => {
+            this.showErrorText = true;
+            this.errorText = 'Something went wrong, Please contact support';
+          })
+          this.spinner.hide();
+    } else
+    {
+      this.showErrorText = true;
+      this.errorText = 'Passwords do not match';
+      this.clearNotification();
+    }
+  }
 
   clearNotification() {
     setTimeout(function() {
       this.showConfirmText = false;
       this.showErrorText = false;
+      this.showInfoText = false;
+
       this.confirmText = null;
       this.errorText = null;
-  }.bind(this), 3000);
+      this.showInfoText = null;
+    }.bind(this), 3000);
+  }
+
+  clearFields() {
+    this.getFormControl('oldPassword').reset();
+    this.getFormControl('newPassword').reset();
+    this.getFormControl('verificationCode').reset();
+    this.getFormControl('resetNewPassword').reset();
+    this.getFormControl('confirmResetNewPassword').reset();
   }
 }

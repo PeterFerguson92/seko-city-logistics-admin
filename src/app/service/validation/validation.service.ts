@@ -4,7 +4,6 @@ import { debounceTime } from 'rxjs/operators';
 import { POSTCODE_REGEX } from 'src/app/constants';
 import { isValidPhoneNumber } from 'libphonenumber-js'
 import { CommonService } from '../common.service';
-import { threadId } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +59,9 @@ export class ValidationService {
     oldPassword: this.requiredValidationMessages,
     newPassword: this.requiredValidationMessages,
     confirmNewPassword: this.requiredValidationMessages,
-    confirmResetNewPassword: this.requiredValidationMessages
+    resetNewPassword: this.requiredValidationMessages,
+    confirmResetNewPassword: this.requiredValidationMessages,
+    verificationCode: this.requiredValidationMessages
   };
 
   constructor(private commonService: CommonService) { }
