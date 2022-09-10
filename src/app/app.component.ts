@@ -59,6 +59,7 @@ export class AppComponent implements AfterViewInit {
 
   onLogout() {
     localStorage.removeItem('id');
+    localStorage.removeItem('foo')
     this.router.navigateByUrl('/login');
   }
 

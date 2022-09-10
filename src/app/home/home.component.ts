@@ -37,7 +37,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(private bookingService: BookingsService, private itemService: ItemService,
-    private taskService: TaskService, private commonService: CommonService, private orderService: OrderService) { }
+    private taskService: TaskService, private commonService: CommonService, private orderService: OrderService) {
+      if (!localStorage.getItem('foo'))
+      {
+        localStorage.setItem('foo', 'no reload')
+        location.reload()
+      }
+    }
 
   ngOnInit(): void {
     this.getBookingsReport();

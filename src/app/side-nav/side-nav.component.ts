@@ -15,6 +15,7 @@ export class SideNavComponent implements OnInit {
   }
 
   navigate(url) {
+    localStorage.removeItem('id');
     if (this.LOGIN_URL === url)
     {
       localStorage.removeItem('foo')

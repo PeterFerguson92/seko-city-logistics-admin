@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 
@@ -12,7 +14,7 @@ import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component
   templateUrl: './drivers.component.html',
   styleUrls: ['./drivers.component.css', '../../shared/shared-table.css', '../../shared/shared-new-form.css']
 })
-export class DriversComponent implements OnInit {
+export class DriversComponent implements OnInit, OnDestroy {
 
   drivers;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -20,13 +22,23 @@ export class DriversComponent implements OnInit {
   dataSource = null;
 
   displayedColumns: string[] = ['ID', 'NAME', 'SURNAME', 'USERNAME', 'EMAIL', 'PHONE', 'COUNTRY', 'ACTION'];
-  constructor(private authService: AuthenticationService,
-    private router: Router, private dialog: MatDialog, private activatedroute: ActivatedRoute) { }
+
+  componentDestroyed$: Subject<boolean> = new Subject();
+
+  constructor(private authService: AuthenticationService, private router: Router,
+    private dialog: MatDialog, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
-      this.dataSource = new MatTableDataSource(data.drivers);
-    });
+    this.spinner.show();
+    this.authService.getDrivers()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(({ data }) => {
+        this.dataSource = new MatTableDataSource(data.getDrivers.users);
+        this.spinner.hide();
+      },
+      error => {
+        console.log(error)
+      })
   }
 
   onAddDriver() {
@@ -63,5 +75,10 @@ export class DriversComponent implements OnInit {
         );
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 }
