@@ -38,6 +38,7 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.validateFormControl('postcode');
+    this.getAddressByPostcode();
   }
 
   validateFormControl(fControlName: string) {

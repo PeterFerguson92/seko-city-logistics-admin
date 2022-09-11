@@ -78,7 +78,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             this.getData(sub);
           }
       },
-      error => { console.log(error); }
+        error => {
+          console.log(error);
+          this.showErrorText = true;
+          this.errorText = 'Something went wrong, Please contact support';
+          this.spinner.hide(); }
     );
   }
 
@@ -91,9 +95,17 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
           this.user = data.getUser.users[0];
           this.buildFormGroup(this.user);
           this.spinner.hide();
+        } else
+        {
+          this.spinner.hide();
         }
       },
-      error => { console.log(error); })
+        error => {
+          console.log(error);
+          this.showErrorText = true;
+          this.errorText = 'Something went wrong, Please contact support';
+          this.spinner.hide();
+        })
   }
 
   ngAfterViewInit(): void {
@@ -229,7 +241,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         {
           const countryCodeFormControl = this.getFormControl('countryCode');
           const numberFormControl = this.getFormControl('number');
-
           if (countryCodeFormControl.pristine || numberFormControl.pristine)
           {
             updateDriverFields.push({ name: 'phoneNumber', value: this.getPhoneNumber() });
@@ -351,6 +362,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
           error => {
             this.showErrorText = true;
             this.errorText = 'Something went wrong, Please contact support';
+            this.spinner.hide();
+
           })
           this.spinner.hide();
     } else

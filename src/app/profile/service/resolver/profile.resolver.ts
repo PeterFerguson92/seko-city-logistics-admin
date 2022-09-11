@@ -16,18 +16,18 @@ export class ProfileResolver implements Resolve<any> {
 
 
   async resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    const sub = this.authService.getAuthSub();
-    if (!sub)
-    {
-      const message = `user sub not found`;
-      return of({ data: null, isInError: true, errorMsg: message });
-    }
-    return this.authService.getUser(sub)
-      .pipe(
-        map(data => ({ data: data.data.getUser, isInError: false, errorMsg: null })),
-        catchError(error => {
-          const message = `Retrieval error: ${error.errorMessage}`;
-          return of({ data: null, isInError: true, errorMsg: message });
-        }));
+  //   const sub = this.authService.getAuthSub();
+  //   if (!sub)
+  //   {
+  //     const message = `user sub not found`;
+  //     return of({ data: null, isInError: true, errorMsg: message });
+  //   }
+  //   return this.authService.getUser(sub)
+  //     .pipe(
+  //       map(data => ({ data: data.data.getUser, isInError: false, errorMsg: null })),
+  //       catchError(error => {
+  //         const message = `Retrieval error: ${error.errorMessage}`;
+  //         return of({ data: null, isInError: true, errorMsg: message });
+  //       }));
   }
 }

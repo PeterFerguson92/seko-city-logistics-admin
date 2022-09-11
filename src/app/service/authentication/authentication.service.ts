@@ -99,18 +99,4 @@ export class AuthenticationService {
     return status.data.isUserAuthenticated;
   }
 
-  async getAuthSub() {
-    // const encryptedId = localStorage.getItem('id');
-    // if (encryptedId)
-    // {
-    //   const encryptionKey = await (lastValueFrom(this.commonService.getKeys())).data.getKeys.encryptionKey;
-    //   const sub = this.commonService.decryptMessage(encryptedId, encryptionKey);
-    //   console.log(sub)
-    //   return sub
-    // } else
-    // {
-    //   return null;
-    // }
-  }
-
 }
