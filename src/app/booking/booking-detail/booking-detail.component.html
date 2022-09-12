@@ -12,7 +12,17 @@
   </mat-step>
   <mat-step>
     <form>
-      <ng-template matStepLabel>Fill out receiver details</ng-template>
+      <ng-template matStepLabel>Fill out pick up details</ng-template>
+      <app-booking-info [bookingInfo]="getBookingInfoData()"></app-booking-info>
+      <div align="end">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onForward(stepper, 'bookingInfoComponent')"> Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <form >
+      <ng-template matStepLabel>Fill out receivers details</ng-template>
       <app-bookings-receivers [references]="booking.receiverReferences" [destination]="booking.destination" [location]="booking.location"
       [senderReference]="getSenderRef()"></app-bookings-receivers >
       <div align="end">
@@ -21,23 +31,13 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
+  <mat-step >
     <form >
       <ng-template matStepLabel>Fill out items details</ng-template>
       <app-booking-items [paymentData]="getPaymentData()"></app-booking-items>
       <div align="end" >
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="onForward(stepper, 'bookingItemsComponent')"> Next </button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step >
-    <form >
-      <ng-template matStepLabel>Fill out pick up details</ng-template>
-      <app-booking-info [bookingInfo]="getBookingInfoData()"></app-booking-info>
-      <div align="end">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onForward(stepper, 'bookingInfoComponent')"> Next</button>
       </div>
     </form>
   </mat-step>
