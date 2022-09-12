@@ -85,10 +85,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       if (this.router.url.includes('add-customer'))
       {
         this.mode = ADD_CUSTOMER_MODE;
-
       } else
       {
-        this.mode = ADD_ORDER_CUSTOMER_MODE
+     //   this.mode = ADD_ORDER_CUSTOMER_MODE
       }
     }
   }
@@ -265,6 +264,7 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   isCreateBookingMode() {
+    console.log(this.mode)
     return CREATE_BOOKING_MODE === this.mode;
   }
 

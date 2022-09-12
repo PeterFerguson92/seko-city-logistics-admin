@@ -21,8 +21,11 @@ export class AddEditOrderComponent implements OnInit {
         this.order.customer = data.order[1].data.customerByReference;
       } else
       {
-        this.order.customer = data.customer;
-        this.mode = data.customer ? ADD_ORDER_CUSTOMER_MODE : CREATE_ORDER_MODE;
+        if (this.router.url.includes('add-order'))
+        {
+          this.order.customer = data.customer;
+          this.mode = data.customer ? ADD_ORDER_CUSTOMER_MODE : CREATE_ORDER_MODE;
+        }
       }
     })
   }

@@ -22,8 +22,11 @@ export class AddEditBookingComponent implements OnInit, OnDestroy {
         this.booking.customer = data.booking[1].data.customerByReference;
       } else
       {
-        this.booking.customer = data.customer;
+        if (this.router.url.includes('add-booking'))
+        {
+          this.booking.customer = data.customer;
         this.mode = data.customer ? ADD_BOOKING_CUSTOMER_MODE : CREATE_BOOKING_MODE;
+        }
       }
     })
   }
