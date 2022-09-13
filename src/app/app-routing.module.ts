@@ -26,7 +26,6 @@ import { DriversResolver } from './driver/service/drivers.resolver';
 import { DriverBookingsResolver } from './booking/service/resolver/driver-bookings.resolver';
 import { DriverBookingsComponent } from './driver/driver-bookings/driver-bookings.component';
 import { DriverBookingsLocationsComponent } from './driver/driver-bookings-locations/driver-bookings-locations.component';
-import { LoadedItemsComponent } from './shipment/loaded-items/loaded-items.component';
 import { TasksResolver } from './task/service/resolver/tasks.resolver';
 import { TaskBoardComponent } from './task/task-board/task-board.component';
 import { OrdersComponent } from './order/orders/orders.component';

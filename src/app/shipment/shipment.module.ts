@@ -7,12 +7,11 @@ import { BookingModule } from '../booking/booking.module';
 import { ShipmentItemsComponent } from './shipment-items/shipment-items.component';
 import { ShipmentAnalysisComponent } from './shipment-analysis/shipment-analysis.component';
 import { ShipmentReportComponent } from './shipment-report/shipment-report.component';
-import { LoadedItemsComponent } from './loaded-items/loaded-items.component';
 import { EligibleItemsComponent } from './eligible-items/eligible-items.component';
 
 @NgModule({
   declarations: [AddEditShipmentComponent, ShipmentsComponent,
-    ShipmentItemsComponent, ShipmentAnalysisComponent, ShipmentReportComponent, LoadedItemsComponent, EligibleItemsComponent],
+    ShipmentItemsComponent, ShipmentAnalysisComponent, ShipmentReportComponent, EligibleItemsComponent],
   imports: [CommonModule, SharedModule, BookingModule]
 })
 export class ShipmentModule { }
