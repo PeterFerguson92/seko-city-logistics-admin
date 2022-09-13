@@ -17,7 +17,6 @@ import { BookingSummaryResolver } from './booking/service/resolver/booking-summa
 import { ShipmentItemsResolver } from './shipment/service/resolver/shipment-items.resolver';
 import { DriversComponent } from './driver/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
-import { LoadedItemsResolver } from './shipment/service/resolver/loaded-items.resolver';
 import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items.component';
 import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment-analysis.component';
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
@@ -38,13 +37,15 @@ import { CustomerBookingHistoryComponent } from './customer/customer-booking-his
 import { CustomerBookingHistoryResolver } from './customer/service/resolver/customer-booking-history.resolver';
 import { ProfileComponent } from './profile/profile/profile.component';
 import { AuthGuard } from './shared/authentication/auth.guard';
+import { EligibleItemsResolver } from './shipment/service/resolver/eligible-items.resolver';
+import { EligibleItemsComponent } from './shipment/eligible-items/eligible-items.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
   { path: 'add-shipment', component: AddEditShipmentComponent },
-  { path: 'loaded-items', component: LoadedItemsComponent, resolve: { info: LoadedItemsResolver }},
+  { path: 'eligible-items', component: EligibleItemsComponent, resolve: { info: EligibleItemsResolver }},
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'shipment-items/:reference', component: ShipmentItemsComponent, resolve: { items: ShipmentItemsResolver } },
   { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver } },

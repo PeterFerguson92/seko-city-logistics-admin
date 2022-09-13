@@ -35,8 +35,8 @@ export class ShipmentsComponent implements OnInit, AfterContentInit {
     })
   }
 
-  onAssign() {
-    this.router.navigate(['/loaded-items']);
+  onEligibleItems() {
+    this.router.navigate(['/eligible-items']);
   }
 
   onAddShipment() {
