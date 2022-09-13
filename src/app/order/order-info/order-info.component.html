@@ -3,9 +3,7 @@
   <mat-accordion [multi]="true">
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          DELIVERY
-        </mat-panel-title>
+        <mat-panel-title> DELIVERY </mat-panel-title>
       </mat-expansion-panel-header>
       <br/>
         <div class="columns">
@@ -13,6 +11,7 @@
             <app-material-date-picker-input
               [label]="'Date'" (inputChange)="onInputChange($event, 'deliveryDate')" formControlName="deliveryDate">
             </app-material-date-picker-input>&nbsp;
+            <app-material-button [label]="'Check availability'" (click)="onCheckAvailabilty()"></app-material-button><br>
           </div>
           <div class="item">
             <app-material-select-input [options]="times" formControlName="deliveryTime"
@@ -37,9 +36,7 @@
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          ITEMS
-        </mat-panel-title>
+        <mat-panel-title> ITEMS </mat-panel-title>
       </mat-expansion-panel-header>
       <br/>
         <div id="parent" formArrayName="items" *ngFor="let item of items.controls; let i = index">
@@ -75,9 +72,7 @@
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          PAYMENT
-        </mat-panel-title>
+        <mat-panel-title> PAYMENT </mat-panel-title>
       </mat-expansion-panel-header>
       <br/>
       <div id="parent">

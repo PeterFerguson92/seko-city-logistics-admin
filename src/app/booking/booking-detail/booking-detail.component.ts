@@ -7,7 +7,6 @@ import { BookingReviewComponent } from '../booking-review/booking-review.compone
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { EDIT_BOOKING_MODE, VIEW_BOOKING_MODE } from 'src/app/constants';
 import { lastValueFrom } from 'rxjs';
-import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings/bookings.service';
 import { Router } from '@angular/router';
 import { ICustomer } from 'src/app/customer/model';
@@ -31,8 +30,7 @@ export class BookingDetailComponent implements OnInit {
   @Input() mode
   senderFullName: string;
 
-  constructor(private router: Router,
-    private dialog: MatDialog,
+  constructor(private router: Router, private dialog: MatDialog,
     private customersService: CustomersService,
     private bookingsService: BookingsService) { }
 

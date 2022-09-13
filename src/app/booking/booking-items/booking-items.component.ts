@@ -305,12 +305,20 @@ export class BookingItemsComponent implements OnInit {
   }
 
   isMultipleEnabled() {
-    this.isAllSelected = this.allEnabled();
    return this.dataSource && this.dataSource.data && this.dataSource.data.filter((u: any) => u.selected).length > 0;
+  }
+
+  isAllChecked() {
+    return this.dataSource && this.dataSource.data &&
+      this.dataSource.data.filter((u: any) => u.selected).length === this.dataSource.data.length ;
   }
 
   isSelectLabel(label) {
     return label === 'SELECTED';
+  }
+
+  selectRow(element) {
+    element.selected = !element.selected;
   }
 
   selectAll() {

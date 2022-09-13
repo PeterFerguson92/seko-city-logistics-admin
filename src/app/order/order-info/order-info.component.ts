@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AvailabilityDialogComponent } from 'src/app/booking/availability-dialog/availability-dialog.component';
 import {
   FULL_PAYMENT_STATUS_ALIAS, NO_PAYMENT_PAYMENT_STATUS_ALIAS,
   ORDER_ITEMS, ORDER_ITEMS_TYPES_DISPLAY_NAMES, ORDER_PICKUP_TIMES,
@@ -354,5 +355,13 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
+  }
+
+  onCheckAvailabilty() {
+    this.dialog.open(AvailabilityDialogComponent, {
+      height: '50%',
+      width: '60%',
+      data: { date: this.commonService.getFormattedIsoDate(this.getFormControl('deliveryDate').value) }
+    });
   }
 }

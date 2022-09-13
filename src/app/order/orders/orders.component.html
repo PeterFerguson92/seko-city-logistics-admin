@@ -32,13 +32,13 @@
   <ng-container matColumnDef="ACTION">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button class="icon-color" matTooltip="Edit booking" matTooltipPosition="above">
+      <button mat-icon-button class="icon-color" matTooltip="Edit order" matTooltipPosition="above">
         <mat-icon (click)="editOrder(element)">edit</mat-icon>
       </button>
-      <button mat-icon-button class="icon-color" matTooltip="Update booking" matTooltipPosition="above">
+      <button mat-icon-button class="icon-color" matTooltip="Update order" matTooltipPosition="above">
         <mat-icon (click)="updateOrder(element)">low_priority</mat-icon>
       </button>
-      <button mat-icon-button class="icon-color"  matTooltip="Delete booking" matTooltipPosition="right">
+      <button mat-icon-button class="icon-color"  matTooltip="Delete order" matTooltipPosition="right">
         <mat-icon (click)="deleteOrder(element.reference)">delete</mat-icon>
       </button>
     </td>
