@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
-import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { IShipment } from '../model';
 import { ShipmentService } from '../service/shipment.service';
 
@@ -56,7 +56,10 @@ export class ShipmentsComponent implements OnInit, AfterContentInit {
   }
 
   onDeleteShipment(reference) {
-    const dialogRef = this.dialog.open(DialogComponent);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      height: '25%',
+      width: '30%',
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'true')
       {

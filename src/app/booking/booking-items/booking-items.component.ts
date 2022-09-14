@@ -309,8 +309,10 @@ export class BookingItemsComponent implements OnInit {
   }
 
   isAllChecked() {
-    return this.dataSource && this.dataSource.data &&
+    const result =  this.dataSource && this.dataSource.data &&
       this.dataSource.data.filter((u: any) => u.selected).length === this.dataSource.data.length ;
+    this.isAllSelected = result;
+    return result
   }
 
   isSelectLabel(label) {

@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
-import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { OrderUpdateDialogComponent } from '../order-update-dialog/order-update-dialog.component';
 import { OrderService } from '../service/order.service';
 
@@ -61,7 +61,10 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   deleteOrder(reference) {
-    const dialogRef = this.dialog.open(DialogComponent);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      height: '25%',
+      width: '30%',
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'true')
       {

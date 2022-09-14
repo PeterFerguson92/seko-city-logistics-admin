@@ -1,11 +1,11 @@
 <article class="table-header">
-  <button class="action-button button-add-row" mat-button (click)="onUnassignItems()">UNASSIGN</button>
+  <button class="action-button button-add-row" mat-button (click)="onUnassignItems()" [disabled]="!isMultipleEnabled()">UNASSIGN</button>
 </article>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef={{displayedColumns[0]}}>
     <th mat-header-cell *matHeaderCellDef >
       <mat-checkbox
-      (change)="selectAll()">{{displayedColumns[0]}}
+      (change)="selectAll()" [checked]="isAllChecked()">{{displayedColumns[0]}}
     </mat-checkbox>
     </th>
     <td mat-cell *matCellDef="let element">
