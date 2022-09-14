@@ -31,6 +31,7 @@ export class EligibleItemsComponent implements OnInit {
   SHIPMENT_SELECTION_MESSAGE = 'Please select shipment';
   shipmentList = [];
   loadingDate = null;
+  isAllSelected = false;
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,
     private itemService: ItemService,private formBuilder: FormBuilder,
@@ -60,27 +61,6 @@ export class EligibleItemsComponent implements OnInit {
     return element.shipmentReference === this.activatedroute.snapshot.params.reference;
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    // if there is a selection then clear that selection
-    if (this.isSomeSelected()) {
-      this.selection.clear();
-    } else {
-      this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
-    }
-  }
-
-  isSomeSelected() {
-    return this.selection.selected.length > 0;
-  }
-
   isDisabled() {
     return this.SHIPMENT_SELECTION_MESSAGE === this.getFormControl('selectedShipment').value;
   }
@@ -88,11 +68,11 @@ export class EligibleItemsComponent implements OnInit {
   onAssign() {
     const itemsIdsToAssign = [];
     this.dataSource.data.forEach(row => {
-    if (this.selection.isSelected(row))
+      if (row.selected)
       {
-        itemsIdsToAssign.push(row.itemId)
+        itemsIdsToAssign.push(row.itemId);
       }
-    });
+    })
     this.assignItemsToShipment(itemsIdsToAssign)
   }
 
@@ -149,9 +129,28 @@ export class EligibleItemsComponent implements OnInit {
 
   mergeData(item, booking) {
     const itemCopy = { ...item };
-    // tslint:disable-next-line:no-string-literal
-    itemCopy['itemId'] = item.id
+    itemCopy.itemId = item.id
+    itemCopy.selected = false;
     return { ...itemCopy, ...booking };
   }
+
+  selectAll() {
+    if (this.dataSource && this.dataSource.data)
+    {
+      this.isAllSelected = !this.isAllSelected
+      this.dataSource = new MatTableDataSource(this.dataSource.data.map((obj) => ({ ...obj, selected: this.isAllSelected })));
+    }
+  }
+
+   isMultipleEnabled() {
+    return this.dataSource && this.dataSource.data && this.dataSource.data.filter((u: any) => u.selected).length > 0;
+   }
+
+   isAllChecked() {
+     const result =  this.dataSource && this.dataSource.data &&
+       this.dataSource.data.filter((u: any) => u.selected).length === this.dataSource.data.length ;
+     this.isAllSelected = result;
+     return result
+   }
 
 }
