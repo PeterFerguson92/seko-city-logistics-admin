@@ -20,8 +20,8 @@ export class TaskCardComponent implements OnInit {
 
   onViewTask() {
     const dialogRef = this.dialog.open(AddEditTaskDialogComponent, {
-      // height: '20%',
-      // width: '40%',
+      height: '65%',
+      width: '50%',
       data: { task: this.task }
     });
     dialogRef.afterClosed().subscribe(result => {

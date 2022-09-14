@@ -24,7 +24,7 @@ export class AddEditTaskDialogComponent implements OnInit {
     const formValues = this.getFormValue(this.data);
     this.addEditTaskForm = this.formBuilder.group({
       title: [formValues.title, Validators.required],
-      description: [formValues.description, Validators.required],
+      description: [formValues.description],
       actionDate: [formValues.actionDate ? new Date(formValues.actionDate) : null, Validators.required],
       priority: [this.priorityStatuses[0], Validators.required],
     })
