@@ -263,8 +263,12 @@ export class BookingItemsComponent implements OnInit {
     }
   }
 
+  isCellDisabled(key) {
+    return key === 'status';
+  }
+
   numberOnly(event, key): boolean {
-    if (key === 'description')
+    if (key === 'description' || key === 'status')
     {
       return true
     }

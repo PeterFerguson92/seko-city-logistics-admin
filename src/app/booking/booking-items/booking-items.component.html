@@ -17,7 +17,7 @@
               </section>
               <section *ngIf="isSelectLabel(col.label)">
                 <th mat-header-cell *matHeaderCellDef>
-                  <mat-checkbox (change)="selectAll()" [checked]="isAllChecked()"></mat-checkbox>  Name </th>
+                  <mat-checkbox (change)="selectAll()" [checked]="isAllChecked()"></mat-checkbox></th>
               </section>
               <td mat-cell *matCellDef="let element" [style.background-color]="color">
                 <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
@@ -25,10 +25,6 @@
                     <mat-checkbox (change)="element.selected = $event.checked" [(ngModel)]="element.selected"></mat-checkbox>
                   </ng-container>
                   <div style="text-align: center;" class="btn-edit" *ngSwitchCase="'isEdit'">
-                    <!-- <button [disabled]="!element.id" class="icon-color" mat-icon-button matTooltip="Update item" matTooltipPosition="left">
-                      <mat-icon (click)="assignItem(element)">low_priority</mat-icon>
-                    </button> -->
-                    <!-- <button mat-button >Edit</button> -->
                     <button mat-icon-button class="icon-color" (click)="element.isEdit = !element.isEdit" color="primary" matTooltip="Edit item" matTooltipPosition="above">
                       <mat-icon >edit</mat-icon>
                     </button>
@@ -38,7 +34,6 @@
                     <button mat-icon-button class="icon-color" matTooltip="Delete item" matTooltipPosition="right">
                       <mat-icon (click)="removeRow(element.index)">delete</mat-icon>
                     </button>
-                    <!-- <button mat-button class="button-remove"(click)="removeRow(element.id)"> Delete </button> -->
                   </div>
                   <span *ngSwitchCase="'date'">
                     {{ element[col.key] | date: 'mediumDate' }}
@@ -52,21 +47,20 @@
                   <div class="btn-edit" *ngSwitchCase="'isEdit'">
                     <button mat-button (click)='onConfirmButton(element)'>Confirm</button>
                   </div>
-                  <mat-form-field class="form-input" width="100" *ngSwitchCase="'select'" appearance="outline">
+                  <mat-form-field class="form-input" width="80" *ngSwitchCase="'select'" appearance="outline">
                       <mat-select mat-select [(value)]="element.type" matNativeControl (selectionChange)="selectType($event, element.id)">
                         <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
                       </mat-select>
                   </mat-form-field>
                   <mat-form-field class="form-input" *ngSwitchDefault>
-                    <input  matInput [type]="col.type"  [(ngModel)]="element[col.key]" min="0" step="1" (keypress)="numberOnly($event, col.key)"
-                    (change)="changeInput(element.id)" />
+                    <input matInput [type]="col.type"  [(ngModel)]="element[col.key]" min="0" step="1" (keypress)="numberOnly($event, col.key)"
+                    (change)="changeInput(element.id)" [disabled]="isCellDisabled(col.key)" />
                   </mat-form-field>
                 </div>
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngStyle]="{'background-color': chooseColor(row),'min-height':'81px'}" ></tr>
-
           </table>
           <br>
           <div *ngIf="showWarning()" class="alert warning">
