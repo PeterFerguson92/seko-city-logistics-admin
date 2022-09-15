@@ -1,5 +1,5 @@
-<mat-accordion [multi]="true">
-  <mat-expansion-panel hideToggle class="mat-elevation-z0" [expanded]="false">
+<mat-accordion [multi]="true" >
+  <mat-expansion-panel hideToggle class="mat-elevation-z0" [ngClass]="getTaskClass(task)" [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{task.title}}

@@ -76,21 +76,17 @@ export class TaskBoardComponent implements OnInit {
     }
 
     const taskId = (JSON.parse(JSON.stringify(event.container.data[0])).id)
-
-    // console.log(event)
     this.updateTask(taskId, columnName)
   }
 
   updateTask(taskId, status) {
-    console.log(taskId);
-    console.log(status);
     const updateFields = [{ name: 'status', value: status }]
 
     if (updateFields.length > 0)
     {
       this.taskService.updateTask(taskId, updateFields).subscribe(
         ({ data }) => {
-         // window.location.reload()
+         window.location.reload()
         },
         error => {
           console.log(error);
@@ -103,7 +99,6 @@ export class TaskBoardComponent implements OnInit {
     const dialogRef = this.dialog.open(AddEditTaskDialogComponent, {
       height: '65%',
       width: '50%',
-      data: {  }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)

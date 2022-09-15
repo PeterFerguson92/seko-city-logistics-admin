@@ -1,12 +1,12 @@
-body {
+/* body {
   padding: 40px;
   margin: auto;
-  background: rgb(242 244 247);
+  background: rgb(28, 56, 99);
   font-family: system-ui;
   box-sizing: border-box;
   height: 100vh;
   width: 100vw;
-}
+} */
 
 .card {
 display: flex;
@@ -17,15 +17,15 @@ gap: 1rem;
 color: rgb(152, 162, 179);
 font-size: 14px;
 background: rgb(252, 252, 253);
-/* box-shadow: rgb(16 24 40 / 30%) 0px 0.5px 2px; */
-/* border-radius: 8px; */
-max-width: 350px;
+border-radius: 800px;
+width: 100%;
+/* max-width: 350px; */
 margin: auto;
 }
 
 .card-header {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-body {
@@ -85,3 +85,21 @@ gap: 0.5rem;
 .icon-color {
   color:var(--main-color);
 }
+.pastDueDate {
+  border-style: solid;
+  border-width: 2px;
+  border-color: red;
+  width: 100%;
+}
+
+.currentDueDate {
+  border-style: solid;
+  border-width: 2px;
+  border-color:#ff9800;
+  width: 100%;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0px 0px 0px 0px;
+}
+

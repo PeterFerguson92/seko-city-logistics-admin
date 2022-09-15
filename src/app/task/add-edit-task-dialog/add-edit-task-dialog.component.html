@@ -2,9 +2,12 @@
  <h2 mat-dialog-title>Task Details</h2>
  <div [formGroup]="addEditTaskForm">
   <mat-dialog-content class="mat-typography">
-    <form id="survey-form" [formGroup]="addEditTaskForm" >
+    <div [formGroup]="addEditTaskForm" >
       <div class="item">
         <app-material-input [label]="'Title'" [width]="40" formControlName="title" ></app-material-input>
+        <app-material-date-picker-input [label]="'Action Date'"
+          (inputChange)="onInputChange($event)" formControlName="actionDate">
+        </app-material-date-picker-input>
       </div>
       <div class="item">
         <mat-form-field appearance="outline" class="fill-container">
@@ -15,9 +18,6 @@
         </mat-form-field>
       </div>
       <div class="item">
-        <app-material-date-picker-input [label]="'Action Date'"
-          (inputChange)="onInputChange($event)" formControlName="actionDate">
-        </app-material-date-picker-input>
       </div>
       <div class="item">
         <app-material-select-input [label]="'Priority'" [width]="20" [options]="priorityStatuses"
@@ -25,9 +25,9 @@
           formControlName="priority">
         </app-material-select-input>
       </div>
-    </form>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" [disabled]="isDisabled()" (click)="onSubmit()" cdkFocusInitial>Update</button>
+    <button mat-button [mat-dialog-close]="true" [disabled]="isDisabled()" (click)="onSubmit()" cdkFocusInitial>Submit</button>
   </mat-dialog-actions>

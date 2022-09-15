@@ -16,9 +16,9 @@ export class AddEditTaskDialogComponent implements OnInit {
   addEditTaskForm: FormGroup;
   priorityStatuses = TASK_PRIORITY_STATUSES;
 
-  constructor(private formBuilder: FormBuilder, private router: Router,
+  constructor(private formBuilder: FormBuilder,
     private taskService: TaskService, private commonService: CommonService,
-    private dialogRef: MatDialogRef<DialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     const formValues = this.getFormValue(this.data);
@@ -61,6 +61,7 @@ export class AddEditTaskDialogComponent implements OnInit {
       title: this.getFormControl('title').value,
       description: this.getFormControl('description').value,
       actionDate: this.commonService.getFormattedIsoDate(this.getFormControl('actionDate').value),
+      priority: this.getFormControl('priority').value
     }
 
     this.taskService.createTask(task).subscribe(
