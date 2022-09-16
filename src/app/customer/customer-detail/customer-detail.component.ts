@@ -192,7 +192,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onAddEdit() {
-    // console.log(this.mode)
     this.mode === EDIT_CUSTOMER_MODE ? this.editCustomer() : this.addCustomer();
   }
 
@@ -264,7 +263,6 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   isCreateBookingMode() {
-    console.log(this.mode)
     return CREATE_BOOKING_MODE === this.mode;
   }
 

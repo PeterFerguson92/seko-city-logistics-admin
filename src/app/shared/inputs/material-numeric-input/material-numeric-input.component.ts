@@ -17,6 +17,7 @@ export class MaterialNumericInputComponent implements OnInit, ControlValueAccess
   @Input() width;
   @Input() errorMsg: string;
   @Input() type;
+  @Input() max;
   @Input() disabled ;
   @Output() inputChange = new EventEmitter<MatInput>();
   value;

@@ -118,11 +118,13 @@
       </tr>
       <br>
       <p><b>Number of items:</b> <br>{{booking.itemsDetails.totalNumberOfItems}}</p>
-      <p><b>Total amount:</b> <br>£{{booking.itemsDetails.totalAmount}}</p>
+      <p><b>Total amount:</b> <br>£{{booking.itemsDetails.paymentInfo.totalAmount}}</p>
       <p><b>Selected payment type:</b> <br>{{booking.itemsDetails.paymentInfo.paymentType}}</p>
       <p><b>Selected payment status:</b> <br>{{booking.itemsDetails.paymentInfo.paymentStatus}}</p>
       <p><b>Amount Paid:</b> <br>£{{booking.itemsDetails.paymentInfo.amountPaid}}</p>
       <p><b>Amount Outstanding:</b> <br>£{{booking.itemsDetails.paymentInfo.amountOutstanding}}</p>
+      <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied"><b>Discount Amount:</b> <br>£{{booking.itemsDetails.paymentInfo.discountAmount}}</p>
+      <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied"><b>Discount Reason:</b> <br>{{booking.itemsDetails.paymentInfo.discountReason}}</p>
       <p><b>Notes:</b> <br>{{booking.itemsDetails.paymentInfo.paymentNotes}}</p>
     </table>
   </mat-expansion-panel>

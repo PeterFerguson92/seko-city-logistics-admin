@@ -15,9 +15,10 @@ export class BookingReviewComponent implements OnInit {
     },
     itemsDetails: {
       items: [{ quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }],
-      paymentInfo: { paymentType: '', paymentStatus: '', paymentNotes: '', amountPaid: '', amountOutstanding: '' },
-      totalNumberOfItems: 0,
-      totalAmount: 0
+      paymentInfo: {
+        paymentType: '', paymentStatus: '', paymentNotes: '', amountPaid: '', amountOutstanding: '',
+        discountAmount : 4, discountReason : 'REASON 1' , totalAmount: 0, isDiscountApplied: false},
+      totalNumberOfItems: 0
     },
     info: { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '', updatesViaEmail: '' }
   };

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES, FULL_PAYMENT_STATUS_ALIAS,
+  BOOKING_ITEMS, BOOKING_ITEMS_TYPES_DISPLAY_NAMES, DISCOUNT_REASONS, FULL_PAYMENT_STATUS_ALIAS,
   NO_PAYMENT_PAYMENT_STATUS_ALIAS,
   PARTIAL_PAYMENT_STATUS_ALIAS, PAYMENT_STATUSES, PAYMENT_TYPES
 } from 'src/app/constants';
@@ -49,13 +49,16 @@ export class BookingItemsComponent implements OnInit {
   dataSource;
   isAllSelected;
   showItems = false;
+  errorMsg: string;
   bookingItemForm: FormGroup;
   paymentForm: FormGroup;
   showDescription = false;
+  applyDiscountEnabled = true;
   types = BOOKING_ITEMS_TYPES_DISPLAY_NAMES;
   typesObject = BOOKING_ITEMS
   paymentTypes = PAYMENT_TYPES
   paymentStatuses = PAYMENT_STATUSES;
+  discountReasons = DISCOUNT_REASONS;
   displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
   columnsSchema: any = COLUMNS_SCHEMA;
 
@@ -70,7 +73,12 @@ export class BookingItemsComponent implements OnInit {
       paymentNotes: [this.paymentData.paymentNotes ? this.paymentData.paymentNotes : '', []],
       totalAmount: [this.paymentData.totalAmount ? this.paymentData.totalAmount : 0,  []],
       amountPaid: [this.paymentData.amountPaid ? this.paymentData.amountPaid : 0,  []],
-      amountOutstanding: [this.paymentData.amountOutstanding ? this.paymentData.amountOutstanding: 0 , []]
+      amountOutstanding: [this.paymentData.amountOutstanding ? this.paymentData.amountOutstanding : 0, []],
+      discountAmount: [this.paymentData.discountAmount ? this.paymentData.discountAmount : 0 , []],
+      discountReason: [this.paymentData.discountReason ? this.paymentData.discountReason : this.discountReasons[0], []],
+      isDiscountApplied: [this.paymentData.isDiscountApplied ? this.paymentData.isDiscountApplied : false , []]
+
+
     })
     if (this.getFormControl('paymentStatus').value === PARTIAL_PAYMENT_STATUS_ALIAS)
     {
@@ -79,6 +87,7 @@ export class BookingItemsComponent implements OnInit {
     {
       this.getFormControl('amountPaid').disable();
     }
+    this.getFormControl('numberOfItems').disable();
     this.getFormControl('totalAmount').disable();
     this.getFormControl('amountOutstanding').disable();
     this.getBookingItems()
@@ -151,7 +160,6 @@ export class BookingItemsComponent implements OnInit {
 
   addMultipleRow() {
     const items = this.dataSource.data.filter((u: any) => u.selected);
-
     this.dialog.open(ItemDuplicateDialogComponent, {
       data: { }
     }).afterClosed().subscribe(result => {
@@ -348,7 +356,6 @@ export class BookingItemsComponent implements OnInit {
 
   /***** End Items service ****/
 
-
   populateFields() {
     if (this.paymentData.reference)
     {
@@ -368,13 +375,77 @@ export class BookingItemsComponent implements OnInit {
     }
   }
 
-
   onSelectionChange(event: any, fControlName: string) {
     this.paymentForm.get(fControlName).setValue(event.value);
     if (fControlName === 'paymentStatus')
     {
       this.setPaymentProperties(event.value)
     }
+  }
+
+  isApplyDiscountDisabled() {
+    return parseInt(this.getFormControl('discountAmount').value,10) < this.getFormControl('totalAmount').value
+  }
+
+  getErrorMessage() {
+    return this.isApplyDiscountDisabled() ? 'EIRRR' : null;
+  }
+
+  getApplyRemoveDiscountLabel() {
+    return this.getFormControl('isDiscountApplied').value ? 'Remove Discount' : 'Apply Discount';
+  }
+
+  getMax() {
+    return this.getFormControl('totalAmount').value
+  }
+
+  onApplyRemoveDiscount() {
+    const isDiscountAppliedControl = this.getFormControl('isDiscountApplied');
+
+    const totalAmountControl = this.getFormControl('totalAmount');
+    const discountAmountControl = this.getFormControl('discountAmount');
+
+    isDiscountAppliedControl.setValue(!isDiscountAppliedControl.value);
+
+    if (isDiscountAppliedControl.value)
+    {
+      discountAmountControl.disable();
+      totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value);
+     // discountAmountControl.setValue(totalAmountControl.value);
+    } else
+    {
+      discountAmountControl.enable();
+      totalAmountControl.setValue(parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10));
+    }
+
+
+    this.updateTotalAmount();
+
+    // if (discountAmountControl.value >= totalAmountControl.value)
+    // {
+    //   discountAmountControl.setValue(totalAmountControl.value);
+    //   this.processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl);
+
+    // } else {
+    //   discountAmountControl.setValue(0);
+    //   this.processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl);
+
+    // }
+    // this.processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl);
+
+  }
+
+  processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl) {
+    if (isDiscountAppliedControl.value)
+    {
+      totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value)
+    } else
+    {
+     totalAmountControl.setValue(parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10));
+    }
+    discountAmountControl.setValue(0);
+
+    this.updateTotalAmount();
   }
 
   onConfirmButton(element) {
@@ -420,7 +491,6 @@ export class BookingItemsComponent implements OnInit {
     } else
     {
       this.paymentForm.get('amountPaid').disable();
-
     }
   }
 
@@ -444,6 +514,7 @@ export class BookingItemsComponent implements OnInit {
     const totalAmountControl = this.getFormControl('totalAmount');
     const amountPaidControl = this.getFormControl('amountPaid');
     const outstandingPaidControl = this.getFormControl('amountOutstanding');
+
     if (parseInt(amountPaidControl.value, 10) <= 0)
     {
       amountPaidControl.setValue(0);
@@ -474,6 +545,8 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getPaymentInfoDetails() {
+    // this.getFormControl('discountAmount').setValue(parseInt(this.getFormControl('discountAmount').value, 10));
+
     const bookingPaymentDetails: any = {};
     Object.keys(this.paymentForm.controls).forEach(key => {
       const formControl = this.paymentForm.controls[key];

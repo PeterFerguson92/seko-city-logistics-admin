@@ -97,6 +97,17 @@
                       </div>
                     </div>
                     <div class="columns">
+                      <div class="item" >
+                        <app-material-numeric-input
+                          [label]="'Discount (£)'" [width]="20" [max]="getMax()" formControlName="discountAmount">
+                        </app-material-numeric-input >&nbsp;
+                        <app-material-select-input [label]="'Type'" [width]="40" [options]="discountReasons" formControlName="discountReason"
+                          (selectionChange)="onSelectionChange($event, 'discountReason')" [value]="discountReasons[0]">
+                        </app-material-select-input>&nbsp;
+                        <app-material-button  *ngIf="isApplyDiscountDisabled()" [label]="getApplyRemoveDiscountLabel()" (click)="onApplyRemoveDiscount()"></app-material-button><br>
+                      </div>
+                    </div>
+                    <div class="columns">
                       <div class="item">
                         <app-material-select-input [label]="'Type'" [width]="40" [options]="paymentTypes" formControlName="paymentType"
                           (selectionChange)="onSelectionChange($event, 'paymentType')" [value]="paymentTypes[0]">

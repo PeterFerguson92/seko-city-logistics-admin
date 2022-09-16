@@ -1,10 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TASK_PRIORITY_STATUSES } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
-import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { TaskService } from '../service/task.service';
 
 @Component({
