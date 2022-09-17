@@ -53,7 +53,7 @@
         <mat-icon (click)="updateBooking(element)">low_priority</mat-icon>
       </button>
       <button mat-icon-button class="icon-color" matTooltip="Assign Driver" matTooltipPosition="right">
-        <mat-icon (click)="onAssignDriver(element.reference, element.assignedDriverReference)">directions_walk</mat-icon>
+        <mat-icon (click)="onAssignDriver(element)">directions_walk</mat-icon>
       </button>
       <button *ngIf="showHistory" mat-icon-button class="icon-color" matTooltip="Bookings history" matTooltipPosition="right">
         <mat-icon (click)="onHistory(element.senderReference)">chrome_reader_mode</mat-icon>

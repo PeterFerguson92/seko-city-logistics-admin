@@ -38,6 +38,7 @@ import { ProfileComponent } from './profile/profile/profile.component';
 import { AuthGuard } from './shared/authentication/auth.guard';
 import { EligibleItemsResolver } from './shipment/service/resolver/eligible-items.resolver';
 import { EligibleItemsComponent } from './shipment/eligible-items/eligible-items.component';
+import { BookingDriverComponent } from './booking/booking-driver/booking-driver.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'booking-summary/:reference', component: BookingSummaryComponent, resolve: { booking: BookingSummaryResolver } },
+  { path: 'booking-driver/:reference', component: BookingDriverComponent, resolve: { booking: BookingSummaryResolver }  },
   { path: 'drivers', component: DriversComponent, resolve: { drivers: DriversResolver } },
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },

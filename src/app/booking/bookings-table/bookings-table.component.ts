@@ -98,17 +98,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     )
   }
 
-  onAssignDriver(reference, driverReference) {
-      {
-        const dialogRef = this.dialog.open(BookingAssignDriverDialogComponent, {
-          height: '47%',
-          width: '30%',
-          data: { reference, driverReference }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          // console.log(result)
-        })
-      }
+  onAssignDriver(element) {
+    this.router.navigate(['/booking-driver', element.reference]);
   }
 
   getFormattedDate(date) {

@@ -9,7 +9,7 @@ import {
   GET_BOOKINGS_DESTINATION_REPORT_DATA,
   GET_BOOKINGS_REPORT_DATA,
   GET_BOOKING_BY_REFERENCE, GET_PREVIOUS_RECEIVERS, SYNC_BOOKING,
-  SYNC_ITEMS, SYNC_RECEIVERS, UPDATE_BOOKING, UPDATE_BOOKINGS_BY_REFERENCES, UPDATE_BOOKING_STATUS
+  SYNC_ITEMS, SYNC_RECEIVERS, UPDATE_BOOKING, UPDATE_BOOKINGS_BY_REFERENCES, UPDATE_BOOKING_ASSIGNED_DRIVER, UPDATE_BOOKING_STATUS
 } from './request';
 
 const LIMIT = 100
@@ -73,6 +73,12 @@ export class BookingsService {
     });
   }
 
+  updateBookingAssignedDriver(reference: string, assignedDriverReference: string) {
+    return this.apollo.mutate<any>({
+      mutation: UPDATE_BOOKING_ASSIGNED_DRIVER,
+      variables: { reference, assignedDriverReference }
+    });
+  }
   updateBookingsByReferences(references: [string], fields: any) {
     return this.apollo.mutate<any>({
       mutation: UPDATE_BOOKINGS_BY_REFERENCES,

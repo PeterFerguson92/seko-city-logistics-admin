@@ -75,6 +75,17 @@ export const UPDATE_BOOKING_STATUS = gql`
   ${BOOKING_FRAGMENT}
 `;
 
+export const UPDATE_BOOKING_ASSIGNED_DRIVER = gql`
+  mutation updateBookingAssignedDriver($reference: String!, $assignedDriverReference: String!) {
+    updateBookingAssignedDriver(reference: $reference, assignedDriverReference: $assignedDriverReference) {
+      isInError
+      errorMessage
+      data { ...bookingfragment }
+    }
+  }
+  ${BOOKING_FRAGMENT}
+`;
+
 export const UPDATE_BOOKINGS_BY_REFERENCES = gql`
   mutation updateBookingsByReference($references: [String!]!, $fields: [UpdateFieldInput!]) {
     updateBookingsByReference(references: $references, fields: $fields)
