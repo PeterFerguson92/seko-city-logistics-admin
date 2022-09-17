@@ -411,41 +411,13 @@ export class BookingItemsComponent implements OnInit {
     {
       discountAmountControl.disable();
       totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value);
-     // discountAmountControl.setValue(totalAmountControl.value);
     } else
     {
       discountAmountControl.enable();
       totalAmountControl.setValue(parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10));
     }
-
-
     this.updateTotalAmount();
-
-    // if (discountAmountControl.value >= totalAmountControl.value)
-    // {
-    //   discountAmountControl.setValue(totalAmountControl.value);
-    //   this.processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl);
-
-    // } else {
-    //   discountAmountControl.setValue(0);
-    //   this.processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl);
-
-    // }
-    // this.processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl);
-
-  }
-
-  processDiscount(isDiscountAppliedControl, totalAmountControl, discountAmountControl) {
-    if (isDiscountAppliedControl.value)
-    {
-      totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value)
-    } else
-    {
-     totalAmountControl.setValue(parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10));
-    }
-    discountAmountControl.setValue(0);
-
-    this.updateTotalAmount();
+    this.updateOutstandingAmount();
   }
 
   onConfirmButton(element) {
