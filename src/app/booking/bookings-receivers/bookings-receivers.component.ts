@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CUSTOMER_TYPES, CUSTOMER_TITLES, COUNTRIES, COUNTRY_CODES, GH_DESTINATIONS, CUSTOMER_RECEIVER_ROLE } from 'src/app/constants';
@@ -58,9 +58,6 @@ export class BookingsReceiversComponent implements OnInit {
     if (this.references && this.references.length > 0)
     {
       this.populateFields();
-    } else
-    {
-   //   this.receivers.push(this.buildReceiver(null));
     }
 
   }
@@ -297,7 +294,6 @@ export class BookingsReceiversComponent implements OnInit {
       }
     })
     receiver.role = CUSTOMER_RECEIVER_ROLE,
-    // receiver.reference =  null,
     receiver.fullName =  null,
     receiver.email =  null ,
     receiver.fullPhoneNumber =  null ,

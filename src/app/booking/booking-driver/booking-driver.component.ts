@@ -20,6 +20,9 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
   bookingReference;
   errorText;
   showErrorText = false;
+  driversCheckBoxList = [];
+  selectedMateReferences = [];
+  assignedMatesReferences = [];
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -29,11 +32,11 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private spinner: NgxSpinnerService) { }
 
-
   ngOnInit(): void {
     this.activatedroute.data.subscribe(async data => {
       this.bookingReference = data.booking.reference;
       this.currentDriverReference = data.booking.assignedDriverReference;
+      this.assignedMatesReferences = data.booking.assignedMatesReferences;
       this.spinner.show();
       this.getDriversInfo();
       this.assignDriverForm = this.formBuilder.group({
@@ -58,6 +61,7 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
     this.drivers = (await lastValueFrom(this.authService.getDrivers())).data.getDrivers.users;
     this.driversUsername = this.getDriversUsername();
     this.getCurrentDriverUsername(this.currentDriverReference);
+    this.buildDriversCheckBox();
     this.spinner.hide();
   }
 
@@ -66,7 +70,6 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
   }
 
   getCurrentDriverUsername(reference) {
-    console.log(this.drivers)
     if (this.drivers)
     {
       // tslint:disable-next-line:prefer-for-of
@@ -95,6 +98,24 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
     return reference;
   }
 
+  buildDriversCheckBox() {
+    this.drivers.forEach((driver) => {
+      this.driversCheckBoxList.push({
+        info: driver, selected: this.checkIfPresent(driver.reference),
+        disabled: this.isMainDriver(driver.reference)
+      },)
+    });
+  }
+
+  checkIfPresent(reference) {
+    return this.assignedMatesReferences.includes(reference) || this.isMainDriver(reference);
+  }
+
+  isMainDriver(reference) {
+    return reference === this.currentDriverReference;
+  }
+
+
   onUpdateMainDriver() {
     const driverReference = this.getSelectedDriverReference();
     this.bookingService.updateBookingAssignedDriver(this.bookingReference, driverReference)
@@ -105,6 +126,26 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
         {
           this.showErrorText = true
           this.errorText = data.updateBookingAssignedDriver.errorMessage
+        } else
+        {
+          location.reload();
+        }
+      },
+      error => { console.log(error); }
+    );
+  }
+
+  onUpdateMates() {
+    const selected = this.driversCheckBoxList.filter((u: any) => u.selected && !u.disabled);
+    const selectedReference = selected.map((item) => { return item.info.reference});
+    this.bookingService.updateMates(this.bookingReference, selectedReference)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(
+      ({ data }) => {
+        if (data.updateMates.isInError)
+        {
+          this.showErrorText = true
+          this.errorText = data.updateMates.errorMessage
         } else
         {
           location.reload();

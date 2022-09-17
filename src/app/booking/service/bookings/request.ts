@@ -5,7 +5,7 @@ export const BOOKING_FRAGMENT = gql`
         id reference senderReference senderFullName senderPhone receiverReferences destination location numberOfItems
       totalAmount amountPaid amountOutstanding discountAmount discountReason isDiscountApplied paymentType paymentStatus paymentNotes
       pickUpDate pickUpTime pickUpPostCode pickUpAddress
-      updatesViaWhatsapp updatesViaEmail status shipmentReference assignedDriverReference
+      updatesViaWhatsapp updatesViaEmail status shipmentReference assignedDriverReference assignedMatesReferences
     }
 `;
 
@@ -78,6 +78,17 @@ export const UPDATE_BOOKING_STATUS = gql`
 export const UPDATE_BOOKING_ASSIGNED_DRIVER = gql`
   mutation updateBookingAssignedDriver($reference: String!, $assignedDriverReference: String!) {
     updateBookingAssignedDriver(reference: $reference, assignedDriverReference: $assignedDriverReference) {
+      isInError
+      errorMessage
+      data { ...bookingfragment }
+    }
+  }
+  ${BOOKING_FRAGMENT}
+`;
+
+export const UPDATE_ASSIGNED_MATES = gql`
+  mutation updateMates($reference: String!, $assignedMatesReferences: [String!]) {
+    updateMates(reference: $reference, assignedMatesReferences: $assignedMatesReferences) {
       isInError
       errorMessage
       data { ...bookingfragment }
