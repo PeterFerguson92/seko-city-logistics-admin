@@ -36,7 +36,7 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
     this.activatedroute.data.subscribe(async data => {
       this.bookingReference = data.booking.reference;
       this.currentDriverReference = data.booking.assignedDriverReference;
-      this.assignedMatesReferences = data.booking.assignedMatesReferences;
+      this.assignedMatesReferences = data.booking.assignedMatesReferences ?  data.booking.assignedMatesReferences : [];
       this.spinner.show();
       this.getDriversInfo();
       this.assignDriverForm = this.formBuilder.group({

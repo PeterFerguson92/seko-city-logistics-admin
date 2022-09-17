@@ -54,7 +54,7 @@
                   </mat-form-field>
                   <mat-form-field class="form-input" *ngSwitchDefault>
                     <input matInput [type]="col.type"  [(ngModel)]="element[col.key]" min="0" step="1" (keypress)="numberOnly($event, col.key)"
-                    (change)="changeInput(element.id)" [disabled]="isCellDisabled(col.key)" />
+                    (change)="changeInput(element.id)" [disabled]="isCellDisabled(col.key, element)" />
                   </mat-form-field>
                 </div>
               </td>

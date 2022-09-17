@@ -271,8 +271,9 @@ export class BookingItemsComponent implements OnInit {
     }
   }
 
-  isCellDisabled(key) {
-    return key === 'status';
+  isCellDisabled(key, element) {
+    return key === 'status' || (key === 'pricePerUnit' && element.type !== 'OTHER')
+      || key === 'amount';
   }
 
   numberOnly(event, key): boolean {

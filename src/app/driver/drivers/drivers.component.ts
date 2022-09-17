@@ -48,6 +48,7 @@ export class DriversComponent implements OnInit, OnDestroy {
   onEditDriver(reference) {
     this.router.navigate(['/edit-driver', reference])
   }
+
   onShowBookingLocations(reference) {
     this.router.navigate(['/locations', reference])
   }
