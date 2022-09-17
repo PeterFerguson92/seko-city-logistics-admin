@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonService } from 'src/app/service/common.service';
-import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-task-dialog.component';
 import { TaskService } from '../service/task.service';
 
@@ -30,7 +30,7 @@ export class TaskCardComponent implements OnInit {
   }
 
   OnDeleteTask(id) {
-    const dialogRef = this.dialog.open(DialogComponent);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'true')
       {
