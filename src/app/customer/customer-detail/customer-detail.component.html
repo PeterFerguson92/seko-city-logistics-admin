@@ -11,7 +11,7 @@
       <div class="columns">
         <div [formGroup]="loadCustomerForm" class="item">
           <label for="lname">Reference</label><br>
-          <app-material-input formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>&nbsp;
+          <app-material-input [label]="'Reference'" formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>&nbsp;
           <app-material-button [label]="'Load Customer'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
         </div>
     </div>
@@ -25,22 +25,18 @@
       <br/>
         <div class="columns">
           <div class="item">
-            <label for="lname">Type</label><br>
-            <app-material-select-input  [options]="types" formControlName="type"
+            <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
               (selectionChange)="onSelectionChange($event, 'type')"  [width]="60" [value]="'PERSONAL'">
             </app-material-select-input>
           </div>
           <div class="item">
-            <label for="lname">Country</label><br>
-            <app-material-select-input (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
+            <app-material-select-input [label]="'Country'" (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
           </div>
           <div *ngIf="!isCustomerPersonal()" class="item">
-            <label for="lname">Registered Name</label><br>
-            <app-material-input   [width]="60" formControlName="registeredName" [errorMsg]="formValidationMap.registeredName"></app-material-input>
+            <app-material-input  [label]="'Registered Name'" [width]="60" formControlName="registeredName" [errorMsg]="formValidationMap.registeredName"></app-material-input>
           </div>
           <div *ngIf="!isCustomerPersonal()" class="item">
-            <label for="lname">Registered Number</label><br>
-            <app-material-input  [width]="60" formControlName="registeredNumber" [errorMsg]="formValidationMap.registeredName"></app-material-input>
+            <app-material-input [label]="'Registered Number'" [width]="60" formControlName="registeredNumber" [errorMsg]="formValidationMap.registeredName"></app-material-input>
           </div>
         </div>
     </mat-expansion-panel>
@@ -53,37 +49,30 @@
       <br/>
         <div class="columns">
           <div class="item">
-            <label for="lname">Title</label><br>
-            <app-material-select-input [options]="titles" formControlName="title"
+            <app-material-select-input [label]="'Title'" [options]="titles" formControlName="title"
                 (selectionChange)="onSelectionChange($event, 'title')"  [width]="30" [value]="titles[0]">
             </app-material-select-input>
           </div>
           <div class="item"></div>
           <div class="item">
-            <label for="lname">Name<span>*</span></label><br>
-            <app-material-input formControlName="name" [width]="80" [errorMsg]="formValidationMap.name" [pattern]="'[a-zA-Z ]*'"></app-material-input>
+            <app-material-input [label]="'Name'" formControlName="name" [width]="80" [errorMsg]="formValidationMap.name" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Surname<span>*</span></label><br>
-            <app-material-input formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname" [pattern]="'[a-zA-Z ]*'"></app-material-input>
+            <app-material-input [label]="'Surname'" formControlName="surname" [width]="80" [errorMsg]="formValidationMap.surname" [pattern]="'[a-zA-Z ]*'"></app-material-input>
           </div>
           <div class="item" formGroupName="phoneGroup">
-            <label for="lname"> Phone Number <span>*</span></label><br>
             <app-material-select-input [label]="'Code'"  [width]="15" [options]="countryCodes" formControlName="countryCode"
                   (selectionChange)="onSelectionChange($event, 'countryCode')" [value]="countryCodes[0]"></app-material-select-input>&nbsp;
             <app-material-input [width]="30" [label]="'Number'" formControlName="phone" [errorMsg]="formValidationMap.phone" ></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Email</label><br>
-            <app-material-input [width]="80" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
+            <app-material-input [label]="'Email'" [width]="80" [errorMsg]="formValidationMap.email" formControlName="email"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Postcode<span>*</span></label><br>
-            <app-material-input [width]="35" formControlName="postcode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [label]="'Postcode'" [width]="35" formControlName="postcode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Address</label><br>
-            <app-material-select-input [width]="80" [options]="addresses" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
+            <app-material-select-input [label]="'Address'" [width]="80" [options]="addresses" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input><br>
           </div>
         </div>
     </mat-expansion-panel>

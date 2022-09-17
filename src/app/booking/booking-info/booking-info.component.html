@@ -8,25 +8,21 @@
         <br/>
         <div class="columns">
           <div class="item" >
-            <label for="lname">Date<span>*</span></label><br>
-            <app-material-date-picker-input
+            <app-material-date-picker-input [label]="'Date'"
               (inputChange)="onInputChange($event, 'date')" formControlName="date">
             </app-material-date-picker-input>&nbsp;
             <app-material-button [label]="'Check availability'" (click)="onCheckAvailabilty()"></app-material-button><br>
           </div>
           <div class="item">
-            <label for="lname">Time</label><br>
-            <app-material-select-input [options]="times" formControlName="time"
+            <app-material-select-input [label]="'Time'" [options]="times" formControlName="time"
               (selectionChange)="onSelectionChange($event, 'time')"  [width]="60" [value]="times[0]">
             </app-material-select-input>
           </div>
           <div class="item">
-            <label for="lname">Postcode</label><br>
-            <app-material-input [icon]="'person_pin'"[width]="45" formControlName="postcode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
+            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="postcode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">
-            <label for="lname">Address</label><br>
-            <app-material-select-input [options]="addresses" [width]="80" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
+            <app-material-select-input [label]="'Address'" [options]="addresses" [width]="80" (selectionChange)="onSelectionChange($event, 'address')" formControlName="address"></app-material-select-input>
           </div>
           <div class="item">
             <label for="lname">Updates via whatsapp</label>&nbsp;

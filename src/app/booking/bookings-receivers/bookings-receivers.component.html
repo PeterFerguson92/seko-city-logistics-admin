@@ -11,15 +11,13 @@
         <br/>
           <div class="columns">
             <div class="item">
-              <label for="fname">Destination<span>*</span></label><br>
-              <app-material-select-input  (selectionChange)="onDestinationSelectionChange($event, 'destination')"
+              <app-material-select-input [label]="'Destination'" (selectionChange)="onDestinationSelectionChange($event, 'destination')"
                 [options]="destinations" formControlName="destination">
               </app-material-select-input>
             </div>
             <div class="item">
-              <label for="fname">Location</label><br>
               <app-material-input
-                [width]="60" formControlName="location">
+              [label]="'Location'" [width]="60" formControlName="location">
               </app-material-input>
             </div>
           </div>
@@ -35,7 +33,7 @@
           <div class="columns">
             <div class="item">
               <app-material-button
-                [label]="'Load Previous Receivers'" (click)="onLoadPreviousReceivers()">
+              [label]="'Address'" [label]="'Load Previous Receivers'" (click)="onLoadPreviousReceivers()">
               </app-material-button>
             </div>
             <div class="item">
@@ -54,44 +52,38 @@
               <br/>
               <div class="columns">
                 <div class="item">
-                  <label for="fname">Type<span>*</span></label><br>
-                  <app-material-select-input  [options]="types" formControlName="type"
+                  <app-material-select-input  [label]="'Type'" [options]="types" formControlName="type"
                     (selectionChange)="onSelectionChange($event, 'type', i)"  [width]="30" [value]="types[0]">
                   </app-material-select-input>
                 </div>
                 <div class="item" formGroupName="phoneGroup">
-                  <label for="lname"> Phone Number <span>*</span></label><br>
                   <app-material-select-input [label]="'Code'"  [width]="20" [options]="codes" formControlName="countryCode"
                     (selectionChange)="onSelectionChange($event, 'countryCode', i)" [value]="codes[0]"></app-material-select-input>&nbsp;
                     <app-material-input [label]="'Phone'" [type]="'phone'" [errorMsg]="formValidationMapList[i].phone" formControlName="phone"></app-material-input>
                 </div>
                 <div *ngIf="!isCustomerPersonal(i)" class="item">
-                  <label for="lname">Registered Name</label><br>
                   <app-material-input
-                    [width]="60" formControlName="registeredName" >
+                  [label]="'Registered Name'" [width]="60" formControlName="registeredName" >
                   </app-material-input>
                 </div>
                 <div *ngIf="!isCustomerPersonal(i)" class="item">
                   <label for="lname">Registered Number</label><br>
                   <app-material-input
-                    [width]="60" formControlName="registeredNumber">
+                  [label]="'Registered Number'" [width]="60" formControlName="registeredNumber">
                   </app-material-input>
                 </div>
                 <div class="item">
-                  <label for="lname">Title</label><br>
                   <app-material-select-input [options]="titles" formControlName="title"
-                  (selectionChange)="onSelectionChange($event, 'title',i)"  [width]="30" [value]="titles[0]">
+                    [label]="'Title'" (selectionChange)="onSelectionChange($event, 'title',i)"  [width]="30" [value]="titles[0]">
                   </app-material-select-input>
                 </div>
                 <div class="item">
                 </div>
                 <div class="item">
-                  <label for="lname">Name  <span>*</span></label><br>
-                  <app-material-input formControlName="name" [errorMsg]="formValidationMapList[i].name" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
+                  <app-material-input [label]="'Name'" formControlName="name" [errorMsg]="formValidationMapList[i].name" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
                 </div>
                 <div class="item">
-                  <label for="lname">Surname <span>*</span></label><br>
-                  <app-material-input formControlName="surname" [errorMsg]="formValidationMapList[i].surname" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
+                  <app-material-input [label]="'Surname'" formControlName="surname" [errorMsg]="formValidationMapList[i].surname" [width]="80"  [pattern]="'[a-zA-Z ]*'"></app-material-input>
                 </div>
                 <div class="item" >
                   <app-material-button [label]="'-'" (click)="onDeleteReceiver(i)"></app-material-button>&nbsp;
