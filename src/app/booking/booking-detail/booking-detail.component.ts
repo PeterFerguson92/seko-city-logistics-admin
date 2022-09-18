@@ -86,7 +86,8 @@ export class BookingDetailComponent implements OnInit {
       numberOfItems: this.booking.numberOfItems,
       discountAmount: this.booking.discountAmount,
       discountReason: this.booking.discountReason,
-      isDiscountApplied: this.booking.isDiscountApplied
+      isDiscountApplied: this.booking.isDiscountApplied,
+      fullAmount: this.booking.fullAmount
     }
   }
 
@@ -220,6 +221,7 @@ export class BookingDetailComponent implements OnInit {
       items: bookingInfo.itemsDetails.items,
       numberOfItems: bookingInfo.itemsDetails.totalNumberOfItems,
       totalAmount: Number(bookingInfo.itemsDetails.paymentInfo.totalAmount),
+      fullAmount: Number(bookingInfo.itemsDetails.paymentInfo.fullAmount),
       paymentType: bookingInfo.itemsDetails.paymentInfo.paymentType,
       paymentStatus: bookingInfo.itemsDetails.paymentInfo.paymentStatus,
       amountPaid: Number(bookingInfo.itemsDetails.paymentInfo.amountPaid),
@@ -299,6 +301,7 @@ export class BookingDetailComponent implements OnInit {
       items: bookingInfo.itemsDetails.items,
       numberOfItems: bookingInfo.itemsDetails.totalNumberOfItems,
       totalAmount: Number(bookingInfo.itemsDetails.paymentInfo.totalAmount),
+      fullAmount: Number(bookingInfo.itemsDetails.paymentInfo.fullAmount),
       paymentType: bookingInfo.itemsDetails.paymentInfo.paymentType,
       paymentStatus: bookingInfo.itemsDetails.paymentInfo.paymentStatus,
       paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,

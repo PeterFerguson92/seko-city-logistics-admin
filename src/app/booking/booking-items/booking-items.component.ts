@@ -72,7 +72,8 @@ export class BookingItemsComponent implements OnInit {
       paymentStatus: [this.paymentData.paymentStatus ? this.paymentData.paymentStatus : this.paymentStatuses[0], Validators.required],
       paymentNotes: [this.paymentData.paymentNotes ? this.paymentData.paymentNotes : '', []],
       totalAmount: [this.paymentData.totalAmount ? this.paymentData.totalAmount : 0,  []],
-      amountPaid: [this.paymentData.amountPaid ? this.paymentData.amountPaid : 0,  []],
+      fullAmount: [this.paymentData.fullAmount ? this.paymentData.fullAmount : 0,  []],
+      amountPaid: [this.paymentData.amountPaid ? this.paymentData.amountPaid : 0, []],
       amountOutstanding: [this.paymentData.amountOutstanding ? this.paymentData.amountOutstanding : 0, []],
       discountAmount: [this.paymentData.discountAmount ? this.paymentData.discountAmount : 0 , []],
       discountReason: [this.paymentData.discountReason ? this.paymentData.discountReason : this.discountReasons[0], []],
@@ -90,6 +91,8 @@ export class BookingItemsComponent implements OnInit {
     this.getFormControl('numberOfItems').disable();
     this.getFormControl('totalAmount').disable();
     this.getFormControl('amountOutstanding').disable();
+    this.getFormControl('fullAmount').disable();
+
     this.getBookingItems()
   }
 
@@ -417,7 +420,10 @@ export class BookingItemsComponent implements OnInit {
       discountAmountControl.enable();
       totalAmountControl.setValue(parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10));
     }
-    this.updateTotalAmount();
+    if (this.paymentForm.get('paymentStatus').value === FULL_PAYMENT_STATUS_ALIAS)
+    {
+      this.paymentForm.get('amountPaid').setValue(this.getFormControl('totalAmount').value);
+    }
     this.updateOutstandingAmount();
   }
 
@@ -442,7 +448,7 @@ export class BookingItemsComponent implements OnInit {
         break;
       case PARTIAL_PAYMENT_STATUS_ALIAS:
         outstandingPaidControl.setValue(outstandingPaidControl.value);
-        amountPaidControl.setValue(this.paymentData.amountPaid);
+        amountPaidControl.setValue(1);
         amountPaidControl.enable();
         break;
       case NO_PAYMENT_PAYMENT_STATUS_ALIAS:
@@ -450,7 +456,6 @@ export class BookingItemsComponent implements OnInit {
         amountPaidControl.disable();
         break;
     }
-
   }
 
   isDisabled() {
@@ -470,6 +475,7 @@ export class BookingItemsComponent implements OnInit {
   updateItemsInfo() {
     const totals = this.calculateTotals();
     this.getFormControl('totalAmount').setValue(totals.totalAmount);
+    this.getFormControl('fullAmount').setValue(totals.totalAmount);
     this.getFormControl('numberOfItems').setValue(totals.totalItems);
     this.updateTotalAmount()
   }
@@ -478,9 +484,9 @@ export class BookingItemsComponent implements OnInit {
     if (this.paymentForm.get('paymentStatus').value === FULL_PAYMENT_STATUS_ALIAS)
     {
       this.paymentForm.get('amountPaid').setValue(this.getFormControl('totalAmount').value);
+      this.paymentForm.get('fullAmount').setValue(this.getFormControl('totalAmount').value);
     }
     this.updateOutstandingAmount();
-
   }
 
   updateOutstandingAmount() {
@@ -518,8 +524,6 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getPaymentInfoDetails() {
-    // this.getFormControl('discountAmount').setValue(parseInt(this.getFormControl('discountAmount').value, 10));
-
     const bookingPaymentDetails: any = {};
     Object.keys(this.paymentForm.controls).forEach(key => {
       const formControl = this.paymentForm.controls[key];
