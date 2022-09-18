@@ -50,6 +50,8 @@ export class EligibleItemsComponent implements OnInit {
         loadingDate: [this.getFormattedDate(this.shipmentList[0].loadingDate)]
       });
     })
+
+    this.getFormControl('loadingDate').disable();
   }
 
   getFormattedDate(date) {
