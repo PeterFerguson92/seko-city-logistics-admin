@@ -7,10 +7,11 @@ import { AddEditDriverComponent } from './add-edit-driver/add-edit-driver.compon
 import { DriverBookingsComponent } from './driver-bookings/driver-bookings.component';
 import { DriverBookingsNotFoundComponent } from './driver-bookings-not-found/driver-bookings-not-found.component';
 import { DriverBookingsLocationsComponent } from './driver-bookings-locations/driver-bookings-locations.component';
+import { AssignMultipleBookingsComponent } from './assign-multiple-bookings/assign-multiple-bookings.component';
 
 @NgModule({
   declarations: [DriversComponent, AddEditDriverComponent,DriverBookingsComponent,
-    DriverBookingsNotFoundComponent, DriverBookingsLocationsComponent],
+    DriverBookingsNotFoundComponent, DriverBookingsLocationsComponent, AssignMultipleBookingsComponent],
   imports: [CommonModule, SharedModule, FlexLayoutModule],
 
 })

@@ -39,6 +39,7 @@ import { AuthGuard } from './shared/authentication/auth.guard';
 import { EligibleItemsResolver } from './shipment/service/resolver/eligible-items.resolver';
 import { EligibleItemsComponent } from './shipment/eligible-items/eligible-items.component';
 import { BookingDriverComponent } from './booking/booking-driver/booking-driver.component';
+import { AssignMultipleBookingsComponent } from './driver/assign-multiple-bookings/assign-multiple-bookings.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -68,6 +69,8 @@ const routes: Routes = [
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },
   { path: 'assignedBookings/:reference', component: DriverBookingsComponent, resolve: { bookings: DriverBookingsResolver } },
+  { path: 'assign-bookings', component: AssignMultipleBookingsComponent },
+  { path: 'assignOrders/:reference', component: AssignMultipleBookingsComponent },
   { path: 'locations/:reference', component: DriverBookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'reports', component: ReportsComponent },
   { path: 'tasks', component: TaskBoardComponent, resolve: { tasks: TasksResolver } },

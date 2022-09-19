@@ -8,6 +8,10 @@
 </a>
 <article class="table-header">
   <input type="text" class="form-control" placeholder="Search..." style="width: 30%;" (keyup)="onFilter($event.target.value)">
+  &nbsp;
+  <button class="action-button button-add-row" mat-button (click)="onAssignBookings()">ASSIGN BOOKINGS</button>
+  &nbsp;
+  <button class="action-button button-add-row" mat-button (click)="onAssignOrders()">ASSIGN ORDERS</button>
 </article>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef={{displayedColumns[0]}}>

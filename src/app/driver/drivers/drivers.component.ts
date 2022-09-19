@@ -50,11 +50,19 @@ export class DriversComponent implements OnInit, OnDestroy {
   }
 
   onShowBookingLocations(reference) {
-    this.router.navigate(['/locations', reference])
+    this.router.navigate(['/locations', reference]);
   }
 
   onShowAssignedBookings(reference) {
-    this.router.navigate(['/assignedBookings', reference])
+    this.router.navigate(['/assignedBookings', reference]);
+  }
+
+  onAssignBookings() {
+    this.router.navigate(['/assignBookings']);
+  }
+
+  onAssignOrders() {
+
   }
 
   onFilter(value: string) {
