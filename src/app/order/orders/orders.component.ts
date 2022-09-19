@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
+import { OrderAssignDriverDialogComponent } from '../order-assign-driver-dialog/order-assign-driver-dialog.component';
 import { OrderUpdateDialogComponent } from '../order-update-dialog/order-update-dialog.component';
 import { OrderService } from '../service/order.service';
 
@@ -54,6 +55,17 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       // height: '80%',
       width: '25%',
       data: { order }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    })
+  }
+
+  onAssignDriver(reference, assignedDriverReference) {
+    const dialogRef = this.dialog.open(OrderAssignDriverDialogComponent, {
+      height: '43%',
+      width: '35%',
+      data: { reference, assignedDriverReference }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)

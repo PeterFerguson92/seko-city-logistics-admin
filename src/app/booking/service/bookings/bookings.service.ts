@@ -80,6 +80,7 @@ export class BookingsService {
       variables: { reference, assignedDriverReference }
     });
   }
+
   updateBookingsByReferences(references: [string], fields: any) {
     return this.apollo.mutate<any>({
       mutation: UPDATE_BOOKINGS_BY_REFERENCES,

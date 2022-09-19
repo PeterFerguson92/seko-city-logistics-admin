@@ -5,7 +5,7 @@ export const ORDER_FRAGMENT = gql`
         id reference customerReference customerFullName customerPhone
         totalAmount amountPaid amountOutstanding paymentType paymentStatus paymentNotes
         deliveryDate deliveryTime deliveryPostCode deliveryAddress
-        updatesViaWhatsapp  updatesViaEmail status archived
+        updatesViaWhatsapp updatesViaEmail status archived assignedDriverReference
       }
 `;
 
@@ -49,6 +49,17 @@ export const UPDATE_ORDER_STATUS = gql`
   mutation updateOrderStatus($reference: String!, $status: String!) {
     updateOrderStatus(reference: $reference, status: $status) {
       ...orderfragment
+    }
+  }
+  ${ORDER_FRAGMENT}
+`;
+
+export const UPDATE_ORDER_ASSIGNED_DRIVER = gql`
+  mutation updateOrderAssignedDriver($reference: String!, $assignedDriverReference: String!) {
+    updateOrderAssignedDriver(reference: $reference, assignedDriverReference: $assignedDriverReference) {
+      isInError
+      errorMessage
+      data { ...orderfragment }
     }
   }
   ${ORDER_FRAGMENT}

@@ -8,6 +8,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderInfoComponent } from './order-info/order-info.component';
 import { OrderReviewComponent } from './order-review/order-review.component';
 import { OrderUpdateDialogComponent } from './order-update-dialog/order-update-dialog.component';
+import { OrderAssignDriverDialogComponent } from './order-assign-driver-dialog/order-assign-driver-dialog.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { OrderUpdateDialogComponent } from './order-update-dialog/order-update-d
     OrderInfoComponent,
     OrderReviewComponent,
     OrderUpdateDialogComponent,
+    OrderAssignDriverDialogComponent,
   ],
   imports: [CommonModule, SharedModule, FlexLayoutModule, CustomerModule]
 })

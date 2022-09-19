@@ -3,7 +3,6 @@
 </ngx-spinner>
 <div id="summary" class="center">
   <div>
-  <!-- <div [formGroup]="receiversCustomerForm"> -->
     <mat-accordion [multi]="true">
       <div [formGroup]="assignDriverForm">
       <mat-expansion-panel hideToggle [expanded]="true">
@@ -15,7 +14,6 @@
         <br/>
           <div class="columns">
             <div class="item">
-              <!-- <app-material-input [label]="'Assigned Driver'" [width]="80" formControlName="currentDriverUsername" ></app-material-input> -->
                 <app-material-select-input [label]="'Select Driver'"
                   [width]="60" (selectionChange)="onSelectionChange($event, 'selectedDriverUsername')"
                   formControlName="selectedDriverUsername"

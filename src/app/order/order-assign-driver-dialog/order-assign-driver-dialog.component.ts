@@ -1,24 +1,29 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
-import { BookingsService } from '../service/bookings/bookings.service';
+import { OrderService } from '../service/order.service';
 
 @Component({
-  selector: 'app-booking-assign-driver-dialog',
-  templateUrl: './booking-assign-driver-dialog.component.html',
-  styleUrls: ['./booking-assign-driver-dialog.component.css', '../../shared/shared.dialog.css']
+  selector: 'app-order-assign-driver-dialog',
+  templateUrl: './order-assign-driver-dialog.component.html',
+  styleUrls: ['./order-assign-driver-dialog.component.css', '../../shared/shared.dialog.css']
 })
-export class BookingAssignDriverDialogComponent implements OnInit {
+export class OrderAssignDriverDialogComponent implements OnInit, OnDestroy {
+
   assignDriverForm: FormGroup;
   currentDriver;
   drivers;
   driversUsername;
+  errorText;
+  showErrorText = false;
+
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(private formBuilder: FormBuilder,
-    private bookingService: BookingsService,
+    private orderService: OrderService,
     private authService: AuthenticationService,
     private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) private data: any) { }
@@ -27,10 +32,8 @@ export class BookingAssignDriverDialogComponent implements OnInit {
     this.spinner.show();
     this.getDriversInfo();
     this.assignDriverForm = this.formBuilder.group({
-      currentDriverUsername: [''],
       selectedDriverUsername: [''],
     })
-    this.assignDriverForm.get('currentDriverUsername').disable();
   }
 
   getFormControl(fControlName: string) {
@@ -46,8 +49,9 @@ export class BookingAssignDriverDialogComponent implements OnInit {
   async getDriversInfo() {
     this.drivers = (await lastValueFrom(this.authService.getDrivers())).data.getDrivers.users;
     this.driversUsername = this.getDriversUsername();
-    this.getCurrentDriverUsername(this.data.driverReference);
+    this.getCurrentDriverUsername(this.data.assignedDriverReference);
     this.spinner.hide();
+
   }
 
   getDriversUsername() {
@@ -61,7 +65,7 @@ export class BookingAssignDriverDialogComponent implements OnInit {
       for (let i = 0; i < this.drivers.length; i++) {
         if (this.drivers[i].reference === reference)
         {
-          this.getFormControl('currentDriverUsername').setValue(this.drivers[i].username);
+          this.getFormControl('selectedDriverUsername').setValue(this.drivers[i].username);
         }
       }
     }
@@ -82,11 +86,26 @@ export class BookingAssignDriverDialogComponent implements OnInit {
 
   onSubmit() {
     const driverReference = this.getSelectedDriverReference();
-    const updateFields = [{ name: 'assignedDriverReference', value: driverReference }];
-      this.bookingService.updateBooking(this.data.reference, updateFields, false).subscribe(
-        ({ data }) => { location.reload()},
-        error => { console.log(error);}
-      );
+    this.orderService.updateOrderAssignedDriver(this.data.reference, driverReference)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(
+      ({ data }) => {
+        if (data.updateOrderAssignedDriver.isInError)
+        {
+          this.showErrorText = true
+          this.errorText = data.updateOrderAssignedDriver.errorMessage
+        } else
+        {
+         location.reload();
+        }
+      },
+      error => { console.log(error); }
+    );
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 
 }

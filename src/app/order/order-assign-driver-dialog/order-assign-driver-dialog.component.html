@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>ASSIGN DRIVER</h2>
+<br>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<mat-dialog-content class="mat-typography">
+  <form id="survey-form" [formGroup]="assignDriverForm" >
+      <div class="item">
+        <app-material-select-input [label]="'Select Driver'" [width]="80" (selectionChange)="onSelectionChange($event, 'selectedDriverUsername')" formControlName="selectedDriverUsername"
+        [options]="driversUsername">
+        </app-material-select-input>
+      </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" (click)="onSubmit()" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

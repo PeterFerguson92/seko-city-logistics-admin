@@ -38,6 +38,9 @@
       <button mat-icon-button class="icon-color" matTooltip="Update order" matTooltipPosition="above">
         <mat-icon (click)="updateOrder(element)">low_priority</mat-icon>
       </button>
+      <button mat-icon-button class="icon-color" matTooltip="Assign Driver" matTooltipPosition="above">
+        <mat-icon (click)="onAssignDriver(element.reference, element.assignedDriverReference)">directions_walk</mat-icon>
+      </button>
       <button mat-icon-button class="icon-color"  matTooltip="Delete order" matTooltipPosition="right">
         <mat-icon (click)="deleteOrder(element.reference)">delete</mat-icon>
       </button>
