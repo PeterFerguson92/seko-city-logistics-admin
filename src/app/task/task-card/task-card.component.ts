@@ -13,7 +13,9 @@ import { TaskService } from '../service/task.service';
 export class TaskCardComponent implements OnInit {
   @Input() task;
 
-  constructor(private commonService: CommonService, private taskService: TaskService, private dialog: MatDialog) { }
+  constructor(private commonService: CommonService,
+    private taskService: TaskService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -46,13 +48,12 @@ export class TaskCardComponent implements OnInit {
     })
   }
 
-
   getFormattedDate(date) {
     return this.commonService.getFormattedDate(date)
   }
 
   getTaskClass(task) {
-    const today = new Date().toISOString();
+    const today = new Date(new Date()).toISOString()
     if (this.commonService.getFormattedDate(today) >
       this.commonService.getFormattedDate(task.actionDate) && task.status !== 'DONE')
     {

@@ -58,7 +58,7 @@ export class DriversComponent implements OnInit, OnDestroy {
   }
 
   onAssignBookings() {
-    this.router.navigate(['/assignBookings']);
+    this.router.navigate(['/assign-bookings']);
   }
 
   onAssignOrders() {

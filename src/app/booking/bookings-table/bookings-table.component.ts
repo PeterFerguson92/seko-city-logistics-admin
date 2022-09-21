@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
-import { BookingAssignDriverDialogComponent } from '../booking-assign-driver-dialog/booking-assign-driver-dialog.component';
 import { BookingUpdateDialogComponent } from '../booking-update-dialog/booking-update-dialog.component';
 import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings/bookings.service';

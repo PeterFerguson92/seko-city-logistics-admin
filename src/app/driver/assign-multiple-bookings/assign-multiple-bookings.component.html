@@ -1,1 +1,79 @@
-<p>assign-multiple-bookings works!</p>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div [formGroup]="selectionForm">
+  <mat-accordion [multi]="true">
+      <mat-expansion-panel hideToggle [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>PICK UP DATE</mat-panel-title>
+        </mat-expansion-panel-header>
+        <br/>
+        <div id="parent">
+          <app-material-select-input [label]="'Select Driver'"
+                  [width]="20" (selectionChange)="onSelectionChange($event, 'selectedDriverUsername')"
+                  formControlName="selectedDriverUsername"
+                  [options]="driversUsername">
+                </app-material-select-input>&nbsp;
+          <app-material-date-picker-input [label]="'Date'"
+            (inputChange)="onInputChange($event, 'date')" formControlName="date">
+          </app-material-date-picker-input>&nbsp;
+          <app-material-button [label]="'Load Bookings'" (click)="onLoadBookings()"></app-material-button><br>
+        </div>
+        <br>
+      </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <br>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef={{displayedColumns[0]}}>
+        <th mat-header-cell *matHeaderCellDef >
+          <mat-checkbox
+          (change)="selectAll()" [checked]="isAllChecked()">{{displayedColumns[0]}}
+        </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox
+            (change)="element.selected = $event.checked" [(ngModel)]="element.selected">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef={{displayedColumns[1]}}>
+        <th mat-header-cell *matHeaderCellDef>{{displayedColumns[1]}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.reference }} </td>
+      </ng-container>
+      <ng-container matColumnDef={{displayedColumns[2]}}>
+        <th mat-header-cell *matHeaderCellDef>{{displayedColumns[2]}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.senderFullName}} </td>
+      </ng-container>
+      <ng-container matColumnDef={{displayedColumns[3]}}>
+        <th mat-header-cell *matHeaderCellDef>{{displayedColumns[3]}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
+      </ng-container>
+      <ng-container matColumnDef={{displayedColumns[4]}}>
+        <th mat-header-cell *matHeaderCellDef>{{displayedColumns[4]}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.pickUpPostCode}} </td>
+      </ng-container>
+      <ng-container matColumnDef={{displayedColumns[5]}}>
+        <th mat-header-cell *matHeaderCellDef>{{displayedColumns[5]}}</th>
+        <td mat-cell *matCellDef="let element">{{getDriverUsername(element.assignedDriverReference)}}</td>
+      </ng-container>
+      <ng-container matColumnDef="ACTION">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button class="icon-color" matTooltip="View booking"  matTooltipPosition="left">
+            <mat-icon (click)="onViewBooking(element.bookingReference)">list_alt</mat-icon>
+          </button>
+          <button mat-icon-button mat-icon-button class="icon-color" matTooltip="Unassign item"  matTooltipPosition="right">
+            <mat-icon (click)="onUnassignItem(element.itemId)">settings_backup_restore</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+
+    <div class="assignButton">
+      <app-material-button [label]="'ASSIGN'" [width]="30"  [disabled]="isDisabled()" (click)="onAssign()"></app-material-button><br>
+    </div>

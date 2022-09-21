@@ -22,7 +22,6 @@ import { HomeModule } from './home/home.module';
 import { TaskModule } from './task/task.module';
 import { OrdersComponent } from './order/orders/orders.component';
 import { UpdateItemsDialogComponent } from './items/update-items-dialog/update-items-dialog.component';
-import { ProfileComponent } from './profile/profile/profile.component';
 import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
