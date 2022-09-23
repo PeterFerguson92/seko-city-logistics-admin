@@ -41,6 +41,8 @@ import { EligibleItemsComponent } from './shipment/eligible-items/eligible-items
 import { BookingDriverComponent } from './booking/booking-driver/booking-driver.component';
 import { AssignMultipleBookingsComponent } from './driver/assign-multiple-bookings/assign-multiple-bookings.component';
 import { AssignMultipleOrdersComponent } from './driver/assign-multiple-orders/assign-multiple-orders.component';
+import { OrderSummaryComponent } from './order/order-summary/order-summary.component';
+import { OrderSummaryResolver } from './order/service/resolver/order-summary.resolver';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -79,6 +81,7 @@ const routes: Routes = [
   { path: 'add-order', component: AddEditOrderComponent },
   { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },
   { path: 'add-order/:reference', component: AddEditOrderComponent, resolve: { customer: CustomerResolver } },
+  { path: 'order-summary/:reference', component: OrderSummaryComponent, resolve: { data: OrderSummaryResolver } },
   { path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

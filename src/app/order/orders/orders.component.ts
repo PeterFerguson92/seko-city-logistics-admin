@@ -50,6 +50,10 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/edit-order', element.reference, element.customerReference]);
   }
 
+  viewOrder(reference) {
+    this.router.navigate(['/order-summary', reference]);
+  }
+
   updateOrder(order) {
     const dialogRef = this.dialog.open(OrderUpdateDialogComponent, {
       // height: '80%',
