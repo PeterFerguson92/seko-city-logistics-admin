@@ -26,10 +26,11 @@ export class OrderSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(async result => {
+      console.log(result)
       this.spinner.show();
-        if (result.isInError)
+        if (result.data.isInError)
         {
-            // TODO
+          this.router.navigate(['/not-found']);
         } else
         {
           await this.processOrderInfo(result.data.order);

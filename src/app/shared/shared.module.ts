@@ -25,6 +25,7 @@ import { ConfirmDialogComponent } from './elements/confirm-dialog/confirm-dialog
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { NotificationMessageComponent } from './notification-message/notification-message.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -45,7 +46,8 @@ import { NotificationMessageComponent } from './notification-message/notificatio
     AlertComponent,
     InputComponent,
     JumbotronComponent,
-    NotificationMessageComponent],
+    NotificationMessageComponent,
+    NotFoundComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule,NgxSpinnerModule ],
   exports: [
     ReactiveFormsModule,

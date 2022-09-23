@@ -19,7 +19,7 @@ export class OrderSummaryResolver implements Resolve<boolean> {
     return this.orderService.getOrderByReference(reference)
       .pipe(
         map(data => ({
-          order: data.data.orderByReference, isInError: false, errorMsg: null,
+          order: data.data.orderByReference, isInError: data.data.orderByReference === null ? true: false, errorMsg: null,
           reference
         })),
         catchError(error => {
