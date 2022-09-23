@@ -9,7 +9,7 @@ button[disabled]{
   background-color: #cccccc;
   color: #666666;
 }
-.custom-btn {
+.action-btn {
   width: 130px;
   height: 40px;
   color: #fff;
