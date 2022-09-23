@@ -2,7 +2,7 @@
   <app-section-title [title]="'Customers'"></app-section-title>
 </div> -->
 
-<a mat-fab (click)="onAddBooking()" class="fab-main">
+<a mat-fab *ngIf="showAddButton" (click)="onAddBooking()" class="fab-main">
   <mat-icon class="mat-18">add</mat-icon>
 </a>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
