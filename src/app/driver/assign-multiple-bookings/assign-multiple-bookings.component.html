@@ -58,22 +58,11 @@
         <th mat-header-cell *matHeaderCellDef>{{displayedColumns[5]}}</th>
         <td mat-cell *matCellDef="let element">{{getDriverUsername(element.assignedDriverReference)}}</td>
       </ng-container>
-      <ng-container matColumnDef="ACTION">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-icon-button class="icon-color" matTooltip="View booking"  matTooltipPosition="left">
-            <mat-icon (click)="onViewBooking(element.bookingReference)">list_alt</mat-icon>
-          </button>
-          <button mat-icon-button mat-icon-button class="icon-color" matTooltip="Unassign item"  matTooltipPosition="right">
-            <mat-icon (click)="onUnassignItem(element.itemId)">settings_backup_restore</mat-icon>
-          </button>
-        </td>
-      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
 
-    <div class="assignButton">
+    <div class="assignButton" >
       <app-material-button [label]="'ASSIGN'" [width]="30"  [disabled]="isDisabled()" (click)="onAssign()"></app-material-button><br>
     </div>

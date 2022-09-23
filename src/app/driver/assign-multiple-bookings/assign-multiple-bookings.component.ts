@@ -19,15 +19,15 @@ export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
   bookings;
   includeArchive = true;
   dataSource = null;
-  displayedColumns: string[] = ['SELECT', 'ID', 'SENDER', 'DESTINATION', 'POSTCODE','DRIVER', 'ACTION'];
+  displayedColumns: string[] = ['SELECT', 'ID', 'SENDER', 'DESTINATION', 'POSTCODE','DRIVER'];
   currentDriver;
   drivers;
   driversUsername;
-  currentDriverReference;
+  currentDriverReference = null;
   bookingReference;
   errorText;
   isAllSelected = false;
-
+  isButtonDisabled = true;
 
   constructor(private formBuilder: FormBuilder,
     private commonService: CommonService,
@@ -38,8 +38,9 @@ export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
 
   ngOnInit(): void {
     this.selectionForm = this.formBuilder.group({
-      date: [new Date('2022-09-19T00:00:00.000Z'), [Validators.required]],
-      selectedDriverUsername: [''],
+      // date: [new Date('2022-09-19T00:00:00.000Z'), [Validators.required]],
+      date: [new Date(), [Validators.required]],
+      selectedDriverUsername: ['', [Validators.required]],
     })
     this.spinner.show();
     this.getDriversInfo();
@@ -82,9 +83,9 @@ export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
       .subscribe(
       ({ data }) => {
           this.bookings = data.filterBookings;
-          const newData = this.bookings.map((item, index) => Object.assign({}, item, { selected: false, index }));
+          const newData = this.bookings.map((item, index) => Object.assign({}, item,
+            { selected: false, index }));
           this.dataSource =  new MatTableDataSource(newData)
-          console.log(this.bookings)
       },
       error => {
         console.log(error);
@@ -99,7 +100,6 @@ export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
     if (fControlName === 'selectedDriverUsername')
     {
       this.currentDriverReference = this.getDriverReference(fControl.value);
-      console.log(this.currentDriverReference)
     }
   }
 
@@ -148,7 +148,9 @@ export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
   }
 
   isDisabled() {
-    return false;
+    const selectedBookings = this.dataSource && this.dataSource.data ?
+      this.dataSource.data.filter((u: any) => u.selected) : [];
+    return selectedBookings.length === 0 || this.currentDriverReference === null;
   }
 
   selectAll() {
@@ -160,25 +162,26 @@ export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
   }
 
   isAllChecked() {
-    const result =  this.dataSource && this.dataSource.data &&
+    const result =  this.dataSource && this.dataSource.data && this.dataSource.data.length > 0 &&
       this.dataSource.data.filter((u: any) => u.selected).length === this.dataSource.data.length ;
     this.isAllSelected = result;
     return result
   }
 
   onAssign() {
+    console.log(3343)
     const selectedBookings = this.dataSource.data.filter((u: any) => u.selected);
     const selectedBookingsReference = selectedBookings.map(a => a.reference);
 
-    const fieldToUpdate = { name: 'assignedDriverReference', value: this.currentDriverReference };
-    this.bookingsService.updateBookingsByReferences(selectedBookingsReference, fieldToUpdate).subscribe(
-      ({ data }) => {
-        location.reload();
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    // const fieldToUpdate = { name: 'assignedDriverReference', value: this.currentDriverReference };
+    // this.bookingsService.updateBookingsByReferences(selectedBookingsReference, fieldToUpdate).subscribe(
+    //   ({ data }) => {
+    //     location.reload();
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
+    // )
   }
 
 
