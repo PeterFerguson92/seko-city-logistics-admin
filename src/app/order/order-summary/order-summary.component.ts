@@ -9,7 +9,6 @@ import { ACCOUNT_NAME, ACCOUNT_SORT_CODE, ACCOUNT_NUMBER, BANK_TRANSFER_PAYMENT_
 import { CommonService } from 'src/app/service/common.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
 @Component({
   selector: 'app-order-summary',
   templateUrl: './order-summary.component.html',
@@ -74,6 +73,7 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   exportAsPDF() {
+    this.spinner.show();
     const summary = document.getElementById('summary');
     const height = summary.clientHeight;
     const width = summary.clientWidth;
@@ -86,8 +86,13 @@ export class OrderSummaryComponent implements OnInit {
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
       doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      doc.save('order_'+ this.order.reference + '.pdf');
+      doc.save(`order_${this.getTimeStamp()}_${this.order.reference}.pdf`);
     })
+    this.spinner.hide();
+  }
+
+  getTimeStamp() {
+    return this.commonService.getTimeStamp(this.order.createdAt);
   }
 
   editOrder() {

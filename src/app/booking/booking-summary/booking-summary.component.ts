@@ -81,8 +81,12 @@ export class BookingSummaryComponent implements OnInit {
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
       doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      doc.save('booking_'+ this.booking.reference + '.pdf');
+      doc.save(`booking_${this.getTimeStamp()}_${this.booking.reference}.pdf`);
     })
+  }
+
+  getTimeStamp() {
+    return this.commonService.getTimeStamp(this.booking.createdAt);
   }
 
   editBooking() {

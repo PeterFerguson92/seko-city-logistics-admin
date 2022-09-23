@@ -4,7 +4,6 @@ import { GET_ACTIVITY_AVAILABILITY, GET_ADDRESSES_BY_POSTCODE, GET_KEY } from '.
 import { Apollo } from 'apollo-angular';
 import * as CryptoJS from 'crypto-js';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -87,6 +86,17 @@ export class CommonService {
     const newDate = new Date(date + ' GMT');
     newDate.setUTCHours(0,0,0,0);
     return newDate.toISOString();
+  }
+
+  getTimeStamp(dateToTimeStamp) {
+    const date = new Date();
+    date.setTime(dateToTimeStamp);
+    const yyyy = date.getFullYear();
+    const mm = date.getMonth() + 1;
+    const dd = date.getDate();
+
+    const formattedToday = dd + '_' + mm + '_' + yyyy;
+    return formattedToday;
   }
 
   isCustomerPersonal(customerType:string) {
