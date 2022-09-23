@@ -18,7 +18,9 @@ import { CustomersService } from '../service/customers.service';
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.css', '../../shared/shared-new-form.css']
+  styleUrls: ['./customer-detail.component.css',
+    '../../shared/shared-new-form.css',
+  '../../shared/common.css']
 })
 export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() customer: ICustomer;

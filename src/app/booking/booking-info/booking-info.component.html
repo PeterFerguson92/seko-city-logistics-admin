@@ -11,7 +11,7 @@
             <app-material-date-picker-input [label]="'Date'"
               (inputChange)="onInputChange($event, 'date')" formControlName="date">
             </app-material-date-picker-input>&nbsp;
-            <app-material-button [label]="'Check availability'" (click)="onCheckAvailabilty()"></app-material-button><br>
+            <app-material-button [label]="'CHECK AVAILABILITY'" [width]="30" (click)="onCheckAvailabilty()"></app-material-button><br>
           </div>
           <div class="item">
             <app-material-select-input [label]="'Time'" [options]="times" formControlName="time"

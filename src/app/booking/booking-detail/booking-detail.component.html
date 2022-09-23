@@ -47,12 +47,11 @@
       just click on the create button and I'll take care of the rest.
     </p>
     <app-booking-review></app-booking-review>
-    <div align="center">
-      <br>
-      <app-material-button [label]="'SUBMIT'" [width]="30" (click)="onSubmit()"></app-material-button>
-    </div>
-    <div>
+    <div align="end">
       <button mat-button matStepperPrevious>Back</button>
+    </div>
+    <div class="submitButton" >
+      <app-material-button [label]="'SUBMIT'" [width]="30" (click)="onSubmit()"></app-material-button>
     </div>
   </mat-step>
 </mat-stepper>

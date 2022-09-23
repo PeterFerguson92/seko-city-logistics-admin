@@ -33,12 +33,12 @@
           <div class="columns">
             <div class="item">
               <app-material-button
-              [label]="'Address'" [label]="'Load Previous Receivers'" (click)="onLoadPreviousReceivers()">
+              [label]="'Address'" [label]="'LOAD PREVIOUS RECEIVERS'" [width]="50" (click)="onLoadPreviousReceivers()">
               </app-material-button>
             </div>
             <div class="item">
               <app-material-button
-                *ngIf="isAddItemsVisible()" [label]="'Add Receiver'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" (click)="onAddReceveirs()">
+                *ngIf="isAddItemsVisible()" [label]="'ADD RECEIVER'" [width]="50" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" (click)="onAddReceveirs()">
               </app-material-button>
             </div>
           </div>

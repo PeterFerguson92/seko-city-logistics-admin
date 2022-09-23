@@ -17,7 +17,7 @@ import { AttachInvoiceDialogComponent } from '../attach-invoice-dialog/attach-in
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
-  styleUrls: ['./booking-detail.component.css', '../../shared/shared.css']
+  styleUrls: ['./booking-detail.component.css', '../../shared/shared.css', '../../shared/common.css']
 })
 export class BookingDetailComponent implements OnInit {
   @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;

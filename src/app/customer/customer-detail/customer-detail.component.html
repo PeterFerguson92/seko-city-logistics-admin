@@ -12,7 +12,7 @@
         <div [formGroup]="loadCustomerForm" class="item">
           <label for="lname">Reference</label><br>
           <app-material-input [label]="'Reference'" formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>&nbsp;
-          <app-material-button [label]="'Load Customer'" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
+          <app-material-button [label]="'Load Customer'" [width]="20" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
         </div>
     </div>
   </mat-expansion-panel>
@@ -83,8 +83,8 @@
 </div>
   </div>
   <br>
-  <div *ngIf="!isBookingOrderMode()" class="submitBtn" align="center">
-    <app-material-button [label]="'Submit'" [color]="'antiquewhite'" [backgroundColor]="'#6D8299'" [width]="30" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
+  <div *ngIf="!isBookingOrderMode()" class="submitButton">
+    <app-material-button [label]="'SUBMIT'" [width]="30" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
   </div>
   <br>
   <br>

@@ -396,7 +396,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   getApplyRemoveDiscountLabel() {
-    return this.getFormControl('isDiscountApplied').value ? 'Remove Discount' : 'Apply Discount';
+    return this.getFormControl('isDiscountApplied').value ? 'REMOVE DISCOUNT' : 'APPLY DISCOUNT';
   }
 
   getMax() {

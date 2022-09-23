@@ -5,10 +5,10 @@
     <div class="col-75">
       <div class="container" >
           <article class="table-header">
-            <button class="action-button button-add-row" mat-button (click)="addRow(null)">Add Item</button>
-            <button class="action-button button-remove-rows" mat-button (click)="removeSelectedRows()" [disabled]="!isMultipleEnabled()">Remove Item</button>
-            <button class="action-button button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">Add Multiple items</button>
-            <button class="action-button button-add-multi-row" mat-button (click)="updateStatus()" [disabled]="!isMultipleEnabled()">Update items status</button>
+            <button class="action-button button-add-row" mat-button (click)="addRow(null)">ADD ITEM</button>
+            <button class="action-button button-remove-rows" mat-button (click)="removeSelectedRows()" [disabled]="!isMultipleEnabled()">REMOVE ITEM</button>
+            <button class="action-button button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">ADD MULTIPLE ITEMS</button>
+            <button class="action-button button-add-multi-row" mat-button (click)="updateStatus()" [disabled]="!isMultipleEnabled()">UPDATE ITEMS STATUS</button>
           </article>
           <table mat-table [dataSource]="dataSource">
             <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
@@ -109,7 +109,7 @@
                         <app-material-select-input [label]="'Type'" [width]="40" [options]="discountReasons" formControlName="discountReason"
                           (selectionChange)="onSelectionChange($event, 'discountReason')" [value]="discountReasons[0]">
                         </app-material-select-input>&nbsp;
-                        <app-material-button  *ngIf="isApplyDiscountDisabled()" [label]="getApplyRemoveDiscountLabel()" (click)="onApplyRemoveDiscount()"></app-material-button><br>
+                        <app-material-button  *ngIf="isApplyDiscountDisabled()" [width]="30" [label]="getApplyRemoveDiscountLabel()" (click)="onApplyRemoveDiscount()"></app-material-button><br>
                       </div>
                     </div>
                     <div class="columns">
