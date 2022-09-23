@@ -13,6 +13,7 @@
           <label for="lname">Reference</label><br>
           <app-material-input [label]="'Reference'" formControlName="ref" [errorMsg]="formValidationMap.ref"></app-material-input>&nbsp;
           <app-material-button [label]="'Load Customer'" [width]="20" [disabled]="isLoadDisabled()" (click)="onLoadCustomer()"></app-material-button>
+          <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
         </div>
     </div>
   </mat-expansion-panel>

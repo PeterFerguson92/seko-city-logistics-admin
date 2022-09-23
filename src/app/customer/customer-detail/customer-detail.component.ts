@@ -45,6 +45,9 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   countryCodes = COUNTRY_CODES
   alertOptions = { autoClose: true, keepAfterRouteChange: false };
 
+  showErrorText;
+  errorText
+
   constructor(private router: Router, private activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
     private customersService: CustomersService, private commonService: CommonService,
     private validationService: ValidationService, private alertService: AlertService) { }
@@ -110,17 +113,28 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       ({ data }) => {
         if (data.customerByReference)
         {
+          this.showErrorText = false;
+          this.errorText = null;
           this.customer = data.customerByReference;
-          this.populateFields()
+          this.populateFields();
         } else
         {
-          this.alertService.success('Customer not found', this.alertOptions);
+          this.showErrorText = true;
+          this.errorText = 'Customer not found';
+          this.clearNotification();
         }
       },
       error => {
         console.log(error);
       }
     )
+  }
+
+  clearNotification() {
+    setTimeout(function() {
+      this.showErrorText = false;
+      this.errorText = null;
+    }.bind(this), 3000);
   }
 
   populateFields() {
