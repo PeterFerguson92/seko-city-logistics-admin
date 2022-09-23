@@ -1,0 +1,17 @@
+.actionBtn {
+  margin: 3%;
+  background-color: #6D8299!important;
+  color: antiquewhite;
+}
+
+.alert-section {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  height:70px;
+}
+
+.no-record-found {
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}

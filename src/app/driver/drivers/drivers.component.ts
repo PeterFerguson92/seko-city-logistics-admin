@@ -62,7 +62,7 @@ export class DriversComponent implements OnInit, OnDestroy {
   }
 
   onAssignOrders() {
-
+    this.router.navigate(['/assign-orders']);
   }
 
   onFilter(value: string) {

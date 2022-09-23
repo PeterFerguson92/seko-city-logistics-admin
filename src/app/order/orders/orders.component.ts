@@ -18,7 +18,7 @@ import { OrderService } from '../service/order.service';
 export class OrdersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['ID', 'CUSTOMER NAME', 'DELIVERY ADDRESS',
+  displayedColumns: string[] = ['ID', 'CUSTOMER NAME','DELIVERY DATE', 'DELIVERY ADDRESS',
     'PAYMENT TYPE', 'PAYMENT STATUS', 'STATUS', 'ACTION'];
   orders: [] = null;
   dataSource = null;

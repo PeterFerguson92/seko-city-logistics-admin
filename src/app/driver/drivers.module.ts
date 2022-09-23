@@ -8,10 +8,11 @@ import { DriverBookingsComponent } from './driver-bookings/driver-bookings.compo
 import { DriverBookingsNotFoundComponent } from './driver-bookings-not-found/driver-bookings-not-found.component';
 import { DriverBookingsLocationsComponent } from './driver-bookings-locations/driver-bookings-locations.component';
 import { AssignMultipleBookingsComponent } from './assign-multiple-bookings/assign-multiple-bookings.component';
+import { AssignMultipleOrdersComponent } from './assign-multiple-orders/assign-multiple-orders.component';
 
 @NgModule({
   declarations: [DriversComponent, AddEditDriverComponent,DriverBookingsComponent,
-    DriverBookingsNotFoundComponent, DriverBookingsLocationsComponent, AssignMultipleBookingsComponent],
+    DriverBookingsNotFoundComponent, DriverBookingsLocationsComponent, AssignMultipleBookingsComponent, AssignMultipleOrdersComponent],
   imports: [CommonModule, SharedModule, FlexLayoutModule],
 
 })

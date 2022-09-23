@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import {
-  CREATE_ORDER, DELETE_ORDER, GET_ALL_ORDERS,
-  GET_ORDERS_REPORT_DATA, GET_ORDER_BY_REFERENCE, SYNC_ORDER, UPDATE_ORDER, UPDATE_ORDER_ASSIGNED_DRIVER, UPDATE_ORDER_STATUS
+  CREATE_ORDER, DELETE_ORDER, FILTER_ORDERS, GET_ALL_ORDERS,
+  GET_ORDERS_REPORT_DATA, GET_ORDER_BY_REFERENCE, SYNC_ORDER, UPDATE_ORDER,
+  UPDATE_ORDERS_BY_REFERENCES, UPDATE_ORDER_ASSIGNED_DRIVER, UPDATE_ORDER_STATUS
 } from './requests';
 import { CURSOR, LIMIT } from '../../constants';
 
@@ -26,6 +27,13 @@ export class OrderService {
     return this.apollo.query<any>({
       query: GET_ORDER_BY_REFERENCE,
       variables: {reference}
+    });
+  }
+
+  filterOrders(fields: any) {
+    return this.apollo.query<any>({
+      query: FILTER_ORDERS,
+      variables: { fields }
     });
   }
 
@@ -54,6 +62,13 @@ export class OrderService {
     return this.apollo.mutate<any>({
       mutation: UPDATE_ORDER_ASSIGNED_DRIVER,
       variables: { reference, assignedDriverReference }
+    });
+  }
+
+  updateOrdersByReferences(references: [string], fields: any) {
+    return this.apollo.mutate<any>({
+      mutation: UPDATE_ORDERS_BY_REFERENCES,
+      variables: { references, fields }
     });
   }
 

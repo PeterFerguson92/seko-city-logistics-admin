@@ -10,7 +10,10 @@ import { CommonService } from 'src/app/service/common.service';
 @Component({
   selector: 'app-assign-multiple-bookings',
   templateUrl: './assign-multiple-bookings.component.html',
-  styleUrls: ['./assign-multiple-bookings.component.css', '../../shared/shared-table.css','../../shared/shared-new-form.css']
+  styleUrls: ['./assign-multiple-bookings.component.css',
+    '../../shared/shared-table.css',
+    '../../shared/shared-new-form.css',
+    '../../shared/common.css']
 })
 export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
 
@@ -173,15 +176,15 @@ export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
     const selectedBookings = this.dataSource.data.filter((u: any) => u.selected);
     const selectedBookingsReference = selectedBookings.map(a => a.reference);
 
-    // const fieldToUpdate = { name: 'assignedDriverReference', value: this.currentDriverReference };
-    // this.bookingsService.updateBookingsByReferences(selectedBookingsReference, fieldToUpdate).subscribe(
-    //   ({ data }) => {
-    //     location.reload();
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // )
+    const fieldToUpdate = { name: 'assignedDriverReference', value: this.currentDriverReference };
+    this.bookingsService.updateBookingsByReferences(selectedBookingsReference, fieldToUpdate).subscribe(
+      ({ data }) => {
+        location.reload();
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 

@@ -27,6 +27,15 @@ export const GET_ORDER_BY_REFERENCE = gql`
   ${ORDER_FRAGMENT}
 `;
 
+export const FILTER_ORDERS = gql`
+  query filterOrders($fields: [UpdateFieldInput!]) {
+    filterOrders(fields: $fields) {
+      ...orderfragment
+    }
+  }
+  ${ORDER_FRAGMENT}
+`;
+
 export const CREATE_ORDER = gql`
   mutation createOrder($order: OrderInput!) {
     createOrder(order: $order) {
@@ -63,6 +72,12 @@ export const UPDATE_ORDER_ASSIGNED_DRIVER = gql`
     }
   }
   ${ORDER_FRAGMENT}
+`;
+
+export const UPDATE_ORDERS_BY_REFERENCES = gql`
+  mutation updateOrdersByReference($references: [String!]!, $fields: [UpdateFieldInput!]) {
+    updateOrdersByReference(references: $references, fields: $fields)
+  }
 `;
 
 export const SYNC_ORDER = gql`
