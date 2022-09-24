@@ -31,7 +31,8 @@ export class OrderReviewComponent implements OnInit {
           quantity: 0,
           amount: 0
         }
-      ]
+      ],
+      numberOfItems: 0,
     }
   }
 

@@ -26,7 +26,6 @@ export class OrderSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(async result => {
-      console.log(result)
       this.spinner.show();
         if (result.data.isInError)
         {
@@ -44,7 +43,6 @@ export class OrderSummaryComponent implements OnInit {
     (await lastValueFrom(this.customersService.getCustomerByReference(this.order.customerReference))).data.customerByReference;
     this.order.items =
       (await lastValueFrom(this.itemService.getItemsByOrderReference(this.order.reference))).data.itemsByOrderReference;
-    console.log(this.order)
     this.spinner.hide();
 
   }

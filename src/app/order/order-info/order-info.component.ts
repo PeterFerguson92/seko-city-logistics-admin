@@ -301,7 +301,9 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       const formControl = this.orderInfoForm.controls[key];
       if (key === 'items')
       {
-       orderInfoDetails.items = this.getOrderItemsInfoDetails()
+       const itemsData = this.getOrderItemsInfoDetails();
+        orderInfoDetails.items = itemsData.itemsInfo;
+        orderInfoDetails.numberOfItems = itemsData.numberOfItems;
       } else
       {
         if (key === 'deliveryDate')
@@ -337,7 +339,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       numberOfItems = numberOfItems + parseInt(control.get('quantity').value, 10)
     })
     // itemsInfo[numberOfItems] = numberOfItems;
-    return itemsInfo;
+    return { itemsInfo, numberOfItems };
   }
 
   getOrderItems() {

@@ -86,7 +86,7 @@
         <td>{{item.status}}</td>
       </tr>
       <br>
-      <p><b>Number of items:</b> <br>{{getNumberOfItems()}}</p>
+      <p><b>Number of items:</b> <br>{{order.numberOfItems}}</p>
       <p><b>Total amount:</b> <br>£{{order.totalAmount}}</p>
       <p><b>Selected payment type:</b> <br>{{order.paymentType}}</p>
       <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Name:</b> <br>{{accountName}}</p>

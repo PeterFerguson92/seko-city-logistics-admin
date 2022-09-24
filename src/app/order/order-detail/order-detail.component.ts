@@ -100,7 +100,7 @@ export class OrderDetailComponent implements OnInit {
     customerFullName: string, customerPhone: string) {
     const dto = {
       customerId, customerReference, customerFullName, customerPhone,
-      ...this.order.info, numberOfItems: this.order.info.items.length, reference: this.order.reference
+      ...this.order.info, reference: this.order.reference
     }
     return dto
   }
@@ -108,7 +108,7 @@ export class OrderDetailComponent implements OnInit {
   createOrderRequest(orderDto) {
     this.orderService.createOrder(orderDto).subscribe(
       ({ data }) => {
-        this.redirectToOrders()
+       this.redirectToOrders()
       },
       error => {
         console.log(error);
