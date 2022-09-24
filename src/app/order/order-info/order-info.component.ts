@@ -10,7 +10,7 @@ import {
 import { ItemService } from 'src/app/items/item.service';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
-import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-order-info',
@@ -183,7 +183,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   onDeleteItem(index) {
     if (this.items.length > 1)
     {
-      const dialogRef = this.dialog.open(DialogComponent);
+      const dialogRef = this.dialog.open(ConfirmDialogComponent);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'true')
         {

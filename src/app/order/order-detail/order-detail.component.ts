@@ -13,7 +13,7 @@ import { OrderService } from '../service/order.service';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.css']
+  styleUrls: ['./order-detail.component.css','../../shared/common.css']
 })
 export class OrderDetailComponent implements OnInit {
   @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;

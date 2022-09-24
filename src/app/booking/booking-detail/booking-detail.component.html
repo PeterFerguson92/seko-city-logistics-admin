@@ -14,8 +14,10 @@
     <form>
       <ng-template matStepLabel>Fill out pick up details</ng-template>
       <app-booking-info [bookingInfo]="getBookingInfoData()"></app-booking-info>
-      <div align="end">
+      <div align="start">
         <button mat-button matStepperPrevious>Back</button>
+      </div>
+      <div align="end">
         <button mat-button (click)="onForward(stepper, 'bookingInfoComponent')"> Next</button>
       </div>
     </form>
@@ -25,8 +27,10 @@
       <ng-template matStepLabel>Fill out receivers details</ng-template>
       <app-bookings-receivers [references]="booking.receiverReferences" [destination]="booking.destination" [location]="booking.location"
       [senderReference]="getSenderRef()"></app-bookings-receivers >
-      <div align="end">
+      <div align="start">
         <button mat-button matStepperPrevious>Back</button>
+      </div>
+      <div align="end">
         <button mat-button (click)="onForward(stepper, 'bookingReceiversComponent')">Next</button>
       </div>
     </form>
@@ -35,8 +39,10 @@
     <form >
       <ng-template matStepLabel>Fill out items details</ng-template>
       <app-booking-items [paymentData]="getPaymentData()"></app-booking-items>
-      <div align="end" >
+      <div align="start">
         <button mat-button matStepperPrevious>Back</button>
+      </div>
+      <div align="end">
         <button mat-button (click)="onForward(stepper, 'bookingItemsComponent')"> Next </button>
       </div>
     </form>
@@ -47,7 +53,7 @@
       just click on the create button and I'll take care of the rest.
     </p>
     <app-booking-review></app-booking-review>
-    <div align="end">
+    <div align="start">
       <button mat-button matStepperPrevious>Back</button>
     </div>
     <div class="submitButton" >

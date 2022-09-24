@@ -105,7 +105,7 @@ export class BookingDetailComponent implements OnInit {
 
   onSubmit() {
     const dialogRef = this.dialog.open(AttachInvoiceDialogComponent, {
-      // data: { date: this.commonService.getFormattedIsoDate(this.getFormControl('date').value) }
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
