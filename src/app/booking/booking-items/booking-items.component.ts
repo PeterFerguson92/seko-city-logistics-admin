@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component';
 import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-duplicate-dialog.component';
 import { UpdateItemsDialogComponent } from 'src/app/items/update-items-dialog/update-items-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 
 export interface IItem {
   id: number
@@ -78,8 +79,6 @@ export class BookingItemsComponent implements OnInit {
       discountAmount: [this.paymentData.discountAmount ? this.paymentData.discountAmount : 0 , []],
       discountReason: [this.paymentData.discountReason ? this.paymentData.discountReason : this.discountReasons[0], []],
       isDiscountApplied: [this.paymentData.isDiscountApplied ? this.paymentData.isDiscountApplied : false , []]
-
-
     })
     if (this.getFormControl('paymentStatus').value === PARTIAL_PAYMENT_STATUS_ALIAS)
     {
@@ -146,7 +145,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   removeRow(id) {
-    const dialogRef = this.dialog.open(DialogComponent);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'true')
       {
@@ -183,7 +182,7 @@ export class BookingItemsComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.dataSource.data.filter((u: any) => !u.selected));
           this.updateItemsInfo()
         }
-      });
+     });
   }
 
   updateStatus() {
@@ -427,6 +426,27 @@ export class BookingItemsComponent implements OnInit {
     this.updateOutstandingAmount();
   }
 
+  processDiscount() {
+    const totalAmountControl = this.getFormControl('totalAmount');
+    const discountAmountControl = this.getFormControl('discountAmount');
+    const isDiscountAppliedControl = this.getFormControl('isDiscountApplied');
+
+    if (isDiscountAppliedControl.value)
+    {
+      discountAmountControl.disable();
+      totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value);
+    } else
+    {
+      discountAmountControl.enable();
+      totalAmountControl.setValue(parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10));
+    }
+    if (this.paymentForm.get('paymentStatus').value === FULL_PAYMENT_STATUS_ALIAS)
+    {
+      this.paymentForm.get('amountPaid').setValue(this.getFormControl('totalAmount').value);
+    }
+    this.updateOutstandingAmount();
+  }
+
   onConfirmButton(element) {
     element.isEdit = !element.isEdit;
     const totals = this.calculateTotals();
@@ -477,7 +497,8 @@ export class BookingItemsComponent implements OnInit {
     this.getFormControl('totalAmount').setValue(totals.totalAmount);
     this.getFormControl('fullAmount').setValue(totals.totalAmount);
     this.getFormControl('numberOfItems').setValue(totals.totalItems);
-    this.updateTotalAmount()
+    this.updateTotalAmount();
+    this.processDiscount()
   }
 
   updateTotalAmount() {
