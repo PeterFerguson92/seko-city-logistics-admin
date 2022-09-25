@@ -1,6 +1,9 @@
 <div>
   <h2 mat-dialog-title>Receivers Information</h2>
-    <span class="example-list-section">
+    <div *ngIf="receivers.length === 0" class="no-record-found">
+      No previous receivers found!
+    </div>
+    <span *ngIf="receivers.length > 0" class="example-list-section">
       <ul>
         <li *ngFor="let recv of receivers">
           <mat-checkbox [(ngModel)]="recv.selected"

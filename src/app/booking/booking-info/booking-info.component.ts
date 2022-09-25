@@ -9,7 +9,7 @@ import { AvailabilityDialogComponent } from '../availability-dialog/availability
 @Component({
   selector: 'app-booking-info',
   templateUrl: './booking-info.component.html',
-  styleUrls: ['./booking-info.component.css', '../../shared/shared-new-form.css']
+  styleUrls: ['./booking-info.component.css', '../../shared/shared-new-form.css', '../../shared/common.css']
 })
 export class BookingInfoComponent implements OnInit, AfterViewInit {
   @Input() bookingInfo
