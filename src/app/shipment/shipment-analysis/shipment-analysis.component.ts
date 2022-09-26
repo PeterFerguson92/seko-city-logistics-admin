@@ -24,11 +24,12 @@ export class ShipmentAnalysisComponent implements OnInit, OnDestroy {
     'thirdyPartyExpenses', 'carToAccraCheckpoint', 'carToKumasiCheckpoint', 'carToOtherCheckpoint'];
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
     private shipmentService: ShipmentService) { }
 
   ngOnInit(): void {

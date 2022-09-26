@@ -1,5 +1,8 @@
-<div id="summary">
-  <mat-accordion  [multi]="true">
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div id="summary" *ngIf="showSummary()" >
+  <mat-accordion [multi]="true">
     <mat-expansion-panel hideToggle [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -141,7 +144,7 @@
   </div>
 
   <div align="end" >
-    <button mat-raised-button (click)="exportAsPDF()" class="exportButton"><mat-icon>picture_as_pdf</mat-icon> Export booking to PDF</button>
+    <button *ngIf="showSummary()" mat-raised-button (click)="exportAsPDF()" class="exportButton"><mat-icon>picture_as_pdf</mat-icon> Export booking to PDF</button>
   </div>
   <br>
   <br>

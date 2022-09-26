@@ -31,10 +31,10 @@ export class ShipmentItemsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private itemService: ItemService,
-    private dialog: MatDialog) { }
+    private itemService: ItemService) { }
 
   ngOnInit(): void {
     const snapshot = this.activatedRoute.snapshot;
