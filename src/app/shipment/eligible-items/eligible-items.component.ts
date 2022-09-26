@@ -1,20 +1,25 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 import { IBooking } from 'src/app/booking/model';
 import { ItemService } from 'src/app/items/item.service';
 import { CommonService } from 'src/app/service/common.service';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
+import { ShipmentService } from '../service/shipment.service';
 
 @Component({
   selector: 'app-eligible-items',
   templateUrl: './eligible-items.component.html',
   styleUrls: ['./eligible-items.component.css', '../../shared/shared-table.css','../../shared/shared-new-form.css']
 })
-export class EligibleItemsComponent implements OnInit {
+export class EligibleItemsComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,26 +37,69 @@ export class EligibleItemsComponent implements OnInit {
   shipmentList = [];
   loadingDate = null;
   isAllSelected = false;
+  isError = false;
+  errorMsg = null;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,
     private itemService: ItemService,private formBuilder: FormBuilder,
-    private commonService: CommonService) { }
+    private commonService: CommonService, private shipmentService: ShipmentService,
+    private spinner: NgxSpinnerService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      const items = data.info[0].data.eligibleItems;
-      this.dataSource = items.length > 0 ? new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.shipmentsObjs = data.info[1].data.shipments;
-      this.shipments = this.getShipmentsDetailsList(this.shipmentsObjs)
+      this.getEligibleItems();
+      this.getShipments();
       this.selectedShipmentForm = this.formBuilder.group({
-        selectedShipment: [this.shipmentList[0]],
-        loadingDate: [this.getFormattedDate(this.shipmentList[0].loadingDate)]
+        selectedShipment: [''],
+        loadingDate: ['']
       });
     })
-
     this.getFormControl('loadingDate').disable();
+  }
+
+  getEligibleItems() {
+    this.spinner.show();
+    this.itemService.getEligibleItems()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (result) => {
+          const items = result.data.eligibleItems;
+          this.dataSource = items.length > 0 ? new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.spinner.hide()
+        },
+        error: () => {
+          this.spinner.hide()
+          this.dialog.open(InfoDialogComponent, {
+            height: '25%',
+            width: '30%',
+            data: { message: `Sorry couldn't retrieve eligible items` }
+          });
+        }
+      })
+  }
+
+  getShipments() {
+    this.shipmentService.getShipments()
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe({
+      next: (result) => {
+        this.shipmentsObjs = result.data.shipments;
+        this.shipments = this.getShipmentsDetailsList(this.shipmentsObjs);
+        this.getFormControl('selectedShipment').setValue(this.shipmentList[0]);
+        this.getFormControl('loadingDate').setValue(this.getFormattedDate(this.shipmentList[0].loadingDate));
+      },
+      error: () => {
+        this.spinner.hide()
+        this.dialog.open(InfoDialogComponent, {
+          height: '25%',
+          width: '30%',
+          data: { message: `Sorry couldn't retrieve shipments` }
+        });
+      }
+    })
   }
 
   getFormattedDate(date) {
@@ -104,7 +152,10 @@ export class EligibleItemsComponent implements OnInit {
     const shipmentsDetails: string[] = [];
     shipmentsDetails.push(this.SHIPMENT_SELECTION_MESSAGE)
     shipments.forEach((shipment) => {
-      this.shipmentList.push({containerNumber: shipment.containerNumber, loadingDate: shipment.loadingDate })
+      if (shipment.containerNumber.length > 0)
+      {
+        this.shipmentList.push({ containerNumber: shipment.containerNumber, loadingDate: shipment.loadingDate });
+      }
     })
     return shipmentsDetails
   }
@@ -155,4 +206,8 @@ export class EligibleItemsComponent implements OnInit {
      return result
    }
 
+   ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
+  }
 }

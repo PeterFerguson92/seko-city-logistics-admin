@@ -10,7 +10,6 @@ import { LoginComponent } from './login/login.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AddEditShipmentComponent } from './shipment/add-edit-shipment/add-edit-shipment.component';
 import { ShipmentResolver } from './shipment/service/resolver/shipment.resolver';
-import { ShipmentsResolverService } from './shipment/service/resolver/shipments.resolver.service';
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 import { BookingSummaryComponent } from './booking/booking-summary/booking-summary.component';
 import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
@@ -36,7 +35,6 @@ import { CustomerBookingHistoryComponent } from './customer/customer-booking-his
 import { CustomerBookingHistoryResolver } from './customer/service/resolver/customer-booking-history.resolver';
 import { ProfileComponent } from './profile/profile/profile.component';
 import { AuthGuard } from './shared/authentication/auth.guard';
-import { EligibleItemsResolver } from './shipment/service/resolver/eligible-items.resolver';
 import { EligibleItemsComponent } from './shipment/eligible-items/eligible-items.component';
 import { BookingDriverComponent } from './booking/booking-driver/booking-driver.component';
 import { AssignMultipleBookingsComponent } from './driver/assign-multiple-bookings/assign-multiple-bookings.component';
@@ -48,9 +46,9 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'shipments', component: ShipmentsComponent, resolve: { shipments: ShipmentsResolverService } },
+  { path: 'shipments', component: ShipmentsComponent},
   { path: 'add-shipment', component: AddEditShipmentComponent },
-  { path: 'eligible-items', component: EligibleItemsComponent, resolve: { info: EligibleItemsResolver }},
+  { path: 'eligible-items', component: EligibleItemsComponent },
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'shipment-items/:reference', component: ShipmentItemsComponent, resolve: { items: ShipmentItemsResolver } },
   { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver } },
