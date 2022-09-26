@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonService } from 'src/app/service/common.service';
@@ -15,7 +15,8 @@ import { OrderService } from '../service/order.service';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css',
+  styleUrls: [
+    './orders.component.css',
     '../../shared/shared-table.css',
     '../../shared/common.css']
 })
@@ -35,9 +36,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private orderService: OrderService,
     private commonService: CommonService,
-    private spinner: NgxSpinnerService,
-    private activatedRoute: ActivatedRoute) {}
-
+    private spinner: NgxSpinnerService) {}
   ngOnInit(): void {
     this.spinner.show();
     this.orderService.getOrders()
