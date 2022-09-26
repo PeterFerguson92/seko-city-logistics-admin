@@ -33,12 +33,12 @@ export class EligibleItemsComponent implements OnInit, OnDestroy {
   dataSource = null;
   height =  '80%';
   width = '65%';
-  SHIPMENT_SELECTION_MESSAGE = 'Please select shipment';
   shipmentList = [];
   loadingDate = null;
   isAllSelected = false;
   isError = false;
   errorMsg = null;
+  SHIPMENT_SELECTION_MESSAGE = 'Please select shipment';
   componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(private router: Router, private activatedroute: ActivatedRoute,

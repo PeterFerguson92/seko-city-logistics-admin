@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 import { PLACES_OF_RECEIPT, PORTS_OF_DISCHARGE, PORTS_OF_LOADING } from 'src/app/constants';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
 import { IShipment } from '../model';
 import { ShipmentService } from '../service/shipment.service';
-
 
 @Component({
   selector: 'app-add-edit-shipment',
@@ -12,40 +15,92 @@ import { ShipmentService } from '../service/shipment.service';
   styleUrls: ['./add-edit-shipment.component.css', './../../shared/shared-new-form.css']
 })
 
-export class AddEditShipmentComponent implements OnInit {
+export class AddEditShipmentComponent implements OnInit, OnDestroy {
 
   addEditShipmentForm: FormGroup;
   shipment: IShipment;
   portsOfLoading = PORTS_OF_LOADING
   portsOfDischarge = PORTS_OF_DISCHARGE;
   placesOfReceipt = PLACES_OF_RECEIPT;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private activatedroute: ActivatedRoute, private router: Router, private formBuilder: FormBuilder,
-    private shipmentService: ShipmentService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private shipmentService: ShipmentService,
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.activatedroute.data.subscribe(data => {
-      this.shipment = this.shipment && this.shipment.reference ? this.shipment : data.shipment;
-      this.addEditShipmentForm = this.formBuilder.group({
-        reference: [null],
-        portOfLoading: [this.portsOfLoading[0]],
-        portOfDischarge: [this.portsOfDischarge[0]],
-        placeOfReceipt: [this.placesOfReceipt[0]],
-        loadingDate: [this.shipment ? this.shipment.loadingDate : null, Validators.required],
-        consigneeName: [this.shipment ? this.shipment.consigneeName: ''],
-        consigneeAddress: [this.shipment ? this.shipment.consigneeAddress: ''],
-        exporterFullName: [this.shipment ? this.shipment.exporterFullName: ''],
-        exporterPostcode: [this.shipment ? this.shipment.exporterPostcode: ''],
-        exporterAddress: [this.shipment ? this.shipment.exporterAdress : ''],
-        exporterArea: [this.shipment ? this.shipment.exporterArea: ''],
-        exporterCity: [this.shipment ? this.shipment.exporterCity: ''],
-        containerNumber: [this.shipment ? this.shipment.containerNumber: ''],
-        blVessel: [this.shipment ? this.shipment.blVessel: ''],
-        shipmentDate: [this.shipment ? this.shipment.shipmentDate : ''],
-      })
+    this.buildForm();
+    const snapshot = this.activatedRoute.snapshot;
+    console.log(snapshot.routeConfig.path)
+    const reference = snapshot.paramMap.get('reference');
+    if (snapshot.routeConfig.path !== 'add-shipment')
+    {
+      this.getShipmentByReference(reference);
+    }
+  }
+
+  buildForm() {
+    this.addEditShipmentForm = this.formBuilder.group({
+      reference: [null],
+      portOfLoading: [this.portsOfLoading[0]],
+      portOfDischarge: [this.portsOfDischarge[0]],
+      placeOfReceipt: [this.placesOfReceipt[0]],
+      loadingDate: ['', Validators.required],
+      consigneeName: [''],
+      consigneeAddress: [''],
+      exporterFullName: [''],
+      exporterPostcode: [''],
+      exporterAddress: [''],
+      exporterArea: [''],
+      exporterCity: [''],
+      containerNumber: [''],
+      blVessel: [''],
+      shipmentDate: [''],
     })
   }
 
+  getShipmentByReference(reference) {
+    this.spinner.show();
+    this.shipmentService.getShipmentByReference(reference)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+      next: (result) => {
+          this.shipment = result.data ? result.data.shipmentByReference : null;
+          if (this.shipment)
+          {
+            this.addEditShipmentForm.patchValue({
+              loadingDate: this.shipment.loadingDate,
+              consigneeName: this.shipment.consigneeName,
+              consigneeAddress: this.shipment.consigneeAddress,
+              exporterFullName: this.shipment.exporterFullName,
+              exporterPostcode: this.shipment.exporterPostcode,
+              exporterAddress: this.shipment.exporterAdress,
+              exporterArea: this.shipment.exporterArea,
+              exporterCity: this.shipment.exporterCity,
+              containerNumber: this.shipment.containerNumber,
+              blVessel: this.shipment.blVessel,
+              shipmentDate: this.shipment.shipmentDate,
+            });
+          } else
+          {
+            this.router.navigate(['/not-found']);
+          }
+          this.spinner.hide()
+      },
+      error: () => {
+        this.spinner.hide()
+        this.dialog.open(InfoDialogComponent, {
+          height: '25%',
+          width: '30%',
+          data: { message: `Sorry couldn't retrieve shipment with reference ${reference}` }
+        });
+      }
+    })
+  }
   onSubmit() {
     if (this.router.url.includes('edit-shipment'))
     {
@@ -57,6 +112,7 @@ export class AddEditShipmentComponent implements OnInit {
   }
 
   updateShipment() {
+    this.spinner.show();
     const updateCustomerFields = []
     Object.keys(this.addEditShipmentForm.controls).forEach(key => {
       const formControl = this.addEditShipmentForm.controls[key]
@@ -68,18 +124,24 @@ export class AddEditShipmentComponent implements OnInit {
 
     if (updateCustomerFields.length > 0)
     {
-      this.shipmentService.updateShipment(this.shipment.reference, updateCustomerFields).subscribe(
-        ({ data }) => {
-          this.redirectToShipments();
-        },
-        error => {
-          console.log(error);
+      this.shipmentService.updateShipment(this.shipment.reference, updateCustomerFields)
+        .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe({
+        next: () => { this.redirectToShipments(); },
+        error: () => {
+          this.spinner.hide()
+          this.dialog.open(InfoDialogComponent, {
+            height: '25%',
+            width: '30%',
+            data: { message: `Sorry couldn't create shipment` }
+          });
         }
-      );
+      })
     }
   }
 
   createShipment() {
+    this.spinner.show();
     const shipment = {
       reference: this.getFormControl('reference').value,
       portOfLoading: this.getFormControl('portOfLoading').value,
@@ -98,14 +160,19 @@ export class AddEditShipmentComponent implements OnInit {
       shipmentDate: this.getFormControl('shipmentDate').value
     }
 
-    this.shipmentService.createShipment(shipment).subscribe(
-      ({ data }) => {
-        this.redirectToShipments();
-      },
-      error => {
-        console.log(error);
+    this.shipmentService.createShipment(shipment)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+      next: () => { this.redirectToShipments(); },
+      error: () => {
+        this.spinner.hide()
+        this.dialog.open(InfoDialogComponent, {
+          height: '25%',
+          width: '30%',
+          data: { message: `Sorry couldn't create shipment` }
+        });
       }
-    );
+    })
   }
 
   redirectToShipments() {
@@ -113,7 +180,6 @@ export class AddEditShipmentComponent implements OnInit {
       window.location.reload();
     });
   }
-
 
   isDisabled() {
     return !this.addEditShipmentForm.valid;
@@ -127,5 +193,10 @@ export class AddEditShipmentComponent implements OnInit {
     const fControl = this.getFormControl(fControlName);
     fControl.setValue(event)
     fControl.markAsDirty();
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 }

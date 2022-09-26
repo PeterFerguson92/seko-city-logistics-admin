@@ -49,7 +49,7 @@ const routes: Routes = [
   { path: 'shipments', component: ShipmentsComponent},
   { path: 'add-shipment', component: AddEditShipmentComponent },
   { path: 'eligible-items', component: EligibleItemsComponent },
-  { path: 'edit-shipment/:reference', component: AddEditShipmentComponent, resolve: { shipment: ShipmentResolver  } },
+  { path: 'edit-shipment/:reference', component: AddEditShipmentComponent },
   { path: 'shipment-items/:reference', component: ShipmentItemsComponent, resolve: { items: ShipmentItemsResolver } },
   { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver } },
   { path: 'shipment-report/:reference', component: ShipmentReportComponent, resolve: { shipment: ShipmentResolver  } },
