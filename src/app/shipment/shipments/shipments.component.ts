@@ -30,9 +30,12 @@ export class ShipmentsComponent implements OnInit, OnDestroy {
   errorMsg = null;
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router, private commonService: CommonService,
-    private shipmentService: ShipmentService, private dialog: MatDialog,
-    private spinner: NgxSpinnerService) { }
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private spinner: NgxSpinnerService,
+    private commonService: CommonService,
+    private shipmentService: ShipmentService) { }
 
   ngOnInit(): void {
     this.spinner.show();

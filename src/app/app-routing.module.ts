@@ -74,7 +74,7 @@ const routes: Routes = [
   { path: 'locations/:reference', component: DriverBookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'reports', component: ReportsComponent },
   { path: 'tasks', component: TaskBoardComponent, resolve: { tasks: TasksResolver } },
-  { path: 'orders', component: OrdersComponent, resolve: { orders: OrdersResolver } },
+  { path: 'orders', component: OrdersComponent},
   { path: 'add-order', component: AddEditOrderComponent },
   { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },
   { path: 'add-order/:reference', component: AddEditOrderComponent, resolve: { customer: CustomerResolver } },

@@ -1,9 +1,11 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 import { CommonService } from 'src/app/service/common.service';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { OrderAssignDriverDialogComponent } from '../order-assign-driver-dialog/order-assign-driver-dialog.component';
@@ -13,29 +15,49 @@ import { OrderService } from '../service/order.service';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css','../../shared/shared-table.css']
+  styleUrls: ['./orders.component.css',
+    '../../shared/shared-table.css',
+    '../../shared/common.css']
 })
-export class OrdersComponent implements OnInit, AfterViewInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['ID', 'CUSTOMER NAME','DELIVERY DATE', 'DELIVERY ADDRESS',
+  displayedColumns: string[] = ['ID', 'CUSTOMER NAME','DATE', 'POSTCODE',
     'PAYMENT TYPE', 'PAYMENT STATUS', 'STATUS', 'ACTION'];
   orders: [] = null;
   dataSource = null;
+  isError = false;
+  errorMsg = null;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router, private activatedroute: ActivatedRoute, private commonService: CommonService,
-    private orderService: OrderService, private dialog: MatDialog, private cdRef : ChangeDetectorRef) {
-    }
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private orderService: OrderService,
+    private commonService: CommonService,
+    private spinner: NgxSpinnerService,
+    private activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
-    this.activatedroute.data.subscribe(data => {
-      this.dataSource = new MatTableDataSource(data.orders);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.cdRef.detectChanges();
-    })
+  ngOnInit(): void {
+    this.spinner.show();
+    this.orderService.getOrders()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (result) => {
+          this.isError = false;
+          this.dataSource = new MatTableDataSource(result.data.orders);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.spinner.hide();
+        },
+        error: (error) => {
+          this.errorMsg = error.message
+          this.isError = true;
+          console.log(error);
+          this.spinner.hide()
+        }
+      }
+    )
   }
 
   getFormattedDate(date) {
@@ -94,5 +116,10 @@ export class OrdersComponent implements OnInit, AfterViewInit {
         )
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 }
