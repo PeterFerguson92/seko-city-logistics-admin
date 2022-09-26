@@ -13,7 +13,6 @@ import { ShipmentResolver } from './shipment/service/resolver/shipment.resolver'
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 import { BookingSummaryComponent } from './booking/booking-summary/booking-summary.component';
 import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
-import { ShipmentItemsResolver } from './shipment/service/resolver/shipment-items.resolver';
 import { DriversComponent } from './driver/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
 import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items.component';
@@ -50,7 +49,7 @@ const routes: Routes = [
   { path: 'add-shipment', component: AddEditShipmentComponent },
   { path: 'eligible-items', component: EligibleItemsComponent },
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent },
-  { path: 'shipment-items/:reference', component: ShipmentItemsComponent, resolve: { items: ShipmentItemsResolver } },
+  { path: 'shipment-items/:reference', component: ShipmentItemsComponent},
   { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver } },
   { path: 'shipment-report/:reference', component: ShipmentReportComponent, resolve: { shipment: ShipmentResolver  } },
   { path: 'bookings', component: BookingsComponent },

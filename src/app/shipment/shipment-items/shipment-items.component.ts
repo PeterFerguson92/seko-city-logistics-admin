@@ -1,18 +1,23 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 import { ItemService } from 'src/app/items/item.service';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-shipment-items',
   templateUrl: './shipment-items.component.html',
-  styleUrls: ['./shipment-items.component.css', '../../shared/shared-table.css']
+  styleUrls: [
+    './shipment-items.component.css',
+    '../../shared/shared-table.css',
+    '../../shared/common.css']
 })
-export class ShipmentItemsComponent implements OnInit {
+export class ShipmentItemsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['SELECT', 'SENDER NAME', 'DESTINATION',
@@ -20,18 +25,48 @@ export class ShipmentItemsComponent implements OnInit {
   items = null;
   dataSource;
   isAllSelected = false;
+  isError = false;
+  errorMsg = null;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router,private activatedroute: ActivatedRoute,
-  private itemService: ItemService, private dialog: MatDialog) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    private itemService: ItemService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
-      const items = data.items;
-      this.dataSource = items.length > 0 ?
-        new MatTableDataSource(this.buildItemsData(items)) : new MatTableDataSource(null);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
+    const snapshot = this.activatedRoute.snapshot;
+    const shipmentReference = snapshot.paramMap.get('reference');
+    this.getItems(shipmentReference);
+  }
+
+  getItems(shipmentReference) {
+    this.spinner.show();
+    this.itemService.filteredFullItems({name: 'shipmentReference', value: shipmentReference})
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (result) => {
+          const items = result.data.filteredFullItems;
+          if (items.length > 0) {
+            this.dataSource = new MatTableDataSource(this.buildItemsData(items))
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          } else
+          {
+            this.dataSource = new MatTableDataSource(null);
+            this.errorMsg = `No records found`
+            this.isError = true;
+          }
+          this.spinner.hide()
+        },
+        error: () => {
+          this.errorMsg = `Sorry couldn't retrieve items`
+          this.isError = true;
+          this.spinner.hide()
+        }
+      })
   }
 
   onViewBooking(reference) {
@@ -57,7 +92,6 @@ export class ShipmentItemsComponent implements OnInit {
       }
     })
   }
-
 
   onUnassignItems() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -125,8 +159,13 @@ export class ShipmentItemsComponent implements OnInit {
    return result
  }
 
-  selectElement(element) {
-    element.selected = !element.selected;
-  }
+selectElement(element) {
+  element.selected = !element.selected;
+}
+
+ngOnDestroy() {
+  this.componentDestroyed$.next(true)
+  this.componentDestroyed$.complete()
+}
 
 }

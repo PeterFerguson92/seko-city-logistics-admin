@@ -25,17 +25,16 @@ export class AddEditShipmentComponent implements OnInit, OnDestroy {
   componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private shipmentService: ShipmentService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog) { }
+    private activatedRoute: ActivatedRoute,
+    private shipmentService: ShipmentService) { }
 
   ngOnInit() {
     this.buildForm();
     const snapshot = this.activatedRoute.snapshot;
-    console.log(snapshot.routeConfig.path)
     const reference = snapshot.paramMap.get('reference');
     if (snapshot.routeConfig.path !== 'add-shipment')
     {
