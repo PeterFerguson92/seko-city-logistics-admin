@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
 import { IShipment } from '../model';
 import { ShipmentService } from '../service/shipment.service';
 
@@ -9,7 +13,7 @@ import { ShipmentService } from '../service/shipment.service';
   templateUrl: './shipment-analysis.component.html',
   styleUrls: ['./shipment-analysis.component.css', '../../shared/shared-new-form.css']
 })
-export class ShipmentAnalysisComponent implements OnInit {
+export class ShipmentAnalysisComponent implements OnInit, OnDestroy {
   shipmentAnalysisForm: FormGroup;
   shipment: IShipment;
   EXCLUSIION_FORM_CONTROL_KEYS = ['loadingCostNotes', 'clearingNotes', 'notes', 'totalAmountCharged',
@@ -18,36 +22,45 @@ export class ShipmentAnalysisComponent implements OnInit {
   LOADING_FORM_CONTROL_KEYS = ['containerCharge', 'containerExtraCharge', 'loadersCost'];
   CLEARING_FORM_CONTROL_KEYS = ['clearingCharge', 'incentives', 'totalGhDriversFood', 'totalGhDriversTips',
     'thirdyPartyExpenses', 'carToAccraCheckpoint', 'carToKumasiCheckpoint', 'carToOtherCheckpoint'];
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router, private activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog,
     private shipmentService: ShipmentService) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
-      this.shipment = this.shipment && this.shipment.reference ? this.shipment : data.shipment;
-      this.shipmentAnalysisForm = this.formBuilder.group({
-        reference: [null],
-        totalAmountCharged: [this.shipment ? this.shipment.totalAmountCharged : 0],
-        containerCharge: [this.shipment ? this.shipment.containerCharge : 0],
-        containerExtraCharge: [this.shipment ? this.shipment.containerExtraCharge : 0],
-        loadersCost: [this.shipment ? this.shipment.loadersCost : 0],
-        loadingExtraCost: [this.shipment ? this.shipment.loadingExtraCost : 0],
-        totalLoadingCost: [this.shipment ? this.shipment.totalLoadingCost : 0],
-        loadingCostNotes: [this.shipment ? this.shipment.loadingCostNotes : ''],
-        clearingCharge: [this.shipment ? this.shipment.clearingCharge: 0],
-        incentives: [this.shipment ? this.shipment.incentives : 0],
-        totalGhDriversFood: [this.shipment ? this.shipment.totalGhDriversFood : 0],
-        totalGhDriversTips: [this.shipment ? this.shipment.totalGhDriversTips : 0],
-        thirdyPartyExpenses: [this.shipment ? this.shipment.thirdyPartyExpenses : 0],
-        carToAccraCheckpoint: [this.shipment ? this.shipment.carToAccraCheckpoint : 0],
-        carToKumasiCheckpoint: [this.shipment ? this.shipment.carToKumasiCheckpoint : 0],
-        carToOtherCheckpoint: [this.shipment ? this.shipment.carToOtherCheckpoint : 0],
-        totalClearingCost: [this.shipment ? this.shipment.totalClearingCost : 0],
-        clearingNotes: [this.shipment ? this.shipment.clearingNotes : ''],
-        totalExpenses: [this.shipment ? this.shipment.totalExpenses : 0],
-        profit: [this.shipment ? this.shipment.profit : 0],
-        notes: [this.shipment ? this.shipment.notes : '']
-      })
+    this.buildForm();
+    const snapshot = this.activatedRoute.snapshot;
+    const reference = snapshot.paramMap.get('reference');
+    this.getShipmentByReference(reference);
+  }
+
+  buildForm() {
+    this.shipmentAnalysisForm = this.formBuilder.group({
+      reference: [null],
+      totalAmountCharged: [0],
+      containerCharge: [0],
+      containerExtraCharge: [0],
+      loadersCost: [0],
+      loadingExtraCost: [0],
+      totalLoadingCost: [0],
+      loadingCostNotes: [''],
+      clearingCharge: [0],
+      incentives: [0],
+      totalGhDriversFood: [0],
+      totalGhDriversTips: [0],
+      thirdyPartyExpenses: [0],
+      carToAccraCheckpoint: [0],
+      carToKumasiCheckpoint: [0],
+      carToOtherCheckpoint: [0],
+      totalClearingCost: [0],
+      clearingNotes: [''],
+      totalExpenses: [0],
+      profit: [0],
+      notes: ['']
     })
 
     this.shipmentAnalysisForm.get('totalLoadingCost').disable();
@@ -57,6 +70,55 @@ export class ShipmentAnalysisComponent implements OnInit {
     this.shipmentAnalysisForm.get('totalExpenses').disable();
     this.shipmentAnalysisForm.get('profit').disable();
   }
+
+  getShipmentByReference(reference) {
+    this.spinner.show();
+    this.shipmentService.getShipmentByReference(reference)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+      next: (result) => {
+          this.shipment = result.data ? result.data.shipmentByReference : null;
+          if (this.shipment)
+          {
+            this.shipmentAnalysisForm.patchValue({
+              totalAmountCharged: this.shipment.totalAmountCharged,
+              containerCharge: this.shipment.containerCharge,
+              containerExtraCharge: this.shipment.containerExtraCharge,
+              loadersCost: this.shipment.loadersCost,
+              loadingExtraCost: this.shipment.loadingExtraCost,
+              totalLoadingCost: this.shipment.totalLoadingCost,
+              loadingCostNotes: this.shipment.loadingCostNotes,
+              clearingCharge: this.shipment.clearingCharge,
+              incentives: this.shipment.incentives,
+              totalGhDriversFood: this.shipment.totalGhDriversFood,
+              totalGhDriversTips: this.shipment.totalGhDriversTips,
+              thirdyPartyExpenses: this.shipment.thirdyPartyExpenses,
+              carToAccraCheckpoint: this.shipment.carToAccraCheckpoint,
+              carToKumasiCheckpoint: this.shipment.carToKumasiCheckpoint,
+              carToOtherCheckpoint: this.shipment.carToOtherCheckpoint,
+              totalClearingCost: this.shipment.totalClearingCost,
+              clearingNotes: this.shipment.clearingNotes,
+              totalExpenses: this.shipment.totalExpenses,
+              profit: this.shipment.profit,
+              notes: this.shipment.notes,
+            });
+          } else
+          {
+            this.router.navigate(['/not-found']);
+          }
+          this.spinner.hide()
+      },
+      error: () => {
+        this.spinner.hide()
+        this.dialog.open(InfoDialogComponent, {
+          height: '25%',
+          width: '30%',
+          data: { message: `Sorry couldn't retrieve shipment with reference ${reference}` }
+        });
+      }
+    })
+  }
+
 
   isDisabled() { return false; }
 
@@ -134,8 +196,11 @@ export class ShipmentAnalysisComponent implements OnInit {
   }
 
   onGenerateReport() {
-    console.log(this.shipment.reference)
     this.router.navigate(['/shipment-report', this.shipment.reference]);
+  }
 
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 }

@@ -100,6 +100,7 @@ export class AddEditShipmentComponent implements OnInit, OnDestroy {
       }
     })
   }
+
   onSubmit() {
     if (this.router.url.includes('edit-shipment'))
     {

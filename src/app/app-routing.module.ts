@@ -9,7 +9,6 @@ import { CustomerResolver } from './customer/service/resolver/customer-resolver'
 import { LoginComponent } from './login/login.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AddEditShipmentComponent } from './shipment/add-edit-shipment/add-edit-shipment.component';
-import { ShipmentResolver } from './shipment/service/resolver/shipment.resolver';
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 import { BookingSummaryComponent } from './booking/booking-summary/booking-summary.component';
 import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
@@ -50,8 +49,8 @@ const routes: Routes = [
   { path: 'eligible-items', component: EligibleItemsComponent },
   { path: 'edit-shipment/:reference', component: AddEditShipmentComponent },
   { path: 'shipment-items/:reference', component: ShipmentItemsComponent},
-  { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent, resolve: { shipment: ShipmentResolver } },
-  { path: 'shipment-report/:reference', component: ShipmentReportComponent, resolve: { shipment: ShipmentResolver  } },
+  { path: 'shipment-analysis/:reference', component: ShipmentAnalysisComponent },
+  { path: 'shipment-report/:reference', component: ShipmentReportComponent },
   { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'add-customer', component: CustomerDetailComponent },
