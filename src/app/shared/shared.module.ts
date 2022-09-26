@@ -10,7 +10,6 @@ import { MaterialInputComponent } from './inputs/material-input/material-input.c
 import { MaterialNumericInputComponent } from './inputs/material-numeric-input/material-numeric-input.component';
 import { MaterialSelectInputComponent } from './inputs/material-select-input/material-select-input.component';
 import { MaterialTextAreaInputComponent } from './inputs/material-text-area-input/material-text-area-input.component';
-import { ReportsComponent } from '../reports/reports.component';
 import { MaterialSpinnerComponent } from './buttons/material-spinner/material-spinner.component';
 import { MaterialTableComponent } from './elements/material-table/material-table.component';
 import { SectionTitleComponent } from './elements/section-title/section-title.component';
@@ -26,6 +25,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { NotificationMessageComponent } from './notification-message/notification-message.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { InfoDialogComponent } from './elements/info-dialog/info-dialog.component';
 
 @NgModule({
   declarations: [MaterialButtonComponent,
@@ -47,7 +47,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     InputComponent,
     JumbotronComponent,
     NotificationMessageComponent,
-    NotFoundComponent],
+    NotFoundComponent,
+    InfoDialogComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialDesignModule,NgxSpinnerModule ],
   exports: [
     ReactiveFormsModule,

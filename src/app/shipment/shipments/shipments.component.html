@@ -1,3 +1,6 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <app-jumbotron title="SHIPMENTS" imgPath="../../../assets/freight.jpeg"></app-jumbotron>
 <br>
 <article class="table-header">
@@ -12,6 +15,7 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[0]}}</th>
     <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
   </ng-container>
+  <div *ngIf="!isError">
   <ng-container matColumnDef={{displayedColumns[1]}}>
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[1]}}</th>
     <td mat-cell *matCellDef="let element"> {{getFormattedDate(element.loadingDate)}} </td>
@@ -45,7 +49,11 @@
       </button>
     </td>
   </ng-container>
+  </div>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+<div *ngIf="isError" class="no-record-found">
+  {{errorMsg}}
+</div>
