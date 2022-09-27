@@ -26,7 +26,7 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.bookingInfoForm = this.formBuilder.group({
-      date: [this.bookingInfo.pickUpDate ? new Date(this.bookingInfo.pickUpDate) : new Date(), [Validators.required]],
+      date: [this.bookingInfo.pickUpDate ? new Date(this.bookingInfo.pickUpDate) : null, []],
       time: [this.bookingInfo.pickUpTime ? this.bookingInfo.pickUpTime :  this.times[0], [Validators.required]],
       postcode: [this.bookingInfo.pickUpPostCode ? this.bookingInfo.pickUpPostCode : '', [Validators.required,
       this.validationService.postCodeValidator]],
@@ -103,7 +103,7 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
   getInfoDetails() {
     const info = {};
     Object.keys(this.bookingInfoForm.controls).forEach((control: string) => {
-      if (control === 'date')
+      if (control === 'date' && this.getFormControl(control).value)
       {
         info[control] = this.commonService.getFormattedIsoDate(this.getFormControl(control).value);
       } else

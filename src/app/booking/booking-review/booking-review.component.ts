@@ -43,6 +43,6 @@ export class BookingReviewComponent implements OnInit {
   }
 
   getFormattedDate(date) {
-    return this.commonService.getFormattedDate(date);
+    return date === null ? 'TBD' : this.commonService.getFormattedDate(date);
   }
 }
