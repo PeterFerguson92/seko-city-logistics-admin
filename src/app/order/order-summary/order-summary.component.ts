@@ -35,22 +35,9 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
     private customersService: CustomersService ) { }
 
   ngOnInit(): void {
-    // this.activatedroute.data.subscribe(async result => {
-    //   this.spinner.show();
-    //     if (result.data.isInError)
-    //     {
-    //       this.router.navigate(['/not-found']);
-    //     } else
-    //     {
-    //       await this.processOrderInfo(result.data.order);
-    //     }
-    // })
     const snapshot = this.activatedRoute.snapshot;
     const reference = snapshot.paramMap.get('reference');
-    if (snapshot.routeConfig.path !== 'add-shipment')
-    {
-      this.getOrderByReference(reference);
-    }
+    this.getOrderByReference(reference);
   }
 
   getOrderByReference(reference) {
