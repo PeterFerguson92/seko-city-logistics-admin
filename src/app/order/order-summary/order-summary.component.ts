@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { ItemService } from 'src/app/items/item.service';
 import { jsPDF } from 'jspdf';
@@ -8,34 +8,70 @@ import domtoimage from 'dom-to-image'
 import { ACCOUNT_NAME, ACCOUNT_SORT_CODE, ACCOUNT_NUMBER, BANK_TRANSFER_PAYMENT_TYPE } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderService } from '../service/order.service';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-order-summary',
   templateUrl: './order-summary.component.html',
   styleUrls: ['./order-summary.component.css']
 })
-export class OrderSummaryComponent implements OnInit {
+export class OrderSummaryComponent implements OnInit, OnDestroy {
   order;
   accountName = ACCOUNT_NAME
   accountSortCode = ACCOUNT_SORT_CODE;
   accountNumber = ACCOUNT_NUMBER;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router, private activatedroute: ActivatedRoute,
-    private commonService: CommonService, private customersService: CustomersService,
-    private itemService: ItemService, private spinner: NgxSpinnerService) { }
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private itemService: ItemService,
+    private spinner: NgxSpinnerService,
+    private orderService: OrderService,
+    private commonService: CommonService,
+    private activatedRoute: ActivatedRoute,
+    private customersService: CustomersService ) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(async result => {
-      this.spinner.show();
-        if (result.data.isInError)
-        {
-          this.router.navigate(['/not-found']);
-        } else
-        {
-          await this.processOrderInfo(result.data.order);
-        }
-    })
+    // this.activatedroute.data.subscribe(async result => {
+    //   this.spinner.show();
+    //     if (result.data.isInError)
+    //     {
+    //       this.router.navigate(['/not-found']);
+    //     } else
+    //     {
+    //       await this.processOrderInfo(result.data.order);
+    //     }
+    // })
+    const snapshot = this.activatedRoute.snapshot;
+    const reference = snapshot.paramMap.get('reference');
+    if (snapshot.routeConfig.path !== 'add-shipment')
+    {
+      this.getOrderByReference(reference);
+    }
   }
+
+  getOrderByReference(reference) {
+    this.spinner.show();
+    this.orderService.getOrderByReference(reference)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (result) => {
+        this.processOrderInfo(result.data.orderByReference);
+        this.spinner.hide()
+    },
+    error: () => {
+      this.spinner.hide()
+      this.dialog.open(InfoDialogComponent, {
+        height: '25%',
+        width: '30%',
+        data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
+      });
+    }
+  })
+}
 
   async processOrderInfo(rawOrder) {
     this.order = JSON.parse(JSON.stringify(rawOrder));
@@ -48,7 +84,7 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   showSummary() {
-    return this.order.customer && this.order.items;
+    return this.order && this.order.customer && this.order.items;
   }
 
   isCustomerPersonal(customerType) {
@@ -96,6 +132,11 @@ export class OrderSummaryComponent implements OnInit {
 
   editOrder() {
     this.router.navigate(['/edit-order', this.order.reference, this.order.customerReference]);
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 
 
