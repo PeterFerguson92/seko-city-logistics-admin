@@ -5,7 +5,7 @@
     <div [formGroup]="addEditTaskForm" >
       <div class="item">
         <app-material-input [label]="'Title'" [width]="40" formControlName="title" ></app-material-input>
-        <app-material-date-picker-input [label]="'Action Date'"
+        <app-material-date-picker-input [label]="'Due Date'"
           (inputChange)="onInputChange($event)" formControlName="actionDate">
         </app-material-date-picker-input>
       </div>

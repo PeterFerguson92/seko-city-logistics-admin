@@ -53,9 +53,12 @@ export class TaskCardComponent implements OnInit {
   }
 
   getTaskClass(task) {
-    const today = new Date(new Date()).toISOString()
-    if (this.commonService.getFormattedDate(today) >
-      this.commonService.getFormattedDate(task.actionDate) && task.status !== 'DONE')
+    const today = new Date(new Date()).toISOString();
+    const todayNewDate = new Date(this.commonService.getFormattedDate(today).split('/').reverse().join('/'));
+    const taskDueDate = new Date(this.commonService.getFormattedDate(task.actionDate).split('/').reverse().join('/'));
+
+    if (todayNewDate  >
+      taskDueDate && task.status !== 'DONE')
     {
       return { pastDueDate:true }
     }
