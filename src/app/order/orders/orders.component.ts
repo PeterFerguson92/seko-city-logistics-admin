@@ -36,7 +36,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private orderService: OrderService,
     private commonService: CommonService,
-    private spinner: NgxSpinnerService) {}
+    private spinner: NgxSpinnerService) { }
+
   ngOnInit(): void {
     this.spinner.show();
     this.orderService.getOrders()

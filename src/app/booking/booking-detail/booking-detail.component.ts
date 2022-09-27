@@ -103,20 +103,22 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
+  onSave() {
+    this.processBooking(false, true)
+  }
+
   onSubmit() {
     const dialogRef = this.dialog.open(AttachInvoiceDialogComponent, {
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       const attachInvoice = result === 'true';
-      console.log(attachInvoice)
-      this.processBooking(attachInvoice)
+      this.processBooking(attachInvoice, false)
     })
   }
 
-  async processBooking(attachInvoice) {
+  async processBooking(attachInvoice, isPending) {
 
     if (EDIT_BOOKING_MODE === this.mode)
     {
@@ -146,12 +148,12 @@ export class BookingDetailComponent implements OnInit {
           this.booking.senderFullName = senderDetails.fullName;
         }
         const recvReference = await this.getReceiverReferences(this.booking.receiver.receivers);
-        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice)
+        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice, isPending)
       } else
       {
         const senderDetails = await this.saveSender(this.booking.sender);
         const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
-        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice)
+        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice, isPending)
       }
     }
   }
@@ -208,7 +210,7 @@ export class BookingDetailComponent implements OnInit {
     return recvReferences;
   }
 
-  saveBooking(senderDetails, recvReferences, bookingInfo, attachInvoice) {
+  saveBooking(senderDetails, recvReferences, bookingInfo, attachInvoice, isPending) {
     const booking = {
       id: null,
       reference: '',
@@ -240,7 +242,7 @@ export class BookingDetailComponent implements OnInit {
       shipmentReference: '',
       assignedDriverReference: ''
     };
-    this.bookingsService.createBooking(booking, attachInvoice).subscribe(
+    this.bookingsService.createBooking(booking, attachInvoice, isPending).subscribe(
       ({ data }) => {
         this.redirectToBookings()
       },

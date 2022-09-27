@@ -37,10 +37,10 @@ export class OrderService {
     });
   }
 
-  createOrder(order: any) {
+  createOrder(order: any, isPending) {
     return this.apollo.mutate<any>({
       mutation: CREATE_ORDER,
-      variables: { order }
+      variables: { order, isPending }
     });
   }
 

@@ -53,10 +53,10 @@ export class BookingsService {
     });
   }
 
-  createBooking(booking: any, attachInvoice: boolean) {
+  createBooking(booking: any, attachInvoice: boolean, isPending: boolean) {
     return this.apollo.mutate<IBooking>({
       mutation: CREATE_BOOKING,
-      variables: { input: booking, attachInvoice }
+      variables: { input: booking, attachInvoice, isPending }
     });
   }
 

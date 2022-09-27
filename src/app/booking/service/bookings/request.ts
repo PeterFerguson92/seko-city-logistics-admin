@@ -47,8 +47,8 @@ export const FILTER_BOOKINGS = gql`
 `;
 
 export const CREATE_BOOKING = gql`
-  mutation createBooking($input: BookingInput!, $attachInvoice: Boolean!) {
-    createBooking(input: $input, attachInvoice: $attachInvoice) {
+  mutation createBooking($input: BookingInput!, $attachInvoice: Boolean!, $isPending: Boolean!) {
+    createBooking(input: $input, attachInvoice: $attachInvoice, isPending: $isPending) {
       ...bookingfragment
     }
   }

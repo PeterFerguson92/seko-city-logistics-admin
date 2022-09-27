@@ -37,8 +37,8 @@ export const FILTER_ORDERS = gql`
 `;
 
 export const CREATE_ORDER = gql`
-  mutation createOrder($order: OrderInput!) {
-    createOrder(order: $order) {
+  mutation createOrder($order: OrderInput!, $isPending: Boolean!) {
+    createOrder(order: $order, isPending:$isPending ) {
     ...orderfragment
     }
   }

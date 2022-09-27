@@ -63,10 +63,14 @@ export class OrderDetailComponent implements OnInit {
     this.order.info = this.orderInfoComponent.getOrderInfoDetails();
   }
 
+  onSave() {
+    this.createOrder(true)
+  }
+
   async onSubmit() {
     if (CREATE_ORDER_MODE === this.mode)
     {
-      this.createOrder();
+      this.createOrder(false);
     } else
     {
       if (EDIT_ORDER_MODE === this.mode)
@@ -79,11 +83,11 @@ export class OrderDetailComponent implements OnInit {
     }
   }
 
-  async createOrder() {
+  async createOrder(isPending) {
     const customerDetails = await this.saveCustomer(this.order.orderCustomer);
     const orderDto = this.buildOrderDto(customerDetails.id, customerDetails.reference,
       customerDetails.fullName, customerDetails.fullPhoneNumber)
-    this.createOrderRequest(orderDto);
+    this.createOrderRequest(orderDto, isPending);
   }
 
 
@@ -105,8 +109,8 @@ export class OrderDetailComponent implements OnInit {
     return dto
   }
 
-  createOrderRequest(orderDto) {
-    this.orderService.createOrder(orderDto).subscribe(
+  createOrderRequest(orderDto, isPending) {
+    this.orderService.createOrder(orderDto, isPending).subscribe(
       ({ data }) => {
        this.redirectToOrders()
       },
@@ -189,7 +193,7 @@ export class OrderDetailComponent implements OnInit {
       orderDto = this.buildOrderDto(this.order.customer.id, this.order.customer.reference,
         this.order.customer.fullName, this.order.customer.fullPhoneNumber);
     }
-    this.createOrderRequest(orderDto);
+    this.createOrderRequest(orderDto, false);
   }
 
 

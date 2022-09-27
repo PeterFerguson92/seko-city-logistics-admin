@@ -47,14 +47,12 @@ export class EligibleItemsComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
       this.getEligibleItems();
       this.getShipments();
       this.selectedShipmentForm = this.formBuilder.group({
         selectedShipment: [''],
         loadingDate: ['']
       });
-    })
     this.getFormControl('loadingDate').disable();
   }
 
