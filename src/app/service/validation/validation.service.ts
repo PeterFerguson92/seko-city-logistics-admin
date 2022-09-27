@@ -55,6 +55,7 @@ export class ValidationService {
     email: this.emailValidationMessages,
     address: this.requiredValidationMessages,
     postcode: this.postcodeValidationMessages,
+    deliveryPostCode: this.postcodeValidationMessages,
     location: this.requiredValidationMessages,
     oldPassword: this.requiredValidationMessages,
     newPassword: this.requiredValidationMessages,

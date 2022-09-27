@@ -38,7 +38,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.orderInfoForm = this.formBuilder.group({
-      deliveryDate: [this.orderInfo.deliveryDate ? new Date(this.orderInfo.deliveryDate ) : new Date(), [Validators.required]],
+      deliveryDate: [this.orderInfo.deliveryDate ? new Date(this.orderInfo.deliveryDate ) : null, []],
       deliveryTime: [this.orderInfo.deliveryTime ? this.orderInfo.deliveryTime :  this.times[0], [Validators.required]],
       deliveryPostCode: [this.orderInfo.deliveryPostCode ? this.orderInfo.deliveryPostCode : '',
       [Validators.required, this.validationService.postCodeValidator]],
@@ -241,7 +241,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     const info: any = { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '',updatesViaEmail: '' }
     Object.entries(info).forEach((key) => {
       const attributeName = key[0];
-      if (attributeName === 'date')
+      if (attributeName === 'date' && this.getFormControl(attributeName).value)
       {
         info[attributeName] = this.commonService.getFormattedIsoDate(this.getFormControl(attributeName).value);
       } else
@@ -306,7 +306,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
         orderInfoDetails.numberOfItems = itemsData.numberOfItems;
       } else
       {
-        if (key === 'deliveryDate')
+        if (key === 'deliveryDate' && formControl.value)
         {
           orderInfoDetails[key] = this.commonService.getFormattedIsoDate(formControl.value);
         } else
