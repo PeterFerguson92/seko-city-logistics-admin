@@ -12,14 +12,19 @@ import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component
 @Component({
   selector: 'app-drivers',
   templateUrl: './drivers.component.html',
-  styleUrls: ['./drivers.component.css', '../../shared/shared-table.css', '../../shared/shared-new-form.css']
+  styleUrls: ['./drivers.component.css',
+    '../../shared/shared-table.css',
+    '../../shared/shared-new-form.css',
+    '../../shared/common.css']
 })
 export class DriversComponent implements OnInit, OnDestroy {
 
   drivers;
+  isError = false;
+  errorMsg = null;
+  dataSource = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  dataSource = null;
 
   displayedColumns: string[] = ['ID', 'NAME', 'SURNAME', 'USERNAME', 'EMAIL', 'PHONE', 'COUNTRY', 'ACTION'];
 
@@ -31,14 +36,20 @@ export class DriversComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.spinner.show();
     this.authService.getDrivers()
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(({ data }) => {
-        this.dataSource = new MatTableDataSource(data.getDrivers.users);
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe({
+      next: (result) => {
+        this.dataSource = new MatTableDataSource(result.data.getDrivers.users);
         this.spinner.hide();
       },
-      error => {
-        console.log(error)
-      })
+    error: (error) => {
+      this.spinner.hide()
+      this.errorMsg = error.message
+      this.isError = true;
+      console.log(error);
+      this.spinner.hide()
+    }
+  })
   }
 
   onAddDriver() {

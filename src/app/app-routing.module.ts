@@ -65,7 +65,7 @@ const routes: Routes = [
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'booking-summary/:reference', component: BookingSummaryComponent, resolve: { booking: BookingSummaryResolver } },
   { path: 'booking-driver/:reference', component: BookingDriverComponent, resolve: { booking: BookingSummaryResolver }  },
-  { path: 'drivers', component: DriversComponent, resolve: { drivers: DriversResolver } },
+  { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },
   { path: 'assignedBookings/:reference', component: DriverBookingsComponent, resolve: { bookings: DriverBookingsResolver } },
