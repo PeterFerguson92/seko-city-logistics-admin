@@ -43,9 +43,9 @@ export class DriversComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       },
     error: (error) => {
-      this.spinner.hide()
-      this.errorMsg = error.message
+      this.errorMsg = 'Something went wrong, please contact system support'
       this.isError = true;
+      console.log(error.message);
       console.log(error);
       this.spinner.hide()
     }

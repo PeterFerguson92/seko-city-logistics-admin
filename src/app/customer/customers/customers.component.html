@@ -1,3 +1,6 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <app-jumbotron title="Customers" imgPath="../../../assets/customer.jpeg"></app-jumbotron>
 <br>
 <a mat-fab (click)="addCustomer()" class="fab-main">
@@ -11,43 +14,48 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[0]}}</th>
     <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
   </ng-container>
-  <ng-container matColumnDef={{displayedColumns[1]}}>
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[1]}}</th>
-    <td mat-cell *matCellDef="let element"> {{getName(element)}} </td>
-  </ng-container>
-  <ng-container matColumnDef={{displayedColumns[2]}}>
-    <th mat-header-cell *matHeaderCellDef mat-sort-header  class="centre">{{displayedColumns[2]}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-  </ng-container>
-  <ng-container matColumnDef={{displayedColumns[3]}}>
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[3]}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.postcode}} </td>
-  </ng-container>
-  <ng-container matColumnDef={{displayedColumns[4]}}>
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[4]}}</th>
-    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-  </ng-container>
-  <ng-container matColumnDef="ACTION">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-icon-button class="icon-color" matTooltip="Create a booking for customer" matTooltipPosition="left">
-        <mat-icon (click)="bookCustomer(element.reference)">book</mat-icon>
-      </button>
-      <button mat-icon-button class="icon-color" matTooltip="Bookings history" matTooltipPosition="above">
-        <mat-icon (click)="onHistory(element.reference)">chrome_reader_mode</mat-icon>
-      </button>
-      <button mat-icon-button class="icon-color" matTooltip="Create a order for customer" matTooltipPosition="above">
-        <mat-icon (click)="orderCustomer(element.reference)">library_books</mat-icon>
-      </button>
-      <button mat-icon-button class="icon-color" matTooltip="Edit customer" matTooltipPosition="above">
-        <mat-icon (click)="editCustomer(element.reference)">edit</mat-icon>
-      </button>
-      <button mat-icon-button class="icon-color" matTooltip="Delete customer" matTooltipPosition="right">
-        <mat-icon (click)="deleteCustomer(element.reference)">delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+  <div *ngIf="!isError">
+    <ng-container matColumnDef={{displayedColumns[1]}}>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[1]}}</th>
+      <td mat-cell *matCellDef="let element"> {{getName(element)}} </td>
+    </ng-container>
+    <ng-container matColumnDef={{displayedColumns[2]}}>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header  class="centre">{{displayedColumns[2]}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+    </ng-container>
+    <ng-container matColumnDef={{displayedColumns[3]}}>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[3]}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.postcode}} </td>
+    </ng-container>
+    <ng-container matColumnDef={{displayedColumns[4]}}>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{displayedColumns[4]}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ACTION">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTION </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button class="icon-color" matTooltip="Create a booking for customer" matTooltipPosition="left">
+          <mat-icon (click)="bookCustomer(element.reference)">book</mat-icon>
+        </button>
+        <button mat-icon-button class="icon-color" matTooltip="Bookings history" matTooltipPosition="above">
+          <mat-icon (click)="onHistory(element.reference)">chrome_reader_mode</mat-icon>
+        </button>
+        <button mat-icon-button class="icon-color" matTooltip="Create a order for customer" matTooltipPosition="above">
+          <mat-icon (click)="orderCustomer(element.reference)">library_books</mat-icon>
+        </button>
+        <button mat-icon-button class="icon-color" matTooltip="Edit customer" matTooltipPosition="above">
+          <mat-icon (click)="editCustomer(element.reference)">edit</mat-icon>
+        </button>
+        <button mat-icon-button class="icon-color" matTooltip="Delete customer" matTooltipPosition="right">
+          <mat-icon (click)="deleteCustomer(element.reference)">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  </div>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+<div *ngIf="isError" class="no-record-found">
+  {{errorMsg}}
+</div>
