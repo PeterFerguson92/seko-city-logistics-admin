@@ -12,7 +12,9 @@ export class AddEditCustomerDialogComponent implements OnInit {
 
   customer: ICustomer = null;
   mode = null;
-  constructor(public dialogRef: MatDialogRef<DialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    private dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit(): void {
     this.customer = this.data.customer;

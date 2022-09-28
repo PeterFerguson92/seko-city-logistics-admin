@@ -48,12 +48,20 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   showErrorText;
   errorText
 
-  constructor(private router: Router, private activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
-    private customersService: CustomersService, private commonService: CommonService,
-    private validationService: ValidationService, private alertService: AlertService) { }
+  constructor(private router: Router,
+    private activatedroute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private customersService: CustomersService,
+    private commonService: CommonService,
+    private validationService: ValidationService,
+    private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
+      if (data === null || data.customer === null)
+      {
+        this.router.navigate(['/not-found']);
+      }
       this.setMode();
       this.customer = this.customer && this.customer.reference ? this.customer : data.customer
 
