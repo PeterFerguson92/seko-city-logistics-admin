@@ -37,6 +37,7 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const snapshot = this.activatedRoute.snapshot;
     const reference = snapshot.paramMap.get('reference');
+    console.log(reference)
     this.getOrderByReference(reference);
   }
 
@@ -46,34 +47,49 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
         next: (result) => {
-        this.processOrderInfo(result.data.orderByReference);
+          if (result.data.orderByReference === null)
+          {
+            this.alertError(reference)
+          } else
+          {
+            this.processOrderInfo(result.data.orderByReference);
+          }
         this.spinner.hide()
-    },
-    error: (error) => {
-      this.spinner.hide();
-      console.log('error for order ' + reference)
-      console.log(error.message);
-      console.log(error)
-      const dialogRef =  this.dialog.open(InfoDialogComponent, {
-        height: '30%',
-        width: '30%',
-        data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        this.router.navigate(['/orders']);
-      })
-    }
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log('error for order ' + reference)
+        console.log(error.message);
+        console.log(error)
+        this.alertError(reference)
+      }
   })
 }
 
   async processOrderInfo(rawOrder) {
-    this.order = JSON.parse(JSON.stringify(rawOrder));
-    this.order.customer =
-    (await lastValueFrom(this.customersService.getCustomerByReference(this.order.customerReference))).data.customerByReference;
-    this.order.items =
-      (await lastValueFrom(this.itemService.getItemsByOrderReference(this.order.reference))).data.itemsByOrderReference;
-    this.spinner.hide();
+    if (rawOrder === null)
+    {
+      this.router.navigate(['/not-found']);
+    } else
+    {
+      this.order = JSON.parse(JSON.stringify(rawOrder));
+      this.order.customer =
+        (await lastValueFrom(this.customersService.getCustomerByReference(this.order.customerReference))).data.customerByReference;
+      this.order.items =
+        (await lastValueFrom(this.itemService.getItemsByOrderReference(this.order.reference))).data.itemsByOrderReference;
+      this.spinner.hide();
+    }
+  }
 
+  alertError(reference) {
+    const dialogRef =  this.dialog.open(InfoDialogComponent, {
+      height: '30%',
+      width: '30%',
+      data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['/orders']);
+    })
   }
 
   showSummary() {

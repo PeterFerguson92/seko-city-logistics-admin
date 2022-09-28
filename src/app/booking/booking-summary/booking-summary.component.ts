@@ -52,7 +52,13 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.componentDestroyed$))
         .subscribe({
           next: (result) => {
-          this.processBookingInfo(result.data.bookingByReference);
+            if (result.data.bookingByReference === null)
+            {
+              this.alertError(reference)
+            } else
+            {
+              this.processBookingInfo(result.data.bookingByReference);
+            }
           this.spinner.hide()
       },
       error: (error) => {
@@ -60,15 +66,19 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
         console.log('error for booking ' + reference)
         console.log(error.message);
         console.log(error)
-        const dialogRef =  this.dialog.open(InfoDialogComponent, {
-          height: '30%',
-          width: '30%',
-          data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          this.router.navigate(['/bookings']);
-        })
+        this.alertError(reference);
       }
+    })
+  }
+
+  alertError(reference) {
+    const dialogRef =  this.dialog.open(InfoDialogComponent, {
+      height: '30%',
+      width: '30%',
+      data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['/orders']);
     })
   }
 
