@@ -53,15 +53,17 @@ export class OrderAssignDriverDialogComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
         .subscribe({
           next: (result) => {
+            this.showErrorText = false
+            this.errorText = null
             this.drivers = result.data.getDrivers.users;
             this.driversUsername = this.getDriversUsername();
             this.getCurrentDriverUsername(this.data.assignedDriverReference);
             this.spinner.hide();
           },
           error: (error) => {
-            this.showErrorText = true
-            this.errorText = error.message
-            this.spinner.hide()
+            this.showErrorText = true;
+            this.errorText = error.message;
+            this.spinner.hide();
           }
         })
     }

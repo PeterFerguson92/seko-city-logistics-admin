@@ -37,7 +37,6 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const snapshot = this.activatedRoute.snapshot;
     const reference = snapshot.paramMap.get('reference');
-    console.log(reference)
     this.getOrderByReference(reference);
   }
 
