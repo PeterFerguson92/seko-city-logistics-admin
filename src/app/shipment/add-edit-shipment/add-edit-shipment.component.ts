@@ -93,7 +93,7 @@ export class AddEditShipmentComponent implements OnInit, OnDestroy {
       error: () => {
         this.spinner.hide()
         this.dialog.open(InfoDialogComponent, {
-          height: '25%',
+          height: '30%',
           width: '30%',
           data: { message: `Sorry couldn't retrieve shipment with reference ${reference}` }
         });

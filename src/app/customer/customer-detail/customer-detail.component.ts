@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 import {
   ADD_BOOKING_CUSTOMER_MODE,
   ADD_CUSTOMER_MODE, ADD_ORDER_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
@@ -12,6 +15,7 @@ import { CREATE_ORDER } from 'src/app/order/service/requests';
 import { CommonService } from 'src/app/service/common.service';
 import { ValidationService} from 'src/app/service/validation/validation.service';
 import { AlertService } from 'src/app/shared/elements/alert/alert.service';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
 import { ICustomer } from '../model';
 import { CustomersService } from '../service/customers.service';
 
@@ -22,7 +26,7 @@ import { CustomersService } from '../service/customers.service';
     '../../shared/shared-new-form.css',
   '../../shared/common.css']
 })
-export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CustomerDetailComponent implements OnInit, OnDestroy {
   @Input() customer: ICustomer;
   @Input() mode;
   @Output() closeDialog = new EventEmitter<string>();
@@ -48,46 +52,75 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
   showErrorText;
   errorText
 
-  constructor(private router: Router,
-    private activatedroute: ActivatedRoute,
+  componentDestroyed$: Subject<boolean> = new Subject();
+
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private customersService: CustomersService,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService,
     private commonService: CommonService,
-    private validationService: ValidationService,
-    private alertService: AlertService) { }
+    private activatedRoute: ActivatedRoute,
+    private customersService: CustomersService,
+    private validationService: ValidationService) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
-      if (data === null || data.customer === null)
-      {
-        this.router.navigate(['/not-found']);
-      }
-      this.setMode();
-      this.customer = this.customer && this.customer.reference ? this.customer : data.customer
-
-      this.loadCustomerForm = this.formBuilder.group({ref: ['', []]});
-      this.addEditCustomerForm = this.formBuilder.group({
-        type: [this.types[0], [Validators.required]],
-        title: [this.titles[0], [Validators.required]],
-        name: ['', Validators.required],
-        surname: ['', Validators.required],
-        registeredName: [''],
-        registeredNumber: [''],
-        email: ['', [Validators.email]],
-        phoneGroup: this.formBuilder.group({
-          countryCode: [this.countryCodes[0], [Validators.required]],
-          phone: ['', [Validators.required]],}, { validators: [Validators.required, this.validationService.phoneValidator] }),
-        postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
-        address: ['', [Validators.required]],
-        country: [this.countries[0], [Validators.required]]
-      });
-
-      if (this.customer && this.mode !== ADD_CUSTOMER_MODE)
-      {
-        this.populateFields()
-      }
-    })
+    this.buildForm();
+    const snapshot = this.activatedRoute.snapshot;
+    const reference = snapshot.paramMap.get('reference');
+    if (snapshot.routeConfig.path !== 'add-customer')
+    {
+      this.getCustomerByReference(reference);
+    }
   }
+
+  buildForm() {
+    this.loadCustomerForm = this.formBuilder.group({ref: ['', []]});
+    this.addEditCustomerForm = this.formBuilder.group({
+      type: [this.types[0], [Validators.required]],
+      title: [this.titles[0], [Validators.required]],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      registeredName: [''],
+      registeredNumber: [''],
+      email: ['', [Validators.email]],
+      phoneGroup: this.formBuilder.group({
+        countryCode: [this.countryCodes[0], [Validators.required]],
+        phone: ['', [Validators.required]],}, { validators: [Validators.required, this.validationService.phoneValidator] }),
+      postcode: ['', [Validators.required, this.validationService.postCodeValidator]],
+      address: ['', [Validators.required]],
+      country: [this.countries[0], [Validators.required]]
+    });
+  }
+
+  getCustomerByReference(reference) {
+    this.spinner.show();
+    this.customersService.getCustomerByReference(reference)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (result) => {
+          if (result.data === null || result.data.customerByReference === null)
+          {
+            this.router.navigate(['/not-found']);
+          }
+          this.showErrorText = false;
+          this.errorText = null;
+          const customer = result.data.customerByReference;
+          this.populateFields(customer);
+        },
+        error: (error) => {
+          console.log(error.message);
+          console.log(error)
+          this.spinner.hide()
+          this.dialog.open(InfoDialogComponent, {
+            height: '30%',
+            width: '30%',
+            data: { message: `Sorry couldn't retrieve shipment with reference ${reference}` }
+          });
+        }
+      })
+    }
 
   setMode() {
     if (this.router.url.includes('edit-customer'))
@@ -98,44 +131,13 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
       if (this.router.url.includes('add-customer'))
       {
         this.mode = ADD_CUSTOMER_MODE;
-      } else
-      {
-     //   this.mode = ADD_ORDER_CUSTOMER_MODE
       }
     }
   }
 
-
-  ngAfterViewInit(): void {
-    this.validateFormControl('registeredName');
-    this.validateFormControl('name');
-    this.validateFormControl('surname');
-    this.validateFormControl('email');
-    this.validateFormControl('address');
-    this.validateFormControl('postcode');
-    this.validateGroupFormControl('phoneGroup', 'phone')
-  }
-
   onLoadCustomer() {
-    this.customersService.getCustomerByReference(this.loadCustomerForm.get('ref').value).subscribe(
-      ({ data }) => {
-        if (data.customerByReference)
-        {
-          this.showErrorText = false;
-          this.errorText = null;
-          this.customer = data.customerByReference;
-          this.populateFields();
-        } else
-        {
-          this.showErrorText = true;
-          this.errorText = 'Customer not found';
-          this.clearNotification();
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    const reference = this.loadCustomerForm.get('ref').value;
+    this.populateFields(reference);
   }
 
   clearNotification() {
@@ -145,28 +147,28 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }.bind(this), 3000);
   }
 
-  populateFields() {
+  populateFields(customer) {
     const mainFormControl = this.addEditCustomerForm;
     const phoneGroupFormControl = this.addEditCustomerForm.get('phoneGroup');
     mainFormControl.patchValue({
-      type: this.customer.type === '' ? this.types[0] : this.customer.type,
-      title: this.customer.title,
-      name: this.customer.name,
-      surname: this.customer.surname,
-      registeredName: this.customer.registeredName,
-      registeredNumber: this.customer.registeredNumber,
-      email: this.customer.email,
-      address: this.customer.address,
-      postcode: this.customer.postcode,
-      country: this.customer.country === '' ? this.countries[0] : this.customer.country
+      type: customer.type === '' ? this.types[0] : customer.type,
+      title: customer.title,
+      name: customer.name,
+      surname: customer.surname,
+      registeredName: customer.registeredName,
+      registeredNumber: customer.registeredNumber,
+      email: customer.email,
+      address: customer.address,
+      postcode: customer.postcode,
+      country: customer.country === '' ? this.countries[0] : customer.country
     });
-
-    this.getAddressByPostcode()
 
     phoneGroupFormControl.patchValue({
-      countryCode: this.customer.countryCode,
-      phone: this.customer.phone
+      countryCode: customer.countryCode,
+      phone: customer.phone
     });
+
+    this.getAddressByPostcode();
   }
 
   validateFormControl(fControlName: string) {
@@ -374,7 +376,8 @@ export class CustomerDetailComponent implements OnInit, AfterViewInit, OnDestroy
     return !this.addEditCustomerForm.valid;
   }
 
-   ngOnDestroy() {
-  //  this.createCustomer.unsubscribe();
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 }
