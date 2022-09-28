@@ -1,3 +1,6 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <div id="summary">
   <div *ngIf="showInvoice">
     <app-booking-invoice [booking]="booking"></app-booking-invoice>
@@ -174,7 +177,7 @@
 </div>
 </div>
 
-<div align="center">
+<div align="center" *ngIf="showBookingSummary()">
   <button mat-raised-button (click)="exportAsPDF()" class="exportButton"><mat-icon>picture_as_pdf</mat-icon> Export to PDF</button>
   <button mat-raised-button  (click)="editBooking()" class="editButton"><mat-icon>edit</mat-icon> Edit booking </button>
   <!-- <button mat-raised-button  (click)="generateInvoice()" class="editButton"><mat-icon>edit</mat-icon>{{getButtonName()}}</button> -->

@@ -1,25 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil, tap } from 'rxjs';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { CommonService } from 'src/app/service/common.service';
 import { ItemService } from '../../items/item.service';
 import { jsPDF } from 'jspdf';
 import domtoimage from 'dom-to-image';
 import { ACCOUNT_NAME, ACCOUNT_NUMBER, ACCOUNT_SORT_CODE, BANK_TRANSFER_PAYMENT_TYPE } from 'src/app/constants';
+import { BookingsService } from '../service/bookings/bookings.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-booking-summary',
   templateUrl: './booking-summary.component.html',
   styleUrls: ['./booking-summary.component.css']
 })
-export class BookingSummaryComponent implements OnInit {
+export class BookingSummaryComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router,
-    private activatedroute: ActivatedRoute,
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private itemService: ItemService,
+    private spinner: NgxSpinnerService,
     private commonService: CommonService,
-    private customersService: CustomersService,
-    private itemService: ItemService) { }
+    private activatedRoute: ActivatedRoute,
+    private bookingService: BookingsService,
+    private customersService: CustomersService) { }
 
   items;
   sender
@@ -30,22 +38,52 @@ export class BookingSummaryComponent implements OnInit {
   accountSortCode = ACCOUNT_SORT_CODE;
   accountNumber = ACCOUNT_NUMBER;
   showInvoice = false;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(async data => {
-      this.booking = JSON.parse(JSON.stringify(data.booking));
-      this.booking.sender =
-        (await lastValueFrom(this.customersService.getCustomerByReference(this.booking.senderReference))).data.customerByReference;
-      this.booking.receivers =
-        (await lastValueFrom(this.customersService.getCustomersByReferences(this.booking.receiverReferences))).data.customersByReferences
-      this.booking.items =
-        (await lastValueFrom(this.itemService.getItemsByBookingReference(this.booking.reference))).data.itemsByBookingReference;
+    const snapshot = this.activatedRoute.snapshot;
+    const reference = snapshot.paramMap.get('reference');
+    this.getOrderByReference(reference);
+  }
+
+  getOrderByReference(reference) {
+    this.spinner.show();
+    this.bookingService.getBookingByReference(reference)
+        .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe({
+          next: (result) => {
+          this.processBookingInfo(result.data.bookingByReference);
+          this.spinner.hide()
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log('error for booking ' + reference)
+        console.log(error.message);
+        console.log(error)
+        const dialogRef =  this.dialog.open(InfoDialogComponent, {
+          height: '30%',
+          width: '30%',
+          data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.router.navigate(['/bookings']);
+        })
+      }
     })
   }
 
+  async processBookingInfo(rawBooking) {
+    this.booking = JSON.parse(JSON.stringify(rawBooking));
+    this.booking.sender =
+      (await lastValueFrom(this.customersService.getCustomerByReference(this.booking.senderReference))).data.customerByReference;
+    this.booking.receivers =
+      (await lastValueFrom(this.customersService.getCustomersByReferences(this.booking.receiverReferences))).data.customersByReferences
+    this.booking.items =
+      (await lastValueFrom(this.itemService.getItemsByBookingReference(this.booking.reference))).data.itemsByBookingReference;
+  }
 
   showBookingSummary() {
-    return this.booking.sender && this.booking.receivers && this.booking.items;
+    return this.booking && this.booking.sender && this.booking.receivers && this.booking.items;
   }
 
   async getItems() {
@@ -99,5 +137,10 @@ export class BookingSummaryComponent implements OnInit {
 
   getButtonName() {
     return this.showInvoice ? 'Show Summary' : 'Generate Invoice' ;
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 }

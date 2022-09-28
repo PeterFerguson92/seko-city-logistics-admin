@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { lastValueFrom, Subject, takeUntil } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil, tap } from 'rxjs';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { ItemService } from 'src/app/items/item.service';
 import { jsPDF } from 'jspdf';
@@ -49,13 +49,19 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
         this.processOrderInfo(result.data.orderByReference);
         this.spinner.hide()
     },
-    error: () => {
-      this.spinner.hide()
-      this.dialog.open(InfoDialogComponent, {
-        height: '25%',
+    error: (error) => {
+      this.spinner.hide();
+      console.log('error for order ' + reference)
+      console.log(error.message);
+      console.log(error)
+      const dialogRef =  this.dialog.open(InfoDialogComponent, {
+        height: '30%',
         width: '30%',
         data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
       });
+      dialogRef.afterClosed().subscribe(result => {
+        this.router.navigate(['/orders']);
+      })
     }
   })
 }

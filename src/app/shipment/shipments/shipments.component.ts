@@ -42,16 +42,24 @@ export class ShipmentsComponent implements OnInit, OnDestroy {
     this.shipmentService.getShipments()
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
-        next: (data) => {
+        next: (result) => {
           this.isError = false;
-          this.dataSource = new MatTableDataSource(data.data.shipments);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          if (result.data.shipments.length > 0)
+          {
+            this.dataSource = new MatTableDataSource(result.data.shipments);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          } else
+          {
+            this.errorMsg = 'No Records found'
+            this.isError = true;
+          }
           this.spinner.hide();
         },
         error: (error) => {
           this.errorMsg = 'Something went wrong, please contact system support'
           this.isError = true;
+          console.log('error loading customers')
           console.log(error.message);
           console.log(error);
           this.spinner.hide()

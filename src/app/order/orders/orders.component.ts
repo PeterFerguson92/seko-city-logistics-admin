@@ -45,9 +45,16 @@ export class OrdersComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (result) => {
           this.isError = false;
-          this.dataSource = new MatTableDataSource(result.data.orders);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          if (result.data.orders.length > 0)
+          {
+            this.dataSource = new MatTableDataSource(result.data.orders);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          } else
+          {
+            this.errorMsg = 'No Records found'
+            this.isError = true;
+          }
           this.spinner.hide();
         },
         error: (error) => {
