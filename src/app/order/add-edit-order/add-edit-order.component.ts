@@ -14,20 +14,33 @@ export class AddEditOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
-      if (this.router.url.includes('edit-order'))
-      {
-        this.mode = EDIT_ORDER_MODE
-        this.order = Object.assign({}, data.order[0].data.orderByReference);
-        this.order.customer = data.order[1].data.customerByReference;
-      } else
-      {
-        if (this.router.url.includes('add-order'))
+        if (this.router.url.includes('edit-order'))
         {
-          this.order.customer = data.customer;
-          this.mode = data.customer ? ADD_ORDER_CUSTOMER_MODE : CREATE_ORDER_MODE;
+          if (this.isDataEmpty(data))
+          {
+            this.router.navigate(['/not-found']);
+          }
+          this.mode = EDIT_ORDER_MODE
+          this.order = Object.assign({}, data.order[0].data.orderByReference);
+          this.order.customer = data.order[1].data.customerByReference;
+        } else
+        {
+          if (this.router.url.includes('add-order'))
+          {
+            if (this.isDataEmpty(data))
+            {
+              this.router.navigate(['/not-found']);
+            }
+            this.order.customer = data.customer;
+            this.mode = data.customer ? ADD_ORDER_CUSTOMER_MODE : CREATE_ORDER_MODE;
+          }
         }
-      }
     })
+  }
+
+  isDataEmpty(data) {
+    return data.order[0].data.orderByReference === null ||
+      data.order[1].data.customerByReference === null
   }
 
 }
