@@ -107,6 +107,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
           this.showErrorText = false;
           this.errorText = null;
           const customer = result.data.customerByReference;
+          this.spinner.hide();
           this.populateFields(customer);
         },
         error: (error) => {
