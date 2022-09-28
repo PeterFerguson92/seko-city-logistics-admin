@@ -30,7 +30,6 @@ export class OrderAssignDriverDialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit(): void {
-    this.spinner.show();
     this.loadDrivers();
     this.assignDriverForm = this.formBuilder.group({
       selectedDriverUsername: [''],
@@ -62,7 +61,7 @@ export class OrderAssignDriverDialogComponent implements OnInit, OnDestroy {
           },
           error: (error) => {
             this.showErrorText = true;
-            this.errorText = error.message;
+            this.errorText = `Loading Drivers failed: Please contact system support`;
             this.spinner.hide();
           }
         })
@@ -103,7 +102,7 @@ export class OrderAssignDriverDialogComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
         .subscribe({
           next: (result) => {
-            if (result.data.updateOrderAssignedDriver.isInError){
+            if (result.data && result.data.updateOrderAssignedDriver.isInError){
               this.showErrorText = true
               this.errorText = result.data.updateOrderAssignedDriver.errorMessage
             } else {
@@ -113,7 +112,7 @@ export class OrderAssignDriverDialogComponent implements OnInit, OnDestroy {
           },
           error: () => {
             this.showErrorText = true
-            this.errorText = `Sorry couldn't complete the process`
+            this.errorText = `Update failed: Please contact system`;
             this.spinner.hide()
           }
         })

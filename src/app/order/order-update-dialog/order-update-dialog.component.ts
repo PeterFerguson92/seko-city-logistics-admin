@@ -52,8 +52,10 @@ export class OrderUpdateDialogComponent implements OnInit, OnDestroy {
     .subscribe({
       next: (result) => { location.reload(); },
       error: (error) => {
+        console.log(error);
+        console.log(error.message);
         this.showErrorText = true;
-        this.errorText = error.message;
+        this.errorText = `Update failed: Please contact system support`;
       }
     })
  }

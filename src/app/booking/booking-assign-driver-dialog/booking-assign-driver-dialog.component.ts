@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { lastValueFrom } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { BookingsService } from '../service/bookings/bookings.service';
 
@@ -11,21 +11,24 @@ import { BookingsService } from '../service/bookings/bookings.service';
   templateUrl: './booking-assign-driver-dialog.component.html',
   styleUrls: ['./booking-assign-driver-dialog.component.css', '../../shared/shared.dialog.css']
 })
-export class BookingAssignDriverDialogComponent implements OnInit {
+export class BookingAssignDriverDialogComponent implements OnInit, OnDestroy {
   assignDriverForm: FormGroup;
   currentDriver;
   drivers;
   driversUsername;
+  errorText;
+  showErrorText = false;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private bookingService: BookingsService,
     private authService: AuthenticationService,
     private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit(): void {
-    this.spinner.show();
-    this.getDriversInfo();
+    this.loadDrivers();
     this.assignDriverForm = this.formBuilder.group({
       currentDriverUsername: [''],
       selectedDriverUsername: [''],
@@ -43,13 +46,6 @@ export class BookingAssignDriverDialogComponent implements OnInit {
     fControl.markAsDirty();
   }
 
-  async getDriversInfo() {
-    this.drivers = (await lastValueFrom(this.authService.getDrivers())).data.getDrivers.users;
-    this.driversUsername = this.getDriversUsername();
-    this.getCurrentDriverUsername(this.data.driverReference);
-    this.spinner.hide();
-  }
-
   getDriversUsername() {
     return this.drivers ? this.drivers.map(a => a.username) : [];
   }
@@ -57,11 +53,10 @@ export class BookingAssignDriverDialogComponent implements OnInit {
   getCurrentDriverUsername(reference) {
     if (this.drivers)
     {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.drivers.length; i++) {
-        if (this.drivers[i].reference === reference)
-        {
-          this.getFormControl('currentDriverUsername').setValue(this.drivers[i].username);
+      for (const driver of this.drivers)
+      {
+        if (driver.reference === reference){
+          this.getFormControl('selectedDriverUsername').setValue(driver.username);
         }
       }
     }
@@ -70,23 +65,64 @@ export class BookingAssignDriverDialogComponent implements OnInit {
   getSelectedDriverReference() {
     let reference;
     const selectedDriverUsername = this.getFormControl('selectedDriverUsername').value;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.drivers.length; i++) {
-      if (this.drivers[i].username === selectedDriverUsername)
+    for (const driver of this.drivers)
       {
-        reference = this.drivers[i].reference;
+        if (driver.username === selectedDriverUsername) {
+          reference = driver.reference;
+        }
       }
-    }
     return reference;
   }
 
+  loadDrivers() {
+    this.spinner.show()
+    this.authService.getDrivers()
+      .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe({
+          next: (result) => {
+            this.showErrorText = false
+            this.errorText = null
+            this.drivers = result.data.getDrivers.users;
+            this.driversUsername = this.getDriversUsername();
+            this.getCurrentDriverUsername(this.data.assignedDriverReference);
+            this.spinner.hide();
+          },
+          error: (error) => {
+            this.showErrorText = true;
+            this.errorText = `Loading Drivers failed: Please contact system support`;
+            this.spinner.hide();
+          }
+        })
+    }
+
   onSubmit() {
     const driverReference = this.getSelectedDriverReference();
-    const updateFields = [{ name: 'assignedDriverReference', value: driverReference }];
-      this.bookingService.updateBooking(this.data.reference, updateFields, false).subscribe(
-        ({ data }) => { location.reload()},
-        error => { console.log(error);}
-      );
+
+    this.bookingService.updateBookingAssignedDriver(this.data.reference, driverReference)
+    .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (result) => {
+          if (result.data && result.data.updateBookingAssignedDriver.isInError){
+            this.showErrorText = true
+            this.errorText = result.data.updateBookingAssignedDriver.errorMessage
+          } else {
+            location.reload();
+          }
+          this.spinner.hide()
+        },
+        error: (error) => {
+          console.log(error);
+          console.log(error.message);
+          this.showErrorText = true
+          this.errorText = `Update failed: Please contact system`;
+          this.spinner.hide()
+        }
+      })
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 
 }
