@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
 import { CustomersService } from 'src/app/customer/service/customers.service';
@@ -15,19 +15,24 @@ import { OrderService } from '../service/order.service';
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css','../../shared/common.css']
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailComponent implements OnInit, OnDestroy {
   @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;
   @ViewChild(OrderInfoComponent) orderInfoComponent: OrderInfoComponent;
   @ViewChild(OrderReviewComponent) orderReviewComponent: OrderReviewComponent;
 
   @Input() order;
   @Input() mode
+  errorText;
+  showErrorText = false;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router, private orderService: OrderService,
-    private customerService: CustomersService, private itemService: ItemService) { }
+  constructor(
+    private router: Router,
+    private itemService: ItemService,
+    private orderService: OrderService,
+    private customerService: CustomersService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   getOrderInfo() {
     return {
@@ -161,25 +166,31 @@ export class OrderDetailComponent implements OnInit {
   }
 
   syncOrderItems(orderReference, items) {
-    this.itemService.syncOrderItems(orderReference, items).subscribe(
-      ({ data }) => {
-        this.redirectToOrders()
-      },
-      error => {
+    this.itemService.syncOrderItems(orderReference, items)
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe({
+      next: () => { this.redirectToOrders();},
+      error: (error) => {
         console.log(error);
+        console.log(error.message);
+        this.showErrorText = true
+        this.errorText = `Operation failed: Please contact system`;
       }
-    )
+    })
   }
 
   syncOrder(order) {
-    this.orderService.syncOrder(order).subscribe(
-      ({ data }) => {
-       this.redirectToOrders()
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    this.orderService.syncOrder(order)
+    .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: () => { this.redirectToOrders();},
+        error: (error) => {
+          console.log(error);
+          console.log(error.message);
+          this.showErrorText = true
+          this.errorText = `Operation failed: Please contact system`;
+        }
+      })
   }
 
   async addOrder() {
@@ -201,6 +212,11 @@ export class OrderDetailComponent implements OnInit {
     this.router.navigate(['/orders']).then(() => {
       window.location.reload();
     });
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 
 }

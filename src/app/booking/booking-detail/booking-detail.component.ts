@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
 import { BookingInfoComponent } from '../booking-info/booking-info.component';
@@ -6,7 +6,7 @@ import { BookingItemsComponent } from '../booking-items/booking-items.component'
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
 import { CustomersService } from 'src/app/customer/service/customers.service';
 import { EDIT_BOOKING_MODE, VIEW_BOOKING_MODE } from 'src/app/constants';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { BookingsService } from '../service/bookings/bookings.service';
 import { Router } from '@angular/router';
 import { ICustomer } from 'src/app/customer/model';
@@ -19,7 +19,7 @@ import { AttachInvoiceDialogComponent } from '../attach-invoice-dialog/attach-in
   templateUrl: './booking-detail.component.html',
   styleUrls: ['./booking-detail.component.css', '../../shared/shared.css', '../../shared/common.css']
 })
-export class BookingDetailComponent implements OnInit {
+export class BookingDetailComponent implements OnInit, OnDestroy {
   @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;
   @ViewChild(BookingsReceiversComponent) bookingReceiversComponent: BookingsReceiversComponent;
   @ViewChild(BookingItemsComponent) bookingItemsComponent: BookingItemsComponent;
@@ -28,9 +28,14 @@ export class BookingDetailComponent implements OnInit {
 
   @Input() booking;
   @Input() mode
+  errorText;
+  showErrorText = false;
   senderFullName: string;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private router: Router, private dialog: MatDialog,
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
     private customersService: CustomersService,
     private bookingsService: BookingsService) { }
 
@@ -242,50 +247,62 @@ export class BookingDetailComponent implements OnInit {
       shipmentReference: '',
       assignedDriverReference: ''
     };
-    this.bookingsService.createBooking(booking, attachInvoice, isPending).subscribe(
-      ({ data }) => {
-        this.redirectToBookings()
-      },
-      error => {
+    this.bookingsService.createBooking(booking, attachInvoice, isPending)
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe({
+      next: () => { this.redirectToBookings();},
+      error: (error) => {
         console.log(error);
+        console.log(error.message);
+        this.showErrorText = true
+        this.errorText = `Operation failed: Please contact system`;
       }
-    )
+    })
     return booking;
   }
 
   syncItems(bookingReference, items) {
-    this.bookingsService.syncItems(bookingReference, items).subscribe(
-      ({ data }) => {
-        this.redirectToBookings()
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    this.bookingsService.syncItems(bookingReference, items)
+    .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: () => { this.redirectToBookings();},
+        error: (error) => {
+          console.log(error);
+          console.log(error.message);
+          this.showErrorText = true
+          this.errorText = `Operation failed: Please contact system`;
+        }
+      })
   }
 
   syncBooking(bookingInfo, attachInvoice) {
-    this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo), attachInvoice).subscribe(
-      ({ data }) => {
-        // this.redirectToBookings()
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo), attachInvoice)
+    .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: () => {},
+        error: (error) => {
+          console.log(error);
+          console.log(error.message);
+          this.showErrorText = true
+          this.errorText = `Operation failed: Please contact system`;
+        }
+      })
   }
 
   syncReceivers(reference, receivers: [ICustomer]) {
     if (receivers.length > 0)
     {
-      this.bookingsService.syncReceivers(reference, receivers).subscribe(
-        ({ data }) => {
-          this.redirectToBookings()
-        },
-        error => {
+      this.bookingsService.syncReceivers(reference, receivers)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: () => {},
+        error: (error) => {
           console.log(error);
+          console.log(error.message);
+          this.showErrorText = true
+          this.errorText = `Operation failed: Please contact system`;
         }
-      )
+      })
     }
   }
 
@@ -328,6 +345,11 @@ export class BookingDetailComponent implements OnInit {
     this.router.navigate(['/bookings']).then(() => {
       window.location.reload();
     });
+  }
+
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
   }
 
 }

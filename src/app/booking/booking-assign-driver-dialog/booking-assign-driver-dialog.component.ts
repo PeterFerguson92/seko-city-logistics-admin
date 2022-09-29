@@ -12,19 +12,19 @@ import { BookingsService } from '../service/bookings/bookings.service';
   styleUrls: ['./booking-assign-driver-dialog.component.css', '../../shared/shared.dialog.css']
 })
 export class BookingAssignDriverDialogComponent implements OnInit, OnDestroy {
-  assignDriverForm: FormGroup;
   currentDriver;
   drivers;
   driversUsername;
   errorText;
   showErrorText = false;
+  assignDriverForm: FormGroup;
   componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(
     private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService,
     private bookingService: BookingsService,
     private authService: AuthenticationService,
-    private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit(): void {
@@ -97,7 +97,6 @@ export class BookingAssignDriverDialogComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const driverReference = this.getSelectedDriverReference();
-
     this.bookingService.updateBookingAssignedDriver(this.data.reference, driverReference)
     .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
