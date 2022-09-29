@@ -63,7 +63,7 @@ const routes: Routes = [
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent },
-  { path: 'assignedBookings/:reference', component: DriverBookingsComponent, resolve: { bookings: DriverBookingsResolver } },
+  { path: 'assignedBookings/:reference', component: DriverBookingsComponent},
   { path: 'assign-bookings', component: AssignMultipleBookingsComponent },
   { path: 'assign-orders', component: AssignMultipleOrdersComponent },
   { path: 'locations/:reference', component: DriverBookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
