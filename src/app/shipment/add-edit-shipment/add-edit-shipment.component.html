@@ -113,9 +113,10 @@
         </div>
     </mat-expansion-panel>
   </mat-accordion>
-</div>
+  </div>
   </div>
   <br>
+  <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
   <div class="submitBtn" align="center">
     <app-material-button [label]="'SUBMIT'" [width]="30" [disabled]="isDisabled()" (click)="onSubmit()"></app-material-button>
   </div>

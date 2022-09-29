@@ -17,11 +17,13 @@ import { ShipmentService } from '../service/shipment.service';
 
 export class AddEditShipmentComponent implements OnInit, OnDestroy {
 
-  addEditShipmentForm: FormGroup;
+  errorText;
   shipment: IShipment;
+  showErrorText = false;
+  addEditShipmentForm: FormGroup;
   portsOfLoading = PORTS_OF_LOADING
-  portsOfDischarge = PORTS_OF_DISCHARGE;
   placesOfReceipt = PLACES_OF_RECEIPT;
+  portsOfDischarge = PORTS_OF_DISCHARGE;
   componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(
@@ -128,13 +130,13 @@ export class AddEditShipmentComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.componentDestroyed$))
         .subscribe({
         next: () => { this.redirectToShipments(); },
-        error: () => {
-          this.spinner.hide()
-          this.dialog.open(InfoDialogComponent, {
-            height: '25%',
-            width: '30%',
-            data: { message: `Sorry couldn't create shipment` }
-          });
+        error: (error) => {
+        console.log(error.message);
+        console.log(error)
+        this.showErrorText = true
+        this.errorText = `Operation failed: Please contact system support`;
+        this.clearNotification();
+        this.spinner.hide()
         }
       })
     }
@@ -164,13 +166,13 @@ export class AddEditShipmentComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
       next: () => { this.redirectToShipments(); },
-      error: () => {
+      error: (error) => {
+        console.log(error.message);
+        console.log(error)
+        this.showErrorText = true
+        this.errorText = `Operation failed: Please contact system support`;
+        this.clearNotification();
         this.spinner.hide()
-        this.dialog.open(InfoDialogComponent, {
-          height: '25%',
-          width: '30%',
-          data: { message: `Sorry couldn't create shipment` }
-        });
       }
     })
   }
@@ -193,6 +195,13 @@ export class AddEditShipmentComponent implements OnInit, OnDestroy {
     const fControl = this.getFormControl(fControlName);
     fControl.setValue(event)
     fControl.markAsDirty();
+  }
+
+  clearNotification() {
+    setTimeout(function() {
+      this.showErrorText = false;
+      this.errorText = null;
+    }.bind(this), 3000);
   }
 
   ngOnDestroy() {

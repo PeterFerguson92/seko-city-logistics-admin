@@ -11,7 +11,6 @@ import { ReportsComponent } from './reports/reports.component';
 import { AddEditShipmentComponent } from './shipment/add-edit-shipment/add-edit-shipment.component';
 import { ShipmentsComponent } from './shipment/shipments/shipments.component';
 import { BookingSummaryComponent } from './booking/booking-summary/booking-summary.component';
-import { BookingSummaryResolver } from './booking/service/resolver/booking-summary.resolver';
 import { DriversComponent } from './driver/drivers/drivers.component';
 import { HomeComponent } from './home/home.component';
 import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items.component';
@@ -60,7 +59,7 @@ const routes: Routes = [
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'booking-summary/:reference', component: BookingSummaryComponent},
-  { path: 'booking-driver/:reference', component: BookingDriverComponent, resolve: { booking: BookingSummaryResolver }  },
+  { path: 'booking-driver/:reference', component: BookingDriverComponent  },
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddEditDriverComponent },
   { path: 'edit-driver/:reference', component: AddEditDriverComponent },

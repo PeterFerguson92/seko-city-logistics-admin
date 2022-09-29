@@ -36,6 +36,7 @@
             <app-material-select-input (selectionChange)="onSelectionChange($event, 'country')" [options]="countries" formControlName="country"></app-material-select-input>
           </div>
         </div>
+        <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
       <div class="btn-block">
         <app-material-button [label]="'SUBMIT'" [disabled]="isDisabled()" [width]="30" (click)="onSubmit()"></app-material-button>
       </div>
