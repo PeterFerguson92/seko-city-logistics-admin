@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import {
   ADD_BOOKING_CUSTOMER_MODE,
+  ADD_BOOKING_ORDER_CUSTOMER_MODE,
   ADD_CUSTOMER_MODE, ADD_ORDER_CUSTOMER_MODE, COUNTRIES, COUNTRY_CODES, CREATE_BOOKING_MODE,
   CREATE_ORDER_MODE,
   CUSTOMER_ORDER_ROLE,
@@ -107,8 +108,9 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
           this.showErrorText = false;
           this.errorText = null;
           const customer = result.data.customerByReference;
-          this.spinner.hide();
           this.populateFields(customer);
+          this.setMode()
+          this.spinner.hide();
         },
         error: (error) => {
           console.log(error.message);
@@ -132,6 +134,9 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
       if (this.router.url.includes('add-customer'))
       {
         this.mode = ADD_CUSTOMER_MODE;
+      } else
+      {
+        this.mode = ADD_BOOKING_ORDER_CUSTOMER_MODE
       }
     }
   }
@@ -227,7 +232,6 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   }
 
   addCustomer() {
-    const createCustomerData = 'createCustomer'
     this.createCustomer = this.customersService.createCustomer(this.getCustomerDetails()).subscribe(
       ({ data }) => {
         this.router.navigate(['/customers']).then(() => {
@@ -286,7 +290,9 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   }
 
   isBookingOrderMode() {
-    return this.bookingOrderModes.includes(this.mode);
+    // console.log(this.mode)
+    // return !this.mode === null && this.bookingOrderModes.includes(this.mode);
+    return this.mode === ADD_BOOKING_ORDER_CUSTOMER_MODE;
   }
 
   isCreateBookingMode() {

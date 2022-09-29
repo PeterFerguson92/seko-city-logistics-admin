@@ -28,7 +28,7 @@ export class AddEditBookingComponent implements OnInit {
       {
         if (this.router.url.includes('add-booking'))
         {
-          if (this.isDataEmpty(data)){
+          if (data === null && data.booking === null && this.isDataEmpty(data)){
             this.router.navigate(['/not-found']);
           }
           this.booking.customer = data.customer;
@@ -39,7 +39,7 @@ export class AddEditBookingComponent implements OnInit {
   }
 
   isDataEmpty(data) {
-    return data.booking[0].data.bookingByReference === null ||
+    return data.booking === null || data.booking[0].data.bookingByReference === null ||
       data.booking[1].data.customerByReference === null
   }
 }
