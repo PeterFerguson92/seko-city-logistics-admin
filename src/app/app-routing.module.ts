@@ -18,7 +18,6 @@ import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items
 import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment-analysis.component';
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
 import { AddEditDriverComponent } from './driver/add-edit-driver/add-edit-driver.component';
-import { DriverResolver } from './driver/service/driver.resolver';
 import { DriverBookingsResolver } from './booking/service/resolver/driver-bookings.resolver';
 import { DriverBookingsComponent } from './driver/driver-bookings/driver-bookings.component';
 import { DriverBookingsLocationsComponent } from './driver/driver-bookings-locations/driver-bookings-locations.component';
@@ -64,7 +63,7 @@ const routes: Routes = [
   { path: 'booking-driver/:reference', component: BookingDriverComponent, resolve: { booking: BookingSummaryResolver }  },
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddEditDriverComponent },
-  { path: 'edit-driver/:reference', component: AddEditDriverComponent, resolve: { driver: DriverResolver } },
+  { path: 'edit-driver/:reference', component: AddEditDriverComponent },
   { path: 'assignedBookings/:reference', component: DriverBookingsComponent, resolve: { bookings: DriverBookingsResolver } },
   { path: 'assign-bookings', component: AssignMultipleBookingsComponent },
   { path: 'assign-orders', component: AssignMultipleOrdersComponent },
