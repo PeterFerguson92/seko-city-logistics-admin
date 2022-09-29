@@ -43,10 +43,10 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const snapshot = this.activatedRoute.snapshot;
     const reference = snapshot.paramMap.get('reference');
-    this.getOrderByReference(reference);
+    this.getBookingByReference(reference);
   }
 
-  getOrderByReference(reference) {
+  getBookingByReference(reference) {
     this.spinner.show();
     this.bookingService.getBookingByReference(reference)
         .pipe(takeUntil(this.componentDestroyed$))
@@ -75,10 +75,10 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
     const dialogRef =  this.dialog.open(InfoDialogComponent, {
       height: '30%',
       width: '30%',
-      data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
+      data: { message: `Sorry something went wrong, please contact system support` }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['/orders']);
+      this.router.navigate(['/bookings']);
     })
   }
 
@@ -127,7 +127,6 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
       const imgProps = doc.getImageProperties(imgData);
       const pdfWidth = doc.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
       doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       doc.save(`booking_${this.getTimeStamp()}_${this.booking.reference}.pdf`);
     })

@@ -19,11 +19,12 @@
                   formControlName="selectedDriverUsername"
                   [options]="driversUsername">
                 </app-material-select-input>&nbsp;
-                <app-material-button [label]="'Update Driver'" (click)="onUpdateMainDriver()"></app-material-button>
+                <app-material-button [label]="'UPDATE DRIVER'" [width]="30" (click)="onUpdateMainDriver()"></app-material-button>
             </div>
           </div>
       </mat-expansion-panel>
     </div>
+    <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
       <mat-expansion-panel hideToggle [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title> MANAGE MATES </mat-panel-title>
@@ -38,7 +39,7 @@
               </mat-checkbox>
             </li>
           </ul>
-          <app-material-button [label]="'Update Mates'" (click)="onUpdateMates()"></app-material-button>
+          <app-material-button [label]="'UPDATE MATES'" [width]="20" (click)="onUpdateMates()"></app-material-button>
         </mat-expansion-panel>
     </mat-accordion>
   </div>

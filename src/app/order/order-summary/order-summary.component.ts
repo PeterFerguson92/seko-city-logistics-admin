@@ -84,7 +84,7 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
     const dialogRef =  this.dialog.open(InfoDialogComponent, {
       height: '30%',
       width: '30%',
-      data: { message: `Sorry couldn't retrieve order with reference ${reference}` }
+      data: { message: `Sorry something went wrong, please contact system support` }
     });
     dialogRef.afterClosed().subscribe(result => {
       this.router.navigate(['/orders']);

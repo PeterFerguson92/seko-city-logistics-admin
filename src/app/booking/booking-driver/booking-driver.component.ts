@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
 import { BookingsService } from '../service/bookings/bookings.service';
 
 @Component({
@@ -12,38 +14,99 @@ import { BookingsService } from '../service/bookings/bookings.service';
   styleUrls: ['./booking-driver.component.css', '../../shared/shared-new-form.css']
 })
 export class BookingDriverComponent implements OnInit, OnDestroy {
-  assignDriverForm: FormGroup;
-  currentDriver;
   drivers;
-  driversUsername;
-  currentDriverReference;
-  bookingReference;
   errorText;
+  currentDriver
+  driversUsername;
+  bookingReference;
   showErrorText = false;
+  currentDriverReference;
   driversCheckBoxList = [];
   selectedMateReferences = [];
   assignedMatesReferences = [];
-
+  assignDriverForm: FormGroup;
   componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private formBuilder: FormBuilder,
-    private activatedroute: ActivatedRoute,
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
     private bookingService: BookingsService,
     private authService: AuthenticationService,
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(async data => {
-      this.bookingReference = data.booking.reference;
-      this.currentDriverReference = data.booking.assignedDriverReference;
-      this.assignedMatesReferences = data.booking.assignedMatesReferences ?  data.booking.assignedMatesReferences : [];
-      this.spinner.show();
-      this.getDriversInfo();
-      this.assignDriverForm = this.formBuilder.group({
-        currentDriverUsername: [''],
-        selectedDriverUsername: [''],
-      })
-      this.assignDriverForm.get('currentDriverUsername').disable();
+    const snapshot = this.activatedRoute.snapshot;
+    const reference = snapshot.paramMap.get('reference');
+    this.bookingReference = reference;
+    this.getBookingByReference(reference);
+    this.assignDriverForm = this.formBuilder.group({
+      currentDriverUsername: [''],
+      selectedDriverUsername: [''],
+    })
+    this.assignDriverForm.get('currentDriverUsername').disable();
+  }
+
+  getBookingByReference(reference) {
+    this.spinner.show();
+    this.bookingService.getBookingByReference(reference)
+        .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe({
+          next: (result) => {
+            if (result.data.bookingByReference === null)
+            {
+              this.alertError(reference)
+            } else
+            {
+              const data = result.data.bookingByReference;
+              this.currentDriverReference = data.assignedDriverReference;
+              this.assignedMatesReferences = data.assignedMatesReferences ? data.assignedMatesReferences : [];
+              this.loadDrivers();
+              this.spinner.hide();
+            }
+          this.spinner.hide()
+      },
+      error: (error) => {
+        this.spinner.hide();
+        console.log('error for booking ' + reference)
+        console.log(error.message);
+        console.log(error)
+        this.alertError(reference);
+      }
+    })
+  }
+
+  loadDrivers() {
+    this.spinner.show()
+    this.authService.getDrivers()
+      .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe({
+          next: (result) => {
+            this.showErrorText = false
+            this.errorText = null
+            this.drivers = result.data.getDrivers.users;
+            this.driversUsername = this.getDriversUsername();
+            this.getCurrentDriverUsername(this.currentDriverReference);
+            this.buildDriversCheckBox();
+            this.spinner.hide();
+          },
+          error: (error) => {
+            this.showErrorText = true;
+            this.errorText = `Loading Drivers failed: Please contact system support`;
+            this.spinner.hide();
+          }
+        })
+    }
+
+  alertError(reference) {
+    const dialogRef =  this.dialog.open(InfoDialogComponent, {
+      height: '30%',
+      width: '30%',
+      data: { message: `Sorry something went wrong, please contact system support` }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['/bookings']);
     })
   }
 
@@ -58,11 +121,7 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
   }
 
   async getDriversInfo() {
-    this.drivers = (await lastValueFrom(this.authService.getDrivers())).data.getDrivers.users;
-    this.driversUsername = this.getDriversUsername();
-    this.getCurrentDriverUsername(this.currentDriverReference);
-    this.buildDriversCheckBox();
-    this.spinner.hide();
+    this.loadDrivers();
   }
 
   getDriversUsername() {
@@ -99,6 +158,7 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
   }
 
   buildDriversCheckBox() {
+    console.log('3947r93')
     this.drivers.forEach((driver) => {
       this.driversCheckBoxList.push({
         info: driver, selected: this.checkIfPresent(driver.reference),
@@ -114,7 +174,6 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
   isMainDriver(reference) {
     return reference === this.currentDriverReference;
   }
-
 
   onUpdateMainDriver() {
     const driverReference = this.getSelectedDriverReference();
@@ -140,19 +199,25 @@ export class BookingDriverComponent implements OnInit, OnDestroy {
     const selectedReference = selected.map((item) => { return item.info.reference});
     this.bookingService.updateMates(this.bookingReference, selectedReference)
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(
-      ({ data }) => {
-        if (data.updateMates.isInError)
+      .subscribe({
+        next: (result) => {
+          if (result.data.updateMates.isInError)
         {
           this.showErrorText = true
-          this.errorText = data.updateMates.errorMessage
+          this.errorText = result.data.updateMates.errorMessage
         } else
         {
           location.reload();
         }
-      },
-      error => { console.log(error); }
-    );
+        },
+        error: (error) => {
+          console.log(error.message)
+          console.log(error);
+          this.showErrorText = true;
+          this.errorText = `Update Drivers failed: Please contact system support`;
+          this.spinner.hide();
+        }
+      })
   }
 
   ngOnDestroy() {
