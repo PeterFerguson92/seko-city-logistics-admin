@@ -19,14 +19,12 @@ import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
 import { AddEditDriverComponent } from './driver/add-edit-driver/add-edit-driver.component';
 import { DriverResolver } from './driver/service/driver.resolver';
-import { DriversResolver } from './driver/service/drivers.resolver';
 import { DriverBookingsResolver } from './booking/service/resolver/driver-bookings.resolver';
 import { DriverBookingsComponent } from './driver/driver-bookings/driver-bookings.component';
 import { DriverBookingsLocationsComponent } from './driver/driver-bookings-locations/driver-bookings-locations.component';
 import { TasksResolver } from './task/service/resolver/tasks.resolver';
 import { TaskBoardComponent } from './task/task-board/task-board.component';
 import { OrdersComponent } from './order/orders/orders.component';
-import { OrdersResolver } from './order/service/resolver/orders.resolver';
 import { AddEditOrderComponent } from './order/add-edit-order/add-edit-order.component';
 import { OrderResolver } from './order/service/resolver/order.resolver';
 import { CustomerBookingHistoryComponent } from './customer/customer-booking-history/customer-booking-history.component';
@@ -38,7 +36,6 @@ import { BookingDriverComponent } from './booking/booking-driver/booking-driver.
 import { AssignMultipleBookingsComponent } from './driver/assign-multiple-bookings/assign-multiple-bookings.component';
 import { AssignMultipleOrdersComponent } from './driver/assign-multiple-orders/assign-multiple-orders.component';
 import { OrderSummaryComponent } from './order/order-summary/order-summary.component';
-import { OrderSummaryResolver } from './order/service/resolver/order-summary.resolver';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
@@ -63,7 +60,7 @@ const routes: Routes = [
   { path: 'add-booking/:reference', component: AddEditBookingComponent, resolve: { customer: CustomerResolver } },
   { path: 'edit-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
   { path: 'view-booking/:reference/:senderReference', component: AddEditBookingComponent, resolve: { booking: BookingsResolverService } },
-  { path: 'booking-summary/:reference', component: BookingSummaryComponent, resolve: { booking: BookingSummaryResolver } },
+  { path: 'booking-summary/:reference', component: BookingSummaryComponent},
   { path: 'booking-driver/:reference', component: BookingDriverComponent, resolve: { booking: BookingSummaryResolver }  },
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddEditDriverComponent },
