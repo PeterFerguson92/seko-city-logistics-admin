@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
+import { Subject, takeUntil } from 'rxjs';
+import { BookingsService } from 'src/app/booking/service/bookings/bookings.service';
 import { CommonService } from 'src/app/service/common.service';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
 import { styles } from './mapstyles';
 const postcodes = require('node-postcodes.io')
 
@@ -12,39 +14,93 @@ const postcodes = require('node-postcodes.io')
   templateUrl: './driver-bookings-locations.component.html',
   styleUrls: ['./driver-bookings-locations.component.css']
 })
-export class DriverBookingsLocationsComponent implements OnInit {
+export class DriverBookingsLocationsComponent implements OnInit, OnDestroy {
 
-  map: google.maps.Map;
   bookings;
-  googleMapsKey;
+  dialog: any;
+  router: any;
   geoLocations;
+  googleMapsKey;
   currentLocation;
+  errorMsg: string;
+  isError: boolean;
+  map: google.maps.Map;
   showNoBookings = false;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private activatedroute: ActivatedRoute, private authService: AuthenticationService,
-    private spinner: NgxSpinnerService, private commonService: CommonService) { }
+  constructor(
+    private spinner: NgxSpinnerService,
+    private commonService: CommonService,
+    private activatedRoute: ActivatedRoute,
+    private bookingService: BookingsService) { }
 
   ngOnInit(): void {
     this.spinner.show()
-    this.activatedroute.data.subscribe(data => {
-      this.bookings = data.bookings;
-      if (data.bookings.length > 0)
+    const snapshot = this.activatedRoute.snapshot;
+    const reference = snapshot.paramMap.get('reference');
+    this.getBookingsByDriverReference(reference);
+  }
+
+  getBookingsByDriverReference(reference) {
+    this.bookingService.filterBookings({name: 'assignedDriverReference', value: reference})
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (result) => {
+          if (this.isDataEmpty(result))
+          {
+            this.spinner.hide();
+            console.log(result);
+            this.alertError(reference);
+          } else
+          {
+            this.displayBookings(result.data.filterBookings);
+            this.spinner.hide();
+          }
+        },
+        error: (error) => {
+          console.log(error.message);
+          console.log(error)
+          this.spinner.hide();
+          this.alertError(reference)
+        }
+    })
+  }
+
+  isDataEmpty(result) {
+    return result === null || result.data === null ||
+      result.data.filterBookings === null
+  }
+
+  alertError(reference) {
+    console.log('error on driver with reference' + reference);
+    const dialogRef =  this.dialog.open(InfoDialogComponent, {
+      height: '30%',
+      width: '30%',
+      data: { message: `Sorry something went wrong, please contact system support` }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['/bookings']);
+    })
+  }
+
+  displayBookings(bookings) {
+    this.bookings = bookings;
+      if (this.bookings.length > 0)
       {
-        this.getGeoLocations(data.bookings)
+        this.getGeoLocations()
         this.getGoogleApiKey();
         this.calculateGeoLocationsDistances();
       } else
       {
         this.spinner.hide()
       }
-    })
   }
 
   showNoBookingsPage() {
-    return this.bookings.length === 0;
+    return this.bookings && this.bookings.length === 0;
   }
 
-  async getGeoLocations(bookings) {
+  async getGeoLocations() {
     const bookingsPostCodes = [];
     const morningBookings = this.getBookingsByPickUpTime('MORNING');
     const afternoonBookings = this.getBookingsByPickUpTime('AFTERNOON');
@@ -193,5 +249,8 @@ export class DriverBookingsLocationsComponent implements OnInit {
     }
   }
 
-
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
+  }
 }

@@ -44,6 +44,7 @@ export class DriverBookingsComponent implements OnInit, OnDestroy {
   }
 
   getBookingsByDriverReference(reference) {
+    this.spinner.show();
     this.bookingService.filterBookings({name: 'assignedDriverReference', value: reference})
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
@@ -52,11 +53,13 @@ export class DriverBookingsComponent implements OnInit, OnDestroy {
           {
             this.errorMsg = 'No Records found'
             this.isError = true;
+            this.spinner.hide()
           } else
           {
             this.dataSource = new MatTableDataSource(result.data.filterBookings);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            this.spinner.hide();
           }
         },
         error: (error) => {
@@ -70,8 +73,8 @@ export class DriverBookingsComponent implements OnInit, OnDestroy {
   }
 
   isDataEmpty(result) {
-    return result === null || result.data === null ||
-      result.data.filterBookings === null || result.data.filterBookings.length === 0
+    return (result === null || result.data === null ||
+      result.data.filterBookings === null) && result.data.filterBookings.length === 0
   }
 
   onViewBooking(reference) {

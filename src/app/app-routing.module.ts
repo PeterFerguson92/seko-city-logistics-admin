@@ -66,7 +66,7 @@ const routes: Routes = [
   { path: 'assignedBookings/:reference', component: DriverBookingsComponent},
   { path: 'assign-bookings', component: AssignMultipleBookingsComponent },
   { path: 'assign-orders', component: AssignMultipleOrdersComponent },
-  { path: 'locations/:reference', component: DriverBookingsLocationsComponent, resolve: { bookings: DriverBookingsResolver } },
+  { path: 'locations/:reference', component: DriverBookingsLocationsComponent },
   { path: 'reports', component: ReportsComponent },
   { path: 'tasks', component: TaskBoardComponent, resolve: { tasks: TasksResolver } },
   { path: 'orders', component: OrdersComponent},
