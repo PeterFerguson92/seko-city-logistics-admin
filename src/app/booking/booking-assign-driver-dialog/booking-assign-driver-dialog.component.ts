@@ -91,9 +91,17 @@ export class BookingAssignDriverDialogComponent implements OnInit, OnDestroy {
             this.showErrorText = true;
             this.errorText = `Loading Drivers failed: Please contact system support`;
             this.spinner.hide();
+            this.clearNotification();
           }
         })
-    }
+  }
+
+  clearNotification() {
+    setTimeout(function() {
+      this.showErrorText = false;
+      this.errorText = null;
+    }.bind(this), 3000);
+  }
 
   onSubmit() {
     const driverReference = this.getSelectedDriverReference();

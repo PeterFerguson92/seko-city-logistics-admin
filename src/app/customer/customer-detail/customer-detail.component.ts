@@ -119,7 +119,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
           this.dialog.open(InfoDialogComponent, {
             height: '30%',
             width: '30%',
-            data: { message: `Sorry couldn't retrieve shipment with reference ${reference}` }
+            data: { message: `Sorry couldn't retrieve customer with reference ${reference}` }
           });
         }
       })

@@ -115,14 +115,24 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   createOrderRequest(orderDto, isPending) {
-    this.orderService.createOrder(orderDto, isPending).subscribe(
-      ({ data }) => {
-       this.redirectToOrders()
-      },
-      error => {
+    this.orderService.createOrder(orderDto, isPending).pipe(takeUntil(this.componentDestroyed$))
+    .subscribe({
+      next: () => { this.redirectToOrders();},
+      error: (error) => {
         console.log(error);
+        console.log(error.message);
+        this.showErrorText = true
+        this.errorText = `Operation failed: Please contact system`;
+        this.clearNotification();
       }
-    )
+    })
+  }
+
+  clearNotification() {
+    setTimeout(function() {
+      this.showErrorText = false;
+      this.errorText = null;
+    }.bind(this), 3000);
   }
 
   async editOrder() {
@@ -188,7 +198,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
           console.log(error);
           console.log(error.message);
           this.showErrorText = true
-          this.errorText = `Operation failed: Please contact system`;
+          this.errorText = `Operation failed: Please contact system support`;
+          this.clearNotification();
         }
       })
   }

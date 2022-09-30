@@ -300,10 +300,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
           console.log(error);
           console.log(error.message);
           this.showErrorText = true
-          this.errorText = `Operation failed: Please contact system`;
+          this.errorText = `Operation failed: Please contact system support`;
+          this.clearNotification();
         }
       })
     }
+  }
+
+  clearNotification() {
+    setTimeout(function() {
+      this.showErrorText = false;
+      this.errorText = null;
+    }.bind(this), 3000);
   }
 
   // todo merge builders
