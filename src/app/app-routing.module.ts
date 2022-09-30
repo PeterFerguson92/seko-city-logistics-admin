@@ -17,14 +17,11 @@ import { ShipmentItemsComponent } from './shipment/shipment-items/shipment-items
 import { ShipmentAnalysisComponent } from './shipment/shipment-analysis/shipment-analysis.component';
 import { ShipmentReportComponent } from './shipment/shipment-report/shipment-report.component';
 import { AddEditDriverComponent } from './driver/add-edit-driver/add-edit-driver.component';
-import { DriverBookingsResolver } from './booking/service/resolver/driver-bookings.resolver';
 import { DriverBookingsComponent } from './driver/driver-bookings/driver-bookings.component';
 import { DriverBookingsLocationsComponent } from './driver/driver-bookings-locations/driver-bookings-locations.component';
-import { TasksResolver } from './task/service/resolver/tasks.resolver';
 import { TaskBoardComponent } from './task/task-board/task-board.component';
 import { OrdersComponent } from './order/orders/orders.component';
 import { AddEditOrderComponent } from './order/add-edit-order/add-edit-order.component';
-import { OrderResolver } from './order/service/resolver/order.resolver';
 import { CustomerBookingHistoryComponent } from './customer/customer-booking-history/customer-booking-history.component';
 import { CustomerBookingHistoryResolver } from './customer/service/resolver/customer-booking-history.resolver';
 import { ProfileComponent } from './profile/profile/profile.component';
@@ -49,7 +46,7 @@ const routes: Routes = [
   { path: 'bookings', component: BookingsComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'add-customer', component: CustomerDetailComponent },
-  { path: 'edit-customer/:reference', component: CustomerDetailComponent, resolve: { customer: CustomerResolver } },
+  { path: 'edit-customer/:reference', component: CustomerDetailComponent},
   {
     path: 'customer-history/bookings/:reference', component: CustomerBookingHistoryComponent,
     resolve: { bookings: CustomerBookingHistoryResolver }
@@ -71,8 +68,8 @@ const routes: Routes = [
   { path: 'tasks', component: TaskBoardComponent },
   { path: 'orders', component: OrdersComponent},
   { path: 'add-order', component: AddEditOrderComponent },
-  { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },
-  { path: 'add-order/:reference', component: AddEditOrderComponent, resolve: { customer: CustomerResolver } },
+  { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent },
+  { path: 'add-order/:reference', component: AddEditOrderComponent },
   { path: 'order-summary/:reference', component: OrderSummaryComponent},
   { path: 'profile', canActivate: [AuthGuard], component: ProfileComponent },
   { path: 'not-found', component: NotFoundComponent },
