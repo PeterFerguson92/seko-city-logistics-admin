@@ -68,7 +68,7 @@ const routes: Routes = [
   { path: 'assign-orders', component: AssignMultipleOrdersComponent },
   { path: 'locations/:reference', component: DriverBookingsLocationsComponent },
   { path: 'reports', component: ReportsComponent },
-  { path: 'tasks', component: TaskBoardComponent, resolve: { tasks: TasksResolver } },
+  { path: 'tasks', component: TaskBoardComponent },
   { path: 'orders', component: OrdersComponent},
   { path: 'add-order', component: AddEditOrderComponent },
   { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },

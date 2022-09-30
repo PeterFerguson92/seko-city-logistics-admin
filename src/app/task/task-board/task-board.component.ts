@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Board } from './models/board.model';
@@ -6,14 +6,16 @@ import { Column } from './models/column.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-task-dialog.component';
 import { TaskService } from '../service/task.service';
-import { CommonService } from 'src/app/service/common.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
 
 @Component({
   selector: 'app-task-board',
   templateUrl: './task-board.component.html',
   styleUrls: ['./task-board.component.css']
 })
-export class TaskBoardComponent implements OnInit {
+export class TaskBoardComponent implements OnInit, OnDestroy {
 
   toDoList = [];
   inProgressList = [];
@@ -23,14 +25,47 @@ export class TaskBoardComponent implements OnInit {
     new Column('IN PROGRESS', this.inProgressList),
     new Column('DONE', this.doneList),
   ]);
+  componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private activatedroute: ActivatedRoute, private dialog: MatDialog,
-    private taskService: TaskService, private commonService: CommonService) { }
+
+  constructor(
+    private dialog: MatDialog,
+    private taskService: TaskService,
+    private spinner: NgxSpinnerService,
+    private activatedroute: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
-      this.arrangeTasks(data.tasks)
+    this.taskService.getTasks()
+    .pipe(takeUntil(this.componentDestroyed$))
+    .subscribe({
+      next: (result) => {
+        if (this.isDataEmpty(result))
+        {
+          console.log(result);
+        } else
+        {
+          this.arrangeTasks(result.data.tasks);
+        }
+        this.spinner.hide();
+      },
+      error: (error) => {
+        console.log('error loading tasks')
+        console.log(error.message);
+        console.log(error);
+        this.dialog.open(InfoDialogComponent, {
+          height: '25%',
+          width: '30%',
+          data: { message: error.message }
+        });
+        this.spinner.hide()
+      }
     })
+  }
+
+  isDataEmpty(result) {
+    return (result === null || result.data === null ||
+      result.data.tasks === null) &&  result.data.tasks.length === 0
   }
 
   arrangeTasks(tasks) {
@@ -105,5 +140,9 @@ export class TaskBoardComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this.componentDestroyed$.next(true)
+    this.componentDestroyed$.complete()
+  }
 
 }
