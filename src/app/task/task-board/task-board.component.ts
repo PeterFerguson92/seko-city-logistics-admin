@@ -70,6 +70,7 @@ export class TaskBoardComponent implements OnInit, OnDestroy {
 
   arrangeTasks(tasks) {
     for (const task of tasks)
+    {
       if ('TO DO' === task.status)
       {
         this.toDoList.push(task)
@@ -83,6 +84,7 @@ export class TaskBoardComponent implements OnInit, OnDestroy {
         if ('DONE' === task.status)
         {
           this.doneList.push(task)
+          }
         }
       }
     }

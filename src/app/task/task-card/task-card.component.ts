@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { WEB_TASK_PICK_UP_REQUEST } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-task-dialog.component';
@@ -50,6 +51,22 @@ export class TaskCardComponent implements OnInit {
 
   getFormattedDate(date) {
     return this.commonService.getFormattedDate(date)
+  }
+
+  isWebPickUp(task) {
+    return task.title === WEB_TASK_PICK_UP_REQUEST;
+  }
+
+  getDisplayText(task) {
+    if (this.isWebPickUp(task))
+    {
+      console.log(200)
+      const info = task.description.split('-');
+      return info
+    } else
+    {
+      return task.description;
+    }
   }
 
   getTaskClass(task) {

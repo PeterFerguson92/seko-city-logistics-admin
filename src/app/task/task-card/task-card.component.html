@@ -12,7 +12,12 @@
         </div>
       </div> -->
       <div class="card-body">
-        <p>{{task.description}}</p>
+        <div  *ngIf="isWebPickUp(task)">
+          <div *ngFor="let item of getDisplayText(task)">
+            <p>{{item}}</p>
+          </div>
+        </div>
+        <p  *ngIf="!isWebPickUp(task)">{{getDisplayText(task)}}</p>
         <span class="dot"></span><span class="author">Due date: {{getFormattedDate(task.actionDate)}}</span>
 
         <div class="card-tags"><label class="sc-gsDKAQ knmqvK">{{task.priority}}</label>

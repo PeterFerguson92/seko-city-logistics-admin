@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TASK_PRIORITY_STATUSES } from 'src/app/constants';
+import { TASK_PRIORITY_STATUSES, WEB_TASK_PICK_UP_REQUEST } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { TaskService } from '../service/task.service';
 
@@ -62,14 +62,20 @@ export class AddEditTaskDialogComponent implements OnInit {
       priority: this.getFormControl('priority').value
     }
 
-    this.taskService.createTask(task).subscribe(
-      ({ data }) => {
-        window.location.reload()
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    if (task.title !== WEB_TASK_PICK_UP_REQUEST)
+    {
+      this.taskService.createTask(task).subscribe(
+        ({ data }) => {
+          window.location.reload()
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else
+    {
+      // TODO
+    }
   }
 
   updateTask() {
