@@ -60,7 +60,6 @@ export class TaskCardComponent implements OnInit {
   getDisplayText(task) {
     if (this.isWebPickUp(task))
     {
-      console.log(200)
       const info = task.description.split('-');
       return info
     } else

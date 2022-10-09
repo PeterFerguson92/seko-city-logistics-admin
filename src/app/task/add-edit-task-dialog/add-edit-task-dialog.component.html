@@ -1,10 +1,13 @@
 
+ <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
+  <p style="font-size: 20px; color: white">Please wait...</p>
+</ngx-spinner>
  <h2 mat-dialog-title>Task Details</h2>
  <div [formGroup]="addEditTaskForm">
   <mat-dialog-content class="mat-typography">
     <div [formGroup]="addEditTaskForm" >
       <div class="item">
-        <app-material-input [label]="'Title'" [width]="40" formControlName="title" ></app-material-input>
+        <app-material-input [label]="'Title'" [width]="40" formControlName="title"></app-material-input>
         <app-material-date-picker-input [label]="'Due Date'"
           (inputChange)="onInputChange($event)" formControlName="actionDate">
         </app-material-date-picker-input>
@@ -12,7 +15,7 @@
       <div class="item">
         <mat-form-field appearance="outline" class="fill-container">
           <mat-label>Description</mat-label>
-          <textarea  matAutosizeMinRows="78" [rows]="8" [cols]="12"
+          <textarea  matAutosizeMinRows="78" [rows]="3" [cols]="12"
           matInput style="width: 100%; max-width: 100%;" formControlName="description"
           matTextareaAutosize></textarea>
         </mat-form-field>
@@ -26,8 +29,9 @@
         </app-material-select-input>
       </div>
     </div>
+    <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" [disabled]="isDisabled()" (click)="onSubmit()" cdkFocusInitial>Submit</button>
+    <button mat-button [disabled]="isDisabled()" (click)="onSubmit()" cdkFocusInitial>Submit</button>
   </mat-dialog-actions>
