@@ -69,10 +69,21 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildForm();
     const snapshot = this.activatedRoute.snapshot;
-    const reference = snapshot.paramMap.get('reference');
+
+    let reference = null;
+    if (snapshot.routeConfig.path === 'edit-booking/:reference/:senderReference')
+    {
+      reference = snapshot.paramMap.get('senderReference');
+    }
+
+    if (snapshot.routeConfig.path === 'edit-customer')
+    {
+      reference = snapshot.paramMap.get('reference');
+    }
+
     if (snapshot.routeConfig.path !== 'add-customer')
     {
-      this.getCustomerByReference(reference);
+     this.getCustomerByReference(reference);
     }
   }
 
