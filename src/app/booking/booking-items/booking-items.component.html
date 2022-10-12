@@ -25,7 +25,7 @@
                     <mat-checkbox (change)="element.selected = $event.checked" [(ngModel)]="element.selected"></mat-checkbox>
                   </ng-container>
                   <div style="text-align: center;" class="btn-edit" *ngSwitchCase="'isEdit'">
-                    <button mat-icon-button class="icon-color" (click)="element.isEdit = !element.isEdit" color="primary" matTooltip="Edit item" matTooltipPosition="above">
+                    <button mat-icon-button class="icon-color" (click)="isEdit(element)" color="primary" matTooltip="Edit item" matTooltipPosition="above">
                       <mat-icon >edit</mat-icon>
                     </button>
                     <button mat-icon-button class="icon-color" matTooltip="Duplicate item" matTooltipPosition="right">
@@ -59,8 +59,8 @@
                 </div>
               </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngStyle]="{'background-color': chooseColor(row),'min-height':'81px'}" ></tr>
+            <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+            <tr mat-row *matRowDef="let row; columns: getDisplayedColumns()" [ngStyle]="{'background-color': chooseColor(row),'min-height':'81px'}" ></tr>
           </table>
           <br>
           <div *ngIf="showWarning()" class="alert warning">

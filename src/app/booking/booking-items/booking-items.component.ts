@@ -26,15 +26,15 @@ export interface IItem {
 }
 
 const COLUMNS_SCHEMA = [
-  { key: 'isSelected', type: 'isSelected', label: 'SELECTED'},
-  { key: 'type', type: 'select', label: 'TYPE'},
-  { key: 'description', type: 'text',label: 'DESCRIPTION'},
-  { key: 'value', type: 'number', label: 'VALUE (£)',},
-  { key: 'quantity', type: 'number', label: 'QUANTITY'},
-  { key: 'pricePerUnit', type: 'number', label: 'PRICE PER UNIT (£)'},
-  { key: 'amount', type: 'number', label: 'AMOUNT (£)' },
-  { key: 'status', type: 'text', label: 'STATUS'},
-  { key: 'isEdit', type: 'isEdit', label: 'ACTIONS'},
+  { key: 'isSelected', type: 'isSelected', label: 'SELECTED', visible: true},
+  { key: 'type', type: 'select', label: 'TYPE', visible: true},
+  { key: 'description', type: 'text',label: 'DESCRIPTION',visible: true},
+  { key: 'value', type: 'number', label: 'VALUE (£)',visible: true},
+  { key: 'quantity', type: 'number', label: 'QUANTITY',visible: true},
+  { key: 'pricePerUnit', type: 'number', label: 'PRICE PER UNIT (£)', visible: true},
+  { key: 'amount', type: 'number', label: 'AMOUNT (£)',visible: true },
+  { key: 'status', type: 'text', label: 'STATUS',  visible: true},
+  { key: 'isEdit', type: 'isEdit', label: 'ACTIONS', visible: true},
 ];
 
 @Component({
@@ -93,6 +93,10 @@ export class BookingItemsComponent implements OnInit {
     this.getFormControl('fullAmount').disable();
 
     this.getBookingItems()
+  }
+
+  getDisplayedColumns(): string[] {
+    return this.columnsSchema.filter(cd=>cd.visible).map(cd=>cd.key);
   }
 
   getFormControl(fControlName: string) {
@@ -334,6 +338,28 @@ export class BookingItemsComponent implements OnInit {
     return label === 'SELECTED';
   }
 
+  isEdit(element) {
+    element.isEdit = !element.isEdit;
+    this.hideNotEditableColumns(false)
+  }
+
+
+  onConfirmButton(element) {
+    element.isEdit = !element.isEdit;
+    this.hideNotEditableColumns(true)
+    const totals = this.calculateTotals();
+    this.getFormControl('totalAmount').setValue(totals.totalAmount);
+    this.getFormControl('numberOfItems').setValue(totals.totalItems);
+    this.updateTotalAmount()
+  }
+
+  hideNotEditableColumns(isHidden) {
+    this.columnsSchema[0].visible = isHidden;
+    this.columnsSchema[5].visible = isHidden;
+    this.columnsSchema[6].visible = isHidden;
+    this.columnsSchema[7].visible = isHidden;
+  }
+
   selectRow(element) {
     element.selected = !element.selected;
   }
@@ -445,14 +471,6 @@ export class BookingItemsComponent implements OnInit {
       this.paymentForm.get('amountPaid').setValue(this.getFormControl('totalAmount').value);
     }
     this.updateOutstandingAmount();
-  }
-
-  onConfirmButton(element) {
-    element.isEdit = !element.isEdit;
-    const totals = this.calculateTotals();
-    this.getFormControl('totalAmount').setValue(totals.totalAmount);
-    this.getFormControl('numberOfItems').setValue(totals.totalItems);
-    this.updateTotalAmount()
   }
 
   setPaymentProperties(paymentStatus: string) {
