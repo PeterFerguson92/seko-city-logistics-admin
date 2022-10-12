@@ -87,7 +87,7 @@
 </div>
   </div>
   <br>
-  <div *ngIf="!isBookingOrderMode()" class="submitButton">
+  <div *ngIf="showSubmitBtn()" class="submitButton">
     <app-material-button [label]="'SUBMIT'" [width]="30" [disabled]="isDisabled()" (click)="onAddEdit()"></app-material-button>
   </div>
   <br>

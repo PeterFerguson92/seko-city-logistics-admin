@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
+import { ADD_BOOKING_CUSTOMER_MODE, ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
 
 @Component({
   selector: 'app-add-edit-order',
@@ -32,8 +32,8 @@ export class AddEditOrderComponent implements OnInit {
               this.router.navigate(['/not-found']);
             }
             this.order.customer = data.customer;
-            this.mode = data.customer ? ADD_ORDER_CUSTOMER_MODE : CREATE_ORDER_MODE;
           }
+          this.mode = ADD_BOOKING_CUSTOMER_MODE;
         }
     })
   }

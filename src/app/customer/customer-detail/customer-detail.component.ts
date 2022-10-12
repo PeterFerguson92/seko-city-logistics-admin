@@ -39,6 +39,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   createCustomer;
   addresses = [];
   exclusionList=['reference', 'fullName', 'displayAddress','fullPhoneNumber', 'destination','location','role']
+  retriveCustomerExclusionPaths=['add-order', 'add-customer']
   addEditCustomerForm: FormGroup;
   loadCustomerForm: FormGroup;
   formValidationMap = { ref: '', name: '', surname: '', registeredName: '', phone: '', email: '', address: '', postcode: '', country: '' };
@@ -76,12 +77,17 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
       reference = snapshot.paramMap.get('senderReference');
     }
 
+    if (snapshot.routeConfig.path === 'edit-order/:reference/:customerReference')
+    {
+      reference = snapshot.paramMap.get('customerReference');
+    }
+
     if (snapshot.routeConfig.path === 'edit-customer')
     {
       reference = snapshot.paramMap.get('reference');
     }
 
-    if (snapshot.routeConfig.path !== 'add-customer')
+    if (!this.retriveCustomerExclusionPaths.includes(snapshot.routeConfig.path))
     {
      this.getCustomerByReference(reference);
     }
@@ -300,9 +306,11 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
      return this.loadCustomerForm.get('ref').value === '';
   }
 
+  showSubmitBtn() {
+    return this.router.url.includes('add-customer') || this.router.url.includes('edit-customer')
+  }
+
   isBookingOrderMode() {
-    // console.log(this.mode)
-    // return !this.mode === null && this.bookingOrderModes.includes(this.mode);
     return this.mode === ADD_BOOKING_ORDER_CUSTOMER_MODE;
   }
 
