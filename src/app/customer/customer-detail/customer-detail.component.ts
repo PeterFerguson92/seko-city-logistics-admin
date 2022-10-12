@@ -82,7 +82,12 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
       reference = snapshot.paramMap.get('customerReference');
     }
 
-    if (snapshot.routeConfig.path === 'edit-customer')
+    if (snapshot.routeConfig.path === 'edit-customer/:reference')
+    {
+      reference = snapshot.paramMap.get('reference');
+    }
+
+    if (snapshot.routeConfig.path === 'add-booking/:reference')
     {
       reference = snapshot.paramMap.get('reference');
     }
