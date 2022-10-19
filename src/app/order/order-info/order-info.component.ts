@@ -37,6 +37,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     private validationService: ValidationService, private itemService: ItemService) { }
 
   ngOnInit(): void {
+    console.log(this.orderInfo)
     this.orderInfoForm = this.formBuilder.group({
       deliveryDate: [this.orderInfo.deliveryDate ? new Date(this.orderInfo.deliveryDate ) : null, []],
       deliveryTime: [this.orderInfo.deliveryTime ? this.orderInfo.deliveryTime :  this.times[0], [Validators.required]],
@@ -57,19 +58,24 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     this.getAddressByPostcode()
     if (this.getFormControl('paymentStatus').value === PARTIAL_PAYMENT_STATUS_ALIAS)
     {
+      console.log(343)
       this.getFormControl('amountPaid').enable();
     } else
     {
+      console.log(111)
+
       this.getFormControl('amountPaid').disable();
     }
     this.getFormControl('totalAmount').disable();
     this.getFormControl('amountOutstanding').disable();
     this.initializeProperties(0);
-    this.updateTotalAmount()
+    // this.updateTotalAmount();
 
     if (this.orderInfo.reference)
     {
-      this.getOrderItems()
+      this.getOrderItems();
+      // this.updateTotalAmount();
+
     } else
     {
       this.items.push(this.buildItemGroup(null));
@@ -104,7 +110,11 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
 
     switch(paymentStatus) {
       case FULL_PAYMENT_STATUS_ALIAS:
+        console.log(12121212)
+
         amountPaidControl.setValue(totalAmountControl.value);
+        console.log(amountPaidControl.value)
+
         outstandingPaidControl.setValue(0);
         amountPaidControl.disable();
         break;
@@ -275,6 +285,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     const totalAmountControl = this.getFormControl('totalAmount');
     const amountPaidControl = this.getFormControl('amountPaid');
     const outstandingPaidControl = this.getFormControl('amountOutstanding');
+    console.log(amountPaidControl.value)
     if (parseInt(amountPaidControl.value, 10) <= 0)
     {
       amountPaidControl.setValue(0);
@@ -289,6 +300,10 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
         outstandingPaidControl.setValue(0);
       } else
       {
+        console.log(3737373)
+        console.log(amountPaidControl.value)
+        console.log(totalAmountControl.value)
+
         this.getFormControl('paymentStatus').setValue(PARTIAL_PAYMENT_STATUS_ALIAS)
         outstandingPaidControl.setValue(totalAmountControl.value - amountPaidControl.value);
       }
@@ -351,7 +366,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
           this.initializeProperties(this.items.length - 1)
         }
       );
-        this.updateTotalAmount();
+      //  this.updateTotalAmount();
       },
       error => {
         console.log(error);

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ADD_BOOKING_CUSTOMER_MODE, ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
+import { OrderService } from '../service/order.service';
 
 @Component({
   selector: 'app-add-edit-order',
@@ -10,10 +12,11 @@ import { ADD_BOOKING_CUSTOMER_MODE, ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, 
 export class AddEditOrderComponent implements OnInit {
   order: any = {};
   mode = null;
-  constructor(private activatedroute: ActivatedRoute, private router: Router) { }
+
+  constructor(private activatedRoute: ActivatedRoute, private router: Router,) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
+    this.activatedRoute.data.subscribe(data => {
         if (this.router.url.includes('edit-order'))
         {
           if (this.isDataEmpty(data))
@@ -22,7 +25,6 @@ export class AddEditOrderComponent implements OnInit {
           }
           this.mode = EDIT_ORDER_MODE
           this.order = Object.assign({}, data.order[0].data.orderByReference);
-          this.order.customer = data.order[1].data.customerByReference;
         } else
         {
           if (this.router.url.includes('add-order'))
@@ -39,8 +41,6 @@ export class AddEditOrderComponent implements OnInit {
   }
 
   isDataEmpty(data) {
-    return data.order[0].data.orderByReference === null ||
-      data.order[1].data.customerByReference === null
+    return data === null || data.orderByReference === null
   }
-
 }
