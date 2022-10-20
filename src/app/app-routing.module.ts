@@ -69,7 +69,7 @@ const routes: Routes = [
   { path: 'tasks', component: TaskBoardComponent },
   { path: 'orders', component: OrdersComponent},
   { path: 'add-order', component: AddEditOrderComponent },
-  { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver } },
+  { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent },
   { path: 'add-order/:reference', component: AddEditOrderComponent },
   { path: 'order-summary/:reference', component: OrderSummaryComponent},
   { path: 'profile', canActivate: [AuthGuard], component: ProfileComponent },

@@ -78,21 +78,19 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    console.log(this.order);
-    console.log(this.mode)
-    // if (CREATE_ORDER_MODE === this.mode)
-    // {
-    //   this.createOrder(false);
-    // } else
-    // {
-    //   if (EDIT_ORDER_MODE === this.mode)
-    //   {
-    //     this.editOrder();
-    //   } else
-    //   {
-    //     this.addOrder();
-    //   }
-    // }
+    if (CREATE_ORDER_MODE === this.mode)
+    {
+      this.createOrder(false);
+    } else
+    {
+      if (EDIT_ORDER_MODE === this.mode)
+      {
+        this.editOrder();
+      } else
+      {
+        this.addOrder();
+      }
+    }
   }
 
   async createOrder(isPending) {
