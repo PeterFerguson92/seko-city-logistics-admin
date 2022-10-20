@@ -25,6 +25,7 @@ export class OrderResolver implements Resolve<boolean> {
     }
 
     const call1 = this.orderService.getOrderByReference(reference);
-    return forkJoin([call1])
+    const call2 = this.customersService.getCustomerByReference(customerReference);
+    return forkJoin([call1, call2])
   }
 }

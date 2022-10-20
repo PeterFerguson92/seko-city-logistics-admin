@@ -13,18 +13,22 @@ export class AddEditOrderComponent implements OnInit {
   order: any = {};
   mode = null;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router,) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
+      console.log(data)
+
         if (this.router.url.includes('edit-order'))
         {
           if (this.isDataEmpty(data))
           {
             this.router.navigate(['/not-found']);
           }
+          console.log(data)
           this.mode = EDIT_ORDER_MODE
           this.order = Object.assign({}, data.order[0].data.orderByReference);
+          this.order.customer = data.order[1].data.customerByReference;
         } else
         {
           if (this.router.url.includes('add-order'))
@@ -35,7 +39,7 @@ export class AddEditOrderComponent implements OnInit {
             }
             this.order.customer = data.customer;
           }
-          this.mode = ADD_BOOKING_CUSTOMER_MODE;
+          this.mode = ADD_ORDER_CUSTOMER_MODE;
         }
     })
   }

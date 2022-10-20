@@ -39,7 +39,6 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   createCustomer;
   addresses = [];
   exclusionList=['reference', 'fullName', 'displayAddress','fullPhoneNumber', 'destination','location','role']
-  retriveCustomerExclusionPaths=['add-order', 'add-customer']
   addEditCustomerForm: FormGroup;
   loadCustomerForm: FormGroup;
   formValidationMap = { ref: '', name: '', surname: '', registeredName: '', phone: '', email: '', address: '', postcode: '', country: '' };
@@ -50,6 +49,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   countries = COUNTRIES;
   countryCodes = COUNTRY_CODES
   alertOptions = { autoClose: true, keepAfterRouteChange: false };
+  referencePaths = ['add-booking/:reference','edit-customer/:reference','add-order/:reference' ]
 
   showErrorText;
   errorText
@@ -82,19 +82,14 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
       reference = snapshot.paramMap.get('customerReference');
     }
 
-    if (snapshot.routeConfig.path === 'edit-customer/:reference')
+    if (this.referencePaths.includes(snapshot.routeConfig.path))
     {
       reference = snapshot.paramMap.get('reference');
     }
 
-    if (snapshot.routeConfig.path === 'add-booking/:reference')
+    if (reference !== null)
     {
-      reference = snapshot.paramMap.get('reference');
-    }
-
-    if (!this.retriveCustomerExclusionPaths.includes(snapshot.routeConfig.path))
-    {
-     this.getCustomerByReference(reference);
+      this.getCustomerByReference(reference);
     }
   }
 

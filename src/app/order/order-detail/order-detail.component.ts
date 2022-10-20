@@ -46,6 +46,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       paymentType: this.order.paymentType,
       paymentStatus: this.order.paymentStatus,
       paymentNotes: this.order.paymentNotes,
+      totalAmount: this.order.totalAmount,
       amountPaid: this.order.amountPaid,
       amountOutstanding: this.order.amountOutstanding,
     }
@@ -68,24 +69,30 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     this.order.info = this.orderInfoComponent.getOrderInfoDetails();
   }
 
+  isSaved() {
+    return this.order.reference === null
+  }
+
   onSave() {
     this.createOrder(true)
   }
 
   async onSubmit() {
-    if (CREATE_ORDER_MODE === this.mode)
-    {
-      this.createOrder(false);
-    } else
-    {
-      if (EDIT_ORDER_MODE === this.mode)
-      {
-        this.editOrder();
-      } else
-      {
-        this.addOrder();
-      }
-    }
+    console.log(this.order);
+    console.log(this.mode)
+    // if (CREATE_ORDER_MODE === this.mode)
+    // {
+    //   this.createOrder(false);
+    // } else
+    // {
+    //   if (EDIT_ORDER_MODE === this.mode)
+    //   {
+    //     this.editOrder();
+    //   } else
+    //   {
+    //     this.addOrder();
+    //   }
+    // }
   }
 
   async createOrder(isPending) {
