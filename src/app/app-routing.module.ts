@@ -32,6 +32,7 @@ import { AssignMultipleBookingsComponent } from './driver/assign-multiple-bookin
 import { AssignMultipleOrdersComponent } from './driver/assign-multiple-orders/assign-multiple-orders.component';
 import { OrderSummaryComponent } from './order/order-summary/order-summary.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { OrderResolver } from './order/service/order.resolver';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -68,7 +69,7 @@ const routes: Routes = [
   { path: 'tasks', component: TaskBoardComponent },
   { path: 'orders', component: OrdersComponent},
   { path: 'add-order', component: AddEditOrderComponent },
-  { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent },
+  { path: 'edit-order/:reference/:customerReference', component: AddEditOrderComponent, resolve: { order: OrderResolver }  },
   { path: 'add-order/:reference', component: AddEditOrderComponent },
   { path: 'order-summary/:reference', component: OrderSummaryComponent},
   { path: 'profile', canActivate: [AuthGuard], component: ProfileComponent },

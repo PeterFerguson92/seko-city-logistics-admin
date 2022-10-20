@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject, takeUntil } from 'rxjs';
-import { ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
+import { Subject, takeUntil, throwError } from 'rxjs';
+import { ADD_BOOKING_CUSTOMER_MODE, ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
 import { CustomersService } from 'src/app/customer/service/customers.service';
+import { InfoDialogComponent } from 'src/app/shared/elements/info-dialog/info-dialog.component';
 import { OrderService } from '../service/order.service';
 
 @Component({
@@ -11,10 +12,9 @@ import { OrderService } from '../service/order.service';
   templateUrl: './add-edit-order.component.html',
   styleUrls: ['./add-edit-order.component.css', '../../shared/shared-new-form.css']
 })
-export class AddEditOrderComponent implements OnInit, OnDestroy {
+export class AddEditOrderComponent implements OnInit {
   order: any = {};
   mode = null;
-  componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -24,82 +24,51 @@ export class AddEditOrderComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit(): void {
-    const snapshot = this.activatedRoute.snapshot;
-    let reference = null;
-    if (snapshot.routeConfig.path === 'add-order')
-    {
-      this.mode = CREATE_ORDER_MODE;
-    }
-
-    if (snapshot.routeConfig.path === 'add-order/:reference')
-    {
-      this.mode = ADD_ORDER_CUSTOMER_MODE;
-      reference = snapshot.paramMap.get('reference');
-    }
-
-    if (snapshot.routeConfig.path === 'edit-order/:reference/:customerReference')
-    {
-      this.mode = EDIT_ORDER_MODE;
-      reference = snapshot.paramMap.get('reference');
-    }
-
-    if (reference !== null)
-    {
-      this.getOrderByReference(reference);
-    }
+    this.activatedRoute.data.subscribe(data => {
+      const snapshot = this.activatedRoute.snapshot;
+      this.setMode(snapshot.routeConfig.path)
+      if (this.router.url.includes('edit-order'))
+        {
+          if (this.isDataEmpty(data))
+          {
+            this.router.navigate(['/not-found']);
+          }
+          this.mode = EDIT_ORDER_MODE
+          this.order = Object.assign({}, data.order[0].data.orderByReference);
+          this.order.customer = data.order[1].data.customerByReference;
+        } else
+        {
+          if (this.router.url.includes('add-order'))
+          {
+            if (this.isDataEmpty(data))
+            {
+              this.router.navigate(['/not-found']);
+            }
+            this.order.customer = data.customer;
+          }
+          this.mode = ADD_ORDER_CUSTOMER_MODE;
+        }
+    })
   }
 
   isDataEmpty(data) {
     return data === null || data.orderByReference === null
   }
 
-  getOrderByReference(reference) {
-    this.spinner.show();
-    this.orderService.getOrderByReference(reference)
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe({
-        next: (result) => {
-          if (result.data.orderByReference === null)
-          {
-            throw Error('is null');;
-          }
-          this.order = Object.assign({}, result.data.orderByReference);
-          this.getCustomerByReference(this.order.customerReference)
-        this.spinner.hide()
-      },
-      error: (error) => {
-        this.spinner.hide();
-        console.log('error for order ' + reference)
-        console.log(error.message);
-        console.log(error)
-      }
-    })
-  }
-
-  getCustomerByReference(reference) {
-    this.spinner.show();
-    this.customersService.getCustomerByReference(reference)
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe({
-        next: (result) => {
-          if (result.data === null || result.data.customerByReference === null)
-          {
-            this.router.navigate(['/not-found']);
-          } else
-          {
-            this.order.customer = Object.assign({},result.data.customerByReference );
-          }
-        },
-        error: (error) => {
-          console.log(error.message);
-          console.log(error)
-          this.spinner.hide()
-        }
-      })
+  setMode(path) {
+    if (path === 'add-order')
+    {
+      this.mode = CREATE_ORDER_MODE;
     }
 
-  ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    if (path === 'add-order/:reference')
+    {
+      this.mode = ADD_ORDER_CUSTOMER_MODE;
+    }
+
+    if (path === 'edit-order/:reference/:customerReference')
+    {
+      this.mode = EDIT_ORDER_MODE;
+    }
   }
 }
