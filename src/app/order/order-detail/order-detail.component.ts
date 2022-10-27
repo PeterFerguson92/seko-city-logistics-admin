@@ -120,7 +120,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   createOrderRequest(orderDto, isPending) {
-    this.orderService.createOrder(orderDto, isPending).pipe(takeUntil(this.componentDestroyed$))
+    this.orderService.createOrder(orderDto, true, isPending).pipe(takeUntil(this.componentDestroyed$))
     .subscribe({
       next: () => { this.redirectToOrders();},
       error: (error) => {

@@ -50,7 +50,7 @@ export class OrderUpdateDialogComponent implements OnInit, OnDestroy {
     this.orderService.updateOrderStatus(this.data.order.reference, this.getFormControl('status').value)
     .pipe(takeUntil(this.componentDestroyed$))
     .subscribe({
-      next: (result) => { location.reload(); },
+      next: () => { location.reload(); },
       error: (error) => {
         console.log(error);
         console.log(error.message);
