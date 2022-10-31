@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { WEB_TASK_PICK_UP_REQUEST } from 'src/app/constants';
+import { WEB_TASK_ORDER_REQUEST, WEB_TASK_PICK_UP_REQUEST } from 'src/app/constants';
 import { CommonService } from 'src/app/service/common.service';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
 import { AddEditTaskDialogComponent } from '../add-edit-task-dialog/add-edit-task-dialog.component';
@@ -54,7 +54,7 @@ export class TaskCardComponent implements OnInit {
   }
 
   isWebPickUp(task) {
-    return task.title === WEB_TASK_PICK_UP_REQUEST;
+    return task.title === WEB_TASK_PICK_UP_REQUEST || task.title === WEB_TASK_ORDER_REQUEST;
   }
 
   getDisplayText(task) {

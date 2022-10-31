@@ -48,7 +48,7 @@ export const ACCOUNT_SORT_CODE= '90-34-11';
 export const ACCOUNT_NUMBER= '6373746362';
 export const TASK_PRIORITY_STATUSES = ['LOW', 'MEDIUM', 'HIGH']
 export const WEB_TASK_PICK_UP_REQUEST = 'WEB Pick-Up Request'
-
+export const WEB_TASK_ORDER_REQUEST = 'WEB Order Request'
 export const CUSTOMER_ORDER_ROLE = 'ORDER_CUSTOMER';
 export const CREATE_ORDER_MODE = 'CREATE_ORDER';
 export const EDIT_ORDER_MODE = 'EDIT_ORDER';
