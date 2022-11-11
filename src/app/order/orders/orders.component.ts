@@ -68,6 +68,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     )
   }
 
+  getPickUpDateDetails(pickUpDate) {
+    return pickUpDate === null ? 'TBD' : this.getFormattedDate(pickUpDate);
+  }
+
   getFormattedDate(date) {
     return this.commonService.getFormattedDate(date);
   }
