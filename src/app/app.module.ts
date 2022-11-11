@@ -23,6 +23,7 @@ import { TaskModule } from './task/task.module';
 import { OrdersComponent } from './order/orders/orders.component';
 import { UpdateItemsDialogComponent } from './items/update-items-dialog/update-items-dialog.component';
 import { ProfileModule } from './profile/profile.module';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -58,8 +59,7 @@ import { ProfileModule } from './profile/profile.module';
       return {
         cache: new InMemoryCache(),
         link: httpLink.create({
-          uri: 'http://localhost:4000/api'
-          // uri: 'https://seko-server.herokuapp.com/api'
+          uri: environment.apiUrl
         })
       }
     },
