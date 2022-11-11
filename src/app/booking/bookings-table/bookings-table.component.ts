@@ -21,7 +21,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
   @Input() bookings: [IBooking] = null;
   @Input() includeArchived = false;
   @Input() showAddButton = false;
-  displayedColumns: string[] = ['DATE', 'POSTCODE', 'SENDER', 'DESTINATION', 'PAYMENT', 'BOOKING STATUS', 'ID', 'ACTION'];
+  displayedColumns: string[] = ['ID', 'POSTCODE', 'SENDER', 'DESTINATION', 'PAYMENT', 'BOOKING STATUS', 'DATE', 'ACTION'];
   dataSource = null;
   height = '80%';
   width = '65%';
@@ -85,6 +85,10 @@ export class BookingsTableComponent implements OnInit, OnChanges {
         )
       }
     })
+  }
+
+  getPickUpDateDetails(pickUpDate) {
+    return pickUpDate === null ? 'TBD' : this.getFormattedDate(pickUpDate);
   }
 
   archiveBooking(reference) {
