@@ -155,7 +155,11 @@ export class BookingItemsComponent implements OnInit {
       {
         const newData = this.dataSource.data.filter((u) => u.index !== id);
         this.dataSource = new MatTableDataSource(newData);
-        this.updateItemsInfo()
+        if (this.dataSource.data.length === 0)
+        {
+          this.getFormControl('discountAmount').setValue(0);
+        }
+        this.updateItemsInfo();
       }
     })
   }
@@ -348,6 +352,7 @@ export class BookingItemsComponent implements OnInit {
     element.isEdit = !element.isEdit;
     this.hideNotEditableColumns(true)
     const totals = this.calculateTotals();
+    this.getFormControl('fullAmount').setValue(totals.totalAmount);
     this.getFormControl('totalAmount').setValue(totals.totalAmount);
     this.getFormControl('numberOfItems').setValue(totals.totalItems);
     this.updateTotalAmount()
