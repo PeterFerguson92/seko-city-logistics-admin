@@ -7,7 +7,7 @@
   </div>
   <div class="contentBx">
     <div class="formBx">
-      <img src="assets/login/logo.png">
+      <img style="width: 80%;" src="assets/login/logo2.png">
       <!-- <h2>Welcome</h2> -->
       <form (ngSubmit)="onAuthenticate()" [formGroup]="authForm">
         <div class="inputBx">
@@ -22,7 +22,7 @@
          </div>
          <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
         <div class="inputBx">
-          <app-material-button [label]="'LOGIN'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="100" [disabled]="!authForm.valid"></app-material-button>
+          <app-material-button [label]="'LOGIN'" [color]="'primary'" [backgroundColor]="'#069370'" [width]="50" [disabled]="!authForm.valid"></app-material-button>
         </div>
       </form>
     </div>
