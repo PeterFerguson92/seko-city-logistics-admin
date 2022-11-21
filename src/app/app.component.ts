@@ -14,13 +14,12 @@ export class AppComponent implements AfterViewInit {
   LOGIN_URL = '/login'
 
   constructor(private router: Router, route: Router) {
-
     route.events.subscribe(event => {
-      if (this.sidenav)
-      {
-        this.sidenav.close();
-      }
-      // this.sidenav.open()
+      // if (this.sidenav)
+      // {
+      //   this.sidenav.close();
+      // }
+      this.sidenav.open()
       if (event instanceof RoutesRecognized) {
         this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
       }
