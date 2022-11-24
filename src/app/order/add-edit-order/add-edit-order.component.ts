@@ -17,11 +17,8 @@ export class AddEditOrderComponent implements OnInit {
   mode = null;
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private orderService: OrderService,
-    private activatedRoute: ActivatedRoute,
-    private customersService: CustomersService,
-    private router: Router) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
@@ -33,7 +30,7 @@ export class AddEditOrderComponent implements OnInit {
           {
             this.router.navigate(['/not-found']);
           }
-          this.mode = EDIT_ORDER_MODE
+        this.mode = EDIT_ORDER_MODE
           this.order = Object.assign({}, data.order[0].data.orderByReference);
           this.order.customer = data.order[1].data.customerByReference;
         } else

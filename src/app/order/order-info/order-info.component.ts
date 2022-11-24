@@ -37,7 +37,6 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
     private validationService: ValidationService, private itemService: ItemService) { }
 
   ngOnInit(): void {
-    console.log(this.orderInfo)
     this.orderInfoForm = this.formBuilder.group({
       deliveryDate: [this.orderInfo.deliveryDate ? new Date(this.orderInfo.deliveryDate ) : null, []],
       deliveryTime: [this.orderInfo.deliveryTime ? this.orderInfo.deliveryTime :  this.times[0], [Validators.required]],
