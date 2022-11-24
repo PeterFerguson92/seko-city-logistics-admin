@@ -88,7 +88,7 @@ export class BookingsService {
     });
   }
 
-  syncBooking(booking: IBooking, attachInvoice: boolean) {
+  syncBooking(booking: any, attachInvoice: boolean) {
     return this.apollo.mutate<IBooking>({
       mutation: SYNC_BOOKING,
       variables: { input: booking, attachInvoice }

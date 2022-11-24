@@ -310,7 +310,7 @@ export class BookingItemsComponent implements OnInit {
   }
 
   chooseColor(row) {
-    if (row.value === 0 || row.value === '0')
+    if (row.value === 0 || row.value === '0' || row.pricePerUnit === null )
     {
       return '#FFEBCA';
     }
@@ -319,7 +319,8 @@ export class BookingItemsComponent implements OnInit {
   showWarning() {
     if (this.dataSource && this.dataSource.data)
     {
-      const errorItemsLength = this.dataSource.data.filter(item => item.value === 0 || item.value === '0').length;
+      const errorItemsLength = this.dataSource.data.filter(item => item.value === 0 || item.value === '0'
+        || item.pricePerUnit === null).length;
       return errorItemsLength > 0;
     } else
     {
@@ -360,7 +361,6 @@ export class BookingItemsComponent implements OnInit {
 
   hideNotEditableColumns(isHidden) {
     this.columnsSchema[0].visible = isHidden;
-    this.columnsSchema[5].visible = isHidden;
     this.columnsSchema[6].visible = isHidden;
     this.columnsSchema[7].visible = isHidden;
   }
