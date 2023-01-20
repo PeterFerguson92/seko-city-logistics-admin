@@ -1,33 +1,41 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatStepper } from '@angular/material/stepper';
-import { CustomerDetailComponent } from 'src/app/customer/customer-detail/customer-detail.component';
-import { BookingInfoComponent } from '../booking-info/booking-info.component';
-import { BookingItemsComponent } from '../booking-items/booking-items.component';
-import { BookingReviewComponent } from '../booking-review/booking-review.component';
-import { CustomersService } from 'src/app/customer/service/customers.service';
-import { EDIT_BOOKING_MODE, VIEW_BOOKING_MODE } from 'src/app/constants';
-import { lastValueFrom, Subject, takeUntil } from 'rxjs';
-import { BookingsService } from '../service/bookings/bookings.service';
-import { Router } from '@angular/router';
-import { ICustomer } from 'src/app/customer/model';
-import { BookingsReceiversComponent } from '../bookings-receivers/bookings-receivers.component';
-import { MatDialog } from '@angular/material/dialog';
-import { AttachInvoiceDialogComponent } from '../attach-invoice-dialog/attach-invoice-dialog.component';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { MatStepper } from "@angular/material/stepper";
+import { CustomerDetailComponent } from "src/app/customer/customer-detail/customer-detail.component";
+import { BookingInfoComponent } from "../booking-info/booking-info.component";
+import { BookingItemsComponent } from "../booking-items/booking-items.component";
+import { BookingReviewComponent } from "../booking-review/booking-review.component";
+import { CustomersService } from "src/app/customer/service/customers.service";
+import { EDIT_BOOKING_MODE, VIEW_BOOKING_MODE } from "src/app/constants";
+import { lastValueFrom, Subject, takeUntil } from "rxjs";
+import { BookingsService } from "../service/bookings/bookings.service";
+import { Router } from "@angular/router";
+import { ICustomer } from "src/app/customer/model";
+import { BookingsReceiversComponent } from "../bookings-receivers/bookings-receivers.component";
+import { MatDialog } from "@angular/material/dialog";
+import { AttachInvoiceDialogComponent } from "../attach-invoice-dialog/attach-invoice-dialog.component";
 
 @Component({
-  selector: 'app-booking-detail',
-  templateUrl: './booking-detail.component.html',
-  styleUrls: ['./booking-detail.component.css', '../../shared/shared.css', '../../shared/common.css']
+  selector: "app-booking-detail",
+  templateUrl: "./booking-detail.component.html",
+  styleUrls: [
+    "./booking-detail.component.css",
+    "../../shared/shared.css",
+    "../../shared/common.css",
+  ],
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
-  @ViewChild(CustomerDetailComponent) customerDetailComponent: CustomerDetailComponent;
-  @ViewChild(BookingsReceiversComponent) bookingReceiversComponent: BookingsReceiversComponent;
-  @ViewChild(BookingItemsComponent) bookingItemsComponent: BookingItemsComponent;
+  @ViewChild(CustomerDetailComponent)
+  customerDetailComponent: CustomerDetailComponent;
+  @ViewChild(BookingsReceiversComponent)
+  bookingReceiversComponent: BookingsReceiversComponent;
+  @ViewChild(BookingItemsComponent)
+  bookingItemsComponent: BookingItemsComponent;
   @ViewChild(BookingInfoComponent) bookingInfoComponent: BookingInfoComponent;
-  @ViewChild(BookingReviewComponent) bookingReviewComponent: BookingReviewComponent;
+  @ViewChild(BookingReviewComponent)
+  bookingReviewComponent: BookingReviewComponent;
 
   @Input() booking;
-  @Input() mode
+  @Input() mode;
   errorText;
   showErrorText = false;
   senderFullName: string;
@@ -37,18 +45,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialog: MatDialog,
     private customersService: CustomersService,
-    private bookingsService: BookingsService) { }
+    private bookingsService: BookingsService
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   isDisabled(componentName: string) {
-    if (componentName === 'customerDetailComponent')
-    {
+    if (componentName === "customerDetailComponent") {
       // return true
       // return this.customerDetailComponent.isDisabled();
-    } else
-    {
-      return true
+    } else {
+      return true;
     }
   }
 
@@ -57,16 +64,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
   }
 
   onForward(stepper: MatStepper, componentName: string) {
-    if (!this[componentName].isDisabled())
-    {
-      if (stepper._getFocusIndex() === 3)
-      {
+    if (!this[componentName].isDisabled()) {
+      if (stepper._getFocusIndex() === 3) {
         this.buildBook();
-        this.bookingReviewComponent.updateBook(this.booking)
+        this.bookingReviewComponent.updateBook(this.booking);
       }
       stepper.next();
     }
-  };
+  }
 
   buildBook() {
     this.booking.sender = this.customerDetailComponent.getSenderDetails();
@@ -76,7 +81,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
   }
 
   getSenderRef() {
-    return this.booking.customer && this.booking.customer.reference ? this.booking.customer.reference : this.booking.senderReference
+    return this.booking.customer && this.booking.customer.reference
+      ? this.booking.customer.reference
+      : this.booking.senderReference;
   }
 
   getPaymentData() {
@@ -92,8 +99,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       discountAmount: this.booking.discountAmount,
       discountReason: this.booking.discountReason,
       isDiscountApplied: this.booking.isDiscountApplied,
-      fullAmount: this.booking.fullAmount
-    }
+      fullAmount: this.booking.fullAmount,
+    };
   }
 
   getBookingInfoData() {
@@ -105,86 +112,110 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       pickUpAddress: this.booking.pickUpAddress,
       updatesViaWhatsapp: this.booking.updatesViaWhatsapp,
       updatesViaEmail: this.booking.updatesViaEmail,
-    }
+    };
   }
 
   onSave() {
-    this.processBooking(false, true)
+    this.processBooking(false, true);
   }
 
   onSubmit() {
     const dialogRef = this.dialog.open(AttachInvoiceDialogComponent, {
-      disableClose: true
+      disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      const attachInvoice = result === 'true';
-      this.processBooking(attachInvoice, false)
-    })
+    dialogRef.afterClosed().subscribe((result) => {
+      const attachInvoice = result === "true";
+      this.processBooking(attachInvoice, false);
+    });
   }
 
   async processBooking(attachInvoice, isPending) {
-
-    if (EDIT_BOOKING_MODE === this.mode)
-    {
-      const fields = this.getDifference(this.booking.sender, this.booking.customer)
-      if (fields.length > 0)
-      {
-        const senderDetails = await this.updateCustomer(this.booking.customer.reference, fields);
+    if (EDIT_BOOKING_MODE === this.mode) {
+      const fields = this.getDifference(
+        this.booking.sender,
+        this.booking.customer
+      );
+      if (fields.length > 0) {
+        const senderDetails = await this.updateCustomer(
+          this.booking.customer.reference,
+          fields
+        );
         this.booking.senderId = senderDetails.id;
         this.booking.senderReference = senderDetails.reference;
         this.booking.senderFullName = senderDetails.fullName;
       }
-      await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);
-      await this.syncItems(this.booking.reference, this.booking.itemsDetails.items)
-      this.syncBooking(this.booking, attachInvoice)
-    }
-    else
-    {
-      if (this.booking.customer && this.booking.customer.reference)
-      {
-        let senderDetails = this.booking.customer
-        const fields = this.getDifference(this.booking.sender, this.booking.customer)
-        if (fields.length > 0)
-        {
-          senderDetails = await this.updateCustomer(this.booking.customer.reference, fields);
+      await this.syncReceivers(
+        this.booking.reference,
+        this.booking.receiver.receivers
+      );
+      await this.syncItems(
+        this.booking.reference,
+        this.booking.itemsDetails.items
+      );
+      this.syncBooking(this.booking, attachInvoice);
+    } else {
+      if (this.booking.customer && this.booking.customer.reference) {
+        let senderDetails = this.booking.customer;
+        const fields = this.getDifference(
+          this.booking.sender,
+          this.booking.customer
+        );
+        if (fields.length > 0) {
+          senderDetails = await this.updateCustomer(
+            this.booking.customer.reference,
+            fields
+          );
           this.booking.senderId = senderDetails.id;
           this.booking.senderReference = senderDetails.reference;
           this.booking.senderFullName = senderDetails.fullName;
         }
-        const recvReference = await this.getReceiverReferences(this.booking.receiver.receivers);
-        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice, isPending)
-      } else
-      {
+        const recvReference = await this.getReceiverReferences(
+          this.booking.receiver.receivers
+        );
+        this.saveBooking(
+          senderDetails,
+          recvReference,
+          this.booking,
+          attachInvoice,
+          isPending
+        );
+      } else {
         const senderDetails = await this.saveSender(this.booking.sender);
-        const recvReference = await this.saveReceivers(this.booking.receiver.receivers);
-        this.saveBooking(senderDetails, recvReference, this.booking, attachInvoice, isPending)
+        const recvReference = await this.saveReceivers(
+          this.booking.receiver.receivers
+        );
+        this.saveBooking(
+          senderDetails,
+          recvReference,
+          this.booking,
+          attachInvoice,
+          isPending
+        );
       }
     }
   }
 
   getDifference(obj1, obj2) {
-    const updateFields = []
+    const updateFields = [];
     Object.entries(obj1).forEach((key) => {
       const name = key[0];
       const value = key[1];
-      if (obj1[name] !== obj2[name])
-      {
-        updateFields.push({name, value})
+      if (obj1[name] !== obj2[name]) {
+        updateFields.push({ name, value });
       }
-    })
+    });
 
     return updateFields;
   }
 
   async getReceiverReferences(receivers) {
     const recvToSave = [];
-    const existingRecvReference = []
+    const existingRecvReference = [];
     for (const recv of receivers) {
       if (recv.reference === null) {
         recvToSave.push(recv);
-      } else
-      {
+      } else {
         existingRecvReference.push(recv.reference);
       }
     }
@@ -194,31 +225,52 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
   }
 
   async updateCustomer(reference, fields) {
-    const saved = await lastValueFrom(this.customersService.updateCustomer(reference, fields))
+    const saved = await lastValueFrom(
+      this.customersService.updateCustomer(reference, fields)
+    );
     // tslint:disable-next-line:no-string-literal
-    const senderDetails = saved.data['updateCustomer'];
-    return { reference: senderDetails.reference, fullName: senderDetails.fullName, id: senderDetails.id } ;
+    const senderDetails = saved.data["updateCustomer"];
+    return {
+      reference: senderDetails.reference,
+      fullName: senderDetails.fullName,
+      id: senderDetails.id,
+    };
   }
 
-
   async saveSender(customerDetails) {
-    const saved = await lastValueFrom(this.customersService.createCustomer(customerDetails))
-     // tslint:disable-next-line:no-string-literal
-    const senderDetails = saved.data['createCustomer'];
-    return { reference: senderDetails.reference, fullName: senderDetails.fullName, id: senderDetails.id } ;
+    const saved = await lastValueFrom(
+      this.customersService.createCustomer(customerDetails)
+    );
+    // tslint:disable-next-line:no-string-literal
+    const senderDetails = saved.data["createCustomer"];
+    return {
+      reference: senderDetails.reference,
+      fullName: senderDetails.fullName,
+      id: senderDetails.id,
+    };
   }
 
   async saveReceivers(receiversDetails) {
     const recvReferences = [];
-    const saved = await lastValueFrom(this.customersService.createCustomers(receiversDetails));
-    saved.data.createCustomers.forEach(recv => { recvReferences.push(recv.reference); });
+    const saved = await lastValueFrom(
+      this.customersService.createCustomers(receiversDetails)
+    );
+    saved.data.createCustomers.forEach((recv) => {
+      recvReferences.push(recv.reference);
+    });
     return recvReferences;
   }
 
-  saveBooking(senderDetails, recvReferences, bookingInfo, attachInvoice, isPending) {
+  saveBooking(
+    senderDetails,
+    recvReferences,
+    bookingInfo,
+    attachInvoice,
+    isPending
+  ) {
     const booking = {
       id: null,
-      reference: '',
+      reference: "",
       senderId: senderDetails.id ? senderDetails.id : bookingInfo.customer.id,
       receiverReferences: recvReferences,
       destination: bookingInfo.receiver.destinationInfo.destination,
@@ -230,8 +282,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       paymentType: bookingInfo.itemsDetails.paymentInfo.paymentType,
       paymentStatus: bookingInfo.itemsDetails.paymentInfo.paymentStatus,
       amountPaid: Number(bookingInfo.itemsDetails.paymentInfo.amountPaid),
-      amountOutstanding: Number(bookingInfo.itemsDetails.paymentInfo.amountOutstanding),
-      discountAmount:  Number(bookingInfo.itemsDetails.paymentInfo.discountAmount),
+      amountOutstanding: Number(
+        bookingInfo.itemsDetails.paymentInfo.amountOutstanding
+      ),
+      discountAmount: Number(
+        bookingInfo.itemsDetails.paymentInfo.discountAmount
+      ),
       discountReason: bookingInfo.itemsDetails.paymentInfo.discountReason,
       isDiscountApplied: bookingInfo.itemsDetails.paymentInfo.isDiscountApplied,
       paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,
@@ -242,81 +298,93 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       updatesViaWhatsapp: bookingInfo.info.updatesViaWhatsapp,
       updatesViaEmail: bookingInfo.info.updatesViaEmail,
 
-      shipmentReference: '',
-      assignedDriverReference: ''
+      shipmentReference: "",
+      assignedDriverReference: "",
     };
-    this.bookingsService.createBooking(booking, attachInvoice, isPending)
-    .pipe(takeUntil(this.componentDestroyed$))
-    .subscribe({
-      next: () => { this.redirectToBookings();},
-      error: (error) => {
-        console.log(error);
-        console.log(error.message);
-        this.showErrorText = true
-        this.errorText = `Operation failed: Please contact system`;
-      }
-    })
+    this.bookingsService
+      .createBooking(booking, attachInvoice, isPending)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: () => {
+          this.redirectToBookings();
+        },
+        error: (error) => {
+          console.log(error);
+          console.log(error.message);
+          this.showErrorText = true;
+          this.errorText = `Operation failed: Please contact system`;
+        },
+      });
     return booking;
   }
 
   syncItems(bookingReference, items) {
-    this.bookingsService.syncItems(bookingReference, items)
-    .pipe(takeUntil(this.componentDestroyed$))
+    this.bookingsService
+      .syncItems(bookingReference, items)
+      .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
-        next: () => { this.redirectToBookings();},
+        next: () => {
+          this.redirectToBookings();
+        },
         error: (error) => {
           console.log(error);
           console.log(error.message);
-          this.showErrorText = true
+          this.showErrorText = true;
           this.errorText = `Operation failed: Please contact system`;
-        }
-      })
+        },
+      });
   }
 
   syncBooking(bookingInfo, attachInvoice) {
-    this.bookingsService.syncBooking(this.buildBookingInput(bookingInfo), attachInvoice)
-    .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe({
-        next: () => {},
-        error: (error) => {
-          console.log(error);
-          console.log(error.message);
-          this.showErrorText = true
-          this.errorText = `Operation failed: Please contact system`;
-        }
-      })
-  }
-
-  syncReceivers(reference, receivers: [ICustomer]) {
-    if (receivers.length > 0)
-    {
-      this.bookingsService.syncReceivers(reference, receivers)
+    this.bookingsService
+      .syncBooking(this.buildBookingInput(bookingInfo), attachInvoice)
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
         next: () => {},
         error: (error) => {
           console.log(error);
           console.log(error.message);
-          this.showErrorText = true
-          this.errorText = `Operation failed: Please contact system support`;
-          this.clearNotification();
-        }
-      })
+          this.showErrorText = true;
+          this.errorText = `Operation failed: Please contact system`;
+        },
+      });
+  }
+
+  syncReceivers(reference, receivers: [ICustomer]) {
+    console.log(reference);
+    console.log(JSON.stringify(receivers));
+    if (receivers.length > 0) {
+      this.bookingsService
+        .syncReceivers(reference, receivers)
+        .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe({
+          next: () => {},
+          error: (error) => {
+            console.log(error);
+            console.log(error.message);
+            this.showErrorText = true;
+            this.errorText = `Operation failed: Please contact system support`;
+            this.clearNotification();
+          },
+        });
     }
   }
 
   clearNotification() {
-    setTimeout(function() {
-      this.showErrorText = false;
-      this.errorText = null;
-    }.bind(this), 3000);
+    setTimeout(
+      function () {
+        this.showErrorText = false;
+        this.errorText = null;
+      }.bind(this),
+      3000
+    );
   }
 
   // todo merge builders
   buildBookingInput(bookingInfo) {
     return {
       id: bookingInfo.id,
-      reference: bookingInfo.reference ? bookingInfo.reference : '',
+      reference: bookingInfo.reference ? bookingInfo.reference : "",
       senderId: this.booking.customer.id,
       receiverReferences: [],
       destination: bookingInfo.receiver.destinationInfo.destination,
@@ -329,8 +397,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       paymentStatus: bookingInfo.itemsDetails.paymentInfo.paymentStatus,
       paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,
       amountPaid: Number(bookingInfo.itemsDetails.paymentInfo.amountPaid),
-      amountOutstanding: Number(bookingInfo.itemsDetails.paymentInfo.amountOutstanding),
-      discountAmount:  Number(bookingInfo.itemsDetails.paymentInfo.discountAmount),
+      amountOutstanding: Number(
+        bookingInfo.itemsDetails.paymentInfo.amountOutstanding
+      ),
+      discountAmount: Number(
+        bookingInfo.itemsDetails.paymentInfo.discountAmount
+      ),
       discountReason: bookingInfo.itemsDetails.paymentInfo.discountReason,
       isDiscountApplied: bookingInfo.itemsDetails.paymentInfo.isDiscountApplied,
       pickUpDate: bookingInfo.info.date,
@@ -341,19 +413,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       updatesViaEmail: bookingInfo.info.updatesViaEmail,
       status: bookingInfo.status,
       shipmentReference: bookingInfo.shipmentReference,
-      assignedDriverReference: bookingInfo.assignedDriverReference
+      assignedDriverReference: bookingInfo.assignedDriverReference,
     };
   }
 
   redirectToBookings() {
-    this.router.navigate(['/bookings']).then(() => {
-      window.location.reload();
+    this.router.navigate(["/bookings"]).then(() => {
+      // window.location.reload();
     });
   }
 
   ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
   }
-
 }
