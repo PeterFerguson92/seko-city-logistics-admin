@@ -1,186 +1,178 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen] = "true">
-  <p style="font-size: 20px; color: white">Loading...</p>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen]="true">
+    <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner>
 <div id="summary">
-  <div *ngIf="showInvoice">
-    <app-booking-invoice [booking]="booking"></app-booking-invoice>
-  </div>
-  <div *ngIf="!showInvoice">
-
-<mat-accordion *ngIf="showBookingSummary()" [multi]="true">
-  <mat-expansion-panel hideToggle [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        SENDER DETAILS
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th class="details">Details</th>
-        <th>Value</th>
-      </tr>
-      <tr>
-        <td>Type</td>
-        <td>{{booking.sender.type}}</td>
-      </tr>
-      <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
-        <td>Registered Name</td>
-        <td>{{booking.sender.registeredName}}</td>
-      </tr>
-      <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
-        <td>Registered Number</td>
-        <td>{{booking.sender.registeredNumber}}</td>
-      </tr>
-      <tr>
-        <td>Title</td>
-        <td>{{booking.sender.title}}</td>
-      </tr>
-      <tr>
-        <td>Name</td>
-        <td>{{booking.sender.name}}</td>
-      </tr>
-      <tr>
-        <td>Surname</td>
-        <td>{{booking.sender.surname}}</td>
-      </tr>
-      <tr>
-        <td>Email</td>
-        <td>{{booking.sender.email}}</td>
-      </tr>
-      <tr>
-        <td>Code</td>
-        <td>{{booking.sender.countryCode}}</td>
-      </tr>
-      <tr>
-        <td>Phone</td>
-        <td>{{booking.sender.phone}}</td>
-      </tr>
-      <tr>
-        <td>Postcode</td>
-        <td>{{booking.sender.postcode}}</td>
-      </tr>
-      <tr>
-        <td>Address</td>
-        <td>{{booking.sender.address}}</td>
-      </tr>
-    </table>
-  </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        RECEIVER DETAILS
-      </mat-panel-title>
-      <!-- <mat-panel-description>
+    <div *ngIf="showInvoice">
+        <app-booking-invoice [booking]="booking"></app-booking-invoice>
+    </div>
+    <div *ngIf="!showInvoice">
+        <mat-accordion *ngIf="showBookingSummary()" [multi]="true">
+            <mat-expansion-panel hideToggle [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> SENDER DETAILS </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <th class="details">Details</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>{{ booking.sender.type }}</td>
+                    </tr>
+                    <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
+                        <td>Registered Name</td>
+                        <td>{{ booking.sender.registeredName }}</td>
+                    </tr>
+                    <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
+                        <td>Registered Number</td>
+                        <td>{{ booking.sender.registeredNumber }}</td>
+                    </tr>
+                    <tr>
+                        <td>Title</td>
+                        <td>{{ booking.sender.title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{ booking.sender.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Surname</td>
+                        <td>{{ booking.sender.surname }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ booking.sender.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Code</td>
+                        <td>{{ booking.sender.countryCode }}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>{{ booking.sender.phone }}</td>
+                    </tr>
+                    <tr>
+                        <td>Postcode</td>
+                        <td>{{ booking.sender.postcode }}</td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td>{{ booking.sender.address }}</td>
+                    </tr>
+                </table>
+            </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> RECEIVER DETAILS </mat-panel-title>
+                    <!-- <mat-panel-description>
         This is a summary of the content
       </mat-panel-description> -->
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th>Type</th>
-        <th>Registered Name</th>
-        <th>Registered Number</th>
-        <th>Title</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Country Code</th>
-        <th>Phone</th>
-      </tr>
-      <tr *ngFor="let receiver of booking.receivers">
-        <td>{{receiver.type}}</td>
-        <td>{{receiver.registeredName}}</td>
-        <td>{{receiver.registeredNumber}}</td>
-        <td>{{receiver.title}}</td>
-        <td>{{receiver.name}}</td>
-        <td>{{receiver.surname}}</td>
-        <td>{{receiver.countryCode}}</td>
-        <td>{{receiver.phone}}</td>
-      </tr>
-      <br>
-      <p><b>Destination:</b> <br>{{booking.destination}}</p>
-      <p><b>Location:</b> <br>{{booking.location}}</p>
-    </table>
-  </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        ITEMS DETAILS
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th class="details">Quantity</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Value</th>
-        <th>Price per unit</th>
-        <th>Amount</th>
-        <th>Status</th>
-      </tr>
-      <tr *ngFor="let item of booking.items">
-        <td>{{item.quantity}}</td>
-        <td>{{item.type}}</td>
-        <td>{{item.description}}</td>
-        <td>£{{item.value}}</td>
-        <td>£{{item.pricePerUnit}}</td>
-        <td>£{{item.amount}}</td>
-        <td>{{item.status}}</td>
-      </tr>
-      <br>
-      <p><b>Number of items:</b> <br>{{booking.numberOfItems}}</p>
-      <p><b>Total amount:</b> <br>£{{booking.totalAmount}}</p>
-      <p><b>Selected payment type:</b> <br>{{booking.paymentType}}</p>
-      <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Name:</b> <br>{{accountName}}</p>
-      <p *ngIf="isPaymentTypeBankTransfer()"><b>Sort Code:</b> <br>{{accountSortCode}}</p>
-      <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Number:</b> <br>{{accountNumber}}</p>
-      <p *ngIf="isPaymentTypeBankTransfer()"><b>Reference:</b> <br>{{getBankReference()}}</p>
-      <p><b>Selected payment status:</b> <br>{{booking.paymentStatus}}</p>
-      <p><b>Amount Paid:</b> <br>£{{booking.amountPaid}}</p>
-      <p><b>Amount Outstanding:</b> <br>£{{booking.amountOutstanding}}</p>
-      <p><b>Notes:</b> <br>{{booking.paymentNotes}}</p>
-    </table>
-  </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        PICK UP DETAILS
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th class="details">Details</th>
-        <th>Value</th>
-      </tr>
-      <tr>
-        <td>Date</td>
-        <td>{{getFormattedDate(booking.pickUpDate)}}</td>
-      </tr>
-      <tr>
-        <td>Time</td>
-        <td>{{booking.pickUpTime}}</td>
-      </tr>
-      <tr>
-        <td>Postcode</td>
-        <td>{{booking.pickUpPostCode}}</td>
-      </tr>
-      <tr>
-        <td>Address</td>
-        <td>{{booking.pickUpAddress}}</td>
-      </tr>
-      <tr>
-        <td>Updates Via Whatsapp</td>
-        <td>{{booking.updatesViaWhatsapp ? 'YES': 'NO'}}</td>
-      </tr>
-    </table>
-  </mat-expansion-panel>
-</mat-accordion>
-<br>
-</div>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Registered Name</th>
+                        <th>Registered Number</th>
+                        <th>Title</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Country Code</th>
+                        <th>Phone</th>
+                    </tr>
+                    <tr *ngFor="let receiver of booking.receivers">
+                        <td>{{ receiver.type }}</td>
+                        <td>{{ receiver.registeredName }}</td>
+                        <td>{{ receiver.registeredNumber }}</td>
+                        <td>{{ receiver.title }}</td>
+                        <td>{{ receiver.name }}</td>
+                        <td>{{ receiver.surname }}</td>
+                        <td>{{ receiver.countryCode }}</td>
+                        <td>{{ receiver.phone }}</td>
+                    </tr>
+                    <br />
+                    <p><b>Destination:</b> <br />{{ booking.destination }}</p>
+                    <p><b>Location:</b> <br />{{ booking.location }}</p>
+                </table>
+            </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> ITEMS DETAILS </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <th class="details">Quantity</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Value</th>
+                        <th>Price per unit</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr *ngFor="let item of booking.items">
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.type }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>£{{ item.value }}</td>
+                        <td>£{{ item.pricePerUnit }}</td>
+                        <td>£{{ item.amount }}</td>
+                        <td>{{ item.status }}</td>
+                    </tr>
+                    <br />
+                    <p><b>Number of items:</b> <br />{{ booking.numberOfItems }}</p>
+                    <p><b>Total amount:</b> <br />£{{booking.fullAmount</p>
+                    <p><b>Payable amount:</b> <br />£{{ booking.totalAmount }}</p>
+                    <p><b>Selected payment type:</b> <br />{{ booking.paymentType }}</p>
+                    <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Name:</b> <br />{{ accountName }}</p>
+                    <p *ngIf="isPaymentTypeBankTransfer()"><b>Sort Code:</b> <br />{{ accountSortCode }}</p>
+                    <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Number:</b> <br />{{ accountNumber }}</p>
+                    <p *ngIf="isPaymentTypeBankTransfer()"><b>Reference:</b> <br />{{ getBankReference() }}</p>
+                    <p><b>Selected payment status:</b> <br />{{ booking.paymentStatus }}</p>
+                    <p><b>Amount Paid:</b> <br />£{{ booking.amountPaid }}</p>
+                    <p><b>Amount Outstanding:</b> <br />£{{ booking.amountOutstanding }}</p>
+                    <p><b>Notes:</b> <br />{{ booking.paymentNotes }}</p>
+                </table>
+            </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> PICK UP DETAILS </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <th class="details">Details</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>{{ getFormattedDate(booking.pickUpDate) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Time</td>
+                        <td>{{ booking.pickUpTime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Postcode</td>
+                        <td>{{ booking.pickUpPostCode }}</td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td>{{ booking.pickUpAddress }}</td>
+                    </tr>
+                    <tr>
+                        <td>Updates Via Whatsapp</td>
+                        <td>{{ booking.updatesViaWhatsapp ? 'YES' : 'NO' }}</td>
+                    </tr>
+                </table>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br />
+    </div>
 </div>
 
 <div align="center" *ngIf="showBookingSummary()">
-  <button mat-raised-button (click)="exportAsPDF()" class="exportButton"><mat-icon>picture_as_pdf</mat-icon> Export to PDF</button>
-  <button mat-raised-button  (click)="editBooking()" class="editButton"><mat-icon>edit</mat-icon> Edit booking </button>
-  <!-- <button mat-raised-button  (click)="generateInvoice()" class="editButton"><mat-icon>edit</mat-icon>{{getButtonName()}}</button> -->
+    <button mat-raised-button (click)="exportAsPDF()" class="exportButton"><mat-icon>picture_as_pdf</mat-icon> Export to PDF</button>
+    <button mat-raised-button (click)="editBooking()" class="editButton"><mat-icon>edit</mat-icon> Edit booking</button>
+    <!-- <button mat-raised-button  (click)="generateInvoice()" class="editButton"><mat-icon>edit</mat-icon>{{getButtonName()}}</button> -->
 </div>
-<br>
-<br>
+<br />
+<br />

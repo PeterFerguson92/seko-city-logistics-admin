@@ -1,168 +1,163 @@
 <mat-accordion [multi]="true">
-  <mat-expansion-panel hideToggle [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        SENDER DETAILS
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th class="details">Details</th>
-        <th>Value</th>
-      </tr>
-      <tr>
-        <td>Type</td>
-        <td>{{booking.sender.type}}</td>
-      </tr>
-      <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
-        <td>Registered Name</td>
-        <td>{{booking.sender.registeredName}}</td>
-      </tr>
-      <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
-        <td>Registered Number</td>
-        <td>{{booking.sender.registeredNumber}}</td>
-      </tr>
-      <tr>
-        <td>Title</td>
-        <td>{{booking.sender.title}}</td>
-      </tr>
-      <tr>
-        <td>Name</td>
-        <td>{{booking.sender.name}}</td>
-      </tr>
-      <tr>
-        <td>Surname</td>
-        <td>{{booking.sender.surname}}</td>
-      </tr>
-      <tr>
-        <td>Email</td>
-        <td>{{booking.sender.email}}</td>
-      </tr>
-      <tr>
-        <td>Code</td>
-        <td>{{booking.sender.countryCode}}</td>
-      </tr>
-      <tr>
-        <td>Phone</td>
-        <td>{{booking.sender.phone}}</td>
-      </tr>
-      <tr>
-        <td>Postcode</td>
-        <td>{{booking.sender.postcode}}</td>
-      </tr>
-      <tr>
-        <td>Address</td>
-        <td>{{booking.sender.address}}</td>
-      </tr>
-    </table>
-  </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        RECEIVER DETAILS
-      </mat-panel-title>
-      <!-- <mat-panel-description>
+    <mat-expansion-panel hideToggle [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title> SENDER DETAILS </mat-panel-title>
+        </mat-expansion-panel-header>
+        <table>
+            <tr>
+                <th class="details">Details</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{ booking.sender.type }}</td>
+            </tr>
+            <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
+                <td>Registered Name</td>
+                <td>{{ booking.sender.registeredName }}</td>
+            </tr>
+            <tr *ngIf="!isCustomerPersonal(booking.sender.type)">
+                <td>Registered Number</td>
+                <td>{{ booking.sender.registeredNumber }}</td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td>{{ booking.sender.title }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ booking.sender.name }}</td>
+            </tr>
+            <tr>
+                <td>Surname</td>
+                <td>{{ booking.sender.surname }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ booking.sender.email }}</td>
+            </tr>
+            <tr>
+                <td>Code</td>
+                <td>{{ booking.sender.countryCode }}</td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>{{ booking.sender.phone }}</td>
+            </tr>
+            <tr>
+                <td>Postcode</td>
+                <td>{{ booking.sender.postcode }}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{ booking.sender.address }}</td>
+            </tr>
+        </table>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title> RECEIVER DETAILS </mat-panel-title>
+            <!-- <mat-panel-description>
         This is a summary of the content
       </mat-panel-description> -->
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th>Type</th>
-        <th>Registered Name</th>
-        <th>Registered Number</th>
-        <th>Title</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Country Code</th>
-        <th>Phone</th>
-
-
-      </tr>
-      <tr *ngFor="let receiver of booking.receiver.receivers">
-        <td>{{receiver.type}}</td>
-        <td>{{receiver.registeredName}}</td>
-        <td>{{receiver.registeredNumber}}</td>
-        <td>{{receiver.title}}</td>
-        <td>{{receiver.name}}</td>
-        <td>{{receiver.surname}}</td>
-        <td>{{receiver.countryCode}}</td>
-        <td>{{receiver.phone}}</td>
-      </tr>
-      <br>
-      <p><b>Destination:</b> <br>{{booking.receiver.destinationInfo.destination}}</p>
-      <p><b>Location:</b> <br>{{booking.receiver.destinationInfo.location}}</p>
-    </table>
-  </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        ITEMS DETAILS
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th class="details">Quantity</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Value</th>
-        <th>Price per unit</th>
-        <th>Amount</th>
-      </tr>
-      <tr *ngFor="let item of booking.itemsDetails.items">
-        <td>{{item.quantity}}</td>
-        <td>{{item.type}}</td>
-        <td>{{item.description}}</td>
-        <td>£{{item.value}}</td>
-        <td>£{{item.pricePerUnit}}</td>
-        <td>£{{item.amount}}</td>
-      </tr>
-      <br>
-      <p><b>Number of items:</b> <br>{{booking.itemsDetails.totalNumberOfItems}}</p>
-      <p><b>Total amount:</b> <br>£{{booking.itemsDetails.paymentInfo.totalAmount}}</p>
-      <p><b>Selected payment type:</b> <br>{{booking.itemsDetails.paymentInfo.paymentType}}</p>
-      <p><b>Selected payment status:</b> <br>{{booking.itemsDetails.paymentInfo.paymentStatus}}</p>
-      <p><b>Amount Paid:</b> <br>£{{booking.itemsDetails.paymentInfo.amountPaid}}</p>
-      <p><b>Amount Outstanding:</b> <br>£{{booking.itemsDetails.paymentInfo.amountOutstanding}}</p>
-      <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied"><b>Discount Amount:</b> <br>£{{booking.itemsDetails.paymentInfo.discountAmount}}</p>
-      <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied"><b>Discount Reason:</b> <br>{{booking.itemsDetails.paymentInfo.discountReason}}</p>
-      <p><b>Notes:</b> <br>{{booking.itemsDetails.paymentInfo.paymentNotes}}</p>
-    </table>
-  </mat-expansion-panel>
-  <mat-expansion-panel  [expanded]="false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        PICK UP DETAILS
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <table>
-      <tr>
-        <th class="details">Details</th>
-        <th>Value</th>
-      </tr>
-      <tr>
-        <td>Date</td>
-        <td>{{getFormattedDate(booking.info.date)}}</td>
-      </tr>
-      <tr>
-        <td>Time</td>
-        <td>{{booking.info.time}}</td>
-      </tr>
-      <tr>
-        <td>Postcode</td>
-        <td>{{booking.info.postcode}}</td>
-      </tr>
-      <tr>
-        <td>Address</td>
-        <td>{{booking.info.address}}</td>
-      </tr>
-      <tr>
-        <td>Updates Via Whatsapp</td>
-        <td>{{booking.info.updatesViaWhatsapp ? 'YES': 'NO'}}</td>
-      </tr>
-      <tr>
-        <td>Updates Via Email</td>
-        <td>{{booking.info.updatesViaEmail ? 'YES': 'NO'}}</td>
-      </tr>
-    </table>
-  </mat-expansion-panel>
+        </mat-expansion-panel-header>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Registered Name</th>
+                <th>Registered Number</th>
+                <th>Title</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Country Code</th>
+                <th>Phone</th>
+            </tr>
+            <tr *ngFor="let receiver of booking.receiver.receivers">
+                <td>{{ receiver.type }}</td>
+                <td>{{ receiver.registeredName }}</td>
+                <td>{{ receiver.registeredNumber }}</td>
+                <td>{{ receiver.title }}</td>
+                <td>{{ receiver.name }}</td>
+                <td>{{ receiver.surname }}</td>
+                <td>{{ receiver.countryCode }}</td>
+                <td>{{ receiver.phone }}</td>
+            </tr>
+            <br />
+            <p><b>Destination:</b> <br />{{ booking.receiver.destinationInfo.destination }}</p>
+            <p><b>Location:</b> <br />{{ booking.receiver.destinationInfo.location }}</p>
+        </table>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title> ITEMS DETAILS </mat-panel-title>
+        </mat-expansion-panel-header>
+        <table>
+            <tr>
+                <th class="details">Quantity</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Price per unit</th>
+                <th>Amount</th>
+            </tr>
+            <tr *ngFor="let item of booking.itemsDetails.items">
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.description }}</td>
+                <td>£{{ item.value }}</td>
+                <td>£{{ item.pricePerUnit }}</td>
+                <td>£{{ item.amount }}</td>
+            </tr>
+            <br />
+            <p><b>Number of items:</b> <br />{{ booking.itemsDetails.totalNumberOfItems }}</p>
+            <p><b>Full amount:</b> <br />£{{ booking.itemsDetails.paymentInfo.fullAmount }}</p>
+            <p><b>Payable amount:</b> <br />£{{ booking.itemsDetails.paymentInfo.totalAmount }}</p>
+            <p><b>Selected payment type:</b> <br />{{ booking.itemsDetails.paymentInfo.paymentType }}</p>
+            <p><b>Selected payment status:</b> <br />{{ booking.itemsDetails.paymentInfo.paymentStatus }}</p>
+            <p><b>Amount Paid:</b> <br />£{{ booking.itemsDetails.paymentInfo.amountPaid }}</p>
+            <p><b>Amount Outstanding:</b> <br />£{{ booking.itemsDetails.paymentInfo.amountOutstanding }}</p>
+            <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied">
+                <b>Discount Amount:</b> <br />£{{ booking.itemsDetails.paymentInfo.discountAmount }}
+            </p>
+            <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied">
+                <b>Discount Reason:</b> <br />{{ booking.itemsDetails.paymentInfo.discountReason }}
+            </p>
+            <p><b>Notes:</b> <br />{{ booking.itemsDetails.paymentInfo.paymentNotes }}</p>
+        </table>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title> PICK UP DETAILS </mat-panel-title>
+        </mat-expansion-panel-header>
+        <table>
+            <tr>
+                <th class="details">Details</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>{{ getFormattedDate(booking.info.date) }}</td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td>{{ booking.info.time }}</td>
+            </tr>
+            <tr>
+                <td>Postcode</td>
+                <td>{{ booking.info.postcode }}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{ booking.info.address }}</td>
+            </tr>
+            <tr>
+                <td>Updates Via Whatsapp</td>
+                <td>{{ booking.info.updatesViaWhatsapp ? 'YES' : 'NO' }}</td>
+            </tr>
+            <tr>
+                <td>Updates Via Email</td>
+                <td>{{ booking.info.updatesViaEmail ? 'YES' : 'NO' }}</td>
+            </tr>
+        </table>
+    </mat-expansion-panel>
 </mat-accordion>
