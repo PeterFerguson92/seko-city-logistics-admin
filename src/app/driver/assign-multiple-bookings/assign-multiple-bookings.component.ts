@@ -8,189 +8,188 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
 import { CommonService } from 'src/app/service/common.service';
 
 @Component({
-  selector: 'app-assign-multiple-bookings',
-  templateUrl: './assign-multiple-bookings.component.html',
-  styleUrls: ['./assign-multiple-bookings.component.css',
-    '../../shared/shared-table.css',
-    '../../shared/shared-new-form.css',
-    '../../shared/common.css']
+    selector: 'app-assign-multiple-bookings',
+    templateUrl: './assign-multiple-bookings.component.html',
+    styleUrls: [
+        './assign-multiple-bookings.component.css',
+        '../../shared/shared-table.css',
+        '../../shared/shared-new-form.css',
+        '../../shared/common.css',
+    ],
 })
-export class AssignMultipleBookingsComponent implements OnInit, OnDestroy  {
+export class AssignMultipleBookingsComponent implements OnInit, OnDestroy {
+    selectionForm: FormGroup;
+    componentDestroyed$: Subject<boolean> = new Subject();
+    bookings;
+    includeArchive = true;
+    dataSource = null;
+    displayedColumns: string[] = ['SELECT', 'ID', 'SENDER', 'DESTINATION', 'POSTCODE', 'DRIVER'];
+    currentDriver;
+    drivers;
+    driversUsername;
+    currentDriverReference = null;
+    bookingReference;
+    errorText;
+    isAllSelected = false;
+    isButtonDisabled = true;
 
-  selectionForm: FormGroup;
-  componentDestroyed$: Subject<boolean> = new Subject();
-  bookings;
-  includeArchive = true;
-  dataSource = null;
-  displayedColumns: string[] = ['SELECT', 'ID', 'SENDER', 'DESTINATION', 'POSTCODE','DRIVER'];
-  currentDriver;
-  drivers;
-  driversUsername;
-  currentDriverReference = null;
-  bookingReference;
-  errorText;
-  isAllSelected = false;
-  isButtonDisabled = true;
+    constructor(
+        private formBuilder: FormBuilder,
+        private commonService: CommonService,
+        private bookingsService: BookingsService,
+        private authService: AuthenticationService,
+        private spinner: NgxSpinnerService
+    ) {}
 
-  constructor(private formBuilder: FormBuilder,
-    private commonService: CommonService,
-    private bookingsService: BookingsService,
-    private authService: AuthenticationService,
-    private spinner: NgxSpinnerService
-    ) { }
+    ngOnInit(): void {
+        this.selectionForm = this.formBuilder.group({
+            // date: [new Date('2022-09-19T00:00:00.000Z'), [Validators.required]],
+            date: [new Date(), [Validators.required]],
+            selectedDriverUsername: ['', [Validators.required]],
+        });
+        this.spinner.show();
+        this.getDriversInfo();
+        this.onLoadBookings();
+    }
 
-  ngOnInit(): void {
-    this.selectionForm = this.formBuilder.group({
-      // date: [new Date('2022-09-19T00:00:00.000Z'), [Validators.required]],
-      date: [new Date(), [Validators.required]],
-      selectedDriverUsername: ['', [Validators.required]],
-    })
-    this.spinner.show();
-    this.getDriversInfo();
-    this.onLoadBookings();
-  }
+    getFormControl(fControlName: string) {
+        return this.selectionForm.get(fControlName);
+    }
 
-  getFormControl(fControlName: string) {
-    return this.selectionForm.get(fControlName)
-  }
+    async getDriversInfo() {
+        this.drivers = (await lastValueFrom(this.authService.getDrivers())).data.getDrivers.users;
+        this.driversUsername = this.getDriversUsername();
+        this.getCurrentDriverUsername(this.currentDriverReference);
+        this.spinner.hide();
+    }
 
-  async getDriversInfo() {
-    this.drivers = (await lastValueFrom(this.authService.getDrivers())).data.getDrivers.users;
-    this.driversUsername = this.getDriversUsername();
-    this.getCurrentDriverUsername(this.currentDriverReference);
-    this.spinner.hide();
-  }
+    getDriversUsername() {
+        return this.drivers ? this.drivers.map((a) => a.username) : [];
+    }
 
-  getDriversUsername() {
-    return this.drivers ? this.drivers.map(a => a.username) : [];
-  }
-
-  getCurrentDriverUsername(reference) {
-    if (this.drivers)
-    {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.drivers.length; i++)
-      {
-        if (this.drivers[i].reference === reference)
-        {
-          this.getFormControl('selectedDriverUsername').setValue(this.drivers[i].username);
+    getCurrentDriverUsername(reference) {
+        if (this.drivers) {
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < this.drivers.length; i++) {
+                if (this.drivers[i].reference === reference) {
+                    this.getFormControl('selectedDriverUsername').setValue(this.drivers[i].username);
+                }
+            }
         }
-      }
     }
-  }
 
-  onLoadBookings() {
-    const date = this.commonService.getFormattedIsoDate(this.getFormControl('date').value)
-    this.bookingsService.filterBookings({ name: 'pickUpDate', value: date })
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(
-      ({ data }) => {
-          this.bookings = data.filterBookings;
-          const newData = this.bookings.map((item, index) => Object.assign({}, item,
-            { selected: false, index }));
-          this.dataSource =  new MatTableDataSource(newData)
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  onSelectionChange(event: any, fControlName: string) {
-    const fControl = this.getFormControl(fControlName);
-    fControl.setValue(event.value);
-    fControl.markAsDirty();
-    if (fControlName === 'selectedDriverUsername')
-    {
-      this.currentDriverReference = this.getDriverReference(fControl.value);
+    onLoadBookings() {
+        console.log(this.getFormControl('date').value);
+        const date = this.commonService.getFormattedIsoDate(this.getFormControl('date').value);
+        console.log({ name: 'pickUpDate', value: date });
+        this.bookingsService
+            .filterBookings({ name: 'pickUpDate', value: date })
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe(
+                ({ data }) => {
+                    this.bookings = data.filterBookings;
+                    const newData = this.bookings.map((item, index) =>
+                        Object.assign({}, item, { selected: false, index })
+                    );
+                    this.dataSource = new MatTableDataSource(newData);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
     }
-  }
 
-  getDriverReference(username) {
-    let reference;
-    if (this.drivers)
-    {
-      for (const driver of this.drivers)
-      {
-        if (driver.username === username)
-        {
-          reference = driver.reference;
+    onSelectionChange(event: any, fControlName: string) {
+        const fControl = this.getFormControl(fControlName);
+        fControl.setValue(event.value);
+        fControl.markAsDirty();
+        if (fControlName === 'selectedDriverUsername') {
+            this.currentDriverReference = this.getDriverReference(fControl.value);
         }
-      }
-      return reference;
-    } else
-    {
-      return 'N/A'
     }
-  }
 
-
-  getDriverUsername(assignedDriverReference) {
-    let username;
-    if (this.drivers)
-    {
-      for (const driver of this.drivers)
-      {
-        if (driver.reference === assignedDriverReference)
-        {
-          username = driver.username;
+    getDriverReference(username) {
+        let reference;
+        if (this.drivers) {
+            for (const driver of this.drivers) {
+                if (driver.username === username) {
+                    reference = driver.reference;
+                }
+            }
+            return reference;
+        } else {
+            return 'N/A';
         }
-      }
-      return username;
-    } else
-    {
-      return 'N/A'
     }
 
-  }
-
-  onInputChange(event, fControlName) {
-    const fControl = this.getFormControl(fControlName);
-    fControl.setValue(event)
-    fControl.markAsDirty();
-  }
-
-  isDisabled() {
-    const selectedBookings = this.dataSource && this.dataSource.data ?
-      this.dataSource.data.filter((u: any) => u.selected) : [];
-    return selectedBookings.length === 0 || this.currentDriverReference === null;
-  }
-
-  selectAll() {
-    if (this.dataSource && this.dataSource.data)
-    {
-      this.isAllSelected = !this.isAllSelected
-      this.dataSource = new MatTableDataSource(this.dataSource.data.map((obj) => ({ ...obj, selected: this.isAllSelected })));
+    getDriverUsername(assignedDriverReference) {
+        let username;
+        if (this.drivers) {
+            for (const driver of this.drivers) {
+                if (driver.reference === assignedDriverReference) {
+                    username = driver.username;
+                }
+            }
+            return username;
+        } else {
+            return 'N/A';
+        }
     }
-  }
 
-  isAllChecked() {
-    const result =  this.dataSource && this.dataSource.data && this.dataSource.data.length > 0 &&
-      this.dataSource.data.filter((u: any) => u.selected).length === this.dataSource.data.length ;
-    this.isAllSelected = result;
-    return result
-  }
+    onInputChange(event, fControlName) {
+        const fControl = this.getFormControl(fControlName);
+        fControl.setValue(event);
+        fControl.markAsDirty();
+    }
 
-  onAssign() {
-    console.log(3343)
-    const selectedBookings = this.dataSource.data.filter((u: any) => u.selected);
-    const selectedBookingsReference = selectedBookings.map(a => a.reference);
+    isDisabled() {
+        const selectedBookings =
+            this.dataSource && this.dataSource.data ? this.dataSource.data.filter((u: any) => u.selected) : [];
+        return selectedBookings.length === 0 || this.currentDriverReference === null;
+    }
 
-    const fieldToUpdate = { name: 'assignedDriverReference', value: this.currentDriverReference };
-    this.bookingsService.updateBookingsByReferences(selectedBookingsReference, fieldToUpdate).subscribe(
-      ({ data }) => {
-        location.reload();
-      },
-      error => {
-        console.log(error);
-      }
-    )
-  }
+    selectAll() {
+        if (this.dataSource && this.dataSource.data) {
+            this.isAllSelected = !this.isAllSelected;
+            this.dataSource = new MatTableDataSource(
+                this.dataSource.data.map((obj) => ({
+                    ...obj,
+                    selected: this.isAllSelected,
+                }))
+            );
+        }
+    }
 
+    isAllChecked() {
+        const result =
+            this.dataSource &&
+            this.dataSource.data &&
+            this.dataSource.data.length > 0 &&
+            this.dataSource.data.filter((u: any) => u.selected).length === this.dataSource.data.length;
+        this.isAllSelected = result;
+        return result;
+    }
 
-  ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
-  }
+    onAssign() {
+        const selectedBookings = this.dataSource.data.filter((u: any) => u.selected);
+        const selectedBookingsReference = selectedBookings.map((a) => a.reference);
 
+        const fieldToUpdate = {
+            name: 'assignedDriverReference',
+            value: this.currentDriverReference,
+        };
+        this.bookingsService.updateBookingsByReferences(selectedBookingsReference, fieldToUpdate).subscribe(
+            ({ data }) => {
+                location.reload();
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    ngOnDestroy() {
+        this.componentDestroyed$.next(true);
+        this.componentDestroyed$.complete();
+    }
 }
