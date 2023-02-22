@@ -63,7 +63,7 @@
         <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
         <div class="submitButton">
             <app-material-button [label]="'CONFIRM BOOKING'" [width]="30" (click)="onSubmit()"></app-material-button><br />
-            <app-material-button [label]="'RESERVE BOOKING'" [width]="30" (click)="onSave()"></app-material-button>
+            <app-material-button *ngIf="showReserveBooking()" [label]="'RESERVE BOOKING'" [width]="30" (click)="onSave()"></app-material-button>
         </div>
     </mat-step>
 </mat-stepper>

@@ -5,7 +5,10 @@ import { BookingInfoComponent } from '../booking-info/booking-info.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
 import { CustomersService } from 'src/app/customer/service/customers.service';
-import { EDIT_BOOKING_MODE, VIEW_BOOKING_MODE } from 'src/app/constants';
+import {
+    EDIT_BOOKING_MODE,
+    VIEW_BOOKING_MODE,
+} from 'src/app/constants';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { BookingsService } from '../service/bookings/bookings.service';
 import { Router } from '@angular/router';
@@ -115,6 +118,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.processBooking(false, true);
     }
 
+    showReserveBooking() {
+        return EDIT_BOOKING_MODE !== this.mode;
+    }
+
     onSubmit() {
         const dialogRef = this.dialog.open(AttachInvoiceDialogComponent, {
             disableClose: true,
@@ -137,6 +144,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
             await this.syncReceivers(this.booking.reference, this.booking.receiver.receivers);
             await this.syncItems(this.booking.reference, this.booking.itemsDetails.items);
+            if (this.booking.status === 'PENDING') {
+                this.booking.status = 'CREATED';
+            }
             this.syncBooking(this.booking, attachInvoice);
         } else {
             if (this.booking.customer && this.booking.customer.reference) {
@@ -243,7 +253,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             pickUpAddress: bookingInfo.info.address,
             updatesViaWhatsapp: bookingInfo.info.updatesViaWhatsapp,
             updatesViaEmail: bookingInfo.info.updatesViaEmail,
-
             shipmentReference: '',
             assignedDriverReference: '',
         };
