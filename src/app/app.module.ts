@@ -25,49 +25,53 @@ import { UpdateItemsDialogComponent } from './items/update-items-dialog/update-i
 import { ProfileModule } from './profile/profile.module';
 import { environment } from 'src/environments/environment';
 import { PlannerCalendarComponent } from './planner/planner-calendar/planner-calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    ReportsComponent,
-    SideNavComponent,
-    HomeComponent,
-    OrdersComponent,
-    UpdateItemsDialogComponent,
-    PlannerCalendarComponent
-  ],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    ApolloModule,
-    NgxChartsModule,
-    CustomerModule,
-    BookingModule,
-    ShipmentModule,
-    DriversModule,
-    HomeModule,
-    TaskModule,
-    ProfileModule
-  ],
-  providers: [{
-    provide: APOLLO_OPTIONS,
-    useFactory: (httpLink: HttpLink) => {
-      return {
-        cache: new InMemoryCache(),
-        link: httpLink.create({
-          uri: environment.apiUrl
-        })
-      }
-    },
-    deps: [HttpLink]
-  }],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA], // This is new to version 13 as well,
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        ReportsComponent,
+        SideNavComponent,
+        HomeComponent,
+        OrdersComponent,
+        UpdateItemsDialogComponent,
+        PlannerCalendarComponent,
+    ],
+    entryComponents: [],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        ApolloModule,
+        NgxChartsModule,
+        CustomerModule,
+        BookingModule,
+        ShipmentModule,
+        DriversModule,
+        HomeModule,
+        TaskModule,
+        ProfileModule,
+        FullCalendarModule,
+    ],
+    providers: [
+        {
+            provide: APOLLO_OPTIONS,
+            useFactory: (httpLink: HttpLink) => {
+                return {
+                    cache: new InMemoryCache(),
+                    link: httpLink.create({
+                        uri: environment.apiUrl,
+                    }),
+                };
+            },
+            deps: [HttpLink],
+        },
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA], // This is new to version 13 as well,
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

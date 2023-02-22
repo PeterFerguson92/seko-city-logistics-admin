@@ -1,1 +1,10 @@
-<p>planner-calendar works!</p>
+<!-- <p>planner-calendar works!</p>
+<full-calendar [options]="calendarOptions"></full-calendar> -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-circus" [fullScreen]="true">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<full-calendar [options]="calendarOptions">
+    <ng-template #eventContent let-arg>
+        <b (click)="onClickDate(arg.event)"> {{ arg.event.title }}</b>
+    </ng-template>
+</full-calendar>

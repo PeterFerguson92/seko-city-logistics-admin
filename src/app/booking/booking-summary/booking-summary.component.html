@@ -120,7 +120,7 @@
                     </tr>
                     <br />
                     <p><b>Number of items:</b> <br />{{ booking.numberOfItems }}</p>
-                    <p><b>Total amount:</b> <br />£{{booking.fullAmount</p>
+                    <p><b>Total amount:</b> <br />£{{ booking.fullAmount }}</p>
                     <p><b>Payable amount:</b> <br />£{{ booking.totalAmount }}</p>
                     <p><b>Selected payment type:</b> <br />{{ booking.paymentType }}</p>
                     <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Name:</b> <br />{{ accountName }}</p>
