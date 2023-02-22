@@ -24,6 +24,7 @@ import { OrdersComponent } from './order/orders/orders.component';
 import { UpdateItemsDialogComponent } from './items/update-items-dialog/update-items-dialog.component';
 import { ProfileModule } from './profile/profile.module';
 import { environment } from 'src/environments/environment';
+import { PlannerCalendarComponent } from './planner/planner-calendar/planner-calendar.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { environment } from 'src/environments/environment';
     SideNavComponent,
     HomeComponent,
     OrdersComponent,
-    UpdateItemsDialogComponent
+    UpdateItemsDialogComponent,
+    PlannerCalendarComponent
   ],
   entryComponents: [],
   imports: [

@@ -1,50 +1,52 @@
 <div class="navbar">
-  <div class="user">
-      <img src="assets/login/logo.png" alt="">
-      <h4 class="name">admin</h4>
-      <p class="mail">admin@gmail.com</p>
-  </div>
-  <div class="menu">
-      <div class="menu-head">
-      </div>
-      <div class="menu-item">
-        <button mat-button class="menu-button"  (click)="navigate('/home')" >
-          <mat-icon>home</mat-icon>
-          <span>Home</span>
-        </button>
-        <button mat-button class="menu-button"  (click)="navigate('/customers')" >
-          <mat-icon>people</mat-icon>
-          <span>Customers</span>
-        </button>
-        <button mat-button class="menu-button"  (click)="navigate('/bookings')" >
-          <mat-icon>assignment</mat-icon>
-          <span>Bookings</span>
-        </button>
-        <button mat-button class="menu-button" (click)="navigate('/orders')">
-          <mat-icon>chrome_reader_mode</mat-icon>
-          <span>Orders</span>
-        </button>
-        <button mat-button class="menu-button"  (click)="navigate('/shipments')" >
-          <mat-icon>local_shipping</mat-icon>
-          <span>Shipments</span>
-        </button>
-        <button mat-button class="menu-button" (click)="navigate('/tasks')">
-          <mat-icon>rate_review</mat-icon>
-          <span>Tasks</span>
-        </button>
-        <button mat-button class="menu-button" (click)="navigate('/drivers')">
-          <mat-icon>transfer_within_a_station</mat-icon>
-          <span>Drivers</span>
-        </button>
-        <button mat-button class="menu-button" (click)="navigate('/reports')">
-            <mat-icon>pie_chart</mat-icon>
-            <span>Report</span>
-        </button>
-        <button mat-button class="menu-button" (click)="navigate('/login')">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Logout</span>
-        </button>
-      </div>
-  </div>
+    <div class="user">
+        <img src="assets/login/logo.png" alt="" />
+        <h4 class="name">admin</h4>
+        <p class="mail">admin@gmail.com</p>
+    </div>
+    <div class="menu">
+        <div class="menu-head"></div>
+        <div class="menu-item">
+            <button mat-button class="menu-button" (click)="navigate('/home')">
+                <mat-icon>home</mat-icon>
+                <span>Home</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/planner')">
+                <mat-icon>event_note</mat-icon>
+                <span>Planner</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/customers')">
+                <mat-icon>people</mat-icon>
+                <span>Customers</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/bookings')">
+                <mat-icon>assignment</mat-icon>
+                <span>Bookings</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/orders')">
+                <mat-icon>chrome_reader_mode</mat-icon>
+                <span>Orders</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/shipments')">
+                <mat-icon>local_shipping</mat-icon>
+                <span>Shipments</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/tasks')">
+                <mat-icon>rate_review</mat-icon>
+                <span>Tasks</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/drivers')">
+                <mat-icon>transfer_within_a_station</mat-icon>
+                <span>Drivers</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/reports')">
+                <mat-icon>pie_chart</mat-icon>
+                <span>Report</span>
+            </button>
+            <button mat-button class="menu-button" (click)="navigate('/login')">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
 </div>
-
