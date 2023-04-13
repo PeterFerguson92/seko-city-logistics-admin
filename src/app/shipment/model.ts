@@ -12,7 +12,7 @@ export interface IShipment{
   consigneeAddress: string;
   exporterFullName: string;
   exporterPostcode: string;
-  exporterAdress: string;
+  exporterAddress: string;
   exporterArea: string;
   exporterCity: string;
   containerNumber: string;
