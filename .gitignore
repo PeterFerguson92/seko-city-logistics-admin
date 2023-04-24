@@ -148,7 +148,7 @@ temp/
 
 node_modules
 .firebase
-.firebaserc
+# .firebaserc
 .angular
 .DS_Store
 notes.txt

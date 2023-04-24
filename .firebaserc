@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "qa": "seko-admin-qa",
+    "prod": "seko-admin"
+  }
+}
