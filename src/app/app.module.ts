@@ -26,6 +26,8 @@ import { ProfileModule } from './profile/profile.module';
 import { environment } from 'src/environments/environment';
 import { PlannerCalendarComponent } from './planner/planner-calendar/planner-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { ErrorHandler } from '@angular/core';
+import { RaygunErrorHandler } from './app.raygun.setup';
 
 @NgModule({
     declarations: [
@@ -69,6 +71,10 @@ import { FullCalendarModule } from '@fullcalendar/angular';
                 };
             },
             deps: [HttpLink],
+        },
+        {
+            provide: ErrorHandler,
+            useClass: RaygunErrorHandler,
         },
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA], // This is new to version 13 as well,
