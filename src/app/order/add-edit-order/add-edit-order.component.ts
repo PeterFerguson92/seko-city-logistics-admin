@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-    ADD_ORDER_CUSTOMER_MODE,
-    CREATE_ORDER_MODE,
-    EDIT_ORDER_MODE,
-} from 'src/app/constants';
+import { ADD_ORDER_CUSTOMER_MODE, CREATE_ORDER_MODE, EDIT_ORDER_MODE } from 'src/app/constants';
 
 @Component({
     selector: 'app-add-edit-order',
