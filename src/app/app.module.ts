@@ -28,6 +28,7 @@ import { PlannerCalendarComponent } from './planner/planner-calendar/planner-cal
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { ErrorHandler } from '@angular/core';
 import { RaygunErrorHandler } from './app.raygun.setup';
+import { AuthGuard } from './shared/authentication/auth.guard';
 
 @NgModule({
     declarations: [
@@ -60,6 +61,7 @@ import { RaygunErrorHandler } from './app.raygun.setup';
         FullCalendarModule,
     ],
     providers: [
+        AuthGuard,
         {
             provide: APOLLO_OPTIONS,
             useFactory: (httpLink: HttpLink) => {
