@@ -72,6 +72,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.spinner.hide();
                 },
                 (error) => {
+                    this.spinner.hide();
+                    console.log(error);
                     this.showErrorText = true;
                     this.errorText = 'Something went wrong, Please contact support';
                     this.clearFields();
@@ -91,8 +93,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                     localStorage.setItem('id', encrypted);
                     localStorage.setItem('key', encryptedKey);
                     this.showLoader = false;
-
-                    this.router.navigate([`/${REDIRECT_SECTION_AFTER_LOGIN}`]);
+                    this.router.navigate([`/${REDIRECT_SECTION_AFTER_LOGIN}`]).then(() => {
+                        window.location.reload();
+                    });
                 },
                 (error) => {
                     console.log(error);
