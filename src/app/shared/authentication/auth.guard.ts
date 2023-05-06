@@ -8,14 +8,21 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
 export class AuthGuard implements CanActivate {
     constructor(private router: Router, private authService: AuthenticationService) {}
 
-    canActivate() {
-        const id = localStorage.getItem('id');
-        if (id) {
-            return true;
+    async canActivate() {
+        const key = localStorage.getItem('key');
+        if (key) {
+            const authResponse = await this.authService.isUserAuthenticated(key);
+            if (authResponse.result) {
+                return true;
+            } else {
+                this.redirectToLogin();
+            }
         } else {
-            this.router.navigate(['/login']);
-            return false;
+            this.redirectToLogin();
         }
-        // return this.authService.isUserAuthenticated(localStorage.getItem('sub'));;
+    }
+
+    redirectToLogin() {
+        this.router.navigate(['/login']);
     }
 }
