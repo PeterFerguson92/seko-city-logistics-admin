@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
-import rg4js from 'raygun4js';
+// import rg4js from 'raygun4js';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +9,7 @@ import rg4js from 'raygun4js';
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements AfterViewInit {
-    @ViewChild(MatSidenav)
+    @ViewChild(MatSidenav, { static: true })
     sidenav!: MatSidenav;
     isVisible = true;
     LOGIN_URL = '/login';
@@ -21,12 +21,11 @@ export class AppComponent implements AfterViewInit {
             //   this.sidenav.close();
             // }
 
-                rg4js('trackEvent', {
-                    type: 'pageView',
-                    path: event
-                });
-
-            this.sidenav.open();
+            // rg4js('trackEvent', {
+            //     type: 'pageView',
+            //     path: event
+            // });
+            if (this.sidenav) this.sidenav.open();
             if (event instanceof RoutesRecognized) {
                 this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
             } else if (event instanceof NavigationEnd) {
@@ -59,11 +58,5 @@ export class AppComponent implements AfterViewInit {
 
     onViewProfile() {
         this.router.navigateByUrl('/profile');
-    }
-
-    onLogout() {
-        localStorage.removeItem('id');
-        localStorage.removeItem('foo');
-        this.router.navigateByUrl('/login');
     }
 }

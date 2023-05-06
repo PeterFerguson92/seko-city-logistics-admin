@@ -114,7 +114,7 @@ export class CommonService {
   }
 
   decryptMessage(message, encryptionKey): string {
-    return CryptoJS.AES.decrypt(message,  encryptionKey).toString(CryptoJS.enc.Utf8);;
+    return CryptoJS.AES.decrypt(message,  encryptionKey).toString(CryptoJS.enc.Utf8);
   }
 
 }

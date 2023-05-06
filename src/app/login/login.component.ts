@@ -9,109 +9,127 @@ import { Subject, takeUntil } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+    authForm: FormGroup;
+    showErrorText: boolean;
+    showLoader: boolean;
+    errorText: string;
 
-  authForm: FormGroup;
-  showErrorText: boolean;
-  showLoader: boolean;
-  errorText: string;
+    formValidationMap = {
+        usernameInput: '',
+        passwordInput: '',
+    };
 
-  formValidationMap = {
-    usernameInput: '',
-    passwordInput: ''
-  };
+    componentDestroyed$: Subject<boolean> = new Subject();
 
-  componentDestroyed$: Subject<boolean> = new Subject();
+    constructor(
+        private router: Router,
+        private formBuilder: FormBuilder,
+        private authService: AuthenticationService,
+        private validationService: ValidationService,
+        private commonService: CommonService,
+        private spinner: NgxSpinnerService
+    ) {}
 
-  constructor(private router: Router,
-    private formBuilder: FormBuilder,
-    private authService: AuthenticationService,
-    private validationService: ValidationService,
-    private commonService: CommonService,
-    private spinner: NgxSpinnerService) { }
+    ngOnInit(): void {
+        this.authForm = this.formBuilder.group({
+            usernameInput: ['', [Validators.required]],
+            passwordInput: ['', [Validators.required]],
+        });
 
-  ngOnInit(): void {
-    this.authForm = this.formBuilder.group({
-      usernameInput: ['', [Validators.required]],
-      passwordInput: ['', [Validators.required]],
-    })
+        this.validateFormControl('usernameInput');
+        this.validateFormControl('passwordInput');
+    }
 
-    this.validateFormControl('usernameInput');
-    this.validateFormControl('passwordInput');
-  }
+    getFormControl(fControlName: string) {
+        return this.authForm.get(fControlName);
+    }
 
-  getFormControl(fControlName: string) {
-   return this.authForm.get(fControlName)
-  }
+    onAuthenticate() {
+        this.spinner.show();
+        this.showErrorText = false;
+        const authenticationMode = 'login';
+        this.authService
+            .login(this.authForm.get('usernameInput').value, this.authForm.get('passwordInput').value)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe(
+                ({ data }) => {
+                    if (data[authenticationMode].result) {
+                        this.encript(
+                            data[authenticationMode].userData.sub,
+                            this.authForm.get('usernameInput').value
+                        );
+                    } else {
+                        this.showErrorText = true;
+                        this.errorText = data[authenticationMode].errors[0].message;
+                        this.clearFields();
+                        this.clearNotification();
+                    }
+                    this.spinner.hide();
+                },
+                (error) => {
+                    this.showErrorText = true;
+                    this.errorText = 'Something went wrong, Please contact support';
+                    this.clearFields();
+                    this.clearNotification();
+                }
+            );
+    }
 
-  onAuthenticate() {
-    this.spinner.show();
-    this.showErrorText = false;
-    const authenticationMode = 'login';
-    this.authService.login(this.authForm.get('usernameInput').value,
-      this.authForm.get('passwordInput').value)
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(
-      ({ data }) => {
-        this.showLoader = false;
-        if (data[authenticationMode].result)
-        {
-          this.encript(data[authenticationMode].userData.sub);
-        } else
-        {
-          this.showErrorText = true;
-          this.errorText = data[authenticationMode].errors[0].message;
-          this.clearFields();
-          this.clearNotification();
-        }
-        this.spinner.hide();
-      },
-      error => {
-        this.showErrorText = true;
-        this.errorText = 'Something went wrong, Please contact support';
-        this.clearFields();
-        this.clearNotification();
-      }
-    );
-  }
+    encript(sub, username) {
+        this.commonService
+            .getKeys()
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe(
+                ({ data }) => {
+                    const encrypted = this.commonService.encryptMessage(sub, data.getKeys.encryptionKey);
+                    const encryptedKey = this.commonService.encryptMessage(username, data.getKeys.encryptionKey);
+                    localStorage.setItem('id', encrypted);
+                    localStorage.setItem('key', encryptedKey);
+                    this.showLoader = false;
 
-  encript(sub) {
-    this.commonService.getKeys()
-    .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(
-      ({ data }) => {
-        const encrypted = this.commonService.encryptMessage(sub,  data.getKeys.encryptionKey);
-        localStorage.setItem('id', encrypted);
-        this.router.navigate([`/${REDIRECT_SECTION_AFTER_LOGIN}`])
-      },
-      error => { console.log(error); }
-    );
-  }
+                    this.router.navigate([`/${REDIRECT_SECTION_AFTER_LOGIN}`]);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+    }
 
-  validateFormControl(fControlName: string) {
-    const fControl = this.authForm.get(fControlName);
-    this.validationService.watchAndValidateFormControl(fControl)
-      .subscribe(value => this.formValidationMap[fControlName] = this.validationService.getValidationMessage(fControl, fControlName));
-  }
+    validateFormControl(fControlName: string) {
+        const fControl = this.authForm.get(fControlName);
+        this.validationService
+            .watchAndValidateFormControl(fControl)
+            .subscribe(
+                (value) =>
+                    (this.formValidationMap[fControlName] = this.validationService.getValidationMessage(
+                        fControl,
+                        fControlName
+                    ))
+            );
+    }
 
-  ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
-  }
+    ngOnDestroy() {
+        this.componentDestroyed$.next(true);
+        this.componentDestroyed$.complete();
+    }
 
-  clearNotification() {
-    setTimeout(function() {
-      this.showErrorText = false;
-      this.errorText = null;
-    }.bind(this), 3000);
-  }
+    clearNotification() {
+        setTimeout(
+            function () {
+                this.showErrorText = false;
+                this.errorText = null;
+            }.bind(this),
+            3000
+        );
+    }
 
-  clearFields() {
-    this.getFormControl('usernameInput').reset();
-    this.getFormControl('passwordInput').reset();
-  }
+    clearFields() {
+        this.getFormControl('usernameInput').reset();
+        this.getFormControl('passwordInput').reset();
+    }
 }
