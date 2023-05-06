@@ -26,8 +26,8 @@ import { ProfileModule } from './profile/profile.module';
 import { environment } from 'src/environments/environment';
 import { PlannerCalendarComponent } from './planner/planner-calendar/planner-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { ErrorHandler } from '@angular/core';
-import { RaygunErrorHandler } from './app.raygun.setup';
+// import { ErrorHandler } from '@angular/core';
+// import { RaygunErrorHandler } from './app.raygun.setup';
 import { AuthGuard } from './shared/authentication/auth.guard';
 
 @NgModule({
@@ -74,10 +74,10 @@ import { AuthGuard } from './shared/authentication/auth.guard';
             },
             deps: [HttpLink],
         },
-        {
-            provide: ErrorHandler,
-            useClass: RaygunErrorHandler,
-        },
+        // {
+        //     provide: ErrorHandler,
+        //     useClass: RaygunErrorHandler,
+        // },
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA], // This is new to version 13 as well,
     bootstrap: [AppComponent],
