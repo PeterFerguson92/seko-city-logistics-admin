@@ -9,6 +9,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/c
 import { BookingUpdateDialogComponent } from '../booking-update-dialog/booking-update-dialog.component';
 import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings/bookings.service';
+import { UpdateItemsDialogComponent } from 'src/app/items/update-items-dialog/update-items-dialog.component';
 
 @Component({
     selector: 'app-bookings-table',
@@ -63,6 +64,17 @@ export class BookingsTableComponent implements OnInit, OnChanges {
             height: '43%',
             width: '35%',
             data: { booking },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log(result);
+        });
+    }
+
+    updateItemsBooking(reference) {
+        const dialogRef = this.dialog.open(UpdateItemsDialogComponent, {
+            height: '43%',
+            width: '35%',
+            data: { reference, allItems: true },
         });
         dialogRef.afterClosed().subscribe((result) => {
             console.log(result);

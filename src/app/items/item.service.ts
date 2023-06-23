@@ -10,6 +10,7 @@ import {
     GET_ITEMS_REPORT_DATA,
     SYNC_ORDER_ITEMS,
     UPDATE_ITEM,
+    UPDATE_ITEMS_BY_BOOKING_REFERENCE,
     UPDATE_ITEMS_BY_ID,
 } from './request';
 
@@ -77,6 +78,13 @@ export class ItemService {
         return this.apollo.mutate<any>({
             mutation: UPDATE_ITEMS_BY_ID,
             variables: { ids, fields },
+        });
+    }
+
+    updateItemsByBookingReference(bookingReference, fields: any) {
+        return this.apollo.mutate<any>({
+            mutation: UPDATE_ITEMS_BY_BOOKING_REFERENCE,
+            variables: { bookingReference, fields },
         });
     }
 
