@@ -66,7 +66,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
             data: { booking },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            window.location.reload();
+            location.reload();
         });
     }
 
@@ -77,7 +77,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
             data: { reference, allItems: true },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            window.location.reload();
+            location.reload();
         });
     }
 

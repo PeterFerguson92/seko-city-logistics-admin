@@ -1,5 +1,21 @@
 import { gql } from 'apollo-angular';
 
+export const ITEM_FRAGMENT = gql`
+    fragment itemfragment on Item {
+        id
+        bookingReference
+        shipmentReference
+        quantity
+        type
+        description
+        pricePerUnit
+        value
+        amount
+        status
+        labelNumber
+    }
+`;
+
 export const GET_ITEMS_BY_SHIPMENT_REFERENCE = gql`
     query itemsByShipmentReference($shipmentReference: String!) {
         itemsByShipmentReference(shipmentReference: $shipmentReference) {
@@ -56,16 +72,7 @@ export const GET_ELIGIBLE_ITEMS = gql`
     query {
         eligibleItems {
             item {
-                id
-                bookingReference
-                shipmentReference
-                quantity
-                type
-                description
-                pricePerUnit
-                value
-                amount
-                status
+                ...itemfragment
             }
             booking {
                 id
@@ -91,6 +98,7 @@ export const GET_ELIGIBLE_ITEMS = gql`
             }
         }
     }
+    ${ITEM_FRAGMENT}
 `;
 
 export const GET_ITEMS_REPORT_DATA = gql`
