@@ -5,10 +5,7 @@ import { BookingInfoComponent } from '../booking-info/booking-info.component';
 import { BookingItemsComponent } from '../booking-items/booking-items.component';
 import { BookingReviewComponent } from '../booking-review/booking-review.component';
 import { CustomersService } from 'src/app/customer/service/customers.service';
-import {
-    EDIT_BOOKING_MODE,
-    VIEW_BOOKING_MODE,
-} from 'src/app/constants';
+import { EDIT_BOOKING_MODE, VIEW_BOOKING_MODE } from 'src/app/constants';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { BookingsService } from '../service/bookings/bookings.service';
 import { Router } from '@angular/router';
@@ -370,7 +367,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     redirectToBookings() {
         this.router.navigate(['/bookings']).then(() => {
-            // window.location.reload();
+            window.location.reload();
         });
     }
 

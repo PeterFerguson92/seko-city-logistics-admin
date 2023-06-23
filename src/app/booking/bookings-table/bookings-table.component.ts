@@ -61,23 +61,23 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
     updateBooking(booking) {
         const dialogRef = this.dialog.open(BookingUpdateDialogComponent, {
-            height: '43%',
-            width: '35%',
+            // height: '43%',
+            // width: '35%',
             data: { booking },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
+            window.location.reload();
         });
     }
 
     updateItemsBooking(reference) {
         const dialogRef = this.dialog.open(UpdateItemsDialogComponent, {
-            height: '43%',
-            width: '35%',
+            // height: '43%',
+            // width: '35%',
             data: { reference, allItems: true },
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
+            window.location.reload();
         });
     }
 
@@ -91,8 +91,8 @@ export class BookingsTableComponent implements OnInit, OnChanges {
 
     deleteBooking(reference) {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-            height: '25%',
-            width: '30%',
+            // height: '25%',
+            // width: '30%',
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result === 'true') {

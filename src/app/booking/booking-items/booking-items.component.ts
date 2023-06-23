@@ -35,7 +35,7 @@ const COLUMNS_SCHEMA = [
     { key: 'type', type: 'select', label: 'TYPE', visible: true },
     { key: 'description', type: 'text', label: 'DESCRIPTION', visible: true },
     { key: 'value', type: 'number', label: 'VALUE (£)', visible: true },
-    { key: 'quantity', type: 'number', label: 'QUANTITY', visible: true },
+    { key: 'quantity', type: 'number', label: 'QUANTITY', visible: false },
     { key: 'pricePerUnit', type: 'number', label: 'PRICE PER UNIT (£)', visible: true },
     { key: 'amount', type: 'number', label: 'AMOUNT (£)', visible: true },
     { key: 'status', type: 'text', label: 'STATUS', visible: true },

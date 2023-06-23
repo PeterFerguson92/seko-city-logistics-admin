@@ -1,23 +1,29 @@
-<div class="container">
-  <h1 id="title">Multiple items</h1>
-  <p id="description">Please specify the number of items to duplicate.</p>
-  <div class="row">
-    <div class="col-75">
-      <div class="container">
-        <form id="survey-form" [formGroup]="itemsDuplicateForm" >
-              <fieldset>
-                <legend>Information</legend>
-                <div>
-                  <app-material-numeric-input [width]="40" formControlName="quantity" (keypress)="numberOnly($event)"></app-material-numeric-input>
+<h2 mat-dialog-title>MULTIPLE ITEMS</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="container">
+        <p id="description">Please specify the number of items to duplicate.</p>
+        <div class="row">
+            <div class="col-75">
+                <div class="container">
+                    <form id="survey-form" [formGroup]="itemsDuplicateForm">
+                        <fieldset>
+                            <legend>Information</legend>
+                            <div>
+                                <app-material-numeric-input
+                                    [width]="40"
+                                    formControlName="quantity"
+                                    (keypress)="numberOnly($event)"
+                                ></app-material-numeric-input>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
-            </fieldset>
-        </form>
-      </div>
-      <br>
-      <div align="center">
-        <br>
-        <app-material-button [label]="'Submit'" (click)="onSubmit()"></app-material-button>
-      </div>
+                <br />
+                <div align="center">
+                    <br />
+                    <app-material-button [label]="'Submit'" (click)="onSubmit()"></app-material-button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+</mat-dialog-content>
