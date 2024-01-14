@@ -66,6 +66,10 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
     fControl.markAsDirty();
   }
 
+  isAvailabiltyDisabled() {
+    return this.getFormControl('date').value ? false : true;
+}
+
   onCheckAvailabilty() {
     this.dialog.open(AvailabilityDialogComponent, {
       height: '50%',
