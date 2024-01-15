@@ -108,7 +108,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             pickUpAddress: this.booking.pickUpAddress,
             updatesViaWhatsapp: this.booking.updatesViaWhatsapp,
             updatesViaEmail: this.booking.updatesViaEmail,
+            useCustomerAddress: this.booking.useCustomerAddress,
         };
+    }
+
+    getCustomerPostcode() {
+        const addressInfo = this.customerDetailComponent.getCustomerAddress();
+        this.bookingInfoComponent.setAddress(addressInfo);
     }
 
     onSave() {
@@ -248,6 +254,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             pickUpTime: bookingInfo.info.time,
             pickUpPostCode: bookingInfo.info.postcode,
             pickUpAddress: bookingInfo.info.address,
+            useCustomerAddress: bookingInfo.info.useCustomerAddress,
             updatesViaWhatsapp: bookingInfo.info.updatesViaWhatsapp,
             updatesViaEmail: bookingInfo.info.updatesViaEmail,
             shipmentReference: '',
@@ -357,6 +364,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             pickUpTime: bookingInfo.info.time,
             pickUpPostCode: bookingInfo.info.postcode,
             pickUpAddress: bookingInfo.info.address,
+            useCustomerAddress: bookingInfo.info.useCustomerAddress,
             updatesViaWhatsapp: bookingInfo.info.updatesViaWhatsapp,
             updatesViaEmail: bookingInfo.info.updatesViaEmail,
             status: bookingInfo.status,

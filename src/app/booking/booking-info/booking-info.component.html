@@ -19,6 +19,12 @@
             </app-material-select-input>
           </div>
           <div class="item">
+            <label for="lname">Use customer's address</label>&nbsp;
+            <app-material-checkbox (checkBoxChange)="onAddressSelectionChange($event, 'useCustomerAddress')" formControlName="useCustomerAddress"></app-material-checkbox>
+          </div>
+          <div class="item">
+          </div>
+          <div class="item">
             <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="postcode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
           </div>
           <div class="item">

@@ -12,7 +12,7 @@
     <mat-step>
         <form>
             <ng-template matStepLabel>Fill out pick up details</ng-template>
-            <app-booking-info [bookingInfo]="getBookingInfoData()"></app-booking-info>
+            <app-booking-info (getCustomerPostcode)="getCustomerPostcode()" [bookingInfo]="getBookingInfoData()"></app-booking-info>
             <div align="start">
                 <button mat-button matStepperPrevious>Back</button>
             </div>

@@ -153,7 +153,6 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: (result) => {
-                    console.log(result);
                     if (result.data === null || result.data.customerByReference === null) {
                         this.handleFailCustomer('error', reference);
                     }
@@ -416,6 +415,10 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
         sender.reference = this.customer ? this.customer.reference : null;
         sender.role = this.mode === CREATE_ORDER ? CUSTOMER_ORDER_ROLE : CUSTOMER_SENDER_ROLE;
         return sender;
+    }
+
+    getCustomerAddress() {
+        return { postcode: this.getFormControl('postcode').value, address: this.getFormControl('address').value };
     }
 
     setAttributes() {

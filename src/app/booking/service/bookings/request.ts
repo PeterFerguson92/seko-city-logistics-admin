@@ -4,7 +4,7 @@ export const BOOKING_FRAGMENT = gql`
       fragment bookingfragment on Booking {
       id reference senderReference senderFullName senderPhone receiverReferences destination location numberOfItems
       totalAmount fullAmount amountPaid amountOutstanding discountAmount discountReason isDiscountApplied paymentType paymentStatus paymentNotes
-      pickUpDate pickUpTime pickUpPostCode pickUpAddress
+      pickUpDate pickUpTime pickUpPostCode pickUpAddress useCustomerAddress
       updatesViaWhatsapp updatesViaEmail status shipmentReference assignedDriverReference assignedMatesReferences createdAt
     }
 `;

@@ -51,7 +51,7 @@ export class BookingReviewComponent implements OnInit {
             },
             totalNumberOfItems: 0,
         },
-        info: { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '', updatesViaEmail: '' },
+        info: { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '', updatesViaEmail: '', useCustomerAddress: '' },
     };
     panelOpenState = false;
     data;
