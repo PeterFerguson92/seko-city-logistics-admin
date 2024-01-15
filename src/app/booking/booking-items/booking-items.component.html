@@ -132,7 +132,27 @@
                                 </div>
                                 <div class="columns">
                                     <div class="item">
+                                        <app-material-select-input
+                                            [label]="'Discount Type'"
+                                            [width]="20"
+                                            [options]="discountTypes"
+                                            formControlName="discountType"
+                                            (selectionChange)="onSelectionChange($event, 'discountType')"
+                                            [value]="discountTypes[0]"
+                                        >
+                                        </app-material-select-input
+                                        >&nbsp;
                                         <app-material-numeric-input
+                                            *ngIf="isPercentageDiscount()"
+                                            [label]="'Discount (%)'"
+                                            [width]="20"
+                                            [max]="getMaxDiscount()"
+                                            formControlName="discountAmount"
+                                        >
+                                        </app-material-numeric-input
+                                        >&nbsp;
+                                        <app-material-numeric-input
+                                            *ngIf="!isPercentageDiscount()"
                                             [label]="'Discount (£)'"
                                             [width]="20"
                                             [max]="getMax()"
@@ -141,7 +161,7 @@
                                         </app-material-numeric-input
                                         >&nbsp;
                                         <app-material-select-input
-                                            [label]="'Type'"
+                                            [label]="'Reason Type'"
                                             [width]="40"
                                             [options]="discountReasons"
                                             formControlName="discountReason"
@@ -151,7 +171,7 @@
                                         </app-material-select-input
                                         >&nbsp;
                                         <app-material-button
-                                            *ngIf="isApplyDiscountDisabled()"
+                                            [disabled]="!isApplyDiscountDisabled()"
                                             [width]="30"
                                             [label]="getApplyRemoveDiscountLabel()"
                                             (click)="onApplyRemoveDiscount()"

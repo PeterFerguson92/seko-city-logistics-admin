@@ -4,6 +4,7 @@ import {
     BOOKING_ITEMS,
     BOOKING_ITEMS_TYPES_DISPLAY_NAMES,
     DISCOUNT_REASONS,
+    DISCOUNT_TYPES,
     FULL_PAYMENT_STATUS_ALIAS,
     NO_PAYMENT_PAYMENT_STATUS_ALIAS,
     PARTIAL_PAYMENT_STATUS_ALIAS,
@@ -65,6 +66,7 @@ export class BookingItemsComponent implements OnInit {
     paymentTypes = PAYMENT_TYPES;
     paymentStatuses = PAYMENT_STATUSES;
     discountReasons = DISCOUNT_REASONS;
+    discountTypes = DISCOUNT_TYPES;
     displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
     columnsSchema: any = COLUMNS_SCHEMA;
 
@@ -89,6 +91,10 @@ export class BookingItemsComponent implements OnInit {
             totalAmount: [this.paymentData.totalAmount ? this.paymentData.totalAmount : 0, []],
             fullAmount: [this.paymentData.fullAmount ? this.paymentData.fullAmount : 0, []],
             amountPaid: [this.paymentData.amountPaid ? this.paymentData.amountPaid : 0, []],
+            discountType: [
+                this.paymentData.discountType ? this.paymentData.discountType : this.discountTypes[0],
+                [],
+            ],
             amountOutstanding: [this.paymentData.amountOutstanding ? this.paymentData.amountOutstanding : 0, []],
             discountAmount: [this.paymentData.discountAmount ? this.paymentData.discountAmount : 0, []],
             discountReason: [
@@ -432,9 +438,15 @@ export class BookingItemsComponent implements OnInit {
     }
 
     isApplyDiscountDisabled() {
-        return (
-            parseInt(this.getFormControl('discountAmount').value, 10) < this.getFormControl('totalAmount').value
-        );
+        if (this.getFormControl('isDiscountApplied').value === true) {
+            return true;
+        } else {
+            const threshold =
+                this.getFormControl('discountType').value === 'PERCENTAGE'
+                    ? 101
+                    : this.getFormControl('totalAmount').value;
+            return parseInt(this.getFormControl('discountAmount').value, 10) < threshold;
+        }
     }
 
     getErrorMessage() {
@@ -449,7 +461,19 @@ export class BookingItemsComponent implements OnInit {
         return this.getFormControl('totalAmount').value;
     }
 
+    getMaxDiscount() {
+        return 100;
+    }
+
+    isPercentageDiscount() {
+        return this.getFormControl('discountType').value === 'PERCENTAGE';
+    }
+
     onApplyRemoveDiscount() {
+        this.processDiscount();
+    }
+
+    processDiscount() {
         const isDiscountAppliedControl = this.getFormControl('isDiscountApplied');
 
         const totalAmountControl = this.getFormControl('totalAmount');
@@ -458,13 +482,9 @@ export class BookingItemsComponent implements OnInit {
         isDiscountAppliedControl.setValue(!isDiscountAppliedControl.value);
 
         if (isDiscountAppliedControl.value) {
-            discountAmountControl.disable();
-            totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value);
+            this.applyDiscount(totalAmountControl, discountAmountControl);
         } else {
-            discountAmountControl.enable();
-            totalAmountControl.setValue(
-                parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10)
-            );
+            this.removeDiscount(totalAmountControl, discountAmountControl);
         }
         if (this.paymentForm.get('paymentStatus').value === FULL_PAYMENT_STATUS_ALIAS) {
             this.paymentForm.get('amountPaid').setValue(this.getFormControl('totalAmount').value);
@@ -472,24 +492,31 @@ export class BookingItemsComponent implements OnInit {
         this.updateOutstandingAmount();
     }
 
-    processDiscount() {
-        const totalAmountControl = this.getFormControl('totalAmount');
-        const discountAmountControl = this.getFormControl('discountAmount');
-        const isDiscountAppliedControl = this.getFormControl('isDiscountApplied');
-
-        if (isDiscountAppliedControl.value) {
-            discountAmountControl.disable();
-            totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value);
+    applyDiscount(totalAmountControl, discountAmountControl) {
+        discountAmountControl.disable();
+        if (this.getFormControl('discountType').value === 'PERCENTAGE') {
+            totalAmountControl.setValue(
+                this.calculatePercentage(totalAmountControl.value, discountAmountControl.value)
+            );
         } else {
-            discountAmountControl.enable();
+            totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value);
+        }
+    }
+
+    removeDiscount(totalAmountControl, discountAmountControl) {
+        discountAmountControl.enable();
+
+        if (this.getFormControl('discountType').value === 'PERCENTAGE') {
+            totalAmountControl.setValue(parseInt(this.getFormControl('fullAmount').value, 10));
+        } else {
             totalAmountControl.setValue(
                 parseInt(totalAmountControl.value, 10) + parseInt(discountAmountControl.value, 10)
             );
         }
-        if (this.paymentForm.get('paymentStatus').value === FULL_PAYMENT_STATUS_ALIAS) {
-            this.paymentForm.get('amountPaid').setValue(this.getFormControl('totalAmount').value);
-        }
-        this.updateOutstandingAmount();
+    }
+
+    calculatePercentage(fullAmount, discount) {
+        return fullAmount * ((100 - discount) / 100);
     }
 
     setPaymentProperties(paymentStatus: string) {
