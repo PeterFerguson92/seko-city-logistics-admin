@@ -95,6 +95,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             discountAmount: this.booking.discountAmount,
             discountReason: this.booking.discountReason,
             isDiscountApplied: this.booking.isDiscountApplied,
+            discountType: this.booking.discountType,
             fullAmount: this.booking.fullAmount,
         };
     }
@@ -248,6 +249,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             amountOutstanding: Number(bookingInfo.itemsDetails.paymentInfo.amountOutstanding),
             discountAmount: Number(bookingInfo.itemsDetails.paymentInfo.discountAmount),
             discountReason: bookingInfo.itemsDetails.paymentInfo.discountReason,
+            discountType: bookingInfo.itemsDetails.paymentInfo.discountType,
             isDiscountApplied: bookingInfo.itemsDetails.paymentInfo.isDiscountApplied,
             paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,
             pickUpDate: bookingInfo.info.date,
@@ -310,8 +312,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     syncReceivers(reference, receivers: [ICustomer]) {
-        console.log(reference);
-        console.log(JSON.stringify(receivers));
         if (receivers.length > 0) {
             this.bookingsService
                 .syncReceivers(reference, receivers)
@@ -359,6 +359,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             amountOutstanding: Number(bookingInfo.itemsDetails.paymentInfo.amountOutstanding),
             discountAmount: Number(bookingInfo.itemsDetails.paymentInfo.discountAmount),
             discountReason: bookingInfo.itemsDetails.paymentInfo.discountReason,
+            discountType: bookingInfo.itemsDetails.paymentInfo.discountType,
             isDiscountApplied: bookingInfo.itemsDetails.paymentInfo.isDiscountApplied,
             pickUpDate: bookingInfo.info.date,
             pickUpTime: bookingInfo.info.time,

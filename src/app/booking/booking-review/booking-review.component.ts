@@ -45,13 +45,22 @@ export class BookingReviewComponent implements OnInit {
                 amountOutstanding: '',
                 discountAmount: 4,
                 discountReason: 'REASON 1',
+                discountType: 'AMOUNT',
                 fullAmount: 0,
                 totalAmount: 0,
                 isDiscountApplied: false,
             },
             totalNumberOfItems: 0,
         },
-        info: { date: '', time: '', postcode: '', address: '', updatesViaWhatsapp: '', updatesViaEmail: '', useCustomerAddress: '' },
+        info: {
+            date: '',
+            time: '',
+            postcode: '',
+            address: '',
+            updatesViaWhatsapp: '',
+            updatesViaEmail: '',
+            useCustomerAddress: '',
+        },
     };
     panelOpenState = false;
     data;

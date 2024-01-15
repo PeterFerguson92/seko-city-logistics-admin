@@ -122,6 +122,9 @@
             <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied">
                 <b>Discount Reason:</b> <br />{{ booking.itemsDetails.paymentInfo.discountReason }}
             </p>
+            <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied">
+              <b>Discount Type:</b> <br />{{ booking.itemsDetails.paymentInfo.discountType }}
+          </p>
             <p><b>Notes:</b> <br />{{ booking.itemsDetails.paymentInfo.paymentNotes }}</p>
         </table>
     </mat-expansion-panel>

@@ -496,7 +496,10 @@ export class BookingItemsComponent implements OnInit {
         discountAmountControl.disable();
         if (this.getFormControl('discountType').value === 'PERCENTAGE') {
             totalAmountControl.setValue(
-                this.calculatePercentage(totalAmountControl.value, discountAmountControl.value)
+                parseInt(
+                    this.calculatePercentage(totalAmountControl.value, discountAmountControl.value).toString(),
+                    10
+                )
             );
         } else {
             totalAmountControl.setValue(totalAmountControl.value - discountAmountControl.value);
