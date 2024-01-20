@@ -5,7 +5,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { COUNTRIES, COUNTRY_CODES } from 'src/app/constants';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
-import { CommonService } from 'src/app/service/common.service';
 import { ValidationService } from 'src/app/service/validation/validation.service';
 
 @Component({
@@ -29,6 +28,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     showPasswordMgmtButton = false;
     showErrorText: boolean;
     errorText: string;
+    showErrorText2: boolean;
+    errorText2: string;
     showConfirmText: boolean;
     confirmText: string;
     showInfoText: boolean;
@@ -57,7 +58,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(
         private router: Router,
-        private commonService: CommonService,
         private authService: AuthenticationService,
         private formBuilder: FormBuilder,
         private validationService: ValidationService,
@@ -90,24 +90,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             confirmResetNewPassword: [null, [Validators.required]],
         });
 
-        this.commonService
-            .getKeys()
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe(
-                ({ data }) => {
-                    const encryptedId = localStorage.getItem('id');
-                    if (encryptedId) {
-                        const sub = this.commonService.decryptMessage(encryptedId, data.getKeys.encryptionKey);
-                        this.getData(sub);
-                    }
-                },
-                (error) => {
-                    console.log(error);
-                    this.showErrorText = true;
-                    this.errorText = 'Something went wrong, Please contact support';
-                    this.spinner.hide();
-                }
-            );
+        const encryptedId = localStorage.getItem('id');
+        if (encryptedId) {
+            this.getData(encryptedId);
+        }
     }
 
     getData(sub) {
@@ -116,18 +102,20 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe(
                 ({ data }) => {
-                    if (data.getUser.result) {
+                    if (data.getUser.result && data.getUser.users[0]) {
                         this.user = data.getUser.users[0];
                         this.buildFormGroup(this.user);
                         this.spinner.hide();
                     } else {
+                        this.showErrorText2 = true;
+                        this.errorText2 = 'Something went wrong, Please contact support';
                         this.spinner.hide();
                     }
                 },
                 (error) => {
                     console.log(error);
-                    this.showErrorText = true;
-                    this.errorText = 'Something went wrong, Please contact support';
+                    this.showErrorText2 = true;
+                    this.errorText2 = 'Something went wrong, Please contact support';
                     this.spinner.hide();
                 }
             );
@@ -145,6 +133,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     buildFormGroup(userData) {
+        console.log(userData);
         const phoneNumberData = this.splitPhoneNumber(userData.phoneNumber);
         this.profileForm.controls.name.setValue(userData.name);
         this.profileForm.controls.lastName.setValue(userData.lastName);

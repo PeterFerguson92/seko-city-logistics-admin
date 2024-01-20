@@ -28,7 +28,7 @@ export class BookingsComponent implements OnInit {
     this.bookingsFilterForm = this.formBuilder.group({
       status: [this.bookingStatuses[0]],
       postcode: ['', [this.validationService.postCodeValidator]],
-      reference: ['', [this.validationService.postCodeValidator]],
+      reference: ['', []],
       paymentStatus: [this.paymentStatuses[0]],
       fromDate: [fiveDaysAgo],
       toDate: [today],

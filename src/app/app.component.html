@@ -1,6 +1,6 @@
 <section *ngIf="isVisible">
   <mat-sidenav-container class="container">
-    <mat-sidenav #sidebar mode='side' closed >
+    <mat-sidenav #sidebar mode='side' opened="true" disableClose="true">
         <app-side-nav></app-side-nav>
     </mat-sidenav>
     <mat-sidenav-content>

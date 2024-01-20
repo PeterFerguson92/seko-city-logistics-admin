@@ -3,6 +3,8 @@
 </ngx-spinner>
 <app-jumbotron title="PROFILE" imgPath="../../../assets/administrator.jpeg"></app-jumbotron>
 <br />
+<app-notification-message [showText]="showErrorText2" [text]="errorText2" [color]="'#ff9800'"></app-notification-message>
+
 <div [formGroup]="profileForm">
     <mat-accordion [multi]="true"
         ><mat-expansion-panel hideToggle [expanded]="true">

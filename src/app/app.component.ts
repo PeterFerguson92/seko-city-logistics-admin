@@ -15,6 +15,9 @@ export class AppComponent implements AfterViewInit {
     LOGIN_URL = '/login';
 
     constructor(private router: Router, route: Router) {
+        if (this.sidenav) {
+            this.sidenav.open();
+        }
         route.events.subscribe((event) => {
             // if (this.sidenav)
             // {
@@ -25,16 +28,10 @@ export class AppComponent implements AfterViewInit {
             //     type: 'pageView',
             //     path: event
             // });
-            if (this.sidenav) this.sidenav.open();
             if (event instanceof RoutesRecognized) {
                 this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
             } else if (event instanceof NavigationEnd) {
                 this.isVisible = event.url !== this.LOGIN_URL && event.url !== '/';
-                if (this.isVisible) {
-                    if (this.sidenav) {
-                        this.sidenav.toggle();
-                    }
-                }
             }
         });
     }
