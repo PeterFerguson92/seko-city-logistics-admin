@@ -158,8 +158,8 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
                     }
                     this.showErrorText = false;
                     this.errorText = null;
-                    const customer = result.data.customerByReference;
-                    this.populateFields(customer);
+                    this.customer = result.data.customerByReference;
+                    this.populateFields(this.customer);
                     this.setMode();
                     this.spinner.hide();
                 },
@@ -302,7 +302,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
         const updateCustomerFields = [];
         Object.keys(this.addEditCustomerForm.controls).forEach((key) => {
             const formControl = this.addEditCustomerForm.controls[key];
-            if (!formControl.pristine && formControl.value !== this.customer[key]) {
+            if (!formControl.pristine && this.customer[key] && formControl.value !== this.customer[key]) {
                 updateCustomerFields.push({ name: key, value: formControl.value });
             }
         });
