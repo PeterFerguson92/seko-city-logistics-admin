@@ -116,19 +116,6 @@
                                         <app-material-numeric-input [label]="'Payable Amount(£)'" [width]="60" formControlName="totalAmount">
                                         </app-material-numeric-input>
                                     </div>
-                                    <div class="child">
-                                        <app-material-numeric-input
-                                            [label]="'Paid (£)'"
-                                            [width]="60"
-                                            formControlName="amountPaid"
-                                            (change)="updateOutstandingAmount()"
-                                        >
-                                        </app-material-numeric-input>
-                                    </div>
-                                    <div class="child">
-                                        <app-material-numeric-input [label]="'Outstanding (£)'" [width]="60" formControlName="amountOutstanding">
-                                        </app-material-numeric-input>
-                                    </div>
                                 </div>
                                 <div class="columns">
                                     <div class="item">
@@ -202,6 +189,19 @@
                                         >
                                         </app-material-select-input>
                                     </div>
+                                    <div class="item">
+                                        <app-material-numeric-input
+                                            [label]="'Paid (£)'"
+                                            [width]="40"
+                                            formControlName="amountPaid"
+                                            (change)="updateOutstandingAmount()"
+                                        >
+                                        </app-material-numeric-input>
+                                    </div>
+                                    <div class="child">
+                                      <app-material-numeric-input [label]="'Outstanding (£)'" [width]="60" formControlName="amountOutstanding">
+                                      </app-material-numeric-input>
+                                  </div>
                                     <div class="item">
                                         <app-material-input
                                             [label]="'Notes'"
