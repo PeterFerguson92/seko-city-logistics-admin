@@ -49,6 +49,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       totalAmount: this.order.totalAmount,
       amountPaid: this.order.amountPaid,
       amountOutstanding: this.order.amountOutstanding,
+      useCustomerAddress: this.order.useCustomerAddress,
     }
   }
 
@@ -63,6 +64,11 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       stepper.next();
     }
   };
+
+  getCustomerPostcode() {
+    const addressInfo = this.customerDetailComponent.getCustomerAddress();
+    this.orderInfoComponent.setAddress(addressInfo);
+}
 
   buildOrderReviewData() {
     this.order.orderCustomer = this.customerDetailComponent.getSenderDetails();
@@ -110,8 +116,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       id: details.id, fullPhoneNumber: details.fullPhoneNumber };
   }
 
-  buildOrderDto(customerId: number, customerReference: string,
-    customerFullName: string, customerPhone: string) {
+  buildOrderDto(customerId: number, customerReference: string, customerFullName: string, customerPhone: string) {
     const dto = {
       customerId, customerReference, customerFullName, customerPhone,
       ...this.order.info, reference: this.order.reference
@@ -229,6 +234,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       window.location.reload();
     });
   }
+
 
   ngOnDestroy() {
     this.componentDestroyed$.next(true)

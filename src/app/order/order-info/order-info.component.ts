@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AvailabilityDialogComponent } from 'src/app/booking/availability-dialog/availability-dialog.component';
@@ -27,7 +27,7 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
   types = ORDER_ITEMS_TYPES_DISPLAY_NAMES;
   orderInfoForm: FormGroup;
   formValidationMap = { postcode: '' };
-
+  @Output() getCustomerPostcode = new EventEmitter<null>();
 
   get items(): FormArray {
     return this.orderInfoForm.get('items') as FormArray;
@@ -51,6 +51,10 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       totalAmount: [this.orderInfo.totalAmount ? this.orderInfo.totalAmount : 0,  []],
       amountPaid: [this.orderInfo.amountPaid ? this.orderInfo.amountPaid : 0, []],
       amountOutstanding: [this.orderInfo.amountOutstanding ? this.orderInfo.amountOutstanding : 0, []],
+      useCustomerAddress: [
+        this.orderInfo.useCustomerAddress ? this.orderInfo.useCustomerAddress : false,
+        [Validators.required],
+    ],
       items: this.formBuilder.array([])
     })
 
@@ -225,6 +229,26 @@ export class OrderInfoComponent implements OnInit, AfterViewInit {
       this.addresses = [];
     }
   }
+
+  setAddress(addressInfo: any) {
+    this.getFormControl('deliveryPostCode').setValue(addressInfo.postcode);
+    this.getFormControl('deliveryAddress').setValue(addressInfo.address);
+    this.getAddressByPostcode();
+}
+
+  onAddressSelectionChange(event: any, fControlName: string) {
+    const fControl = this.getFormControl(fControlName);
+    console.log(event.checked)
+    if (event.checked) {
+        this.getCustomerPostcode.emit();
+    } else {
+        this.getFormControl('deliveryPostCode').setValue(null);
+        this.getFormControl('deliveryAddress').setValue(null);
+    }
+    fControl.setValue(event.checked);
+    console.log(fControl.value);
+    fControl.markAsDirty();
+}
 
   getPricePerUnit(selection: string) {
     let price = null;

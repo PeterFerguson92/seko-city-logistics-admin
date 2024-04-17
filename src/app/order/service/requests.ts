@@ -5,7 +5,7 @@ export const ORDER_FRAGMENT = gql`
         id reference customerReference customerFullName customerPhone
         totalAmount amountPaid amountOutstanding paymentType paymentStatus paymentNotes
         deliveryDate deliveryTime deliveryPostCode deliveryAddress
-        updatesViaWhatsapp updatesViaEmail status archived assignedDriverReference createdAt numberOfItems
+        updatesViaWhatsapp updatesViaEmail status archived assignedDriverReference createdAt numberOfItems useCustomerAddress
       }
 `;
 
