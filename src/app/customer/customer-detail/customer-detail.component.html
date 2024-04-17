@@ -5,7 +5,7 @@
   <div [formGroup]="addEditCustomerForm">
     <div class="banner"></div><br>
   <mat-accordion [multi]="true"><mat-expansion-panel hideToggle [expanded]="false">
-    <mat-expansion-panel-header *ngIf="isCreateBookingMode()">
+    <mat-expansion-panel-header *ngIf="isCreateMode()">
       <mat-panel-title>
         ACTION
       </mat-panel-title>

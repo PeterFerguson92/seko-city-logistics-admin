@@ -346,8 +346,8 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
         return this.mode === ADD_BOOKING_ORDER_CUSTOMER_MODE;
     }
 
-    isCreateBookingMode() {
-        return CREATE_BOOKING_MODE === this.mode;
+    isCreateMode() {
+        return CREATE_BOOKING_MODE === this.mode || CREATE_ORDER_MODE === this.mode;
     }
 
     getFormControl(fControlName: string) {
