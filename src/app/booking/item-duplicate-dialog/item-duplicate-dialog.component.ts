@@ -26,7 +26,7 @@ export class ItemDuplicateDialogComponent implements OnInit {
     onSubmit() {
         const value = +this.itemsDuplicateForm.get('quantity').value;
         if (value > 1) {
-            this.dialogRef.close({ data: +this.itemsDuplicateForm.get('quantity').value - 1 });
+            this.dialogRef.close({ data: +this.itemsDuplicateForm.get('quantity').value  });
         }
     }
 
