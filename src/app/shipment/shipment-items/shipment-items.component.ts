@@ -114,8 +114,10 @@ export class ShipmentItemsComponent implements OnInit, OnDestroy {
   }
 
   unAssignItems(itemsIdsToUnAssign) {
-    const fieldToUpdate = { name: 'shipmentReference', value: null };
-    this.itemService.updateItemsById(itemsIdsToUnAssign, fieldToUpdate).subscribe(
+    const updateFields = [];
+    updateFields.push({ name: 'status', value: 'PROCESSING' });
+    updateFields.push({ name: 'shipmentReference', value: null });
+    this.itemService.updateItemsById(itemsIdsToUnAssign, updateFields).subscribe(
       ({ data }) => {
         location.reload();  // TODO handle properly
       },

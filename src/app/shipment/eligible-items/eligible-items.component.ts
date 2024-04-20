@@ -151,9 +151,12 @@ export class EligibleItemsComponent implements OnInit, OnDestroy {
 
     assignItemsToShipment(itemsIdsToAssign) {
         const shipmentReference = this.getShipmentReferenceFromSelection();
-        if (shipmentReference) {
-            const fieldToUpdate = { name: 'shipmentReference', value: shipmentReference };
-            this.itemService.updateItemsById(itemsIdsToAssign, fieldToUpdate).subscribe(
+      if (shipmentReference)
+      {
+            const updateFields = [];
+            updateFields.push({ name: 'status', value: 'IN TRANSIT' });
+            updateFields.push({ name: 'shipmentReference', value: shipmentReference });
+            this.itemService.updateItemsById(itemsIdsToAssign, updateFields).subscribe(
                 ({ data }) => {
                     location.reload(); // TODO handle properly
                 },
