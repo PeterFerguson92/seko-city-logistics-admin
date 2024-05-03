@@ -302,6 +302,22 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
         const updateCustomerFields = [];
         Object.keys(this.addEditCustomerForm.controls).forEach((key) => {
             const formControl = this.addEditCustomerForm.controls[key];
+            if (key === 'phoneGroup') {
+                const countryCodeFormControl = this.getFormControl('countryCode');
+                const numberFormControl = this.getFormControl('phone');
+                const formattedPhone = this.commonService.getFormattedPhoneNumber(
+                    countryCodeFormControl.value,
+                    numberFormControl.value
+                );
+                if (countryCodeFormControl.value !== this.customer.countryCode) {
+                    updateCustomerFields.push({ name: 'countryCode', value: countryCodeFormControl.value });
+                    updateCustomerFields.push({ name: 'fullPhoneNumber', value: formattedPhone });
+                }
+                if (numberFormControl.value !== this.customer.phone) {
+                    updateCustomerFields.push({ name: 'phone', value: numberFormControl.value });
+                    updateCustomerFields.push({ name: 'fullPhoneNumber', value: formattedPhone });
+                }
+            }
             if (!formControl.pristine && this.customer[key] && formControl.value !== this.customer[key]) {
                 updateCustomerFields.push({ name: key, value: formControl.value });
             }
