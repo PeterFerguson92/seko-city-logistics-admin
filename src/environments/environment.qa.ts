@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://seko-server-qa.up.railway.app/api',
+    apiUrl: 'https://seko-server-qa.herokuapp.com/qa-api',
 };
