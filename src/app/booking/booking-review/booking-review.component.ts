@@ -86,4 +86,11 @@ export class BookingReviewComponent implements OnInit {
     getFormattedDate(date) {
         return date === null ? 'TBD' : this.commonService.getFormattedDate(date);
     }
+
+    getDiscountAmount() {
+        return this.commonService.getDiscountAmount(
+            this.booking.itemsDetails.paymentInfo.discountType,
+            this.booking.itemsDetails.paymentInfo.discountAmount
+        );
+    }
 }

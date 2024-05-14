@@ -121,6 +121,13 @@
                     <br />
                     <p><b>Number of items:</b> <br />{{ booking.numberOfItems }}</p>
                     <p><b>Total amount:</b> <br />£{{ booking.fullAmount }}</p>
+                    <p *ngIf="booking.isDiscountApplied"><b>Discount Amount:</b> <br />{{ getDiscountAmount() }}</p>
+                    <p *ngIf="booking.isDiscountApplied">
+                        <b>Discount Reason:</b> <br />{{ booking.discountReason }}
+                    </p>
+                    <p *ngIf="booking.isDiscountApplied">
+                        <b>Discount Type:</b> <br />{{ booking.discountType }}
+                    </p>
                     <p><b>Payable amount:</b> <br />£{{ booking.totalAmount }}</p>
                     <p><b>Selected payment type:</b> <br />{{ booking.paymentType }}</p>
                     <p *ngIf="isPaymentTypeBankTransfer()"><b>Account Name:</b> <br />{{ accountName }}</p>

@@ -117,7 +117,7 @@
             <p><b>Amount Paid:</b> <br />£{{ booking.itemsDetails.paymentInfo.amountPaid }}</p>
             <p><b>Amount Outstanding:</b> <br />£{{ booking.itemsDetails.paymentInfo.amountOutstanding }}</p>
             <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied">
-                <b>Discount Amount:</b> <br />£{{ booking.itemsDetails.paymentInfo.discountAmount }}
+                <b>Discount Amount:</b> <br />{{ getDiscountAmount() }}
             </p>
             <p *ngIf="booking.itemsDetails.paymentInfo.isDiscountApplied">
                 <b>Discount Reason:</b> <br />{{ booking.itemsDetails.paymentInfo.discountReason }}
