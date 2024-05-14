@@ -165,9 +165,14 @@ export class BookingItemsComponent implements OnInit {
             writable: true,
         };
 
-        const newData = this.dataSource
-            ? (this.dataSource = new MatTableDataSource([newRow, ...this.dataSource.data]))
-            : new MatTableDataSource([newRow]);
+        let newData;
+        if (this.dataSource && this.dataSource.data) {
+            this.dataSource.data.push(newRow);
+            this.dataSource = new MatTableDataSource(this.dataSource.data);
+            newData = this.dataSource;
+        } else {
+            newData = new MatTableDataSource([newRow]);
+        }
 
         this.dataSource = newData;
         this.updateItemsInfo();
