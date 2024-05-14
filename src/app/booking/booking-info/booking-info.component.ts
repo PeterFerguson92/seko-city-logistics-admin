@@ -34,6 +34,7 @@ export class BookingInfoComponent implements OnInit, AfterViewInit {
                 this.bookingInfo.pickUpTime ? this.bookingInfo.pickUpTime : this.times[0],
                 [Validators.required],
             ],
+            timeNotes: [this.bookingInfo.pickUpTimeNotes],
             postcode: [
                 this.bookingInfo.pickUpPostCode ? this.bookingInfo.pickUpPostCode : '',
                 [Validators.required, this.validationService.postCodeValidator],

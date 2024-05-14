@@ -55,6 +55,7 @@ export class BookingReviewComponent implements OnInit {
         info: {
             date: '',
             time: '',
+            timeNotes: '',
             postcode: '',
             address: '',
             updatesViaWhatsapp: '',

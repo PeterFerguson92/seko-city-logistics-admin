@@ -104,6 +104,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return {
             pickUpDate: this.booking.pickUpDate,
             pickUpTime: this.booking.pickUpTime,
+            pickUpTimeNotes: this.booking.pickUpTimeNotes,
             pickUpPostCode: this.booking.pickUpPostCode,
             paymentNotes: this.booking.paymentNotes,
             pickUpAddress: this.booking.pickUpAddress,
@@ -254,6 +255,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             paymentNotes: bookingInfo.itemsDetails.paymentInfo.paymentNotes,
             pickUpDate: bookingInfo.info.date,
             pickUpTime: bookingInfo.info.time,
+            pickUpTimeNotes: bookingInfo.info.timeNotes,
             pickUpPostCode: bookingInfo.info.postcode,
             pickUpAddress: bookingInfo.info.address,
             useCustomerAddress: bookingInfo.info.useCustomerAddress,
@@ -363,6 +365,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             isDiscountApplied: bookingInfo.itemsDetails.paymentInfo.isDiscountApplied,
             pickUpDate: bookingInfo.info.date,
             pickUpTime: bookingInfo.info.time,
+            pickUpTimeNotes: bookingInfo.info.timeNotes,
             pickUpPostCode: bookingInfo.info.postcode,
             pickUpAddress: bookingInfo.info.address,
             useCustomerAddress: bookingInfo.info.useCustomerAddress,
