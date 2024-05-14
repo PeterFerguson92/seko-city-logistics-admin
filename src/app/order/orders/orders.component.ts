@@ -69,7 +69,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   getPickUpDateDetails(pickUpDate) {
-    return pickUpDate === null ? 'TBD' : this.getFormattedDate(pickUpDate);
+    return pickUpDate === null ? 'TO BE CONFIRMED' : this.getFormattedDate(pickUpDate);
   }
 
   getFormattedDate(date) {

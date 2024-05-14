@@ -38,6 +38,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     return {
       deliveryDate: this.order.deliveryDate,
       deliveryTime: this.order.deliveryTime,
+      deliveryTimeNotes: this.order.deliveryTimeNotes,
       deliveryPostCode: this.order.deliveryPostCode,
       deliveryAddress: this.order.deliveryAddress,
       updatesViaWhatsapp: this.order.updatesViaWhatsapp,

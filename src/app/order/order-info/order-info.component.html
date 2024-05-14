@@ -19,6 +19,9 @@
             </app-material-select-input>
           </div>
           <div class="item">
+            <app-material-input [label]="'Notes'" [width]="100" formControlName="deliveryTimeNotes"></app-material-input>
+        </div>
+          <div class="item">
             <label for="lname">Use customer's address</label>&nbsp;
             <app-material-checkbox (checkBoxChange)="onAddressSelectionChange($event, 'useCustomerAddress')" formControlName="useCustomerAddress"></app-material-checkbox>
           </div>

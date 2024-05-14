@@ -109,7 +109,7 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
   }
 
   getFormattedDate(date) {
-    return date === null ? 'TBD' : this.commonService.getFormattedDate(date);
+    return date === null ? 'TO BE CONFIRMED' : this.commonService.getFormattedDate(date);
   }
 
   getBankReference() {
