@@ -59,6 +59,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return VIEW_BOOKING_MODE !== this.mode;
     }
 
+    onBackward(stepper: MatStepper) {
+        stepper.previous();
+    }
+
     onForward(stepper: MatStepper, componentName: string) {
         if (!this[componentName].isDisabled()) {
             if (stepper._getFocusIndex() === 3) {

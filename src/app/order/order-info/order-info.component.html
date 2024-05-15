@@ -1,125 +1,181 @@
 <div id="summary" class="center">
-  <div [formGroup]="orderInfoForm">
-  <mat-accordion [multi]="true">
-    <mat-expansion-panel hideToggle [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title> DELIVERY </mat-panel-title>
-      </mat-expansion-panel-header>
-      <br/>
-        <div class="columns">
-          <div class="item" >
-            <app-material-date-picker-input
-              [label]="'Date'" (inputChange)="onInputChange($event, 'deliveryDate')" formControlName="deliveryDate">
-            </app-material-date-picker-input>&nbsp;
-            <app-material-button [label]="'Check availability'" [width]="35" (click)="onCheckAvailabilty()"></app-material-button><br>
-          </div>
-          <div class="item">
-            <app-material-select-input [options]="times" formControlName="deliveryTime"
-            [label]="'Time'" (selectionChange)="onSelectionChange($event, 'deliveryTime')"  [width]="60" [value]="times[0]">
-            </app-material-select-input>
-          </div>
-          <div class="item">
-            <app-material-input [label]="'Notes'" [width]="100" formControlName="deliveryTimeNotes"></app-material-input>
-        </div>
-          <div class="item">
-            <label for="lname">Use customer's address</label>&nbsp;
-            <app-material-checkbox (checkBoxChange)="onAddressSelectionChange($event, 'useCustomerAddress')" formControlName="useCustomerAddress"></app-material-checkbox>
-          </div>
-          <div class="item">
-          </div>
-          <div class="item">
-            <app-material-input [label]="'Postcode'" [icon]="'person_pin'"[width]="45" formControlName="deliveryPostCode" (change)="onPostcodeChange()" [errorMsg]="formValidationMap.postcode"></app-material-input>
-          </div>
-          <div class="item">
-            <app-material-select-input [label]="'Address'"[width]="80" [options]="addresses" (selectionChange)="onSelectionChange($event, 'deliveryAddress')" formControlName="deliveryAddress"></app-material-select-input>
-          </div>
-          <div class="item">
-            <label for="lname">Updates via whatsapp</label>&nbsp;
-            <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')" formControlName="updatesViaWhatsapp"></app-material-checkbox>
-          </div>
-          <div class="item">
-            <label for="lname">Updates via e-mail</label>&nbsp;
-            <app-material-checkbox (checkBoxChange)="onSelectionChange($event, 'updatesViaEmail')" formControlName="updatesViaEmail"></app-material-checkbox>
-          </div>
-        </div>
-    </mat-expansion-panel>
-    <mat-expansion-panel hideToggle [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title> ITEMS </mat-panel-title>
-      </mat-expansion-panel-header>
-      <br/>
-        <div id="parent" formArrayName="items" *ngFor="let item of items.controls; let i = index">
-          <div [formGroupName] = 'i'>
-            <div class="child">
-              <app-material-select-input [label]="'Type'" [options]="types" formControlName="type"
-                (selectionChange)="onItemsSelectionChange($event, 'type', i)"  [width]="120" [value]="types[0]">
-              </app-material-select-input>
-            </div>
-            <div class="child" style="margin-left: 5%">
-              <app-material-numeric-input
-              [label]="'Price Per Unit (£)'" [width]="60" formControlName="pricePerUnit">
-            </app-material-numeric-input >
-          </div>
-          <div class="child" style="margin-left: -2%">
-            <app-material-numeric-input
-              [label]="'Quantity'" [width]="40" (change)="updateItemTotalAmount(i)" formControlName="quantity">
-            </app-material-numeric-input >
-          </div>
-          <div class="child" style="margin-left: -2%">
-            <app-material-numeric-input
-              [label]="'Amount(£)'" [width]="40" formControlName="amount">
-            </app-material-numeric-input >
-          </div>
-          <div class="child" >
-            <app-material-button [label]="'-'" [width]="10"  [disabled]="isDeleteDisabled()" (click)="onDeleteItem(i)"></app-material-button>&nbsp;
-          </div>
-          <div class="child" >
-            <app-material-button [label]="'+'" [width]="10" (click)="onAddItem(i)"></app-material-button>
-          </div>
-        </div>
-      </div>
-    </mat-expansion-panel>
-    <mat-expansion-panel hideToggle [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title> PAYMENT </mat-panel-title>
-      </mat-expansion-panel-header>
-      <br/>
-      <div id="parent">
-        <div class="child">
-          <app-material-numeric-input
-            [label]="'Total (£)'" [width]="60" formControlName="totalAmount">
-          </app-material-numeric-input >
-        </div>
-        <div class="child">
-          <app-material-numeric-input
-            [label]="'Paid (£)'" [width]="60" formControlName="amountPaid" (change)="updateOutstandingAmount()" >
-          </app-material-numeric-input >
-        </div>
-        <div class="child">
-          <app-material-numeric-input
-            [label]="'Outstanding (£)'" [width]="60" formControlName="amountOutstanding">
-          </app-material-numeric-input >
-        </div>
-      </div>
-      <div class="columns">
-        <div class="item">
-          <app-material-select-input [label]="'Type'" [width]="40" [options]="paymentTypes" formControlName="paymentType"
-            (selectionChange)="onSelectionChange($event, 'paymentType')" [value]="paymentTypes[0]">
-          </app-material-select-input>
-        </div>
-        <div class="item">
-          <app-material-select-input [label]="'Status'" [width]="40" [options]="paymentStatuses" formControlName="paymentStatus"
-            (selectionChange)="onSelectionChange($event, 'paymentStatus')" [value]="paymentStatuses[0]">
-          </app-material-select-input>
-        </div>
-        <div class="item">
-          <app-material-input [label]="'Notes'" [icon]="'person_pin'"[width]="100" formControlName="paymentNotes"></app-material-input>
-        </div>
-      </div>
-    </mat-expansion-panel>
-    <div *ngIf="showWarning()" class="alert warning">
-      <strong>Warning!</strong> Please fill in all required field with valid values.
+    <div [formGroup]="orderInfoForm">
+        <mat-accordion [multi]="true">
+            <mat-expansion-panel hideToggle [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> DELIVERY </mat-panel-title>
+                </mat-expansion-panel-header>
+                <br />
+                <div class="columns">
+                    <div class="item">
+                        <app-material-date-picker-input
+                            [label]="'Date'"
+                            (inputChange)="onInputChange($event, 'deliveryDate')"
+                            formControlName="deliveryDate"
+                        >
+                        </app-material-date-picker-input
+                        >&nbsp; <app-material-button [label]="'Check availability'" [width]="35" (click)="onCheckAvailabilty()"></app-material-button
+                        ><br />
+                    </div>
+                    <div class="item">
+                        <app-material-select-input
+                            [options]="times"
+                            formControlName="deliveryTime"
+                            [label]="'Time'"
+                            (selectionChange)="onSelectionChange($event, 'deliveryTime')"
+                            [width]="60"
+                            [value]="times[0]"
+                        >
+                        </app-material-select-input>
+                    </div>
+                    <div class="item">
+                        <app-material-input [label]="'Notes'" [width]="100" formControlName="deliveryTimeNotes"></app-material-input>
+                    </div>
+                    <div></div>
+                    <div class="item">
+                        <label for="lname">Use customer's address</label>&nbsp;
+                        <app-material-checkbox
+                            (checkBoxChange)="onAddressSelectionChange($event, 'useCustomerAddress')"
+                            formControlName="useCustomerAddress"
+                        ></app-material-checkbox>
+                    </div>
+                    <div class="item"></div>
+                    <div class="item">
+                        <app-material-input
+                            [label]="'Postcode'"
+                            [icon]="'person_pin'"
+                            [width]="45"
+                            formControlName="deliveryPostCode"
+                            (change)="onPostcodeChange()"
+                            [errorMsg]="formValidationMap.postcode"
+                        ></app-material-input>
+                    </div>
+                    <div class="item">
+                        <app-material-select-input
+                            [label]="'Address'"
+                            [width]="80"
+                            [options]="addresses"
+                            (selectionChange)="onSelectionChange($event, 'deliveryAddress')"
+                            formControlName="deliveryAddress"
+                        ></app-material-select-input>
+                    </div>
+                    <div class="item">
+                        <label for="lname">Updates via whatsapp</label>&nbsp;
+                        <app-material-checkbox
+                            (checkBoxChange)="onSelectionChange($event, 'updatesViaWhatsapp')"
+                            formControlName="updatesViaWhatsapp"
+                        ></app-material-checkbox>
+                    </div>
+                    <div class="item">
+                        <label for="lname">Updates via e-mail</label>&nbsp;
+                        <app-material-checkbox
+                            (checkBoxChange)="onSelectionChange($event, 'updatesViaEmail')"
+                            formControlName="updatesViaEmail"
+                        ></app-material-checkbox>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel hideToggle [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> ITEMS </mat-panel-title>
+                </mat-expansion-panel-header>
+                <br />
+                <div id="parent" formArrayName="items" *ngFor="let item of items.controls; let i = index">
+                    <div [formGroupName]="i">
+                        <div class="child">
+                            <app-material-select-input
+                                [label]="'Type'"
+                                [options]="types"
+                                formControlName="type"
+                                (selectionChange)="onItemsSelectionChange($event, 'type', i)"
+                                [width]="120"
+                                [value]="types[0]"
+                            >
+                            </app-material-select-input>
+                        </div>
+                        <div class="child" style="margin-left: 5%">
+                            <app-material-numeric-input [label]="'Price Per Unit (£)'" [width]="60" formControlName="pricePerUnit">
+                            </app-material-numeric-input>
+                        </div>
+                        <div class="child" style="margin-left: -2%">
+                            <app-material-numeric-input
+                                [label]="'Quantity'"
+                                [width]="40"
+                                (change)="updateItemTotalAmount(i)"
+                                formControlName="quantity"
+                            >
+                            </app-material-numeric-input>
+                        </div>
+                        <div class="child" style="margin-left: -2%">
+                            <app-material-numeric-input [label]="'Amount(£)'" [width]="40" formControlName="amount"> </app-material-numeric-input>
+                        </div>
+                        <div class="child">
+                            <app-material-button
+                                [label]="'-'"
+                                [width]="10"
+                                [disabled]="isDeleteDisabled()"
+                                (click)="onDeleteItem(i)"
+                            ></app-material-button
+                            >&nbsp;
+                        </div>
+                        <div class="child">
+                            <app-material-button [label]="'+'" [width]="10" (click)="onAddItem(i)"></app-material-button>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel hideToggle [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> PAYMENT </mat-panel-title>
+                </mat-expansion-panel-header>
+                <br />
+                <div id="parent">
+                    <div class="child">
+                        <app-material-numeric-input [label]="'Total (£)'" [width]="60" formControlName="totalAmount"> </app-material-numeric-input>
+                    </div>
+                    <div class="child">
+                        <app-material-numeric-input
+                            [label]="'Paid (£)'"
+                            [width]="60"
+                            formControlName="amountPaid"
+                            (change)="updateOutstandingAmount()"
+                        >
+                        </app-material-numeric-input>
+                    </div>
+                    <div class="child">
+                        <app-material-numeric-input [label]="'Outstanding (£)'" [width]="60" formControlName="amountOutstanding">
+                        </app-material-numeric-input>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="item">
+                        <app-material-select-input
+                            [label]="'Type'"
+                            [width]="40"
+                            [options]="paymentTypes"
+                            formControlName="paymentType"
+                            (selectionChange)="onSelectionChange($event, 'paymentType')"
+                            [value]="paymentTypes[0]"
+                        >
+                        </app-material-select-input>
+                    </div>
+                    <div class="item">
+                        <app-material-select-input
+                            [label]="'Status'"
+                            [width]="40"
+                            [options]="paymentStatuses"
+                            formControlName="paymentStatus"
+                            (selectionChange)="onSelectionChange($event, 'paymentStatus')"
+                            [value]="paymentStatuses[0]"
+                        >
+                        </app-material-select-input>
+                    </div>
+                    <div class="item">
+                        <app-material-input [label]="'Notes'" [icon]="'person_pin'" [width]="100" formControlName="paymentNotes"></app-material-input>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <div *ngIf="showWarning()" class="alert warning"><strong>Warning!</strong> Please fill in all required field with valid values.</div>
+        </mat-accordion>
     </div>
-  </mat-accordion>
 </div>
-  </div>
