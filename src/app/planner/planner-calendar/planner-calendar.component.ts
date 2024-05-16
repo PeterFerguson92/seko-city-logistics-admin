@@ -37,11 +37,11 @@ export class PlannerCalendarComponent implements OnInit, OnDestroy {
         this.spinner.show();
 
         this.bookingService
-            .getBookings()
+            .filterBookings({ name: 'archived', value: 'false' })
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: (result) => {
-                    this.buildEvents(result.data.bookings);
+                    this.buildEvents(result.data.filterBookings);
                     this.spinner.hide();
                 },
                 error: (error) => {
