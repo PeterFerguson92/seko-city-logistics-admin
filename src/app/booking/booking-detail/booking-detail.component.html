@@ -5,7 +5,7 @@
             <ng-template matStepLabel>Fill out sender details</ng-template>
             <app-customer-detail [customer]="booking.customer" [mode]="mode"></app-customer-detail>
             <div style="text-align: center">
-                <app-material-button [label]="'Next'" [width]="10" (click)="onForward(stepper, 'customerDetailComponent')"></app-material-button>
+                <app-material-button [label]="'NEXT'" [width]="10" (click)="onForward(stepper, 'customerDetailComponent')"></app-material-button>
             </div>
         </form>
     </mat-step>
@@ -14,8 +14,8 @@
             <ng-template matStepLabel>Fill out pick up details</ng-template>
             <app-booking-info (getCustomerPostcode)="getCustomerPostcode()" [bookingInfo]="getBookingInfoData()"></app-booking-info>
             <div style="text-align: center">
-                <app-material-button [label]="'Back'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
-                <app-material-button [label]="'Next'" [width]="10" (click)="onForward(stepper, 'bookingInfoComponent')"></app-material-button>
+                <app-material-button [label]="'BACK'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
+                <app-material-button [label]="'NEXT'" [width]="10" (click)="onForward(stepper, 'bookingInfoComponent')"></app-material-button>
             </div>
         </form>
     </mat-step>
@@ -29,8 +29,8 @@
                 [senderReference]="getSenderRef()"
             ></app-bookings-receivers>
             <div style="text-align: center">
-                <app-material-button [label]="'Back'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
-                <app-material-button [label]="'Next'" [width]="10" (click)="onForward(stepper, 'bookingReceiversComponent')"></app-material-button>
+                <app-material-button [label]="'BACK'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
+                <app-material-button [label]="'NEXT'" [width]="10" (click)="onForward(stepper, 'bookingReceiversComponent')"></app-material-button>
             </div>
         </form>
     </mat-step>
@@ -39,21 +39,17 @@
             <ng-template matStepLabel>Fill out items details</ng-template>
             <app-booking-items [paymentData]="getPaymentData()"></app-booking-items>
             <div style="text-align: center">
-                <app-material-button [label]="'Back'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
-                <app-material-button [label]="'Next'" [width]="10" (click)="onForward(stepper, 'bookingItemsComponent')"></app-material-button>
+                <app-material-button [label]="'BACK'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
+                <app-material-button [label]="'NEXT'" [width]="10" (click)="onForward(stepper, 'bookingItemsComponent')"></app-material-button>
             </div>
         </form>
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Confirm</ng-template>
-        <p>
-            Amazing we are now ready to create or update a booking, make sure all information submitted are correct, once you are happy with it just
-            click on the create button and I'll take care of the rest.
-        </p>
         <app-booking-review></app-booking-review>
         <br />
         <div style="text-align: center">
-            <app-material-button [label]="'Back'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
+            <app-material-button [label]="'BACK'" [width]="10" (click)="onBackward(stepper)"></app-material-button>
         </div>
         <app-notification-message [showText]="showErrorText" [text]="errorText" [color]="'#ff9800'"></app-notification-message>
         <div class="submitButton">

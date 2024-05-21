@@ -4,6 +4,7 @@
         <tr>
           <th>Reference</th>
           <th>Sender</th>
+          <th>Phone</th>
           <th>Postcode</th>
           <th>Address</th>
           <th>Time</th>
@@ -12,6 +13,7 @@
         <tr *ngFor="let activity of activities">
           <td>{{activity.reference}}</td>
           <td>{{getCustomerName(activity)}}</td>
+          <td>{{getPhoneNumber(activity)}}</td>
           <td>{{getPostcode(activity)}}</td>
           <td>{{getAddress(activity)}}</td>
           <td>{{getTime(activity)}}</td>
