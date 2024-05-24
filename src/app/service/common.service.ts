@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PERSONAL_CUSTOMER_TYPE } from '../constants';
-import { GET_ACTIVITY_AVAILABILITY, GET_ADDRESSES_BY_POSTCODE, GET_KEY } from './request';
+import { GET_ACTIVITY_AVAILABILITY, GET_ADDRESSES_BY_POSTCODE, GET_KEY, SEND_WHATSAPP_INVOICE } from './request';
 import { Apollo } from 'apollo-angular';
 import * as CryptoJS from 'crypto-js';
 
@@ -61,6 +61,13 @@ export class CommonService {
         return this.apollo.query<any>({
             query: GET_ADDRESSES_BY_POSTCODE,
             variables: { postcode },
+        });
+    }
+
+    sendWhatsappInvoice(bookingReference: string, customerReference: string, activity: string) {
+        return this.apollo.query<any>({
+            query: SEND_WHATSAPP_INVOICE,
+            variables: { bookingReference, customerReference, activity },
         });
     }
 

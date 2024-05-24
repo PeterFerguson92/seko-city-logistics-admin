@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -10,13 +10,14 @@ import { BookingUpdateDialogComponent } from '../booking-update-dialog/booking-u
 import { IBooking } from '../model';
 import { BookingsService } from '../service/bookings/bookings.service';
 import { UpdateItemsDialogComponent } from 'src/app/items/update-items-dialog/update-items-dialog.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-bookings-table',
     templateUrl: './bookings-table.component.html',
     styleUrls: ['./bookings-table.component.css', '../../shared/shared-table.css'],
 })
-export class BookingsTableComponent implements OnInit, OnChanges {
+export class BookingsTableComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     @Input() bookings: [IBooking] = null;
@@ -36,6 +37,7 @@ export class BookingsTableComponent implements OnInit, OnChanges {
     height = '80%';
     width = '65%';
     isArchivedEnabled = false;
+    componentDestroyed$: Subject<boolean> = new Subject();
 
     constructor(
         private router: Router,
@@ -108,19 +110,49 @@ export class BookingsTableComponent implements OnInit, OnChanges {
         });
     }
 
+    invoiceBooking(bookingReference, customerReference) {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            // height: '25%',
+            // width: '30%',
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result === 'true') {
+                this.commonService
+                    .sendWhatsappInvoice(bookingReference, customerReference, 'Booking')
+                    .pipe(takeUntil(this.componentDestroyed$))
+                    .subscribe({
+                        next: () => {
+                            location.reload();
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        },
+                    });
+            }
+        });
+    }
+
     getPickUpDateDetails(pickUpDate) {
         return pickUpDate === null ? 'TBD' : this.getFormattedDate(pickUpDate);
     }
 
     archiveBooking(reference) {
-        this.bookingsService.archiveUnarchiveBooking(reference, !this.isArchivedEnabled).subscribe(
-            ({ data }) => {
-                location.reload();
-            },
-            (error) => {
-                console.log(error);
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            // height: '25%',
+            // width: '30%',
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result === 'true') {
+                this.bookingsService.archiveUnarchiveBooking(reference, !this.isArchivedEnabled).subscribe(
+                    ({ data }) => {
+                        location.reload();
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
             }
-        );
+        });
     }
 
     onAssignDriver(element) {
@@ -141,5 +173,10 @@ export class BookingsTableComponent implements OnInit, OnChanges {
         if (row.status === 'PENDING') {
             return '#FFEBCA';
         }
+    }
+
+    ngOnDestroy() {
+        this.componentDestroyed$.next(true);
+        this.componentDestroyed$.complete();
     }
 }
