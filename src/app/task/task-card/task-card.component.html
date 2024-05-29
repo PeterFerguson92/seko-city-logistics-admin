@@ -19,6 +19,7 @@
         </div>
         <p  *ngIf="!isWebPickUp(task)">{{getDisplayText(task)}}</p>
         <span class="dot"></span><span class="author">Due date: {{getFormattedDate(task.actionDate)}}</span>
+        <span class="dot"></span><span class="author">Created on: {{getCreationDateFormatted(task.createdAt)}}</span>
 
         <div class="card-tags"><label class="sc-gsDKAQ knmqvK">{{task.priority}}</label>
       </div>
