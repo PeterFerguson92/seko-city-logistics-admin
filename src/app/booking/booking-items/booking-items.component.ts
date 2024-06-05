@@ -568,7 +568,9 @@ export class BookingItemsComponent implements OnInit {
         this.getFormControl('fullAmount').setValue(totals.totalAmount);
         this.getFormControl('numberOfItems').setValue(totals.totalItems);
         this.updateTotalAmount();
-        this.processDiscount();
+        if (this.getFormControl('isDiscountApplied').value) {
+            this.processDiscount();
+        }
     }
 
     updateTotalAmount() {
