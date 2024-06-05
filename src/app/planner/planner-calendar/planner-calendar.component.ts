@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { BookingsService } from 'src/app/booking/service/bookings/bookings.service';
+import { OrderService } from 'src/app/order/service/order.service';
 @Component({
     selector: 'app-planner-calendar',
     templateUrl: './planner-calendar.component.html',
@@ -25,6 +26,7 @@ export class PlannerCalendarComponent implements OnInit, OnDestroy {
 
     constructor(
         private router: Router,
+        private orderService: OrderService,
         private bookingService: BookingsService,
         private spinner: NgxSpinnerService
     ) {}
@@ -41,7 +43,7 @@ export class PlannerCalendarComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: (result) => {
-                    this.buildEvents(result.data.filterBookings);
+                    this.getOrders(result.data.filterBookings);
                     this.spinner.hide();
                 },
                 error: (error) => {
@@ -51,26 +53,53 @@ export class PlannerCalendarComponent implements OnInit, OnDestroy {
             });
     }
 
-    buildEvents(bookings) {
-        const bookingsEvent = [];
-        for (const booking of bookings) {
-            const date = new Date(booking.pickUpDate).toISOString().substring(0, 10);
-            bookingsEvent.push({
-                title: `${booking.senderFullName} - ${booking.pickUpPostCode}`,
-                date,
-                reference: booking.reference,
+    getOrders(bookings) {
+        this.orderService
+            .filterOrders({ name: 'archived', value: 'false' })
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: (result) => {
+                    console.log(result.data.filterOrders);
+                    this.buildEvents(bookings, result.data.filterOrders);
+                },
+                error: (error) => {
+                    console.log(error.message);
+                    console.log(error);
+                },
             });
-        }
-        this.calendarOptions.events = bookingsEvent;
     }
 
-    handleDateClick(arg) {
-        console.log(arg);
-        alert('date click! ' + arg.dateStr);
+    buildEvents(bookings, orders) {
+        const events = [];
+        for (const booking of bookings) {
+            const date = new Date(booking.pickUpDate).toISOString().substring(0, 10);
+            events.push({
+                type: 'BOOKING',
+                title: `${booking.senderFullName} - ${booking.pickUpPostCode} - BOOKING`,
+                date,
+                reference: booking.reference,
+                color: 'blue',
+            });
+        }
+        for (const order of orders) {
+            const date = new Date(order.deliveryDate).toISOString().substring(0, 10);
+            events.push({
+                type: 'ORDER',
+                title: `${order.customerFullName} - ${order.deliveryPostCode} - ORDER`,
+                date,
+              reference: order.reference,
+              color: 'green',
+            });
+        }
+        this.calendarOptions.events = events;
     }
 
     onClickDate(data) {
-        this.router.navigate(['/booking-summary', data._def.extendedProps.reference]);
+        if (data._def.extendedProps.type === 'BOOKING') {
+            this.router.navigate(['/booking-summary', data._def.extendedProps.reference]);
+        } else {
+            this.router.navigate(['/order-summary', data._def.extendedProps.reference]);
+        }
     }
 
     ngOnDestroy() {
