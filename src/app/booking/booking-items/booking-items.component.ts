@@ -56,6 +56,10 @@ export class BookingItemsComponent implements OnInit {
     dataSource;
     isAllSelected;
     showItems = false;
+    showExtendedItems = true;
+    extendedItemsButtonLabel = 'VIEW EXTENDED ITEMS';
+    displayItemList = [];
+    extendedDisplayItemList = [];
     errorMsg: string;
     bookingItemForm: FormGroup;
     paymentForm: FormGroup;
@@ -136,7 +140,9 @@ export class BookingItemsComponent implements OnInit {
                         const newData = items.map((item, index) =>
                             Object.assign({}, item, { selected: false, index })
                         );
-                        this.dataSource = new MatTableDataSource(newData);
+                        this.extendedDisplayItemList = newData;
+                        this.dataSource = new MatTableDataSource(this.extendedDisplayItemList);
+                        this.processDisplayItem(this.extendedDisplayItemList);
                     }
                 },
                 (error) => {
@@ -144,6 +150,37 @@ export class BookingItemsComponent implements OnInit {
                 }
             );
         }
+    }
+
+  processDisplayItem(items) {
+    this.displayItemList = [];
+        let index;
+        items.forEach((item: any) => {
+
+            if (item.type !== 'OTHER') {
+                index = this.displayItemList.findIndex((obj: any) => {
+                    return obj.type === item.type && obj.value.toString() === item.value.toString();
+                });
+            } else {
+                index = this.displayItemList.findIndex((obj: any) => {
+                    return (
+                        obj.type === item.type &&
+                        obj.value.toString() === item.value.toString() &&
+                        obj.description === item.description
+                    );
+                });
+            }
+            if (index > -1) {
+                const newqty = this.displayItemList[index].quantity + item.quantity;
+                const newObj = { ...item, quantity: newqty, amount: newqty * item.pricePerUnit };
+                this.displayItemList[index] = newObj;
+            } else {
+                const newObj = { ...item, quantity: 1, amount: item.pricePerUnit };
+                this.displayItemList.push(newObj);
+            }
+        });
+
+        console.log(this.displayItemList);
     }
 
     /***** Items service ****/
@@ -387,6 +424,8 @@ export class BookingItemsComponent implements OnInit {
         this.getFormControl('totalAmount').setValue(totals.totalAmount);
         this.getFormControl('numberOfItems').setValue(totals.totalItems);
         this.updateTotalAmount();
+        console.log(this.dataSource.data);
+        this.processDisplayItem(this.dataSource.data);
     }
 
     hideNotEditableColumns(isHidden) {
@@ -619,5 +658,10 @@ export class BookingItemsComponent implements OnInit {
             bookingPaymentDetails[key] = formControl.value;
         });
         return bookingPaymentDetails;
+    }
+
+    displayExtendedItems() {
+        this.showExtendedItems = !this.showExtendedItems;
+        this.extendedItemsButtonLabel = this.showExtendedItems ? 'VIEW EXTENDED ITEMS' : 'VIEW COMPRESSED ITEMS';
     }
 }

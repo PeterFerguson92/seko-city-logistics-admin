@@ -5,18 +5,40 @@
         <div class="col-75">
             <div class="container">
                 <article class="table-header">
-                    <button class="action-button button-add-row" mat-button (click)="addRow(null)">ADD ITEM</button>
-                    <button class="action-button button-remove-rows" mat-button (click)="removeSelectedRows()" [disabled]="!isMultipleEnabled()">
+                    <button class="action-button button-add-row" mat-button (click)="displayExtendedItems()">{{extendedItemsButtonLabel}}</button>
+                    <button *ngIf="!showExtendedItems" class="action-button button-add-row" mat-button (click)="addRow(null)">ADD ITEM</button>
+                    <button *ngIf="!showExtendedItems" class="action-button button-remove-rows" mat-button (click)="removeSelectedRows()" [disabled]="!isMultipleEnabled()">
                         REMOVE ITEM
                     </button>
-                    <button class="action-button button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">
+                    <button  *ngIf="!showExtendedItems"class="action-button button-add-multi-row" mat-button (click)="addMultipleRow()" [disabled]="!isMultipleEnabled()">
                         ADD MULTIPLE ITEMS
                     </button>
-                    <button class="action-button button-add-multi-row" mat-button (click)="updateStatus()" [disabled]="!isMultipleEnabled()">
+                    <button *ngIf="!showExtendedItems" class="action-button button-add-multi-row" mat-button (click)="updateStatus()" [disabled]="!isMultipleEnabled()">
                         UPDATE ITEMS STATUS
                     </button>
                 </article>
-                <table mat-table [dataSource]="dataSource">
+                <section *ngIf="showExtendedItems">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Value(£)</th>
+                            <th>Price Per Unit(£)</th>
+                            <th>Quantity</th>
+                            <th>Amount(£)</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr *ngFor="let item of displayItemList">
+                            <td>{{item.type}} {{item.description ? '({{item.description}}' : ''}}</td>
+                            <td>{{item.value}}</td>
+                            <td>{{item.pricePerUnit}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.amount}}</td>
+                            <td>{{item.status}}</td>
+                        </tr>
+
+                    </table>
+                </section>
+                <table mat-table [dataSource]="dataSource"  *ngIf="!showExtendedItems">
                     <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
                         <section *ngIf="!isSelectLabel(col.label)">
                             <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
@@ -199,9 +221,9 @@
                                         </app-material-numeric-input>
                                     </div>
                                     <div class="child">
-                                      <app-material-numeric-input [label]="'Outstanding (£)'" [width]="60" formControlName="amountOutstanding">
-                                      </app-material-numeric-input>
-                                  </div>
+                                        <app-material-numeric-input [label]="'Outstanding (£)'" [width]="60" formControlName="amountOutstanding">
+                                        </app-material-numeric-input>
+                                    </div>
                                     <div class="item">
                                         <app-material-input
                                             [label]="'Notes'"
