@@ -38,6 +38,7 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
     accountSortCode = ACCOUNT_SORT_CODE;
     accountNumber = ACCOUNT_NUMBER;
     showInvoice = false;
+    displayItemList = [];
     componentDestroyed$: Subject<boolean> = new Subject();
 
     ngOnInit(): void {
@@ -92,6 +93,7 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
         this.booking.items = (
             await lastValueFrom(this.itemService.getItemsByBookingReference(this.booking.reference))
         ).data.itemsByBookingReference;
+        this.displayItemList = this.bookingService.processDisplayItems(this.booking.items)
     }
 
     showBookingSummary() {
