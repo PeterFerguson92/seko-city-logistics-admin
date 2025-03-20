@@ -20,6 +20,7 @@ import { DialogComponent } from 'src/app/shared/elements/dialog/dialog.component
 import { ItemDuplicateDialogComponent } from '../item-duplicate-dialog/item-duplicate-dialog.component';
 import { UpdateItemsDialogComponent } from 'src/app/items/update-items-dialog/update-items-dialog.component';
 import { ConfirmDialogComponent } from 'src/app/shared/elements/confirm-dialog/confirm-dialog.component';
+import { BookingsService } from '../service/bookings/bookings.service';
 
 export interface IItem {
     id: number;
@@ -74,7 +75,12 @@ export class BookingItemsComponent implements OnInit {
     displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
     columnsSchema: any = COLUMNS_SCHEMA;
 
-    constructor(private formBuilder: FormBuilder, private itemService: ItemService, private dialog: MatDialog) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private itemService: ItemService,
+        private bookingService: BookingsService,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit(): void {
         this.selectedType = this.types[0];
@@ -142,7 +148,9 @@ export class BookingItemsComponent implements OnInit {
                         );
                         this.extendedDisplayItemList = newData;
                         this.dataSource = new MatTableDataSource(this.extendedDisplayItemList);
-                        this.processDisplayItem(this.extendedDisplayItemList);
+                        this.displayItemList = this.bookingService.processDisplayItems(
+                            this.extendedDisplayItemList
+                        );
                     }
                 },
                 (error) => {
@@ -150,36 +158,6 @@ export class BookingItemsComponent implements OnInit {
                 }
             );
         }
-    }
-
-    processDisplayItem(items) {
-        this.displayItemList = [];
-        let index;
-        items.forEach((item: any) => {
-            if (item.type !== 'OTHER') {
-                index = this.displayItemList.findIndex((obj: any) => {
-                    return obj.type === item.type && obj.value.toString() === item.value.toString();
-                });
-            } else {
-                index = this.displayItemList.findIndex((obj: any) => {
-                    return (
-                        obj.type === item.type &&
-                        obj.value.toString() === item.value.toString() &&
-                        obj.description === item.description
-                    );
-                });
-            }
-            if (index > -1) {
-                const newqty = this.displayItemList[index].quantity + item.quantity;
-                const newObj = { ...item, quantity: newqty, amount: newqty * item.pricePerUnit };
-                this.displayItemList[index] = newObj;
-            } else {
-                const newObj = { ...item, quantity: 1, amount: item.pricePerUnit };
-                this.displayItemList.push(newObj);
-            }
-        });
-
-        console.log(this.displayItemList);
     }
 
     /***** Items service ****/
@@ -211,6 +189,7 @@ export class BookingItemsComponent implements OnInit {
         }
 
         this.dataSource = newData;
+        this.displayItemList = this.bookingService.processDisplayItems(this.dataSource.data);
         this.updateItemsInfo();
     }
 
@@ -223,6 +202,7 @@ export class BookingItemsComponent implements OnInit {
                 if (this.dataSource.data.length === 0) {
                     this.getFormControl('discountAmount').setValue(0);
                 }
+                this.displayItemList = this.bookingService.processDisplayItems(this.dataSource.data);
                 this.updateItemsInfo();
             }
         });
@@ -423,8 +403,7 @@ export class BookingItemsComponent implements OnInit {
         this.getFormControl('totalAmount').setValue(totals.totalAmount);
         this.getFormControl('numberOfItems').setValue(totals.totalItems);
         this.updateTotalAmount();
-        console.log(this.dataSource.data);
-        this.processDisplayItem(this.dataSource.data);
+        this.displayItemList = this.bookingService.processDisplayItems(this.dataSource.data);
     }
 
     hideNotEditableColumns(isHidden) {
