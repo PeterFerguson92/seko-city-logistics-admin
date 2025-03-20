@@ -36,6 +36,7 @@ export class BookingReviewComponent implements OnInit {
             destinationInfo: { destination: '', location: '' },
         },
         itemsDetails: {
+            displayItems: [{ quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }],
             items: [{ quantity: 0, type: '', description: '', value: '', pricePerUnit: '', amount: 0 }],
             paymentInfo: {
                 paymentType: '',

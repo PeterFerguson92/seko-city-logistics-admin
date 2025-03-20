@@ -152,11 +152,10 @@ export class BookingItemsComponent implements OnInit {
         }
     }
 
-  processDisplayItem(items) {
-    this.displayItemList = [];
+    processDisplayItem(items) {
+        this.displayItemList = [];
         let index;
         items.forEach((item: any) => {
-
             if (item.type !== 'OTHER') {
                 index = this.displayItemList.findIndex((obj: any) => {
                     return obj.type === item.type && obj.value.toString() === item.value.toString();
@@ -645,6 +644,7 @@ export class BookingItemsComponent implements OnInit {
         const itemsDetails = this.getItemsDataDetails();
         return {
             items: itemsDetails.items,
+            displayItems: this.displayItemList,
             paymentInfo: this.getPaymentInfoDetails(),
             totalNumberOfItems: itemsDetails.totals.totalItems,
             totalAmount: itemsDetails.totals.totalAmount,

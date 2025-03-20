@@ -100,7 +100,7 @@
                 <th>Price per unit</th>
                 <th>Amount</th>
             </tr>
-            <tr *ngFor="let item of booking.itemsDetails.items">
+            <tr *ngFor="let item of booking.itemsDetails.displayItems">
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.type }}</td>
                 <td>{{ item.description }}</td>

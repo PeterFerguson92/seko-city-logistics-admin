@@ -28,7 +28,7 @@
                             <th>Status</th>
                         </tr>
                         <tr *ngFor="let item of displayItemList">
-                            <td>{{item.type}} {{item.description ? '({{item.description}}' : ''}}</td>
+                            <td>{{item.type === 'OTHER' ? item.description : item.type}}</td>
                             <td>{{item.value}}</td>
                             <td>{{item.pricePerUnit}}</td>
                             <td>{{item.quantity}}</td>
