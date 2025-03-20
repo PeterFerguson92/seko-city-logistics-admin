@@ -165,4 +165,33 @@ export class BookingsService {
             query: GET_BOOKINGS_REPORT_DATA,
         });
     }
+
+    processDisplayItems(items) {
+        const displayItemList = [];
+        let index;
+        items.forEach((item: any) => {
+            if (item.type !== 'OTHER') {
+                index = displayItemList.findIndex((obj: any) => {
+                    return obj.type === item.type && obj.value.toString() === item.value.toString();
+                });
+            } else {
+                index = displayItemList.findIndex((obj: any) => {
+                    return (
+                        obj.type === item.type &&
+                        obj.value.toString() === item.value.toString() &&
+                        obj.description === item.description
+                    );
+                });
+            }
+            if (index > -1) {
+                const newqty = displayItemList[index].quantity + item.quantity;
+                const newObj = { ...item, quantity: newqty, amount: newqty * item.pricePerUnit };
+                displayItemList[index] = newObj;
+            } else {
+                const newObj = { ...item, quantity: 1, amount: item.pricePerUnit };
+                displayItemList.push(newObj);
+            }
+        });
+        return displayItemList;
+    }
 }

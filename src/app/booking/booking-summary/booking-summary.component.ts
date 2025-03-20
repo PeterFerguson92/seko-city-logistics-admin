@@ -93,7 +93,7 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
         this.booking.items = (
             await lastValueFrom(this.itemService.getItemsByBookingReference(this.booking.reference))
         ).data.itemsByBookingReference;
-        this.displayItemList = this.bookingService.processDisplayItems(this.booking.items)
+        this.displayItemList = this.bookingService.processDisplayItems(this.booking.items);
     }
 
     showBookingSummary() {
