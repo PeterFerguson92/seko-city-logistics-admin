@@ -9,84 +9,118 @@ import { Subject, takeUntil } from 'rxjs';
 import { BookingsService } from 'src/app/booking/service/bookings/bookings.service';
 import { CommonService } from 'src/app/service/common.service';
 @Component({
-  selector: 'app-driver-bookings',
-  templateUrl: './driver-bookings.component.html',
-  styleUrls: ['./driver-bookings.component.css',
-    '../../shared/shared-table.css', '../../shared/common.css']
+    selector: 'app-driver-bookings',
+    templateUrl: './driver-bookings.component.html',
+    styleUrls: ['./driver-bookings.component.css', '../../shared/shared-table.css', '../../shared/common.css'],
 })
 export class DriverBookingsComponent implements OnInit, OnDestroy {
+    dataSource = null;
+    isError = false;
+    errorMsg = null;
+    bookingReference;
+    errorText;
+    showErrorText = false;
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    componentDestroyed$: Subject<boolean> = new Subject();
+    displayedColumns: string[] = [
+        'ID',
+        'SENDER',
+        'POSTCODE',
+        'ADDRESS',
+        'DATE',
+        'TIME',
+        'PHONE',
+        'STATUS',
+        'ACTION',
+    ];
 
-  dataSource = null;
-  isError = false;
-  errorMsg = null;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  componentDestroyed$: Subject<boolean> = new Subject();
-  displayedColumns: string[] = ['ID', 'SENDER', 'POSTCODE', 'ADDRESS', 'DATE', 'TIME', 'PHONE', 'STATUS', 'ACTION'];
+    constructor(
+        private router: Router,
+        private dialog: MatDialog,
+        private spinner: NgxSpinnerService,
+        private commonService: CommonService,
+        private activatedRoute: ActivatedRoute,
+        private bookingService: BookingsService
+    ) {}
 
-
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private spinner: NgxSpinnerService,
-    private commonService: CommonService,
-    private activatedRoute: ActivatedRoute,
-    private bookingService: BookingsService
-    ) { }
-
-  ngOnInit(): void {
-    const snapshot = this.activatedRoute.snapshot;
-    const reference = snapshot.paramMap.get('reference');
-    if (snapshot.routeConfig.path !== 'add-shipment')
-    {
-      this.getBookingsByDriverReference(reference);
-    }
-  }
-
-  getBookingsByDriverReference(reference) {
-    this.spinner.show();
-    this.bookingService.filterBookings({name: 'assignedDriverReference', value: reference})
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe({
-        next: (result) => {
-          if (this.isDataEmpty(result))
-          {
-            this.errorMsg = 'No Records found'
-            this.isError = true;
-            this.spinner.hide()
-          } else
-          {
-            this.dataSource = new MatTableDataSource(result.data.filterBookings);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.spinner.hide();
-          }
-        },
-        error: (error) => {
-          this.errorMsg = 'Something went wrong, please contact system support';
-          this.isError = true;
-          console.log(error.message);
-          console.log(error);
-          this.spinner.hide()
+    ngOnInit(): void {
+        const snapshot = this.activatedRoute.snapshot;
+        const reference = snapshot.paramMap.get('reference');
+        if (snapshot.routeConfig.path !== 'add-shipment') {
+            this.getBookingsByDriverReference(reference);
         }
-    })
-  }
+    }
 
-  isDataEmpty(result) {
-    return (result === null || result.data === null ||
-      result.data.filterBookings === null) && result.data.filterBookings.length === 0
-  }
+    getBookingsByDriverReference(reference) {
+        this.spinner.show();
+        this.bookingService
+            .filterBookings({ name: 'assignedDriverReference', value: reference })
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: (result) => {
+                    if (this.isDataEmpty(result)) {
+                        this.errorMsg = 'No Records found';
+                        this.isError = true;
+                        this.spinner.hide();
+                    } else {
+                        this.dataSource = new MatTableDataSource(result.data.filterBookings);
+                        this.dataSource.paginator = this.paginator;
+                        this.dataSource.sort = this.sort;
+                        this.spinner.hide();
+                    }
+                },
+                error: (error) => {
+                    this.errorMsg = 'Something went wrong, please contact system support';
+                    this.isError = true;
+                    console.log(error.message);
+                    console.log(error);
+                    this.spinner.hide();
+                },
+            });
+    }
 
-  onViewBooking(reference) {
-    this.router.navigate(['/booking-summary', reference]);
-  }
+    isDataEmpty(result) {
+        return (
+            (result === null || result.data === null || result.data.filterBookings === null) &&
+            result.data.filterBookings.length === 0
+        );
+    }
 
-  getFormattedDate(date) {
-    return this.commonService.getFormattedDate(date);
-  }
+    onViewBooking(reference) {
+        this.router.navigate(['/booking-summary', reference]);
+    }
 
-  ngOnDestroy() {
-    this.componentDestroyed$.next(true)
-    this.componentDestroyed$.complete()
-  }
+    OnUnAssignBooking(bookingReference) {
+        this.bookingService
+            .updateBookingAssignedDriver(bookingReference, '')
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: (result) => {
+                    if (result.data && result.data.updateBookingAssignedDriver.isInError) {
+                        this.showErrorText = true;
+                        this.errorText = result.data.updateBookingAssignedDriver.errorMessage;
+                    } else {
+                        location.reload();
+                    }
+                    this.spinner.hide();
+                },
+                error: (error) => {
+                    console.log(error);
+                    console.log(error.message);
+                    this.showErrorText = true;
+                    this.errorText = `Update failed: Please contact system`;
+                    this.spinner.hide();
+                },
+            });
+    }
+
+    getFormattedDate(date) {
+        return this.commonService.getFormattedDate(date);
+    }
+
+    ngOnDestroy() {
+        this.componentDestroyed$.next(true);
+        this.componentDestroyed$.complete();
+    }
 }
